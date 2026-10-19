@@ -309,6 +309,27 @@ Configs: {
 }
 
 GUI: {
+	AdminPanel: {
+		Title: Test Panel (debug)
+		HealParty: Heal party
+		LevelUp1: Active +1 level
+		LevelUp5: Active +5 levels
+		FaintActive: Faint active Pokémon
+		GiveItems: Give test items
+		SpawnWild: Spawn wild Pokémon
+		ClearWild: Remove wild Pokémon
+		SpawnBrock: Spawn Brock
+		ToggleEye: Toggle Eye of Cthulhu
+		ResetBadges: Reset badges
+		ClearBattles: End stuck battles
+		Close: Close
+		ItemsGiven: Received Poké Balls, Potions, Revives and Rare Candies
+		EyeDefeated: The Eye of Cthulhu now counts as defeated
+		EyeNotDefeated: The Eye of Cthulhu now counts as not defeated
+		BadgesReset: All badges were reset
+		BattlesCleared: All battles were ended
+	}
+
 	Inventory: {
 		ShowParty: Show Party
 		HideParty: Hide Party
@@ -981,6 +1002,7 @@ Keybinds: {
 	OpenPokedexEntry.DisplayName: Open Pokédex Entry For Pokémon
 	TogglePokemon.DisplayName: Toggle Active Pokémon
 	NextPokemon.DisplayName: Summon Next Pokémon
+	AdminPanel.DisplayName: Test Panel (debug)
 	PrevPokemon.DisplayName: Summon Previous Pokémon
 }
 

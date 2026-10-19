@@ -228,6 +228,9 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (HasChosenStarter && KeybindSystem.HubKeybind.JustPressed)
             HubUI.ToggleActive();
 
+        if (KeybindSystem.AdminPanelKeybind.JustPressed)
+            AdminPanelUI.Toggle();
+
         if (_battleClient != null && _hoveredPlayer != -1 && _battleClient.State == ClientBattleState.None)
         {
             if (Main.mouseRight && Main.mouseRightRelease)

@@ -309,6 +309,27 @@ Configs: {
 }
 
 GUI: {
+	AdminPanel: {
+		Title: Painel de Testes (depuração)
+		HealParty: Curar equipe
+		LevelUp1: Ativo +1 nível
+		LevelUp5: Ativo +5 níveis
+		FaintActive: Desmaiar Pokémon ativo
+		GiveItems: Dar itens de teste
+		SpawnWild: Chamar Pokémon selvagem
+		ClearWild: Remover selvagens
+		SpawnBrock: Chamar Brock
+		ToggleEye: Alternar Olho de Cthulhu
+		ResetBadges: Zerar insígnias
+		ClearBattles: Encerrar batalhas travadas
+		Close: Fechar
+		ItemsGiven: Você recebeu Poké Bolas, Poções, Reviveres e Doces Raros
+		EyeDefeated: O Olho de Cthulhu agora conta como derrotado
+		EyeNotDefeated: O Olho de Cthulhu agora conta como não derrotado
+		BadgesReset: Todas as insígnias foram zeradas
+		BattlesCleared: Todas as batalhas foram encerradas
+	}
+
 	Inventory: {
 		ShowParty: Mostrar Equipe
 		HideParty: Esconder Equipe
@@ -981,6 +1002,7 @@ Keybinds: {
 	OpenPokedexEntry.DisplayName: Abrir Registro da Pokédex do Pokémon
 	TogglePokemon.DisplayName: Alternar Pokémon Ativo
 	NextPokemon.DisplayName: Chamar Próximo Pokémon
+	AdminPanel.DisplayName: Painel de Testes (depuração)
 	PrevPokemon.DisplayName: Chamar Pokémon Anterior
 }
 
