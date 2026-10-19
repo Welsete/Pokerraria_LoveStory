@@ -372,7 +372,21 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         var catchChance =
             _capture.Data.Schema.CatchRate / 255f *
-            0.85f; //would / 3 to match game but we can't damage pokemon so that would be too hard
+            0.85f; //would / 3 to match game but that would be too hard at full HP
+
+        // Like the main games, weakened Pokémon are easier to catch: up to 3x at very low HP
+        var data = _capture.Data;
+        if (data.MaxHP > 0)
+            catchChance *= (3f * data.MaxHP - 2f * data.HP) / data.MaxHP;
+
+        // Status conditions help too
+        catchChance *= data.Status switch
+        {
+            NonVolatileStatus.Slp or NonVolatileStatus.Frz => 2.5f,
+            NonVolatileStatus.Par or NonVolatileStatus.Psn or NonVolatileStatus.Tox or NonVolatileStatus.Brn => 1.5f,
+            _ => 1f
+        };
+        catchChance = Math.Min(catchChance, 1f);
         //Main.NewText($"chance {catchChance * catchModifier}, random {random}");
         if (_catchRandom < catchChance * CatchModifier)
             return true;

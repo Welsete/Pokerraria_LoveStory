@@ -21,7 +21,7 @@ public abstract class BasePotionItem : RecoveryItem
 
     public override bool AffectedByPokemonDirectUse(PokemonData data)
     {
-        return data.HP < data.MaxHP;
+        return data.HP > 0 && data.HP < data.MaxHP;
     }
 
     public override int PokemonDirectUse(Player player, PokemonData data, int amount = 1)

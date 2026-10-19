@@ -27,6 +27,7 @@ public abstract class BaseReviveItem : RecoveryItem
 
         // Restore the Pokémon's HP from a fainted state based on the defined percentage
         data.HP = (ushort)Math.Ceiling(data.MaxHP * RestorationPercentage);
+        data.Status = NonVolatileStatus.None;
 
         Main.NewText(
             Language.GetTextValue(

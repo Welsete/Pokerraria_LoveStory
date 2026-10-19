@@ -167,7 +167,8 @@ public sealed class TestBattleUI : SmartUIState
 
     public static void GoBack()
     {
-        if (_optionsPanel.Parent != null)
+        // A replacement for a fainted Pokémon has to be picked first
+        if (_optionsPanel.Parent != null || BattleClient.LocalClient.CurrentRequest == ShowdownRequest.ForcedSwitch)
         {
             SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
             return;
@@ -317,7 +318,7 @@ public sealed class TestBattleUI : SmartUIState
                 continue;
             }
 
-            bool fainted = poke.DataRef != null && poke.DataRef.HP <= 0;
+            bool fainted = pokemon.HP <= 0;
             pokemonButton.UpdateTextures("Terramon/Assets/GUI/TurnBased/Simple");
             label.SetText(DatabaseV2.GetLocalizedPokemonName(pokemon.Schema));
             image.SetImage(pokemon.GetMiniSprite());
@@ -386,6 +387,17 @@ public sealed class TestBattleUI : SmartUIState
             Sender = TerramonPlayer.LocalPlayer
         };
         forfeit.Send();
+    }
+
+    public override void SafeUpdate(GameTime gameTime)
+    {
+        // When the active Pokémon faints, go straight to picking another one
+        if (_opened && _pokemonPanel.Parent == null &&
+            BattleClient.LocalClient.CurrentRequest == ShowdownRequest.ForcedSwitch)
+        {
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.ChooseNext"), Color.Orange);
+            ChangePanel(_pokemonPanel);
+        }
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)

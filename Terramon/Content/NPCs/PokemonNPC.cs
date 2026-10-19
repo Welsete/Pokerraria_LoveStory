@@ -340,6 +340,17 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         }
 
         if (Data != null && Data.HP != 0) NPC.life = Data.HP;
+
+        // A wild Pokémon that fainted in battle leaves once the battle is over
+        if (Data is { HP: 0 } && BattleClient?.Foe == null && Main.netMode != NetmodeID.MultiplayerClient)
+        {
+            for (var i = 0; i < 20; i++)
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke);
+            NPC.active = false;
+            if (Main.dedServ)
+                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+            return;
+        }
         if (PlasmaState)
         {
             var lightIntensity = 0.57f - _plasmaStateTime / 70f;

@@ -175,7 +175,7 @@ public class PokemonData
         var s = shareMultiplier;
         var t = _ot.Equals(myOwner.Player.name) ? 1f : 1.5f;
         var v = (Schema.Evolution is not null && Level >= Schema.Evolution.AtLevel) ? smallBonus : 1f;
-        var pow = (2 * L + 10) / (L + Lp + 10);
+        var pow = (2f * L + 10) / (L + Lp + 10);
         var powFinal = pow * pow * Math.Sqrt(pow);
         var firstMult = b * L * 0.2f * s * powFinal + 1;
         var finalExp = firstMult * t * e * v * f * p;

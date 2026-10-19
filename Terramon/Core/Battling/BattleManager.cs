@@ -648,6 +648,15 @@ public sealed class BattleManager
         else
         {
             client.CurrentRequest = sr;
+
+            // Nicknames are party slots plus one (see SimplePackedPokemon.Team), e.g. "p1: 3" is party slot 2
+            if (side.TryGetProperty("pokemon", out var pokemon))
+            {
+                client.SwitchOrder = pokemon.EnumerateArray()
+                    .Select(p => int.TryParse(p.GetProperty("ident").GetString()?.Split(": ", 2)[^1], out var n) ? n - 1 : -1)
+                    .ToArray();
+            }
+
             if (client.Provider is PokemonNPC npc)
             {
                 Console.WriteLine($"{npc.BattleName} is responding automatically...");

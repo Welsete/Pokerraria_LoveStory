@@ -202,8 +202,18 @@ public struct BattlePokemon()
     }
     public void Faint()
     {
-        Data?.Faint();
+        var justFainted = Data?.Faint() ?? false;
         _status = NonVolatileStatus.Fnt;
+
+        if (!justFainted || Main.dedServ)
+            return;
+
+        Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.Fainted", PokeMessage));
+
+        // Reward the local player's Pokémon for knocking out a foe
+        var local = TerramonPlayer.LocalPlayer;
+        if (Side.Provider != local && local.BattleClient?.Foe == Side.Provider)
+            local.DefeatedPokemon(Data, true);
     }
     public void CureStatus()
     {

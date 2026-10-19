@@ -14,6 +14,11 @@ Battle: {
 	TieRegular: "{0} and {1}'s battle ended in a tie!"
 	TieAgreed: "{0} and {1} agreed to a tie!"
 	TieForced: "{0} and {1}'s battle was forcibly ended!"
+	Fainted: "{0} fainted!"
+	GainedExp: "{0} gained {1} Exp. Points!"
+	LevelUp: "{0} grew to Lv. {1}!"
+	ChooseNext: Choose another Pokémon to send out.
+	ReturnedFainted: "{0} has fainted and returned to its Poké Ball. Use a Revive to heal it."
 }
 
 Buffs: {

@@ -217,6 +217,14 @@ public sealed class BattleInstance
                 foreach (var element in CollectionsMarshal.AsSpan(frame.Elements))
                 {
                     Log(element.ToString());
+
+                    // No side update follows the end of a battle, so apply the final hits (and faints) before it ends
+                    if (inMainFrame && element is WinElement or TieElement)
+                    {
+                        Observe(ref pWriter, ref sWriter);
+                        inMainFrame = false;
+                    }
+
                     if (element is ISplitElement split)
                     {
                         var tgt = (split.PlayerID is 1 or 2) ? split.PlayerID : -1;

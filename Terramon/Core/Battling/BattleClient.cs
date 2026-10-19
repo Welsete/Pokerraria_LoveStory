@@ -38,6 +38,12 @@ public sealed class BattleClient(IBattleProvider provider)
     // This is only used by the server
     public string CachedTeamSpec;
 
+    /// <summary>
+    ///     The party slot of each Pokémon in the order Showdown currently keeps them, which changes after every switch.
+    ///     Null when unknown (multiplayer clients).
+    /// </summary>
+    public int[] SwitchOrder;
+
     //public string Name => Provider.BattleName;
     //public Entity Entity => Provider.SyncedEntity;
     public bool BattleOngoing
@@ -99,6 +105,14 @@ public sealed class BattleClient(IBattleProvider provider)
         if (!CanMakeChoice(choice))
             return false;
 
+        // Showdown switches by its own team order, not by party slot
+        if (choice == BattleChoice.Switch && SwitchOrder != null)
+        {
+            operand = Array.IndexOf(SwitchOrder, operand);
+            if (operand < 0)
+                return false;
+        }
+
         CurrentRequest = ShowdownRequest.Wait;
 
         if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -122,6 +136,7 @@ public sealed class BattleClient(IBattleProvider provider)
         TieRequest = false;
         Foe = null;
         CurrentRequest = ShowdownRequest.None;
+        SwitchOrder = null;
     }
 }
 

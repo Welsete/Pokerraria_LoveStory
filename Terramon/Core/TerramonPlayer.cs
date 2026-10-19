@@ -306,6 +306,14 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (!Player.HasBuff<PokemonCompanion>() && _activeSlot >= 0 && !Player.dead)
             ActiveSlot = -1;
 
+        // A fainted Pokémon can't stay out, so send it back once the battle is over
+        if (_activeSlot >= 0 && Party[_activeSlot] is { HP: 0 } && _battleClient?.Foe == null)
+        {
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.ReturnedFainted", Party[_activeSlot].DisplayName),
+                Color.Orange);
+            ActiveSlot = -1;
+        }
+
         // End the sidebar animation if the player opens their inventory to prevent visual bugs
         if (Main.playerInventory && !_lastPlayerInventory)
             PartyDisplay.Sidebar.ForceKillAnimation();
@@ -658,7 +666,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (!ExpShareOn)
         {
             var active = GetActivePokemon();
-            if (active.Status == NonVolatileStatus.Fnt)
+            if (active is null || active.Status == NonVolatileStatus.Fnt)
                 return;
             var expGain = active.ExperienceFromDefeat(defeated, 1f, this);
             var evGain = active.EVsFromDefeat(defeated, false);
@@ -695,9 +703,13 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         IEnumerable<(StatID Stat, byte EffortIncrease)> gains)
     {
         BattleInstance.Log($"{recipient.DisplayName} gained {expGain} EXP!", BattleInstance.BattleReceiveFollowup);
+        Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.GainedExp", recipient.DisplayName, expGain));
         if (levelsGained != 0)
+        {
             BattleInstance.Log($"{recipient.DisplayName} is now level {recipient.Level}!",
                 BattleInstance.BattleReceiveFollowup);
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.LevelUp", recipient.DisplayName, recipient.Level), Color.Gold);
+        }
         if (gains is null)
             return;
         foreach (var (stat, increase) in gains)

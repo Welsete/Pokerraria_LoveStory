@@ -14,6 +14,11 @@ Battle: {
 	TieRegular: "A batalha entre {0} e {1} terminou empatada!"
 	TieAgreed: "{0} e {1} combinaram um empate!"
 	TieForced: "A batalha entre {0} e {1} foi encerrada à força!"
+	Fainted: "{0} desmaiou!"
+	GainedExp: "{0} ganhou {1} pontos de Exp.!"
+	LevelUp: "{0} subiu para o Nv. {1}!"
+	ChooseNext: Escolha outro Pokémon para mandar à batalha.
+	ReturnedFainted: "{0} desmaiou e voltou para a Poké Bola. Use um Reviver para curá-lo."
 }
 
 Buffs: {
