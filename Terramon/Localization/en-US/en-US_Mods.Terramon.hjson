@@ -11,6 +11,12 @@ Buffs: {
 }
 
 Commands: {
+	Trainer: {
+		Description: Spawns a trainer NPC (such as a Gym Leader) next to you
+		Usage: /trainer <name>
+		NotFound: "No trainer named '{0}' was found"
+	}
+
 	RequiresDebugMode: This command requires Allow Cheat Commands to be enabled in the mod config!
 
 	DexEdit: {
@@ -433,6 +439,11 @@ CommonTooltips: {
 }
 
 Items: {
+	BoulderBadge: {
+		DisplayName: Boulder Badge
+		Tooltip: Proof of victory over Brock, the Pewter City Gym Leader
+	}
+
 	PokeBallItem: {
 		DisplayName: Poké Ball
 		Tooltip:
@@ -968,6 +979,21 @@ Types: {
 }
 
 NPCs: {
+	Trainers: {
+		BattleButton: Battle
+	}
+
+	Brock: {
+		DisplayName: Brock
+
+		Dialogue: {
+			Greeting: I'm Brock, Pewter City's Gym Leader! My rock-hard willpower is evident in my Pokémon. Think you can take me on?
+			Locked: You're not ready for a Gym battle yet. Come back once you've defeated the Eye of Cthulhu!
+			Rematch: Back for another round? My Pokémon are always ready to rock!
+			Defeated: I took you for granted. As proof of your victory, here's the Boulder Badge!
+		}
+	}
+
 	PokemartClerk: {
 		DisplayName: Poké Mart Clerk
 		BestiaryText: The Poké Mart Clerk is a dedicated salesman, stocking all kinds of items for your Pokémon training needs.

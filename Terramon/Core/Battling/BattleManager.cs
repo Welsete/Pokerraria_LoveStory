@@ -4,6 +4,7 @@ using System.Text.Json;
 using EasyPacketsLib;
 using Terramon.Content.Commands;
 using Terramon.Content.NPCs;
+using Terramon.Content.NPCs.Trainers;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.ID;
@@ -652,6 +653,11 @@ public sealed class BattleManager
                 Console.WriteLine($"{npc.BattleName} is responding automatically...");
                 npc.AutoBattleChoice();
             }
+            else if (client.Provider is TrainerNPC trainer)
+            {
+                Console.WriteLine($"{trainer.BattleName} is responding automatically...");
+                trainer.AutoBattleChoice();
+            }
         }
     }
     
@@ -697,6 +703,7 @@ public sealed class BattleManager
         {
             BattleProviderType.Player => Main.player[whoAmI].Terramon(),
             BattleProviderType.PokemonNPC => Main.npc[whoAmI].Pokemon(),
+            BattleProviderType.TrainerNPC => Main.npc[whoAmI].ModNPC as TrainerNPC,
             _ => null,
         };
     }

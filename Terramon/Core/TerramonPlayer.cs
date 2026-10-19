@@ -9,6 +9,7 @@ using Terramon.Content.GUI;
 using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.NPCs.Trainers;
 using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Banners;
 using Terramon.Content.Tiles.Interactive;
@@ -889,6 +890,10 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 b = loser.BattleName;
 
                 Main.NewText($"{a} defeated {b}!", Color.Lime);
+
+                // Reward the local player for beating a trainer
+                if (loser is TrainerNPC trainer && winner == this)
+                    trainer.OnDefeatedBy(this);
 
                 winner.BattleStopped();
                 loser.BattleStopped();

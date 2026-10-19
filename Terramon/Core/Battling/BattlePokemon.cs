@@ -1,5 +1,6 @@
 ﻿using Showdown.NET.Definitions;
 using Terramon.Content.NPCs;
+using Terramon.Content.NPCs.Trainers;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.ID;
 
@@ -29,6 +30,7 @@ public struct BattlePokemon()
         => Side.Provider switch
         {
             TerramonPlayer plr => plr.Player.name,
+            TrainerNPC trainer => trainer.BattleName,
             _ => null,
         };
 
@@ -37,6 +39,7 @@ public struct BattlePokemon()
         {
             TerramonPlayer plr => $"{plr.Player.name}'s {DisplayName}",
             PokemonNPC => $"Wild {DisplayName}",
+            TrainerNPC trainer => $"{trainer.BattleName}'s {DisplayName}",
             _ => null
         };
 

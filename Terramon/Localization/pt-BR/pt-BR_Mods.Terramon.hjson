@@ -1,0 +1,32 @@
+# Somente as partes de ginásios estão traduzidas por enquanto. O resto usa o inglês.
+Commands: {
+	Trainer: {
+		Description: Coloca um treinador (como um Líder de Ginásio) ao seu lado
+		Usage: /trainer <nome>
+		NotFound: "Nenhum treinador chamado '{0}' foi encontrado"
+	}
+}
+
+Items: {
+	BoulderBadge: {
+		DisplayName: Insígnia Rocha
+		Tooltip: Prova da vitória sobre Brock, o Líder de Ginásio de Pewter
+	}
+}
+
+NPCs: {
+	Trainers: {
+		BattleButton: Batalhar
+	}
+
+	Brock: {
+		DisplayName: Brock
+
+		Dialogue: {
+			Greeting: Eu sou Brock, Líder do Ginásio de Pewter! Minha força de vontade é dura como pedra, assim como meus Pokémon. Acha que consegue me vencer?
+			Locked: Você ainda não está pronto para uma batalha de ginásio. Volte quando tiver derrotado o Olho de Cthulhu!
+			Rematch: Voltou para mais uma rodada? Meus Pokémon estão sempre prontos!
+			Defeated: Eu te subestimei. Como prova da sua vitória, aqui está a Insígnia Rocha!
+		}
+	}
+}
