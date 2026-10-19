@@ -509,6 +509,10 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         _capture.Encapsulate(Projectile.position); // Destroy Pokémon NPC
 
+        // Throwing a ball mid-battle closes the battle screen so the catch animation is visible
+        if (Projectile.owner == Main.myPlayer)
+            _capture.EndBattleForCapture();
+
         // Queue resync for the proojectile in multiplayer
         Projectile.netUpdate = true;
     }

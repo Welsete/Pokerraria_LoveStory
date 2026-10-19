@@ -888,7 +888,9 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 a = forfeiter.BattleName;
                 b = winner.BattleName;
 
-                Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.Forfeited", a, b), Color.Lime);
+                // A wild Pokémon "forfeits" when it's caught mid-battle; the catch shows its own message
+                if (forfeiter is not Content.NPCs.PokemonNPC { PlasmaState: true })
+                    Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.Forfeited", a, b), Color.Lime);
 
                 forfeiter.BattleStopped();
                 winner.BattleStopped();

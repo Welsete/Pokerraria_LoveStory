@@ -524,7 +524,21 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public void StopBattleEffects()
     {
-        NPC.ShowNameOnHover = true;
+        NPC.ShowNameOnHover = !PlasmaState;
+    }
+
+    /// <summary>
+    ///     Ends the current battle because this Pokémon was hit by a Poké Ball, so the catch plays out in the world.
+    /// </summary>
+    public void EndBattleForCapture()
+    {
+        if (BattleClient?.Foe == null)
+            return;
+        var forfeit = new ForfeitOrder
+        {
+            Sender = this
+        };
+        forfeit.Send();
     }
 
     public void SetActiveSlot(byte newSlot)
