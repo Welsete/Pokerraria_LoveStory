@@ -13,3 +13,10 @@ jobs:
                   dotnet-version: |
                       8.0.x
                       10.0.x
+            # Terramon needs this dependency mod for turn-based battles, so build it too
+            - uses: JamzOJamz/build-tmodloader-mod@v1
+              with:
+                  project: TmonRuntimes/TmonRuntimes.csproj
+                  dotnet-version: |
+                      8.0.x
+                      10.0.x
