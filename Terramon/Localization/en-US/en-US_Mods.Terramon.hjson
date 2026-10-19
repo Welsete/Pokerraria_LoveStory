@@ -19,6 +19,44 @@ Battle: {
 	LevelUp: "{0} grew to Lv. {1}!"
 	ChooseNext: Choose another Pokémon to send out.
 	ReturnedFainted: "{0} has fainted and returned to its Poké Ball. Use a Revive to heal it."
+	Log: {
+		UsedMove: "{0} used {1}!"
+		SuperEffective: It's super effective!
+		Resisted: It's not very effective...
+		Immune: "It doesn't affect {0}..."
+		Crit: A critical hit!
+		Missed: "{0}'s attack missed!"
+		Failed: But it failed!
+		StatRose: "{0}'s {1} rose!"
+		StatRoseSharply: "{0}'s {1} rose sharply!"
+		StatFell: "{0}'s {1} fell!"
+		StatFellHarshly: "{0}'s {1} harshly fell!"
+		Cured: "{0} was cured of its status condition!"
+		Stats: {
+			Atk: Attack
+			Def: Defense
+			SpA: Sp. Atk
+			SpD: Sp. Def
+			Spe: Speed
+			Accuracy: accuracy
+			Evasion: evasiveness
+		}
+		Status: {
+			Brn: "{0} was burned!"
+			Par: "{0} is paralyzed! It may be unable to move!"
+			Psn: "{0} was poisoned!"
+			Tox: "{0} was badly poisoned!"
+			Slp: "{0} fell asleep!"
+			Frz: "{0} was frozen solid!"
+		}
+		Cant: {
+			slp: "{0} is fast asleep."
+			par: "{0} is paralyzed! It can't move!"
+			frz: "{0} is frozen solid!"
+			flinch: "{0} flinched and couldn't move!"
+			recharge: "{0} must recharge!"
+		}
+	}
 }
 
 Buffs: {

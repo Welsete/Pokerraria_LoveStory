@@ -19,6 +19,44 @@ Battle: {
 	LevelUp: "{0} subiu para o Nv. {1}!"
 	ChooseNext: Escolha outro Pokémon para mandar à batalha.
 	ReturnedFainted: "{0} desmaiou e voltou para a Poké Bola. Use um Reviver para curá-lo."
+	Log: {
+		UsedMove: "{0} usou {1}!"
+		SuperEffective: É super eficaz!
+		Resisted: Não é muito eficaz...
+		Immune: "Não afeta {0}..."
+		Crit: Um golpe crítico!
+		Missed: "O ataque de {0} errou!"
+		Failed: Mas falhou!
+		StatRose: "{1} de {0} aumentou!"
+		StatRoseSharply: "{1} de {0} aumentou muito!"
+		StatFell: "{1} de {0} diminuiu!"
+		StatFellHarshly: "{1} de {0} diminuiu muito!"
+		Cured: "{0} se curou do seu problema de status!"
+		Stats: {
+			Atk: O Ataque
+			Def: A Defesa
+			SpA: O Ataque Especial
+			SpD: A Defesa Especial
+			Spe: A Velocidade
+			Accuracy: A precisão
+			Evasion: A evasão
+		}
+		Status: {
+			Brn: "{0} foi queimado!"
+			Par: "{0} está paralisado! Talvez não consiga se mover!"
+			Psn: "{0} foi envenenado!"
+			Tox: "{0} foi gravemente envenenado!"
+			Slp: "{0} adormeceu!"
+			Frz: "{0} foi congelado!"
+		}
+		Cant: {
+			slp: "{0} está dormindo profundamente."
+			par: "{0} está paralisado! Não consegue se mover!"
+			frz: "{0} está congelado!"
+			flinch: "{0} recuou e não conseguiu se mover!"
+			recharge: "{0} precisa recarregar!"
+		}
+	}
 }
 
 Buffs: {

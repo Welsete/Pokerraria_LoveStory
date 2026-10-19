@@ -230,8 +230,10 @@ public sealed class BattleInstance
                         var tgt = (split.PlayerID is 1 or 2) ? split.PlayerID : -1;
                         mgr.HandleSingleElement(this, sWriter, split.Secret, toSide: -1);
                         mgr.HandleSingleElement(this, pWriter, split.Public, toSide: tgt);
+                        BattleLog.Handle(this, split.Public);
                         continue;
                     }
+                    BattleLog.Handle(this, element);
                     mgr.HandleSingleElement(this, pWriter, element, toSide: -1);
                 }
             }
