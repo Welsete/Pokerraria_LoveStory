@@ -708,12 +708,14 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         IEnumerable<(StatID Stat, byte EffortIncrease)> gains)
     {
         BattleInstance.Log($"{recipient.DisplayName} gained {expGain} EXP!", BattleInstance.BattleReceiveFollowup);
-        BattleLog.Say(Language.GetTextValue("Mods.Terramon.Battle.GainedExp", recipient.DisplayName, expGain));
+        BattleLog.Say(Language.GetTextValue("Mods.Terramon.Battle.GainedExp", BattleLog.HighlightMon(recipient.DisplayName, true),
+            BattleLog.Highlight(expGain, "ffd75e")));
         if (levelsGained != 0)
         {
             BattleInstance.Log($"{recipient.DisplayName} is now level {recipient.Level}!",
                 BattleInstance.BattleReceiveFollowup);
-            BattleLog.Say(Language.GetTextValue("Mods.Terramon.Battle.LevelUp", recipient.DisplayName, recipient.Level), Color.Gold);
+            BattleLog.Say(Language.GetTextValue("Mods.Terramon.Battle.LevelUp", BattleLog.HighlightMon(recipient.DisplayName, true),
+                recipient.Level), Color.Gold);
         }
         if (gains is null)
             return;

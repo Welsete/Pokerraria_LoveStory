@@ -18,8 +18,8 @@ namespace Terramon.Content.GUI.TurnBased;
 public sealed class BattleLogUI : SmartUIState
 {
     private const float WindowWidth = 430f;
-    private const float WindowHeight = 380f;
-    private const float CardHeight = 118f;
+    private const float WindowHeight = 420f;
+    private const float CardHeight = 136f;
 
     private static bool _open;
 
@@ -191,20 +191,52 @@ public sealed class BattleLogUI : SmartUIState
             _list.Add(new UIText(Label("Empty"), 0.8f) { TextColor = Color.Gray });
 
         foreach (var (text, color) in lines)
-        {
-            var line = new UIText(text, 0.8f)
-            {
-                IsWrapped = true,
-                TextColor = color,
-                TextOriginX = 0f
-            };
-            line.Width.Percent = 1f;
-            _list.Add(line);
-        }
+            _list.Add(new LogLine(text, color));
 
         // Keep the newest line in view
         _list.Recalculate();
         _list.ViewPosition = _list.GetTotalHeight();
+    }
+}
+
+/// <summary>
+///     One line of the battle history. Supports chat color tags and wraps to the list's width.
+/// </summary>
+public sealed class LogLine : UIElement
+{
+    private const float TextScale = 0.8f;
+    private readonly string _text;
+    private readonly Color _color;
+
+    public LogLine(string text, Color color)
+    {
+        _text = text;
+        _color = color;
+        Width.Percent = 1f;
+        Height.Pixels = 20f;
+    }
+
+    public override void Recalculate()
+    {
+        base.Recalculate();
+        var width = GetInnerDimensions().Width;
+        if (width <= 0f)
+            return;
+
+        var size = ChatManager.GetStringSize(FontAssets.MouseText.Value, _text, new Vector2(TextScale), width);
+        var height = MathF.Max(20f, size.Y + 2f);
+        if (Math.Abs(height - Height.Pixels) > 0.5f)
+        {
+            Height.Pixels = height;
+            base.Recalculate();
+        }
+    }
+
+    protected override void DrawSelf(SpriteBatch spriteBatch)
+    {
+        var dims = GetInnerDimensions();
+        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, _text, dims.Position(),
+            _color, 0f, Vector2.Zero, new Vector2(TextScale), dims.Width);
     }
 }
 
@@ -214,7 +246,7 @@ public sealed class BattleLogUI : SmartUIState
 public sealed class PokemonCard(LocalizedText title, Func<PokemonData> source) : UIPanel
 {
     private const float TextScale = 0.78f;
-    private const float LineHeight = 17f;
+    private const float LineHeight = 16f;
 
     private static string Text(string key, params object[] args)
         => Language.GetTextValue("Mods.Terramon.GUI.BattleLog." + key, args);
@@ -225,17 +257,17 @@ public sealed class PokemonCard(LocalizedText title, Func<PokemonData> source) :
 
         var dims = GetInnerDimensions();
         var pos = new Vector2(dims.X, dims.Y - 2f);
-        foreach (var line in Lines(source()))
+        foreach (var line in Lines(source(), dims.Width))
         {
             ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, line, pos,
-                Color.White, 0f, Vector2.Zero, new Vector2(TextScale), dims.Width);
+                Color.White, 0f, Vector2.Zero, new Vector2(TextScale));
             pos.Y += LineHeight;
         }
     }
 
     private static string Colored(string hex, string text) => $"[c/{hex}:{text}]";
 
-    private IEnumerable<string> Lines(PokemonData mon)
+    private IEnumerable<string> Lines(PokemonData mon, float maxWidth)
     {
         yield return Colored("a0a8c8", title.Value);
         if (mon == null)
@@ -268,6 +300,29 @@ public sealed class PokemonCard(LocalizedText title, Func<PokemonData> source) :
             changes.Add(Colored(stage > 0 ? "6ee06e" : "f05050", $"{name} {stage:+0;-0}"));
         }
 
-        yield return changes.Count == 0 ? Colored("a0a0a0", Text("NoStatChanges")) : string.Join("  ", changes);
+        if (changes.Count == 0)
+        {
+            yield return Colored("a0a0a0", Text("NoStatChanges"));
+            yield break;
+        }
+
+        // Fill a line with as many changes as fit, then continue on the next one
+        var current = string.Empty;
+        foreach (var change in changes)
+        {
+            var attempt = current.Length == 0 ? change : current + "  " + change;
+            if (current.Length != 0 && Measure(attempt) > maxWidth)
+            {
+                yield return current;
+                attempt = change;
+            }
+
+            current = attempt;
+        }
+
+        yield return current;
     }
+
+    private static float Measure(string text)
+        => ChatManager.GetStringSize(FontAssets.MouseText.Value, text, new Vector2(TextScale)).X;
 }

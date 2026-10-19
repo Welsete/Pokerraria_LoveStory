@@ -20,6 +20,9 @@ Battle: {
 	ChooseNext: Escolha outro Pokémon para mandar à batalha.
 	ReturnedFainted: "{0} desmaiou e voltou para a Poké Bola. Use um Reviver para curá-lo."
 	Log: {
+		SwitchedIn: "{0} entrou na batalha!"
+		Damage: "{0} perdeu {1} PS! ({2})"
+		Healed: "{0} recuperou {1} PS! ({2})"
 		UsedMove: "{0} usou {1}!"
 		SuperEffective: É super eficaz!
 		Resisted: Não é muito eficaz...
@@ -357,7 +360,7 @@ GUI: {
 		Level: Nv. {0}
 		HP: PS: {0} / {1}
 		StatusLabel: "Status: {0}"
-		NoStatChanges: Sem mudanças nos atributos
+		NoStatChanges: Atributos normais
 		Status: {
 			None: Saudável
 			Brn: Queimado

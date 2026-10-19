@@ -60,7 +60,32 @@ public static class BattleLog
     }
 
     /// <summary>
-    ///     Called for every public protocol element of a battle.
+    ///     Wraps text in a chat color tag, e.g. to highlight a Pokémon's name or a number.
+    /// </summary>
+    public static string Highlight(object text, string hex) => $"[c/{hex}:{text}]";
+
+    /// <summary>
+    ///     Highlights a Pokémon's name: blue for the local player's own, orange for everyone else's.
+    /// </summary>
+    public static string HighlightMon(string name, bool own) => Highlight(name, own ? AllyHex : FoeHex);
+
+    private const string AllyHex = "7fc8ff";
+    private const string FoeHex = "ff9a6a";
+    private const string MoveHex = "ffd75e";
+    private const string DamageHex = "ff6b6b";
+    private const string HealHex = "6ee06e";
+
+    private static readonly Color Good = new(110, 224, 110);
+    private static readonly Color Bad = new(255, 120, 110);
+    private static readonly Color Notable = new(255, 170, 70);
+    private static readonly Color Muted = new(160, 160, 175);
+    private static readonly Color StatusColor = new(200, 150, 255);
+
+    // Last known HP of every Pokémon, used to tell how much damage a hit did
+    private static readonly Dictionary<(BattleInstance, int Side, int Slot), (int HP, int MaxHP)> LastHP = [];
+
+    /// <summary>
+    ///     Called for every protocol element of a battle (the secret, exact-HP version of split ones).
     /// </summary>
     public static void Handle(BattleInstance source, ProtocolElement element)
     {
@@ -71,51 +96,113 @@ public static class BattleLog
                     source.Omniscient);
                 _turn++;
                 break;
+            case SwitchElement sw:
+                TrackHP(source, sw.Pokemon, sw.HP);
+                Send(source, "SwitchedIn", LogColor, Mon(source, sw.Pokemon));
+                break;
+            case DragElement drag:
+                TrackHP(source, drag.Pokemon, drag.HP);
+                Send(source, "SwitchedIn", LogColor, Mon(source, drag.Pokemon));
+                break;
+            case DamageElement damage:
+            {
+                var lost = TrackHP(source, damage.Pokemon, damage.HP);
+                if (lost > 0)
+                    Send(source, "Damage", LogColor, Mon(source, damage.Pokemon), Highlight(lost, DamageHex),
+                        HPLeft(source, damage.Pokemon));
+                break;
+            }
+            case HealElement heal:
+            {
+                var gained = -TrackHP(source, heal.Pokemon, heal.HP);
+                if (gained > 0)
+                    Send(source, "Healed", LogColor, Mon(source, heal.Pokemon), Highlight(gained, HealHex),
+                        HPLeft(source, heal.Pokemon));
+                break;
+            }
             case MoveElement move:
-                Send(source, "UsedMove", Mon(source, move.Pokemon), Move(move.Move));
+                Send(source, "UsedMove", LogColor, Mon(source, move.Pokemon), Highlight(Move(move.Move), MoveHex));
                 break;
             case SuperEffectiveElement:
-                Send(source, "SuperEffective");
+                Send(source, "SuperEffective", Notable);
                 break;
             case ResistedElement:
-                Send(source, "Resisted");
+                Send(source, "Resisted", Muted);
                 break;
             case ImmuneElement immune:
-                Send(source, "Immune", Mon(source, immune.Pokemon));
+                Send(source, "Immune", Muted, Mon(source, immune.Pokemon));
                 break;
             case CritElement:
-                Send(source, "Crit");
+                Send(source, "Crit", Notable);
                 break;
             case MissElement miss:
-                Send(source, "Missed", Mon(source, miss.Source));
+                Send(source, "Missed", Muted, Mon(source, miss.Source));
                 break;
             case FailElement:
-                Send(source, "Failed");
+                Send(source, "Failed", Muted);
                 break;
             case BoostElement boost:
-                Send(source, boost.Amount > 1 ? "StatRoseSharply" : "StatRose", Mon(source, boost.Pokemon),
+                Send(source, boost.Amount > 1 ? "StatRoseSharply" : "StatRose", Good, Mon(source, boost.Pokemon),
                     Stat(boost.Stat.ToString()));
                 break;
             case UnboostElement unboost:
-                Send(source, unboost.Amount > 1 ? "StatFellHarshly" : "StatFell", Mon(source, unboost.Pokemon),
+                Send(source, unboost.Amount > 1 ? "StatFellHarshly" : "StatFell", Bad, Mon(source, unboost.Pokemon),
                     Stat(unboost.Stat.ToString()));
                 break;
             case StatusElement status:
-                Send(source, "Status." + status.Status, Mon(source, status.Pokemon));
+                Send(source, "Status." + status.Status, StatusColor, Mon(source, status.Pokemon));
                 break;
             case CureStatusElement cure:
-                Send(source, "Cured", Mon(source, cure.Pokemon));
+                Send(source, "Cured", Good, Mon(source, cure.Pokemon));
                 break;
             case CantElement cant:
-                Send(source, "Cant." + cant.Reason, Mon(source, cant.Pokemon));
+                Send(source, "Cant." + cant.Reason, StatusColor, Mon(source, cant.Pokemon));
                 break;
         }
     }
 
-    private static string Mon(BattleInstance source, string showdownMon)
+    /// <summary>
+    ///     Remembers a Pokémon's new HP and returns how much it went down by (negative if it went up).
+    /// </summary>
+    private static int TrackHP(BattleInstance source, string showdownMon, string showdownHP)
+    {
+        if (string.IsNullOrEmpty(showdownHP))
+            return 0;
+
+        var id = new SimpleMon(showdownMon);
+        var key = (source, id.Side, id.Slot);
+        var parts = showdownHP.Split(' ')[0].Split('/');
+        if (!int.TryParse(parts[0], out var hp))
+            return 0;
+        var maxHP = parts.Length > 1 && int.TryParse(parts[1], out var max) ? max : 0;
+
+        // Forget other battles, so the table doesn't grow forever
+        if (LastHP.Keys.Any(k => k.Item1 != source))
+            foreach (var old in LastHP.Keys.Where(k => k.Item1 != source).ToArray())
+                LastHP.Remove(old);
+
+        var change = LastHP.TryGetValue(key, out var last) ? last.HP - hp : 0;
+        LastHP[key] = (hp, maxHP == 0 ? last.MaxHP : maxHP);
+        return change;
+    }
+
+    private static string HPLeft(BattleInstance source, string showdownMon)
     {
         var id = new SimpleMon(showdownMon);
-        return source.Omniscient[id.Side]?[id.Slot].PokeMessage ?? showdownMon;
+        return LastHP.TryGetValue((source, id.Side, id.Slot), out var hp) && hp.MaxHP > 0
+            ? $"{hp.HP}/{hp.MaxHP}"
+            : "?";
+    }
+
+    /// <summary>
+    ///     A Pokémon's name in a log line, colored depending on who reads it.
+    /// </summary>
+    private readonly record struct MonName(int Side, string Name);
+
+    private static MonName Mon(BattleInstance source, string showdownMon)
+    {
+        var id = new SimpleMon(showdownMon);
+        return new MonName(id.Side, source.Omniscient[id.Side]?[id.Slot].PokeMessage ?? showdownMon);
     }
 
     private static string Move(string showdownMove)
@@ -132,7 +219,10 @@ public static class BattleLog
         return Language.Exists(key) ? Language.GetTextValue(key) : stat;
     }
 
-    private static void Send(BattleInstance source, string key, params object[] args)
+    private static object[] Format(object[] args, int viewerSide)
+        => args.Select(a => a is MonName mon ? HighlightMon(mon.Name, mon.Side == viewerSide) : a).ToArray();
+
+    private static void Send(BattleInstance source, string key, Color color, params object[] args)
     {
         key = Prefix + key;
         if (!Language.Exists(key))
@@ -140,18 +230,21 @@ public static class BattleLog
 
         if (!Main.dedServ)
         {
-            var line = Language.GetTextValue(key, args);
-            Main.NewText(line, LogColor);
-            Record(line, LogColor, source.Omniscient);
+            var line = Language.GetTextValue(key, Format(args, BattleClient.LocalClient.SideIndex));
+            Main.NewText(line, color);
+            Record(line, color, source.Omniscient);
             return;
         }
 
-        // Multiplayer: only the players in this battle see it
-        var text = NetworkText.FromKey(key, args.Select(a => NetworkText.FromLiteral(a.ToString())).ToArray());
-        foreach (var client in new[] { source.ClientA, source.ClientB })
+        // Multiplayer: only the players in this battle see it, each with their own Pokémon highlighted
+        for (var side = 1; side <= 2; side++)
         {
-            if (client.Provider is TerramonPlayer player)
-                ChatHelper.SendChatMessageToClient(text, LogColor, player.Player.whoAmI);
+            var client = side == 1 ? source.ClientA : source.ClientB;
+            if (client.Provider is not TerramonPlayer player)
+                continue;
+            var text = NetworkText.FromKey(key,
+                Format(args, side).Select(a => NetworkText.FromLiteral(a.ToString())).ToArray());
+            ChatHelper.SendChatMessageToClient(text, color, player.Player.whoAmI);
         }
     }
 }
