@@ -22,6 +22,7 @@ Immerse yourself in the captivating crossover of Terraria and Pokémon with the 
 - **Turn-based battles** powered by Pokémon Showdown, against wild Pokémon and trainers.
 - **Gym leaders and badges:** Brock is the first leader, unlocked after defeating the Eye of Cthulhu, and beating him awards the Boulder Badge.
 - **Battle log in chat:** every move used, effectiveness, critical hits, misses, stat changes and status conditions.
+- **Battle history window (L):** the whole battle turn by turn, plus details of both Pokémon (level, types, HP, status and stat changes).
 - **Fainting and experience:** Pokémon faint at 0 HP, defeated Pokémon give EXP, and level ups are shown in chat.
 - **Forced switch:** when your active Pokémon faints, the party panel opens so you can choose the next one.
 - **Improved catching:** catch rate rises up to 3x at low HP and with status conditions (sleep, freeze, paralysis, poison, burn).

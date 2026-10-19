@@ -347,6 +347,35 @@ Configs: {
 }
 
 GUI: {
+	BattleLog: {
+		Title: Histórico da Batalha
+		OpenButton: Histórico (L)
+		YourPokemon: Seu Pokémon
+		Opponent: Oponente
+		Empty: Nada aconteceu na batalha ainda.
+		Turn: "— Turno {0} —"
+		Level: Nv. {0}
+		HP: PS: {0} / {1}
+		StatusLabel: "Status: {0}"
+		NoStatChanges: Sem mudanças nos atributos
+		Status: {
+			None: Saudável
+			Brn: Queimado
+			Par: Paralisado
+			Psn: Envenenado
+			Tox: Muito envenenado
+			Slp: Dormindo
+			Frz: Congelado
+			Fnt: Desmaiado
+		}
+		ShortStats: {
+			Atk: Atq
+			Def: Def
+			SpA: AtE
+			SpD: DfE
+			Spe: Vel
+		}
+	}
 	AdminPanel: {
 		Title: Painel de Testes (depuração)
 		HealParty: Curar equipe
@@ -1035,6 +1064,7 @@ MegaStoneNames: {
 }
 
 Keybinds: {
+	BattleLog.DisplayName: Histórico da Batalha
 	ToggleParty.DisplayName: Equipe
 	OpenPokedex.DisplayName: Pokédex
 	OpenPokedexEntry.DisplayName: Abrir Registro da Pokédex do Pokémon

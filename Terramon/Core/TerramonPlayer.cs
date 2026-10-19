@@ -228,6 +228,8 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (HasChosenStarter && KeybindSystem.HubKeybind.JustPressed)
             HubUI.ToggleActive();
 
+        if (KeybindSystem.BattleLogKeybind.JustPressed)
+            BattleLogUI.Toggle();
         if (KeybindSystem.AdminPanelKeybind.JustPressed)
             AdminPanelUI.Toggle();
 
@@ -706,12 +708,12 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         IEnumerable<(StatID Stat, byte EffortIncrease)> gains)
     {
         BattleInstance.Log($"{recipient.DisplayName} gained {expGain} EXP!", BattleInstance.BattleReceiveFollowup);
-        Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.GainedExp", recipient.DisplayName, expGain));
+        BattleLog.Say(Language.GetTextValue("Mods.Terramon.Battle.GainedExp", recipient.DisplayName, expGain));
         if (levelsGained != 0)
         {
             BattleInstance.Log($"{recipient.DisplayName} is now level {recipient.Level}!",
                 BattleInstance.BattleReceiveFollowup);
-            Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.LevelUp", recipient.DisplayName, recipient.Level), Color.Gold);
+            BattleLog.Say(Language.GetTextValue("Mods.Terramon.Battle.LevelUp", recipient.DisplayName, recipient.Level), Color.Gold);
         }
         if (gains is null)
             return;

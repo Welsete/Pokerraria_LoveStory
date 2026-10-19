@@ -208,7 +208,7 @@ public struct BattlePokemon()
         if (!justFainted || Main.dedServ)
             return;
 
-        Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.Fainted", PokeMessage));
+        BattleLog.Say(Language.GetTextValue("Mods.Terramon.Battle.Fainted", PokeMessage));
 
         // Reward the local player's Pokémon for knocking out a foe
         var local = TerramonPlayer.LocalPlayer;

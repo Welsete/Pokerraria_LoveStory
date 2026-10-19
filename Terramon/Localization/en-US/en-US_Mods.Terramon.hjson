@@ -347,6 +347,35 @@ Configs: {
 }
 
 GUI: {
+	BattleLog: {
+		Title: Battle History
+		OpenButton: History (L)
+		YourPokemon: Your Pokémon
+		Opponent: Opponent
+		Empty: Nothing has happened in battle yet.
+		Turn: "— Turn {0} —"
+		Level: Lv. {0}
+		HP: HP: {0} / {1}
+		StatusLabel: "Status: {0}"
+		NoStatChanges: No stat changes
+		Status: {
+			None: Healthy
+			Brn: Burned
+			Par: Paralyzed
+			Psn: Poisoned
+			Tox: Badly poisoned
+			Slp: Asleep
+			Frz: Frozen
+			Fnt: Fainted
+		}
+		ShortStats: {
+			Atk: Atk
+			Def: Def
+			SpA: SpA
+			SpD: SpD
+			Spe: Spe
+		}
+	}
 	AdminPanel: {
 		Title: Test Panel (debug)
 		HealParty: Heal party
@@ -1035,6 +1064,7 @@ MegaStoneNames: {
 }
 
 Keybinds: {
+	BattleLog.DisplayName: Battle History
 	ToggleParty.DisplayName: Party
 	OpenPokedex.DisplayName: Pokédex
 	OpenPokedexEntry.DisplayName: Open Pokédex Entry For Pokémon

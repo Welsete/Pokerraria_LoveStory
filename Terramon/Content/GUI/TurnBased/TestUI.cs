@@ -151,11 +151,12 @@ public sealed class TestBattleUI : SmartUIState
         if (_opened)
         {
             var battleUILayerName = UILoader.GetLayerName(UILoader.GetUIState<BattleUI>());
+            var battleLogLayerName = UILoader.GetLayerName(UILoader.GetUIState<BattleLogUI>());
 
             foreach (var layer in CollectionsMarshal.AsSpan(layers))
             {
                 var name = layer.Name;
-                if (PreservedInterfaceLayers.Contains(name) || name == battleUILayerName)
+                if (PreservedInterfaceLayers.Contains(name) || name == battleUILayerName || name == battleLogLayerName)
                     continue;
 
                 layer.Active = false;

@@ -13,6 +13,51 @@ public static class BattleLog
 {
     private const string Prefix = "Mods.Terramon.Battle.Log.";
     private static readonly Color LogColor = new(200, 200, 215);
+    private static readonly Color TurnColor = new(255, 210, 90);
+
+    /// <summary>
+    ///     Everything logged in the local player's latest battle, shown by the battle history window.
+    ///     Lock it before reading, since battles run on a background thread.
+    /// </summary>
+    public static readonly List<(string Text, Color Color)> History = [];
+
+    /// <summary>
+    ///     Goes up every time <see cref="History" /> changes, so the window knows when to refresh.
+    /// </summary>
+    public static int HistoryVersion { get; private set; }
+
+    private static BattleField _historyBattle;
+    private static int _turn;
+
+    /// <summary>
+    ///     Adds a line to the battle history. A line from a new battle clears the previous one.
+    /// </summary>
+    public static void Record(string text, Color color, BattleField battle = null)
+    {
+        battle ??= BattleClient.LocalClient?.Battle;
+        lock (History)
+        {
+            if (battle != null && battle != _historyBattle)
+            {
+                History.Clear();
+                _historyBattle = battle;
+                _turn = 0;
+            }
+
+            History.Add((text, color));
+            HistoryVersion++;
+        }
+    }
+
+    /// <summary>
+    ///     Shows a message in chat and, while the local player is battling, keeps it in the battle history.
+    /// </summary>
+    public static void Say(string text, Color? color = null)
+    {
+        Main.NewText(text, color ?? Color.White);
+        if (BattleClient.LocalBattleOngoing)
+            Record(text, color ?? Color.White);
+    }
 
     /// <summary>
     ///     Called for every public protocol element of a battle.
@@ -21,6 +66,11 @@ public static class BattleLog
     {
         switch (element)
         {
+            case TurnElement when !Main.dedServ:
+                Record(Language.GetTextValue("Mods.Terramon.GUI.BattleLog.Turn", _turn + 1), TurnColor,
+                    source.Omniscient);
+                _turn++;
+                break;
             case MoveElement move:
                 Send(source, "UsedMove", Mon(source, move.Pokemon), Move(move.Move));
                 break;
@@ -90,7 +140,9 @@ public static class BattleLog
 
         if (!Main.dedServ)
         {
-            Main.NewText(Language.GetTextValue(key, args), LogColor);
+            var line = Language.GetTextValue(key, args);
+            Main.NewText(line, LogColor);
+            Record(line, LogColor, source.Omniscient);
             return;
         }
 
