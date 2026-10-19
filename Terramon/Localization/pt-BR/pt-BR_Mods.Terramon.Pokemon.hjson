@@ -1,0 +1,905 @@
+Bulbasaur: {
+	DisplayName: Bulbasaur
+	Species: Pokémon Semente
+	DexEntry: Uma semente estranha foi plantada nas costas dele ao nascer. A planta brota e cresce junto com este Pokémon.
+}
+
+Ivysaur: {
+	DisplayName: Ivysaur
+	Species: Pokémon Semente
+	DexEntry: Tem um bulbo de planta nas costas. Dizem que, quando absorve nutrientes, o bulbo desabrocha em uma grande flor.
+}
+
+Venusaur: {
+	DisplayName: Venusaur
+	Species: Pokémon Semente
+	DexEntry: Ao abrir as largas pétalas da sua flor e captar os raios de sol, ele enche o corpo de energia.
+}
+
+Charmander: {
+	DisplayName: Charmander
+	Species: Pokémon Lagarto
+	DexEntry: A chama na cauda mostra a força vital de Charmander. Se ele estiver saudável, a chama arde com intensidade.
+}
+
+Charmeleon: {
+	DisplayName: Charmeleon
+	Species: Pokémon Chama
+	DexEntry: Golpeia com a cauda para derrubar o inimigo. Depois, rasga o oponente caído com suas garras afiadas.
+}
+
+Charizard: {
+	DisplayName: Charizard
+	Species: Pokémon Chama
+	DexEntry: Quando solta uma rajada de fogo superquente, a chama vermelha na ponta da cauda arde com mais força.
+}
+
+Squirtle: {
+	DisplayName: Squirtle
+	Species: Pokémon Tartaruguinha
+	DexEntry: Ele se protege dentro do casco e, sempre que pode, contra-ataca com jatos de água.
+}
+
+Wartortle: {
+	DisplayName: Wartortle
+	Species: Pokémon Tartaruga
+	DexEntry: Quando tocado, este Pokémon recolhe a cabeça, mas a cauda continua um pouco para fora.
+}
+
+Blastoise: {
+	DisplayName: Blastoise
+	Species: Pokémon Marisco
+	DexEntry: Esmaga o inimigo com o corpo pesado até fazê-lo desmaiar. Em apuros, se recolhe dentro do casco.
+}
+
+Caterpie: {
+	DisplayName: Caterpie
+	Species: Pokémon Minhoca
+	DexEntry: Para se proteger, solta um cheiro horrível pelas antenas da cabeça e espanta os inimigos.
+}
+
+Metapod: {
+	DisplayName: Metapod
+	Species: Pokémon Casulo
+	DexEntry: Uma casca dura como aço protege seu corpo frágil. Ele suporta as dificuldades em silêncio enquanto espera a evolução.
+}
+
+Butterfree: {
+	DisplayName: Butterfree
+	Species: Pokémon Borboleta
+	DexEntry: Adora o mel das flores e consegue achar canteiros que tenham até mesmo um pouquinho de pólen.
+}
+
+Weedle: {
+	DisplayName: Weedle
+	Species: Pokémon Inseto Peludo
+	DexEntry: Costuma ser encontrado em florestas e campos. Tem um ferrão afiado e venenoso de uns 5 centímetros no alto da cabeça.
+}
+
+Kakuna: {
+	DisplayName: Kakuna
+	Species: Pokémon Casulo
+	DexEntry: Quase incapaz de se mover, este Pokémon só consegue endurecer a casca para se proteger quando está em perigo.
+}
+
+Beedrill: {
+	DisplayName: Beedrill
+	Species: Pokémon Abelha Venenosa
+	DexEntry: Tem três ferrões venenosos, nas patas da frente e na cauda. Usa-os para espetar o inimigo várias vezes.
+}
+
+Pidgey: {
+	DisplayName: Pidgey
+	Species: Pokémon Passarinho
+	DexEntry: É comum em florestas e bosques. Bate as asas rente ao chão para levantar areia e cegar os inimigos.
+}
+
+Pidgeotto: {
+	DisplayName: Pidgeotto
+	Species: Pokémon Pássaro
+	DexEntry: As garras dos pés são muito desenvolvidas. Consegue carregar presas como um Exeggcute até seu ninho, a mais de 100 km de distância.
+}
+
+Pidgeot: {
+	DisplayName: Pidgeot
+	Species: Pokémon Pássaro
+	DexEntry: Ao caçar, voa rente à superfície da água em alta velocidade para apanhar presas distraídas, como Magikarp.
+}
+
+Rattata: {
+	DisplayName: Rattata
+	Species: Pokémon Rato
+	DexEntry: Vive em qualquer lugar onde haja comida e passa o dia inteiro procurando algo para comer.
+}
+
+Raticate: {
+	DisplayName: Raticate
+	Species: Pokémon Rato
+	DexEntry: Desgasta as presas, que nunca param de crescer, roendo coisas duras. Consegue roer até paredes de concreto.
+}
+
+Spearow: {
+	DisplayName: Spearow
+	Species: Pokémon Passarinho
+	DexEntry: Protege muito seu território e bate as asas curtas sem parar para voar de um lado para o outro em alta velocidade.
+}
+
+Fearow: {
+	DisplayName: Fearow
+	Species: Pokémon Bico
+	DexEntry: Com suas asas enormes e magníficas, consegue ficar no ar sem nunca precisar pousar para descansar.
+}
+
+Ekans: {
+	DisplayName: Ekans
+	Species: Pokémon Serpente
+	DexEntry: Quanto mais velho fica, mais comprido cresce. À noite, enrola o corpo comprido nos galhos das árvores para descansar.
+}
+
+Arbok: {
+	DisplayName: Arbok
+	Species: Pokémon Naja
+	DexEntry: O desenho na barriga parece um rosto assustador. Inimigos fracos fogem só de ver o desenho.
+}
+
+Pikachu: {
+	DisplayName: Pikachu
+	Species: Pokémon Rato
+	DexEntry: Levanta a cauda para observar os arredores. Às vezes, nessa posição, a cauda é atingida por um raio.
+}
+
+Raichu: {
+	DisplayName: Raichu
+	Species: Pokémon Rato
+	DexEntry: Quando a eletricidade se acumula, os músculos ficam estimulados e ele fica mais agressivo que o normal.
+}
+
+Sandshrew: {
+	DisplayName: Sandshrew
+	Species: Pokémon Rato
+	DexEntry: Cava e vive debaixo da terra. Se for ameaçado, se enrola como uma bola para se proteger.
+}
+
+Sandslash: {
+	DisplayName: Sandslash
+	Species: Pokémon Rato
+	DexEntry: Se cavar rápido demais, pode quebrar os espinhos e as garras. Eles crescem de novo em um dia.
+}
+
+NidoranF: {
+	DisplayName: Nidoran♀
+	Species: Pokémon Espinho Venenoso
+	DexEntry: Apesar de pequeno, seus espinhos venenosos o tornam perigoso. A fêmea tem chifres menores.
+}
+
+Nidorina: {
+	DisplayName: Nidorina
+	Species: Pokémon Espinho Venenoso
+	DexEntry: A fêmea tem um temperamento dócil. Solta gritos ultrassônicos capazes de confundir os inimigos.
+}
+
+Nidoqueen: {
+	DisplayName: Nidoqueen
+	Species: Pokémon Broca
+	DexEntry: Usa o corpo áspero e cheio de escamas para fechar a entrada do ninho e proteger os filhotes dos predadores.
+}
+
+NidoranM: {
+	DisplayName: Nidoran♂
+	Species: Pokémon Espinho Venenoso
+	DexEntry: Observa os arredores levantando as orelhas acima do mato. O chifre venenoso serve para se proteger.
+}
+
+Nidorino: {
+	DisplayName: Nidorino
+	Species: Pokémon Espinho Venenoso
+	DexEntry: Levanta as orelhas grandes para observar os arredores. Se perceber qualquer coisa, ataca na hora.
+}
+
+Nidoking: {
+	DisplayName: Nidoking
+	Species: Pokémon Broca
+	DexEntry: É reconhecido pela pele dura como pedra e pelo chifre comprido. Cuidado com o chifre, pois ele contém veneno.
+}
+
+Clefairy: {
+	DisplayName: Clefairy
+	Species: Pokémon Fada
+	DexEntry: Dizem que a felicidade chega para quem vê um grupo de Clefairy dançando sob a lua cheia.
+}
+
+Clefable: {
+	DisplayName: Clefable
+	Species: Pokémon Fada
+	DexEntry: Sua audição é tão apurada que consegue ouvir um alfinete caindo a quase 1 km de distância. Vive em montanhas tranquilas.
+}
+
+Vulpix: {
+	DisplayName: Vulpix
+	Species: Pokémon Raposa
+	DexEntry: Quando nasce, tem só uma cauda branca como a neve. A cauda se divide a partir da ponta conforme envelhece.
+}
+
+Ninetales: {
+	DisplayName: Ninetales
+	Species: Pokémon Raposa
+	DexEntry: Tem nove caudas longas e um pelo de brilho dourado. Dizem que vive por mil anos.
+}
+
+Jigglypuff: {
+	DisplayName: Jigglypuff
+	Species: Pokémon Balão
+	DexEntry: Encanta os inimigos com seus olhos grandes e redondos e depois os faz dormir cantando uma melodia calma.
+}
+
+Wigglytuff: {
+	DisplayName: Wigglytuff
+	Species: Pokémon Balão
+	DexEntry: O pelo deles é tão gostoso que, se dois se aconchegarem juntos, não vão querer mais se separar.
+}
+
+Zubat: {
+	DisplayName: Zubat
+	Species: Pokémon Morcego
+	DexEntry: Mesmo sem olhos, consegue perceber obstáculos usando ondas ultrassônicas que emite pela boca.
+}
+
+Golbat: {
+	DisplayName: Golbat
+	Species: Pokémon Morcego
+	DexEntry: Depois que morde, não para de sugar a energia da vítima, mesmo que fique pesado demais para voar.
+}
+
+Oddish: {
+	DisplayName: Oddish
+	Species: Pokémon Erva
+	DexEntry: Durante o dia, fica debaixo da terra fria para fugir do sol. Cresce tomando banho de luar.
+}
+
+Gloom: {
+	DisplayName: Gloom
+	Species: Pokémon Erva
+	DexEntry: Tem um cheiro horrível! Mesmo assim, cerca de uma em cada mil pessoas gosta de sentir esse fedor de torcer o nariz.
+}
+
+Vileplume: {
+	DisplayName: Vileplume
+	Species: Pokémon Flor
+	DexEntry: Quanto maiores as pétalas, mais pólen tóxico elas contêm. A cabeça grande é pesada e difícil de sustentar.
+}
+
+Paras: {
+	DisplayName: Paras
+	Species: Pokémon Cogumelo
+	DexEntry: Nas costas deste inseto crescem cogumelos chamados tochukaso. Os cogumelos crescem junto com o inseto hospedeiro.
+}
+
+Parasect: {
+	DisplayName: Parasect
+	Species: Pokémon Cogumelo
+	DexEntry: Um cogumelo que cresceu mais que o corpo do hospedeiro controla Parasect. Ele espalha esporos venenosos.
+}
+
+Venonat: {
+	DisplayName: Venonat
+	Species: Pokémon Inseto
+	DexEntry: Seus olhos grandes são, na verdade, aglomerados de olhinhos. À noite, os da sua espécie são atraídos pela luz.
+}
+
+Venomoth: {
+	DisplayName: Venomoth
+	Species: Pokémon Mariposa Venenosa
+	DexEntry: As escamas que espalha paralisam quem as toca, deixando a pessoa sem conseguir ficar de pé.
+}
+
+Diglett: {
+	DisplayName: Diglett
+	Species: Pokémon Toupeira
+	DexEntry: Vive a cerca de 1 metro debaixo da terra, onde se alimenta de raízes. Às vezes aparece na superfície.
+}
+
+Dugtrio: {
+	DisplayName: Dugtrio
+	Species: Pokémon Toupeira
+	DexEntry: Na batalha, cava pelo chão e ataca o inimigo desprevenido por uma direção inesperada.
+}
+
+Meowth: {
+	DisplayName: Meowth
+	Species: Pokémon Gato Arranhador
+	DexEntry: Tem hábitos noturnos. Se vê algo brilhante, seus olhos brilham intensamente.
+}
+
+Persian: {
+	DisplayName: Persian
+	Species: Pokémon Gato Elegante
+	DexEntry: Apesar de o pelo ter muitos admiradores, é difícil de criar como bicho de estimação por causa do seu mau humor imprevisível.
+}
+
+Psyduck: {
+	DisplayName: Psyduck
+	Species: Pokémon Pato
+	DexEntry: Vive atormentado por uma dor de cabeça. Quando a dor fica forte, começa a usar poderes misteriosos.
+}
+
+Golduck: {
+	DisplayName: Golduck
+	Species: Pokémon Pato
+	DexEntry: Aparece perto de rios ao entardecer. Pode usar poderes telecinéticos se a testa brilhar de forma misteriosa.
+}
+
+Mankey: {
+	DisplayName: Mankey
+	Species: Pokémon Macaco-Porco
+	DexEntry: Não é seguro chegar perto quando ele fica furioso sem motivo e não distingue amigos de inimigos.
+}
+
+Primeape: {
+	DisplayName: Primeape
+	Species: Pokémon Macaco-Porco
+	DexEntry: Só para de ficar com raiva quando não tem mais ninguém por perto. Ver esse momento é muito difícil.
+}
+
+Growlithe: {
+	DisplayName: Growlithe
+	Species: Pokémon Filhote
+	DexEntry: É muito amigável e fiel às pessoas. Tenta afastar os inimigos latindo e mordendo.
+}
+
+Arcanine: {
+	DisplayName: Arcanine
+	Species: Pokémon Lendário
+	DexEntry: Um Pokémon admirado há muito tempo pela sua beleza. Corre com agilidade, como se tivesse asas.
+}
+
+Poliwag: {
+	DisplayName: Poliwag
+	Species: Pokémon Girino
+	DexEntry: Sua pele preta e lisa é fina e úmida. Parte dos órgãos internos aparece através da pele como um desenho em espiral.
+}
+
+Poliwhirl: {
+	DisplayName: Poliwhirl
+	Species: Pokémon Girino
+	DexEntry: Consegue viver dentro ou fora da água. Fora dela, transpira sem parar para manter o corpo escorregadio.
+}
+
+Poliwrath: {
+	DisplayName: Poliwrath
+	Species: Pokémon Girino
+	DexEntry: Com músculos extremamente fortes, consegue nadar no Oceano Pacífico sem descansar.
+}
+
+Abra: {
+	DisplayName: Abra
+	Species: Pokémon Psi
+	DexEntry: Dorme 18 horas por dia. Usa vários poderes extrassensoriais mesmo enquanto dorme.
+}
+
+Kadabra: {
+	DisplayName: Kadabra
+	Species: Pokémon Psi
+	DexEntry: Quando usa seu poder psíquico, emite ondas alfa fortes que podem estragar aparelhos de precisão.
+}
+
+Alakazam: {
+	DisplayName: Alakazam
+	Species: Pokémon Psi
+	DexEntry: Suas células cerebrais se multiplicam sem parar até ele morrer. Por isso, ele se lembra de tudo.
+}
+
+Machop: {
+	DisplayName: Machop
+	Species: Pokémon Superforça
+	DexEntry: Levanta um Graveler várias vezes para fortalecer o corpo inteiro. Domina todos os tipos de artes marciais.
+}
+
+Machoke: {
+	DisplayName: Machoke
+	Species: Pokémon Superforça
+	DexEntry: Seu corpo musculoso é tão forte que precisa usar um cinto de controle de força para regular os movimentos.
+}
+
+Machamp: {
+	DisplayName: Machamp
+	Species: Pokémon Superforça
+	DexEntry: Seus quatro braços musculosos conseguem dar uma sequência de mil socos em apenas dois segundos.
+}
+
+Bellsprout: {
+	DisplayName: Bellsprout
+	Species: Pokémon Flor
+	DexEntry: Mesmo com o corpo extremamente magro, é rapidíssimo na hora de pegar suas presas.
+}
+
+Weepinbell: {
+	DisplayName: Weepinbell
+	Species: Pokémon Papa-Moscas
+	DexEntry: As partes em forma de folha funcionam como lâminas para cortar inimigos. Cospe um líquido que dissolve tudo.
+}
+
+Victreebel: {
+	DisplayName: Victreebel
+	Species: Pokémon Papa-Moscas
+	DexEntry: Dizem que vive em colônias enormes no fundo das selvas, mas ninguém nunca voltou de lá.
+}
+
+Tentacool: {
+	DisplayName: Tentacool
+	Species: Pokémon Água-Viva
+	DexEntry: Seu corpo é feito quase todo de água. Dispara raios estranhos pelos olhos parecidos com cristais.
+}
+
+Tentacruel: {
+	DisplayName: Tentacruel
+	Species: Pokémon Água-Viva
+	DexEntry: Normalmente mantém os tentáculos curtos. Durante a caça, estica-os para enroscar e imobilizar a presa.
+}
+
+Geodude: {
+	DisplayName: Geodude
+	Species: Pokémon Rocha
+	DexEntry: É encontrado em campos e montanhas. Como as pessoas o confundem com pedras, é comum pisarem ou tropeçarem nele.
+}
+
+Graveler: {
+	DisplayName: Graveler
+	Species: Pokémon Rocha
+	DexEntry: De natureza livre e despreocupada, não se importa se perder pedaços enquanto rola montanha abaixo.
+}
+
+Golem: {
+	DisplayName: Golem
+	Species: Pokémon Megatonelada
+	DexEntry: Rola montanha abaixo e deixa sulcos do topo até a base. Fique longe desses sulcos.
+}
+
+Ponyta: {
+	DisplayName: Ponyta
+	Species: Pokémon Cavalo de Fogo
+	DexEntry: Quando nasce, mal consegue ficar de pé. Mas, de tanto galopar, suas pernas ficam mais fortes e rápidas.
+}
+
+Rapidash: {
+	DisplayName: Rapidash
+	Species: Pokémon Cavalo de Fogo
+	DexEntry: Muito competitivo, este Pokémon persegue qualquer coisa que se mova rápido na esperança de apostar corrida.
+}
+
+Slowpoke: {
+	DisplayName: Slowpoke
+	Species: Pokémon Bobão
+	DexEntry: Está sempre perdido em pensamentos, mas ninguém sabe no que ele pensa. É bom em pescar com a cauda.
+}
+
+Slowbro: {
+	DisplayName: Slowbro
+	Species: Pokémon Caranguejo-Ermitão
+	DexEntry: O Shellder grudado nele não solta por causa do sabor delicioso que escorre da cauda.
+}
+
+Magnemite: {
+	DisplayName: Magnemite
+	Species: Pokémon Ímã
+	DexEntry: As peças nas laterais do corpo geram energia antigravidade, que o mantém flutuando no ar.
+}
+
+Magneton: {
+	DisplayName: Magneton
+	Species: Pokémon Ímã
+	DexEntry: Um grupo formado por vários Magnemite ligados. Dispara ondas magnéticas poderosas de alta voltagem.
+}
+
+Farfetchd: {
+	DisplayName: Farfetch'd
+	Species: Pokémon Pato Selvagem
+	DexEntry: O talo de planta que carrega é sua arma. Usa-o como uma espada para cortar todo tipo de coisa.
+}
+
+Doduo: {
+	DisplayName: Doduo
+	Species: Pokémon Pássaro Gêmeo
+	DexEntry: Um Pokémon de duas cabeças descoberto como uma mutação repentina. Corre a mais de 100 km/h.
+}
+
+Dodrio: {
+	DisplayName: Dodrio
+	Species: Pokémon Pássaro Triplo
+	DexEntry: O inimigo que tirar os olhos de qualquer uma das três cabeças, mesmo por um segundo, leva bicadas fortes.
+}
+
+Seel: {
+	DisplayName: Seel
+	Species: Pokémon Leão-Marinho
+	DexEntry: Um Pokémon que vive em icebergs. Nada no mar usando a ponta da cabeça para quebrar o gelo.
+}
+
+Dewgong: {
+	DisplayName: Dewgong
+	Species: Pokémon Leão-Marinho
+	DexEntry: Seu corpo é coberto por um pelo branquinho. Quanto mais frio o clima, mais ativo ele fica.
+}
+
+Grimer: {
+	DisplayName: Grimer
+	Species: Pokémon Lodo
+	DexEntry: Lodo exposto aos raios X da lua se transformou em Grimer. Adora se alimentar de coisas imundas.
+}
+
+Muk: {
+	DisplayName: Muk
+	Species: Pokémon Lodo
+	DexEntry: Adoram se juntar em lugares fedidos onde o lodo se acumula, deixando o mau cheiro ao redor ainda pior.
+}
+
+Shellder: {
+	DisplayName: Shellder
+	Species: Pokémon Bivalve
+	DexEntry: Sua concha dura repele qualquer tipo de ataque. Só fica vulnerável quando a concha está aberta.
+}
+
+Cloyster: {
+	DisplayName: Cloyster
+	Species: Pokémon Bivalve
+	DexEntry: Os Cloyster que vivem em mares com correntes fortes desenvolvem espinhos grandes e afiados na concha.
+}
+
+Gastly: {
+	DisplayName: Gastly
+	Species: Pokémon Gás
+	DexEntry: Seu corpo é feito de gás. Mesmo sem ter corpo sólido, consegue envolver um oponente de qualquer tamanho e sufocá-lo.
+}
+
+Haunter: {
+	DisplayName: Haunter
+	Species: Pokémon Gás
+	DexEntry: Se você sentir que está sendo observado no escuro quando não tem ninguém por perto, é porque Haunter está lá.
+}
+
+Gengar: {
+	DisplayName: Gengar
+	Species: Pokémon Sombra
+	DexEntry: Ele se esconde nas sombras. Dizem que, quando Gengar está escondido, o lugar esfria quase 6 °C.
+}
+
+Onix: {
+	DisplayName: Onix
+	Species: Pokémon Serpente de Pedra
+	DexEntry: Cava em alta velocidade à procura de comida. Os túneis que deixa servem de casa para os Diglett.
+}
+
+Drowzee: {
+	DisplayName: Drowzee
+	Species: Pokémon Hipnose
+	DexEntry: Faz os inimigos dormirem e depois come os sonhos deles. Às vezes passa mal por comer só pesadelos.
+}
+
+Hypno: {
+	DisplayName: Hypno
+	Species: Pokémon Hipnose
+	DexEntry: Carrega um objeto parecido com um pêndulo. Certa vez, houve um caso em que ele levou embora uma criança que tinha hipnotizado.
+}
+
+Krabby: {
+	DisplayName: Krabby
+	Species: Pokémon Caranguejo de Rio
+	DexEntry: Se sente o perigo chegando, se cobre com bolhas que solta pela boca para parecer maior.
+}
+
+Kingler: {
+	DisplayName: Kingler
+	Species: Pokémon Pinça
+	DexEntry: Sua pinça grande e dura tem a força de 10 mil cavalos. Mas, por ser tão grande, é difícil de mover.
+}
+
+Voltorb: {
+	DisplayName: Voltorb
+	Species: Pokémon Bola
+	DexEntry: Foi descoberto quando as Poké Bolas foram inventadas. Dizem que existe alguma ligação entre os dois.
+}
+
+Electrode: {
+	DisplayName: Electrode
+	Species: Pokémon Bola
+	DexEntry: "Explode com qualquer estímulo, por menor que seja. É temido e tem o apelido de \"Bola Bomba\"."
+}
+
+Exeggcute: {
+	DisplayName: Exeggcute
+	Species: Pokémon Ovo
+	DexEntry: Seus seis ovos conversam por telepatia. Conseguem se reunir rapidamente se forem separados.
+}
+
+Exeggutor: {
+	DisplayName: Exeggutor
+	Species: Pokémon Coco
+	DexEntry: Suas três cabeças pensam de forma independente. Mas elas se dão bem e nunca parecem brigar.
+}
+
+Cubone: {
+	DisplayName: Cubone
+	Species: Pokémon Solitário
+	DexEntry: Usa o crânio da mãe morta na cabeça. Dizem que, quando se sente sozinho, chora alto.
+}
+
+Marowak: {
+	DisplayName: Marowak
+	Species: Pokémon Guardião do Osso
+	DexEntry: É pequeno e, no início, era muito fraco. Seu temperamento ficou feroz quando começou a usar ossos.
+}
+
+Hitmonlee: {
+	DisplayName: Hitmonlee
+	Species: Pokémon Chute
+	DexEntry: As pernas se encolhem e se esticam livremente. Com elas, consegue acertar um inimigo distante com um chute para o alto.
+}
+
+Hitmonchan: {
+	DisplayName: Hitmonchan
+	Species: Pokémon Soco
+	DexEntry: Os socos giratórios que dá pulverizam até concreto. Descansa depois de três minutos de luta.
+}
+
+Lickitung: {
+	DisplayName: Lickitung
+	Species: Pokémon Lambida
+	DexEntry: Sua língua comprida, coberta de uma saliva grudenta, gruda em qualquer coisa, por isso é muito útil.
+}
+
+Koffing: {
+	DisplayName: Koffing
+	Species: Pokémon Gás Venenoso
+	DexEntry: Seu corpo fino, parecido com um balão, é inflado por gases terrivelmente tóxicos. Fede quando está por perto.
+}
+
+Weezing: {
+	DisplayName: Weezing
+	Species: Pokémon Gás Venenoso
+	DexEntry: Se um dos Koffing gêmeos enche, o outro murcha. Está sempre misturando seus gases venenosos.
+}
+
+Rhyhorn: {
+	DisplayName: Rhyhorn
+	Species: Pokémon Espinhos
+	DexEntry: Forte, mas não muito esperto, este Pokémon consegue derrubar até um arranha-céu com suas investidas.
+}
+
+Rhydon: {
+	DisplayName: Rhydon
+	Species: Pokémon Broca
+	DexEntry: Protegido por uma pele que parece uma armadura, consegue viver em lava derretida a quase 2.000 °C.
+}
+
+Chansey: {
+	DisplayName: Chansey
+	Species: Pokémon Ovo
+	DexEntry: Dizem que traz felicidade. Por ser bondoso, divide seus ovos com pessoas feridas.
+}
+
+Tangela: {
+	DisplayName: Tangela
+	Species: Pokémon Cipó
+	DexEntry: É coberto por muitos cipós que se contorcem, por isso sua verdadeira aparência continua desconhecida. Os cipós azuis crescem a vida toda.
+}
+
+Kangaskhan: {
+	DisplayName: Kangaskhan
+	Species: Pokémon Pai
+	DexEntry: Cria o filhote na bolsa da barriga. Só deixa o bebê sair para brincar quando se sente seguro.
+}
+
+Horsea: {
+	DisplayName: Horsea
+	Species: Pokémon Dragão
+	DexEntry: É conhecido por derrubar insetos voadores com jatos certeiros de tinta lançados da superfície da água.
+}
+
+Seadra: {
+	DisplayName: Seadra
+	Species: Pokémon Dragão
+	DexEntry: Seu corpo é coberto de espinhos afiados. Tentar tocá-lo sem cuidado pode causar desmaio por causa dos espinhos.
+}
+
+Goldeen: {
+	DisplayName: Goldeen
+	Species: Pokémon Peixe-Dourado
+	DexEntry: Nada a uma velocidade constante de 9 km/h. Se sente perigo, contra-ataca com o chifre afiado.
+}
+
+Seaking: {
+	DisplayName: Seaking
+	Species: Pokémon Peixe-Dourado
+	DexEntry: Na época de desova, no outono, podem ser vistos nadando com força rio acima.
+}
+
+Staryu: {
+	DisplayName: Staryu
+	Species: Pokémon Forma de Estrela
+	DexEntry: Mesmo que o corpo seja rasgado, consegue se regenerar desde que o núcleo brilhante do centro fique intacto.
+}
+
+Starmie: {
+	DisplayName: Starmie
+	Species: Pokémon Misterioso
+	DexEntry: Seu núcleo central brilha com as sete cores do arco-íris. Algumas pessoas valorizam o núcleo como uma joia.
+}
+
+MrMime: {
+	DisplayName: Mr. Mime
+	Species: Pokémon Barreira
+	DexEntry: As emanações das pontas dos dedos solidificam o ar em paredes invisíveis que repelem até ataques fortes.
+}
+
+Scyther: {
+	DisplayName: Scyther
+	Species: Pokémon Louva-a-Deus
+	DexEntry: Rasga e corta as presas com suas foices perigosamente afiadas. Muito raramente abre as asas para voar.
+}
+
+Jynx: {
+	DisplayName: Jynx
+	Species: Pokémon Forma Humana
+	DexEntry: Rebola enquanto anda. Consegue fazer as pessoas dançarem no mesmo ritmo que ela.
+}
+
+Electabuzz: {
+	DisplayName: Electabuzz
+	Species: Pokémon Elétrico
+	DexEntry: A eletricidade percorre a superfície do seu corpo. No escuro, o corpo inteiro brilha num azul esbranquiçado.
+}
+
+Magmar: {
+	DisplayName: Magmar
+	Species: Pokémon Cuspidor de Fogo
+	DexEntry: É encontrado perto da boca de vulcões. A temperatura do corpo deste cuspidor de fogo chega a quase 1.200 °C.
+}
+
+Pinsir: {
+	DisplayName: Pinsir
+	Species: Pokémon Besouro-Veado
+	DexEntry: Aperta a presa com as pinças até parti-la ao meio. O que não consegue partir, arremessa para longe.
+}
+
+Tauros: {
+	DisplayName: Tauros
+	Species: Pokémon Touro Selvagem
+	DexEntry: Depois de aumentar a vontade de lutar se chicoteando com as três caudas, avança a toda velocidade.
+}
+
+Magikarp: {
+	DisplayName: Magikarp
+	Species: Pokémon Peixe
+	DexEntry: Não vale quase nada em força e velocidade. É o Pokémon mais fraco e patético do mundo.
+}
+
+Gyarados: {
+	DisplayName: Gyarados
+	Species: Pokémon Atroz
+	DexEntry: Na literatura antiga, há o registro de um Gyarados que destruiu uma vila num acesso de fúria.
+}
+
+Lapras: {
+	DisplayName: Lapras
+	Species: Pokémon Transporte
+	DexEntry: Têm um coração gentil. Como raramente lutam, muitos foram capturados e seu número diminuiu.
+}
+
+Ditto: {
+	DisplayName: Ditto
+	Species: Pokémon Transformação
+	DexEntry: Tem a capacidade de reorganizar toda a sua estrutura celular para se transformar em qualquer coisa que vê.
+}
+
+Eevee: {
+	DisplayName: Eevee
+	Species: Pokémon Evolução
+	DexEntry: Um Pokémon raro que se adapta a ambientes difíceis assumindo diferentes formas de evolução.
+}
+
+Vaporeon: {
+	DisplayName: Vaporeon
+	Species: Pokémon Jato de Bolhas
+	DexEntry: Prefere praias bonitas. Como suas células são parecidas com moléculas de água, pode se dissolver na água.
+}
+
+Jolteon: {
+	DisplayName: Jolteon
+	Species: Pokémon Relâmpago
+	DexEntry: Todos os pelos do corpo ficam arrepiados e pontudos quando ele fica carregado de eletricidade.
+}
+
+Flareon: {
+	DisplayName: Flareon
+	Species: Pokémon Chama
+	DexEntry: Tem uma bolsa de fogo no corpo. Antes da batalha, a temperatura do corpo passa de 900 °C.
+}
+
+Porygon: {
+	DisplayName: Porygon
+	Species: Pokémon Virtual
+	DexEntry: Um Pokémon artificial criado como resultado de pesquisas. Foi programado apenas com movimentos básicos.
+}
+
+Omanyte: {
+	DisplayName: Omanyte
+	Species: Pokémon Espiral
+	DexEntry: Um Pokémon pré-histórico que vivia no mar primitivo. Nada movendo seus dez tentáculos.
+}
+
+Omastar: {
+	DisplayName: Omastar
+	Species: Pokémon Espiral
+	DexEntry: Seus tentáculos são tão desenvolvidos que funcionam como mãos e pés. Assim que prende a presa, morde.
+}
+
+Kabuto: {
+	DisplayName: Kabuto
+	Species: Pokémon Marisco
+	DexEntry: Acredita-se que habitava as praias há 300 milhões de anos. É protegido por uma casca rígida.
+}
+
+Kabutops: {
+	DisplayName: Kabutops
+	Species: Pokémon Marisco
+	DexEntry: Na água, recolhe os membros para ficar mais compacto e depois balança a casca para nadar rápido.
+}
+
+Aerodactyl: {
+	DisplayName: Aerodactyl
+	Species: Pokémon Fóssil
+	DexEntry: Foi recriado a partir do material genético de um dinossauro encontrado em âmbar. Voa soltando gritos agudos.
+}
+
+Snorlax: {
+	DisplayName: Snorlax
+	Species: Pokémon Dorminhoco
+	DexEntry: Não fica satisfeito se não comer mais de 400 kg de comida por dia. Quando termina de comer, vai dormir na hora.
+}
+
+Articuno: {
+	DisplayName: Articuno
+	Species: Pokémon Congelante
+	DexEntry: Um Pokémon pássaro lendário. Consegue criar nevascas congelando a umidade do ar.
+}
+
+Zapdos: {
+	DisplayName: Zapdos
+	Species: Pokémon Elétrico
+	DexEntry: Um Pokémon pássaro lendário que, dizem, surge das nuvens soltando raios enormes.
+}
+
+Moltres: {
+	DisplayName: Moltres
+	Species: Pokémon Chama
+	DexEntry: Dizem que é o Pokémon pássaro lendário do fogo. Cada batida das suas asas cria um clarão ofuscante de chamas.
+}
+
+Dratini: {
+	DisplayName: Dratini
+	Species: Pokémon Dragão
+	DexEntry: "É chamado de \"Pokémon Miragem\" porque pouquíssimas pessoas já o viram. Já encontraram a pele que ele troca."
+}
+
+Dragonair: {
+	DisplayName: Dragonair
+	Species: Pokémon Dragão
+	DexEntry: Suas esferas cristalinas parecem dar a este Pokémon o poder de controlar o clima livremente.
+}
+
+Dragonite: {
+	DisplayName: Dragonite
+	Species: Pokémon Dragão
+	DexEntry: Consegue voar apesar do corpo grande e pesado. Dá a volta ao mundo em apenas 16 horas.
+}
+
+Mewtwo: {
+	DisplayName: Mewtwo
+	Species: Pokémon Genético
+	DexEntry: Foi criado por um cientista depois de anos de terríveis experimentos de manipulação genética e de DNA.
+}
+
+Mew: {
+	DisplayName: Mew
+	Species: Pokémon Nova Espécie
+	DexEntry: Como consegue usar todo tipo de golpe, muitos cientistas acreditam que Mew seja o ancestral dos Pokémon.
+}
