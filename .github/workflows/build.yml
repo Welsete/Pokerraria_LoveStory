@@ -30,6 +30,12 @@ jobs:
                   GH_TOKEN: ${{ github.token }}
               run: |
                   tag="build-${GITHUB_REF_NAME//\//-}"
-                  gh release delete "$tag" --yes --cleanup-tag -R "$GITHUB_REPOSITORY" || true
-                  gh release create "$tag" "$RUNNER_TEMP"/tmlsave/Mods/*.tmod --prerelease --target "$GITHUB_SHA" \
-                      --title "Teste $GITHUB_REF_NAME" --notes "Build automático de $GITHUB_SHA" -R "$GITHUB_REPOSITORY"
+                  files=("$RUNNER_TEMP"/tmlsave/Mods/*.tmod)
+                  # Reuse one release per branch: replace its files instead of recreating it
+                  if gh release view "$tag" -R "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+                      gh release upload "$tag" "${files[@]}" --clobber -R "$GITHUB_REPOSITORY"
+                  else
+                      gh release create "$tag" "${files[@]}" --prerelease --target "$GITHUB_SHA" \
+                          --title "Teste $GITHUB_REF_NAME" -R "$GITHUB_REPOSITORY"
+                  fi
+                  gh release edit "$tag" --draft=false --prerelease --notes "Build automático de $GITHUB_SHA" -R "$GITHUB_REPOSITORY"
