@@ -1,3 +1,21 @@
+Battle: {
+	WildName: "{0} selvagem"
+	OwnedPokemon: "{1} de {0}"
+	WhatWillDo: O que {0} vai fazer?
+	BagUnavailable: A Mochila ainda não pode ser usada nas batalhas.
+	ChallengeReceived: "{0} quer batalhar!"
+	ChallengeAccepted: "{0} aceitou seu desafio"
+	ChallengeDeclined: "{0} recusou seu desafio"
+	TieAsked: "{0} pediu para combinar um empate"
+	TieTakeback: "{0} não quer mais o empate"
+	Started: "{0} começou uma batalha contra {1}!"
+	Forfeited: "{0} desistiu da batalha contra {1}!"
+	Defeated: "{0} derrotou {1}!"
+	TieRegular: "A batalha entre {0} e {1} terminou empatada!"
+	TieAgreed: "{0} e {1} combinaram um empate!"
+	TieForced: "A batalha entre {0} e {1} foi encerrada à força!"
+}
+
 Buffs: {
 	PokemonCompanion: {
 		DisplayName: Pokémon Companheiro

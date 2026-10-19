@@ -500,7 +500,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public Entity SyncedEntity => NPC;
 
-    public string BattleName => "Wild " + Data.DisplayName;
+    public string BattleName => Language.GetTextValue("Mods.Terramon.Battle.WildName", Data.DisplayName);
 
     public PokemonData[] GetBattleTeam() => [Data];
 

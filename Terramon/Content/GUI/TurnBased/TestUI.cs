@@ -18,6 +18,7 @@ namespace Terramon.Content.GUI.TurnBased;
 public sealed class TestBattleUI : SmartUIState
 {
     private readonly static UIElement _optionsPanel;
+    private readonly static UIText _promptText;
     private readonly static UIElement _movesPanel;
     private readonly static UIElement _pokemonPanel;
     private static DynamicPixelRatioElement _mainPanel;
@@ -46,10 +47,23 @@ public sealed class TestBattleUI : SmartUIState
 
     static TestBattleUI()
     {
-        // Create options panel
+        // Create options panel: a prompt on the left half, the four option buttons on the right half
         _optionsPanel = new UIElement();
-        _optionsPanel.Left.Percent = _optionsPanel.Width.Percent = 0.5f;
-        _optionsPanel.Height.Percent = 1f;
+        _optionsPanel.Width.Percent = _optionsPanel.Height.Percent = 1f;
+
+        _promptText = new UIText(string.Empty, 0.6f, true)
+        {
+            IsWrapped = true,
+            VAlign = 0.5f
+        };
+        _promptText.Width.Percent = 0.47f;
+        _optionsPanel.Append(_promptText);
+
+        var optionButtons = new UIElement();
+        optionButtons.Left.Percent = optionButtons.Width.Percent = 0.5f;
+        optionButtons.Height.Percent = 1f;
+        _optionsPanel.Append(optionButtons);
+
         for (ButtonType i = ButtonType.Fight; i <= ButtonType.Run; i++)
         {
             int xFactor = (int)i % 2;
@@ -70,7 +84,7 @@ public sealed class TestBattleUI : SmartUIState
             UIText label = new(Terramon.Instance.GetLocalization($"GUI.TurnBased.ButtonLabels.{i}"), 0.75f, true);
             label.HAlign = label.VAlign = 0.5f;
             button.Append(label);
-            _optionsPanel.Append(button);
+            optionButtons.Append(button);
         }
 
         // Create moves panel (blank)
@@ -203,6 +217,7 @@ public sealed class TestBattleUI : SmartUIState
         PlayerPanel.ResetAnimation();
         FoePanel.ResetAnimation();
 
+        UpdatePrompt();
         Instance.Recalculate();
         _screenDimensions = new(Main.screenWidth, Main.screenHeight);
         if (Main.playerInventory)
@@ -220,11 +235,24 @@ public sealed class TestBattleUI : SmartUIState
     {
         _mainPanel.RemoveAllChildren();
         _mainPanel.Append(to);
-        if (to == _movesPanel)
+        if (to == _optionsPanel)
+            UpdatePrompt();
+        else if (to == _movesPanel)
             UpdateMoves();
         else if (to == _pokemonPanel)
             UpdatePokemon();
         _mainPanel.RecalculateChildren();
+    }
+
+    /// <summary>
+    ///     Shows "What will (active Pokémon) do?" next to the option buttons.
+    /// </summary>
+    public static void UpdatePrompt()
+    {
+        var active = TerramonPlayer.LocalPlayer.GetActivePokemon();
+        _promptText.SetText(active == null
+            ? string.Empty
+            : Language.GetTextValue("Mods.Terramon.Battle.WhatWillDo", active.DisplayName));
     }
 
     public static void UpdateMoves(PokemonData data = null)
@@ -339,6 +367,9 @@ public sealed class TestBattleUI : SmartUIState
 
     private static void BagButton(UIMouseEvent evt, UIElement listeningElement)
     {
+        // TODO: Using items in battle
+        _promptText.SetText(Language.GetTextValue("Mods.Terramon.Battle.BagUnavailable"));
+        _promptText.Recalculate();
     }
 
     private static void PokemonButton(UIMouseEvent evt, UIElement listeningElement)

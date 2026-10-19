@@ -1,3 +1,21 @@
+Battle: {
+	WildName: Wild {0}
+	OwnedPokemon: "{0}'s {1}"
+	WhatWillDo: What will {0} do?
+	BagUnavailable: The Bag can't be used in battle yet.
+	ChallengeReceived: "{0} wants to battle!"
+	ChallengeAccepted: "{0} has accepted your challenge"
+	ChallengeDeclined: "{0} has declined your challenge"
+	TieAsked: "{0} asked to agree to a tie"
+	TieTakeback: "{0} doesn't want a tie anymore"
+	Started: "{0} started a battle against {1}!"
+	Forfeited: "{0} forfeited their battle against {1}!"
+	Defeated: "{0} defeated {1}!"
+	TieRegular: "{0} and {1}'s battle ended in a tie!"
+	TieAgreed: "{0} and {1} agreed to a tie!"
+	TieForced: "{0} and {1}'s battle was forcibly ended!"
+}
+
 Buffs: {
 	PokemonCompanion: {
 		DisplayName: Pokémon Companion

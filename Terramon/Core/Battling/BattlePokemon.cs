@@ -3,6 +3,7 @@ using Terramon.Content.NPCs;
 using Terramon.Content.NPCs.Trainers;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.ID;
+using Terraria.Localization;
 
 namespace Terramon.Core.Battling;
 
@@ -37,9 +38,9 @@ public struct BattlePokemon()
     public readonly string PokeMessage
         => Side.Provider switch
         {
-            TerramonPlayer plr => $"{plr.Player.name}'s {DisplayName}",
-            PokemonNPC => $"Wild {DisplayName}",
-            TrainerNPC trainer => $"{trainer.BattleName}'s {DisplayName}",
+            TerramonPlayer plr => Language.GetTextValue("Mods.Terramon.Battle.OwnedPokemon", plr.Player.name, DisplayName),
+            PokemonNPC => Language.GetTextValue("Mods.Terramon.Battle.WildName", DisplayName),
+            TrainerNPC trainer => Language.GetTextValue("Mods.Terramon.Battle.OwnedPokemon", trainer.BattleName, DisplayName),
             _ => null
         };
 

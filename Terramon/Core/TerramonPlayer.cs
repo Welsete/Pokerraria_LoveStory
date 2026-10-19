@@ -742,7 +742,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
             case ChallengeQuestion:
 
                 // Open UI to accept challenge
-                Main.NewText($"This ({m.Sender.BattleName}) Fucker Wants to Battle you");
+                Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.ChallengeReceived", m.Sender.BattleName));
 
                 // DEBUG: Accept immediately
                 m.Return(new ChallengeAnswer(yes: true));
@@ -751,14 +751,14 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
                 if (c.Yes)
                 {
-                    Main.NewText($"{m.Sender.BattleName} has accepted your challenge");
+                    Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.ChallengeAccepted", m.Sender.BattleName));
                     // Imbalanced operation: Will send battle pick to foe here,
                     // and the other one's pick will be sent in SlotChoice to server
                     var slot = (byte)(_activeSlot == -1 ? 1 : _activeSlot + 1);
                     m.Return(new SlotChoice(slot: slot));
                 }
                 else
-                    Main.NewText($"{m.Sender.BattleName} has declined your challenge");
+                    Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.ChallengeDeclined", m.Sender.BattleName));
 
                 break;
             case SlotChoice:
@@ -775,12 +775,12 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
             case TieQuestion:
 
                 // Show like a little notification and/or change the color of the tie button
-                Main.NewText($"{m.Sender.BattleName} asked to agree to a tie");
+                Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.TieAsked", m.Sender.BattleName));
                 break;
             case TieTakeback:
 
                 // Reverse the effect from the above message
-                Main.NewText($"{m.Sender.BattleName} doesn't want a tie anymore");
+                Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.TieTakeback", m.Sender.BattleName));
                 break;
         }
     }
@@ -854,7 +854,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 var a = owner.BattleName;
                 var b = other.BattleName;
 
-                Main.NewText($"{a} started a battle against {b}!", Color.Aqua);
+                Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.Started", a, b), Color.Aqua);
 
                 // If we're in singleplayer, break early so this stuff only runs from BattleManager
                 if (Main.netMode == NetmodeID.SinglePlayer)
@@ -876,7 +876,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 a = forfeiter.BattleName;
                 b = winner.BattleName;
 
-                Main.NewText($"{a} forfeited their battle against {b}!", Color.Lime);
+                Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.Forfeited", a, b), Color.Lime);
 
                 forfeiter.BattleStopped();
                 winner.BattleStopped();
@@ -889,7 +889,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 a = winner.BattleName;
                 b = loser.BattleName;
 
-                Main.NewText($"{a} defeated {b}!", Color.Lime);
+                Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.Defeated", a, b), Color.Lime);
 
                 // Reward the local player for beating a trainer
                 if (loser is TrainerNPC trainer && winner == this)
@@ -915,13 +915,13 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 switch (t.Type)
                 {
                     case TieStatement.TieType.Regular:
-                        Main.NewText($"{a} and {b}'s battle ended in a tie!", Color.Yellow);
+                        Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.TieRegular", a, b), Color.Yellow);
                         break;
                     case TieStatement.TieType.Agreed:
-                        Main.NewText($"{a} and {b} agreed to a tie!", Color.Yellow);
+                        Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.TieAgreed", a, b), Color.Yellow);
                         break;
                     case TieStatement.TieType.Forced:
-                        Main.NewText($"{a} and {b}'s battle was forcibly ended!", Color.Red);
+                        Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.TieForced", a, b), Color.Red);
                         break;
                 }
 
