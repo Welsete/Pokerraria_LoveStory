@@ -1,5 +1,5 @@
 <div align="center">
-<img src=".github/assets/banner.png" width="564" style="image-rendering: pixelated"><br><br>
+<img src=".github/assets/banner.gif" width="564" style="image-rendering: pixelated"><br><br>
 <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3435381419" target="_blank">Steam Workshop</a> | <a href="https://discord.gg/U8skDEA" target="_blank">Discord</a> | <a href="https://www.youtube.com/@TerramonMod" target="_blank">YouTube</a> | <a href="https://terrariamods.wiki.gg/wiki/Terramon" target="_blank">Official Wiki</a>
 </div>
 
