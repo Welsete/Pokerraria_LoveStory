@@ -34,6 +34,17 @@ Buffs: {
 }
 
 Commands: {
+	Heal: {
+		Description: Fully heals your party, reviving fainted Pokémon (debug)
+		Usage: /heal [slot|all]
+		Success: Healed {0} Pokémon
+	}
+
+	Level: {
+		Description: Raises the level of a Pokémon in your party (debug)
+		Usage: /level <slot> [levels]
+	}
+
 	Trainer: {
 		Description: Spawns a trainer NPC (such as a Gym Leader) next to you
 		Usage: /trainer <name>

@@ -34,6 +34,17 @@ Buffs: {
 }
 
 Commands: {
+	Heal: {
+		Description: Cura toda a sua equipe e revive Pokémon desmaiados (depuração)
+		Usage: /heal [espaço|all]
+		Success: "{0} Pokémon curado(s)"
+	}
+
+	Level: {
+		Description: Sobe o nível de um Pokémon da sua equipe (depuração)
+		Usage: /level <espaço> [níveis]
+	}
+
 	Trainer: {
 		Description: Coloca um treinador (como um Líder de Ginásio) ao seu lado
 		Usage: /trainer <nome>
