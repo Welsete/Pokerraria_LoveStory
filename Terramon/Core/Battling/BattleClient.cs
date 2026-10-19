@@ -89,6 +89,9 @@ public sealed class BattleClient(IBattleProvider provider)
             return false;
         if (Side.Trapped != 0)
             return false;
+        // Wait for the Poké Ball to finish shaking
+        if (Foe is Content.NPCs.PokemonNPC { PlasmaState: true })
+            return false;
 
         return CurrentRequest switch
         {

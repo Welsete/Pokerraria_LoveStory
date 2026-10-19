@@ -52,6 +52,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     private int _mouseHoverTimer;
     private int _plasmaStateTime;
     private Vector2 _plasmaStateVelocity;
+    private bool _noGravityBeforeCapture;
     private int _shinySparkleTimer;
 
     static PokemonNPC()
@@ -371,6 +372,13 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
             if (NPC.scale < 0.02f)
             {
+                // Mid-battle, stay hidden inside the ball until it decides; the battle needs this NPC if it breaks free
+                if (BattleClient?.Foe != null)
+                {
+                    NPC.velocity = Vector2.Zero;
+                    return;
+                }
+
                 NPC.active = false;
                 NPC.netUpdate = true;
                 return;
@@ -493,6 +501,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         // Enable plasma state
         PlasmaState = true;
+        _noGravityBeforeCapture = NPC.noGravity;
 
         // Set velocity to move towards pokeball
         _plasmaStateVelocity = pokeballPos - NPC.Center;
@@ -528,7 +537,23 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     }
 
     /// <summary>
-    ///     Ends the current battle because this Pokémon was hit by a Poké Ball, so the catch plays out in the world.
+    ///     Brings this Pokémon back out of a Poké Ball it escaped from in the middle of a battle.
+    /// </summary>
+    public void BreakFree(Vector2 position)
+    {
+        PlasmaState = false;
+        _plasmaStateTime = 0;
+        NPC.scale = 1f;
+        NPC.alpha = 0;
+        NPC.velocity = Vector2.Zero;
+        NPC.noGravity = _noGravityBeforeCapture;
+        NPC.Center = position;
+        NPC.netUpdate = true;
+        SpawnReleaseEffect();
+    }
+
+    /// <summary>
+    ///     Ends the current battle because this Pokémon was caught.
     /// </summary>
     public void EndBattleForCapture()
     {

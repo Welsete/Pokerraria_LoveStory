@@ -1,6 +1,7 @@
 ﻿using Terramon.Content.Configs;
 using Terramon.Content.GUI;
 using Terramon.Content.NPCs;
+using Terramon.Core.Battling;
 using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.Audio;
@@ -418,6 +419,9 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         TerramonWorld.PlaySoundOverBGM(TerramonSoundID.PkballCatchPla);
 
+        // Caught mid-battle: the battle is over
+        _capture.EndBattleForCapture();
+
         Projectile.Kill();
         var schema = _capture.Data.Schema;
         var ballName = GetType().Name.Split("Projectile")[0];
@@ -509,8 +513,8 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         _capture.Encapsulate(Projectile.position); // Destroy Pokémon NPC
 
-        // Throwing a ball mid-battle closes the battle screen so the catch animation is visible
-        if (Projectile.owner == Main.myPlayer)
+        // In multiplayer the battle can't be resumed if the Pokémon breaks free, so end it right away
+        if (Projectile.owner == Main.myPlayer && Main.netMode != NetmodeID.SinglePlayer)
             _capture.EndBattleForCapture();
 
         // Queue resync for the proojectile in multiplayer
@@ -521,6 +525,16 @@ internal abstract class BasePkballProjectile : ModProjectile
     {
         if (_capture == null) return;
         SoundEngine.PlaySound(in TerramonSoundID.CatchFail, Projectile.position);
+
+        // Broke free mid-battle: come back out and the foe gets a free turn, as throwing the ball used the player's turn
+        if (_capture.BattleClient?.Foe is TerramonPlayer thrower && Main.netMode == NetmodeID.SinglePlayer)
+        {
+            _capture.BreakFree(Projectile.Center);
+            BattleManager.Instance.SkipTurn(thrower.BattleClient);
+            _capture = null;
+            _hasReleasedLocal = true;
+            return;
+        }
 
         // Release (respawn) the Pokémon on the server. It will be synced to all clients.
         if (Main.netMode != NetmodeID.MultiplayerClient)

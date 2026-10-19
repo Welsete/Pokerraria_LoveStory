@@ -671,6 +671,24 @@ public sealed class BattleManager
     }
     
     public int LatestInteractor;
+
+    /// <summary>
+    ///     Uses up a participant's turn without doing anything (e.g. a thrown Poké Ball), so only the foe acts.
+    /// </summary>
+    public void SkipTurn(BattleClient client)
+    {
+        if (!_activeBattles.TryGetValue(client.ID, out var b) || b.Stream is null || b.Stream.IsDisposed)
+            return;
+        if (client.CurrentRequest != ShowdownRequest.Any)
+            return; // Already chose an action this turn
+
+        var side = client == b.ClientA ? 1 : 2;
+        client.CurrentRequest = ShowdownRequest.Wait;
+
+        // Same effect as needing to recharge after Hyper Beam: whatever move is chosen, the turn is skipped
+        b.Stream.Write($">eval battle.sides[{side - 1}].active[0].addVolatile('mustrecharge')");
+        b.SubmitChoice(side, BattleChoice.Move, 1);
+    }
     
     public void HandleChoice(BattleParticipant participant, BattleChoice choice, int operand)
     {
