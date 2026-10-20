@@ -23,16 +23,6 @@ jobs:
                   dotnet-version: |
                       8.0.x
                       10.0.x
-            - name: Diagnose (temporary)
-              if: failure()
-              run: |
-                  ls -la "$RUNNER_TEMP" || true
-                  find "$RUNNER_TEMP" -maxdepth 3 -name "*.log" | head -20 | while read f; do echo "::warning::LOGFILE $f"; done
-                  for f in $(find "$RUNNER_TEMP" "$HOME" -maxdepth 5 \( -name "*.log" -o -name "Logs" \) 2>/dev/null | head -20); do
-                      grep -rhE "error|Error|Exception" "$f" 2>/dev/null | head -40 | while IFS= read -r l; do echo "::warning::${l:0:900}"; done
-                  done
-                  cd TmonRuntimes && (dotnet build TmonRuntimes.csproj 2>&1 | grep -E "error|Error" | head -40 | while IFS= read -r l; do echo "::warning::RT ${l:0:900}"; done) || true
-                  cd ../Terramon && (dotnet build Terramon.csproj 2>&1 | grep -E " error |Error" | sort -u | head -40 | while IFS= read -r l; do echo "::warning::TM ${l:0:900}"; done) || true
             # Publish the .tmod files as a release so they can be downloaded without signing in
             - name: Publish test build
               if: github.event_name != 'pull_request'
