@@ -382,7 +382,7 @@ GUI: {
 		}
 	}
 	AdminPanel: {
-		Title: Test Panel (debug)
+		Title: Test Panel (debug) - right-click the trainer button to pick another trainer
 		HealParty: Heal party
 		LevelUp1: Active +1 level
 		LevelUp5: Active +5 levels
@@ -390,15 +390,31 @@ GUI: {
 		GiveItems: Give test items
 		SpawnWild: Spawn wild Pokémon
 		ClearWild: Remove wild Pokémon
-		SpawnBrock: Spawn Brock
-		ToggleEye: Toggle Eye of Cthulhu
+		SpawnTrainer: "Spawn: {0}"
+		NextBoss: Defeat next League boss
+		GiveBadges: Give all 8 badges
+		LeagueItems: Give challenge items
 		ResetBadges: Reset badges
 		ClearBattles: End stuck battles
 		Close: Close
 		ItemsGiven: Received Poké Balls, Potions, Revives and Rare Candies
-		EyeDefeated: The Eye of Cthulhu now counts as defeated
-		EyeNotDefeated: The Eye of Cthulhu now counts as not defeated
-		BadgesReset: All badges were reset
+		BossDowned: "{0} now counts as defeated"
+		BossesReset: All League bosses now count as not defeated
+		BadgesGiven: Received all 8 Gym badges
+		LeagueItemsGiven: Received every challenge item and the League Invitation
+		Boss: {
+			EyeOfCthulhu: The Eye of Cthulhu
+			EvilBoss: The Eater of Worlds / Brain of Cthulhu
+			Skeletron: Skeletron
+			WallOfFlesh: The Wall of Flesh (Hardmode)
+			AnyMech: A mechanical boss
+			AllMechs: All three mechanical bosses
+			Plantera: Plantera
+			Golem: Golem
+			Cultist: The Lunatic Cultist
+			MoonLord: The Moon Lord
+		}
+		BadgesReset: All badges, the League run and the Hall of Fame were reset
 		BattlesCleared: All battles were ended
 	}
 
@@ -1231,4 +1247,282 @@ Loot: {
 	AfterMoonLord: After defeating the Moon Lord
 	InSnow: In the Snow biome
 	AtNightEvil: At night in the Corruption, Crimson or a Graveyard
+}
+
+// Pokémon League: Gym Leaders, Elite Four, Champion, badges and challenge items (league)
+CommonTooltips.BadgeCase: "Badge Case: {0}/{1}"
+CommonTooltips.HallOfFame: "Hall of Fame: Champion since {0}"
+
+NPCs.Trainers: {
+	Busy: "{0} is in the middle of a battle. Wait your turn!"
+	PrizeMoney: You received {0} in prize money!
+	Arrived: "{0} has arrived!"
+	AlreadyHere: "{0} is already here!"
+
+	League: {
+		NextOpponent: "{0} is on the way... Heal up and get ready for the next battle!"
+		ChampionNeedsMoonLord: "You've beaten the Elite Four! But {0}, the Champion, only faces trainers who have defeated the Moon Lord."
+		RunOver: Your Pokémon League challenge is over. Use the League Invitation to start again from Lorelei.
+		HallOfFame: "{0} defends the title of Champion! Team: {1}"
+		HallOfFameFirst: "Congratulations! {0} and their team ({1}) have entered the Pokémon League Hall of Fame!"
+	}
+}
+
+NPCs.Misty: {
+	DisplayName: Misty
+
+	Dialogue: {
+		Greeting: I'm Misty, the Cerulean City Gym Leader! My policy is an all-out offensive with Water-type Pokémon. Ready to get soaked?
+		Locked: Hold it! Come back after you've beaten the Eater of Worlds or the Brain of Cthulhu, and bring Brock's Boulder Badge with you!
+		Rematch: Back for another dip? The water's fine, but my Pokémon aren't going easy on you!
+		Defeated: Wow! You're too much! Fine, take the Cascade Badge... and this Water Stone. Don't drown in your own success!
+	}
+}
+
+NPCs.LtSurge: {
+	DisplayName: Lt. Surge
+
+	Dialogue: {
+		Greeting: Hey, kid! I'm Lt. Surge, the Lightning American! Electric Pokémon saved me during the war, and they'll zap you just the same!
+		Locked: You won't live long in combat, kid! Come back after you've beaten Skeletron in the Dungeon, and show me Misty's Cascade Badge!
+		Rematch: Back for another shock? Your hair's still standing up from last time!
+		Defeated: Whoa! You're the real deal, kid! Take the Thunder Badge, and this Exp. Share so your whole squad gets stronger!
+	}
+}
+
+NPCs.Erika: {
+	DisplayName: Erika
+
+	Dialogue: {
+		Greeting: Oh, hello... I'm Erika, the Celadon City Gym Leader. I was admiring the flowers the Dryad planted. Shall we have a match?
+		Locked: Oh dear, you've woken me from my nap... Please come back once the Wall of Flesh has fallen, with Lt. Surge's Thunder Badge.
+		Rematch: How lovely to see you again. My Grass-type Pokémon have been blooming since our last battle.
+		Defeated: Oh! I concede defeat... You are remarkably strong. Please take the Rainbow Badge, and this Leaf Stone.
+	}
+}
+
+NPCs.Koga: {
+	DisplayName: Koga
+
+	Dialogue: {
+		Greeting: Fwahahaha! A mere child dares to challenge me? I am Koga, Fuchsia's Gym Leader. Prepare to taste poison and despair!
+		Locked: Fwahaha! You lack the skill! Destroy one of the mechanical horrors that stalk the night, and bring me Erika's Rainbow Badge.
+		Rematch: You return to my dojo? Your resistance to poison must be growing. Let us test it!
+		Defeated: Humph! You have proven your worth! Take the Soul Badge... and this Lucky Egg. A ninja rewards a worthy foe.
+	}
+}
+
+NPCs.Sabrina: {
+	DisplayName: Sabrina
+
+	Dialogue: {
+		Greeting: I had a vision of your arrival. I am Sabrina, Saffron's Gym Leader. I already know how this battle ends... or do I?
+		Locked: I see your future... and it does not include beating me. Not until The Twins, The Destroyer and Skeletron Prime have all fallen, and you carry Koga's Soul Badge.
+		Rematch: I foresaw this rematch. My psychic powers have only grown stronger.
+		Defeated: This loss shocks me... but I did foresee it, in a way. Take the Marsh Badge, and these Ultra Balls.
+	}
+}
+
+NPCs.Blaine: {
+	DisplayName: Blaine
+
+	Dialogue: {
+		Greeting: Hah! I am Blaine, the red-hot Leader of Cinnabar Gym! My fiery Pokémon will incinerate all challengers! You'd better have Burn Heal!
+		Locked: Hah! You're not hot enough yet! Burn down Plantera in the jungle, then bring me Sabrina's Marsh Badge!
+		Rematch: Back to get scorched again? My Pokémon have been training in the Underworld's lava!
+		Defeated: I have burned down to nothing! Not even ashes remain! You've earned the Volcano Badge, and this Fire Stone!
+	}
+}
+
+NPCs.Giovanni: {
+	DisplayName: Giovanni
+
+	Dialogue: {
+		Greeting: So! You have come this far. I am Giovanni, Leader of the Viridian Gym... and much more. Let me show you true power!
+		Locked: You are not worth my time. Crush the Golem in the Lihzahrd Temple and return with Blaine's Volcano Badge... if you can.
+		Rematch: You again? Very well. Team Rocket does not forget, and neither do I.
+		Defeated: Ha! That was a truly intense fight. You have won! As proof, here is the Earth Badge. Take this Exp. Charm, too.
+	}
+}
+
+NPCs.Lorelei: {
+	DisplayName: Lorelei
+
+	Dialogue: {
+		Greeting: Welcome to the Pokémon League! I am Lorelei of the Elite Four. No one can best me when it comes to icy Pokémon!
+		Locked: Only trainers with all eight Gym badges who have defeated the Lunatic Cultist may enter the Pokémon League.
+		Rematch: Back to start the League again? Your Pokémon will be at my mercy when they are frozen solid!
+		Defeated: You're better than I thought! Go on ahead, Bruno awaits. You only got a taste of the League's power!
+	}
+}
+
+NPCs.Bruno: {
+	DisplayName: Bruno
+
+	Dialogue: {
+		Greeting: I am Bruno of the Elite Four! Through rigorous training, people and Pokémon can become stronger. Hoo hah!
+		Locked: Hoo hah! You must defeat Lorelei first, in this same League challenge, before you face my fists!
+		Rematch: Your muscles look stronger! Good! Let's test them, hoo hah!
+		Defeated: Why? How could I lose? My job is done... go face your next challenge!
+	}
+}
+
+NPCs.Agatha: {
+	DisplayName: Agatha
+
+	Dialogue: {
+		Greeting: I am Agatha of the Elite Four. Oak's taken a lot of interest in you, child. Let me show you what a real trainer is!
+		Locked: Hmph! Beat Bruno first, in this same League challenge, child. I don't waste my ghosts on the unworthy.
+		Rematch: Back again? My ghosts never rest... much like the dead in the Dungeon.
+		Defeated: Oh ho! You're something special, child! Fine, go on! Lance awaits.
+	}
+}
+
+NPCs.Lance: {
+	DisplayName: Lance
+
+	Dialogue: {
+		Greeting: I am Lance, the dragon master! Dragons are mystical Pokémon, hard to catch and raise, but their powers are superior!
+		Locked: You must defeat Agatha first, in this same League challenge. Only then will my dragons face you.
+		Rematch: Your journey continues... and so does my dragons' hunger for battle!
+		Defeated: I still can't believe my dragons lost to you! You are now the League Champion... or you would have been, if not for one more trainer!
+	}
+}
+
+NPCs.Blue: {
+	DisplayName: Blue
+
+	Dialogue: {
+		Greeting: Hey! I was looking forward to seeing you! While you were busy fighting bosses, I became the Champion! Smell ya later? Not today!
+		Locked: Heh! Only someone who defeated the Moon Lord AND the whole Elite Four in a single run gets to battle the Champion. That's me!
+		Rematch: Back to take my title again? I've been training ever since. This time I'm winning!
+		Defeated: NO! That can't be! You beat my best! After all that work to become the League Champion... Here, take this Master Ball. You've earned it.
+	}
+}
+
+Items.CascadeBadge: {
+	DisplayName: Cascade Badge
+	Tooltip: Proof of victory over Misty, the Cerulean City Gym Leader
+}
+
+Items.ThunderBadge: {
+	DisplayName: Thunder Badge
+	Tooltip: Proof of victory over Lt. Surge, the Vermilion City Gym Leader
+}
+
+Items.RainbowBadge: {
+	DisplayName: Rainbow Badge
+	Tooltip: Proof of victory over Erika, the Celadon City Gym Leader
+}
+
+Items.SoulBadge: {
+	DisplayName: Soul Badge
+	Tooltip: Proof of victory over Koga, the Fuchsia City Gym Leader
+}
+
+Items.MarshBadge: {
+	DisplayName: Marsh Badge
+	Tooltip: Proof of victory over Sabrina, the Saffron City Gym Leader
+}
+
+Items.VolcanoBadge: {
+	DisplayName: Volcano Badge
+	Tooltip: Proof of victory over Blaine, the Cinnabar Island Gym Leader
+}
+
+Items.EarthBadge: {
+	DisplayName: Earth Badge
+	Tooltip: Proof of victory over Giovanni, the Viridian City Gym Leader
+}
+
+Items.BrockChallenge: {
+	DisplayName: Pewter Gym Challenge
+	Tooltip:
+		'''
+		Calls Brock, the Pewter City Gym Leader
+		Brock accepts challengers who have defeated the Eye of Cthulhu
+		Not consumed
+		'''
+}
+
+Items.MistyChallenge: {
+	DisplayName: Cerulean Gym Challenge
+	Tooltip:
+		'''
+		Calls Misty, the Cerulean City Gym Leader
+		Requires the Boulder Badge and defeating the Eater of Worlds or the Brain of Cthulhu
+		Not consumed
+		'''
+}
+
+Items.LtSurgeChallenge: {
+	DisplayName: Vermilion Gym Challenge
+	Tooltip:
+		'''
+		Calls Lt. Surge, the Vermilion City Gym Leader
+		Requires the Cascade Badge and defeating Skeletron
+		Not consumed
+		'''
+}
+
+Items.ErikaChallenge: {
+	DisplayName: Celadon Gym Challenge
+	Tooltip:
+		'''
+		Calls Erika, the Celadon City Gym Leader
+		Requires the Thunder Badge and defeating the Wall of Flesh
+		Not consumed
+		'''
+}
+
+Items.KogaChallenge: {
+	DisplayName: Fuchsia Gym Challenge
+	Tooltip:
+		'''
+		Calls Koga, the Fuchsia City Gym Leader
+		Requires the Rainbow Badge and defeating any mechanical boss
+		Not consumed
+		'''
+}
+
+Items.SabrinaChallenge: {
+	DisplayName: Saffron Gym Challenge
+	Tooltip:
+		'''
+		Calls Sabrina, the Saffron City Gym Leader
+		Requires the Soul Badge and defeating all three mechanical bosses
+		Not consumed
+		'''
+}
+
+Items.BlaineChallenge: {
+	DisplayName: Cinnabar Gym Challenge
+	Tooltip:
+		'''
+		Calls Blaine, the Cinnabar Island Gym Leader
+		Requires the Marsh Badge and defeating Plantera
+		Not consumed
+		'''
+}
+
+Items.GiovanniChallenge: {
+	DisplayName: Viridian Gym Challenge
+	Tooltip:
+		'''
+		Calls Giovanni, the Viridian City Gym Leader
+		Requires the Volcano Badge and defeating Golem
+		Not consumed
+		'''
+}
+
+Items.LeagueInvitation: {
+	DisplayName: Pokémon League Invitation
+	Tooltip:
+		'''
+		Calls the next opponent of your Pokémon League challenge, starting with Lorelei
+		Requires all eight badges and defeating the Lunatic Cultist
+		Beat the Elite Four in a row, then the Champion if the Moon Lord has fallen
+		Losing a battle sends you back to the start
+		Not consumed
+		'''
 }

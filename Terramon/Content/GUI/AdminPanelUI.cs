@@ -26,6 +26,18 @@ public sealed class AdminPanelUI : SmartUIState
 
     private UIPanel _panel;
 
+    /// <summary>
+    ///     Every trainer in League order, for the trainer spawn button.
+    /// </summary>
+    private static readonly string[] AllTrainers = [..League.GymLeaders, ..League.EliteFourAndChampion];
+
+    private static int _trainerIndex;
+    private UITextPanel<LocalizedText> _trainerButton;
+
+    private void UpdateTrainerButton()
+        => _trainerButton?.SetText(Label("SpawnTrainer")
+            .WithFormatArgs(Lang.GetNPCNameValue(League.TrainerType(AllTrainers[_trainerIndex]))));
+
     private static string Text(string key, params object[] args)
         => Language.GetTextValue("Mods.Terramon.GUI.AdminPanel." + key, args);
 
@@ -59,8 +71,10 @@ public sealed class AdminPanelUI : SmartUIState
             ("GiveItems", GiveItems),
             ("SpawnWild", SpawnWild),
             ("ClearWild", ClearWild),
-            ("SpawnBrock", SpawnTrainer<Brock>),
-            ("ToggleEye", ToggleEyeOfCthulhu),
+            ("SpawnTrainer", SpawnSelectedTrainer),
+            ("NextBoss", AdvanceBossProgress),
+            ("GiveBadges", GiveAllBadges),
+            ("LeagueItems", GiveLeagueItems),
             ("ResetBadges", ResetBadges),
             ("ClearBattles", ClearBattles),
             ("Close", Toggle)
@@ -85,6 +99,19 @@ public sealed class AdminPanelUI : SmartUIState
         {
             var (key, action) = actions[i];
             var button = new UITextPanel<LocalizedText>(Label(key), 0.85f);
+            if (key == "SpawnTrainer")
+            {
+                // Right click picks which trainer the button spawns
+                _trainerButton = button;
+                UpdateTrainerButton();
+                button.OnRightClick += (_, _) =>
+                {
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+                    _trainerIndex = (_trainerIndex + 1) % AllTrainers.Length;
+                    UpdateTrainerButton();
+                };
+            }
+
             button.Width.Pixels = ButtonWidth;
             button.Height.Pixels = ButtonHeight;
             button.Left.Pixels = Gap + i % Columns * (ButtonWidth + Gap);
@@ -199,21 +226,90 @@ public sealed class AdminPanelUI : SmartUIState
         }
     }
 
-    private static void SpawnTrainer<T>() where T : TrainerNPC
+    private static void SpawnSelectedTrainer()
     {
-        var pos = InFrontOfPlayer();
-        NPC.NewNPC(Main.LocalPlayer.GetSource_FromThis(), (int)pos.X, (int)pos.Y, ModContent.NPCType<T>());
+        // Goes through the server in multiplayer, like the challenge items
+        League.RequestSpawn(Main.LocalPlayer, League.TrainerType(AllTrainers[_trainerIndex]));
     }
 
-    private static void ToggleEyeOfCthulhu()
+    /// <summary>
+    ///     The bosses that unlock each step of the League, in order. Only changes this game's flags (meant for
+    ///     singleplayer testing).
+    /// </summary>
+    private static readonly (string Key, Func<bool> IsDowned, Action Down)[] BossSteps =
+    [
+        ("EyeOfCthulhu", () => NPC.downedBoss1, () => NPC.downedBoss1 = true),
+        ("EvilBoss", () => NPC.downedBoss2, () => NPC.downedBoss2 = true),
+        ("Skeletron", () => NPC.downedBoss3, () => NPC.downedBoss3 = true),
+        ("WallOfFlesh", () => Main.hardMode, () => Main.hardMode = true),
+        ("AnyMech", () => NPC.downedMechBossAny, () => NPC.downedMechBoss1 = NPC.downedMechBossAny = true),
+        ("AllMechs", () => NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3,
+            () => NPC.downedMechBoss1 = NPC.downedMechBoss2 = NPC.downedMechBoss3 = NPC.downedMechBossAny = true),
+        ("Plantera", () => NPC.downedPlantBoss, () => NPC.downedPlantBoss = true),
+        ("Golem", () => NPC.downedGolemBoss, () => NPC.downedGolemBoss = true),
+        ("Cultist", () => NPC.downedAncientCultist, () => NPC.downedAncientCultist = true),
+        ("MoonLord", () => NPC.downedMoonlord, () => NPC.downedMoonlord = true)
+    ];
+
+    private static void AdvanceBossProgress()
     {
-        NPC.downedBoss1 = !NPC.downedBoss1;
-        Say(NPC.downedBoss1 ? "EyeDefeated" : "EyeNotDefeated");
+        foreach (var (key, isDowned, down) in BossSteps)
+        {
+            if (isDowned())
+                continue;
+            down();
+            Say("BossDowned", Text("Boss." + key));
+            return;
+        }
+
+        // Everything was already defeated: start over
+        NPC.downedBoss1 = NPC.downedBoss2 = NPC.downedBoss3 = Main.hardMode = false;
+        NPC.downedMechBoss1 = NPC.downedMechBoss2 = NPC.downedMechBoss3 = NPC.downedMechBossAny = false;
+        NPC.downedPlantBoss = NPC.downedGolemBoss = NPC.downedAncientCultist = NPC.downedMoonlord = false;
+        Say("BossesReset");
+    }
+
+    private static void GiveAllBadges()
+    {
+        var player = Main.LocalPlayer;
+        var badges = player.GetModPlayer<GymPlayer>().Badges;
+        foreach (var name in League.GymLeaders)
+        {
+            badges.Add(name);
+
+            // Hand over the badge items too, so the Badge Case can be checked
+            var badgeType = BadgeTypeOf(name);
+            if (badgeType > 0 && !player.HasItem(badgeType))
+                player.QuickSpawnItem(player.GetSource_GiftOrReward(), badgeType);
+        }
+
+        Say("BadgesGiven");
+    }
+
+    private static int BadgeTypeOf(string leader) => leader switch
+    {
+        "Brock" => ModContent.ItemType<BoulderBadge>(),
+        "Misty" => ModContent.ItemType<CascadeBadge>(),
+        "LtSurge" => ModContent.ItemType<ThunderBadge>(),
+        "Erika" => ModContent.ItemType<RainbowBadge>(),
+        "Koga" => ModContent.ItemType<SoulBadge>(),
+        "Sabrina" => ModContent.ItemType<MarshBadge>(),
+        "Blaine" => ModContent.ItemType<VolcanoBadge>(),
+        "Giovanni" => ModContent.ItemType<EarthBadge>(),
+        _ => 0
+    };
+
+    private static void GiveLeagueItems()
+    {
+        var player = Main.LocalPlayer;
+        foreach (var item in ModContent.GetContent<ChallengeItem>())
+            player.QuickSpawnItem(player.GetSource_GiftOrReward(), item.Type);
+        Say("LeagueItemsGiven");
     }
 
     private static void ResetBadges()
     {
-        Main.LocalPlayer.GetModPlayer<GymPlayer>().Badges.Clear();
+        Main.LocalPlayer.GetModPlayer<GymPlayer>().ResetLeague();
         Say("BadgesReset");
     }
 
