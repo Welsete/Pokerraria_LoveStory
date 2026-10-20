@@ -123,6 +123,17 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (c is null || c.State != ClientBattleState.None)
             return false;
 
+        // Fainted Pokémon can't battle: neither our own active one nor a knocked out wild one
+        var fainted = GetActivePokemon() is { HP: 0 } active ? active
+            : other is Content.NPCs.PokemonNPC { Data.HP: 0 } wild ? wild.Data : null;
+        if (fainted != null)
+        {
+            if (Player.whoAmI == Main.myPlayer)
+                Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.CantBattleFainted", fainted.DisplayName),
+                    Color.Orange);
+            return false;
+        }
+
         var question = new ChallengeQuestion
         {
             Sender = this
