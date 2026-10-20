@@ -737,7 +737,8 @@ public sealed class BattleManager
         }
         else
         {
-            if (client.Provider is PokemonNPC or TrainerNPC)
+            // Nothing to answer while waiting for the foe
+            if (sr != ShowdownRequest.Wait && client.Provider is PokemonNPC or TrainerNPC)
                 RespondAutomatically(source, client, root);
         }
     }
@@ -761,10 +762,6 @@ public sealed class BattleManager
 
         if (chosen)
             return;
-
-        // Make sure the default choice isn't blocked by a half-made choice
-        if (client.CurrentRequest == ShowdownRequest.Wait && client.LastRequest != ShowdownRequest.Wait)
-            client.CurrentRequest = client.LastRequest;
 
         if (client.Provider is PokemonNPC npc)
             npc.AutoBattleChoice();
