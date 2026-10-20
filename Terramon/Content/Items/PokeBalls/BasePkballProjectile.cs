@@ -1,4 +1,5 @@
-﻿using Terramon.Content.Configs;
+﻿using EasyPacketsLib;
+using Terramon.Content.Configs;
 using Terramon.Content.GUI;
 using Terramon.Content.NPCs;
 using Terramon.Core.Battling;
