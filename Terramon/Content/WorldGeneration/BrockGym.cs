@@ -553,7 +553,8 @@ public static class BrockGymBuilder
                 Main.tile[outer, y].ClearTile();
             }
 
-            WorldGen.PlaceTile(x, doorFloor - 2, TileID.ClosedDoor, true, true);
+            // For doors, PlaceTile takes the bottom tile of the opening and builds the door upwards from it
+            WorldGen.PlaceTile(x, doorFloor - 1, TileID.ClosedDoor, true, true);
         }
     }
 
