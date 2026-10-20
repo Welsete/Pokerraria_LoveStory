@@ -795,9 +795,14 @@ public class PokemonData
     private const int BitHeldItem = 1 << 8;
     public const int BitEXP = 1 << 9;
     public const int BitHP = 1 << 10;
+    public const int BitEVs = 1 << 11;
+    public const int BitIVs = 1 << 12;
+    public const int BitStatus = 1 << 13;
+    public const int BitMoves = 1 << 14;
 
     public const int AllFieldsBitmask = BitID | BitLevel | BitBall | BitIsShiny | BitPersonalityValue | BitNickname |
-                                        BitVariant | BitOT | BitHeldItem | BitEXP | BitHP;
+                                        BitVariant | BitOT | BitHeldItem | BitEXP | BitHP | BitEVs | BitIVs |
+                                        BitStatus | BitMoves;
 
     /// <summary>
     ///     Determines whether the Pokémon's network state has changed compared to the specified data,
@@ -825,6 +830,10 @@ public class PokemonData
             dirtyFields |= BitHeldItem;
         if ((compareFields & BitEXP) != 0 && TotalEXP != compareData.TotalEXP) dirtyFields |= BitEXP;
         if ((compareFields & BitHP) != 0 && _hp != compareData._hp) dirtyFields |= BitHP;
+        if ((compareFields & BitEVs) != 0 && !EVs.Equals(compareData.EVs)) dirtyFields |= BitEVs;
+        if ((compareFields & BitIVs) != 0 && IVs.Packed != compareData.IVs.Packed) dirtyFields |= BitIVs;
+        if ((compareFields & BitStatus) != 0 && Status != compareData.Status) dirtyFields |= BitStatus;
+        if ((compareFields & BitMoves) != 0 && !Moves.NetEquals(compareData.Moves)) dirtyFields |= BitMoves;
 
         return dirtyFields != 0;
     }
@@ -846,6 +855,12 @@ public class PokemonData
         if ((fields & BitHeldItem) != 0) target._heldItem = _heldItem;
         if ((fields & BitEXP) != 0) target.TotalEXP = TotalEXP;
         if ((fields & BitHP) != 0) target._hp = _hp;
+        if ((fields & BitEVs) != 0) target.EVs = EVs;
+        if ((fields & BitIVs) != 0) target.IVs = IVs;
+        if ((fields & BitStatus) != 0) target.Status = Status;
+        // Moves live in an array, so give the target its own copy (a shared one would never look changed)
+        if ((fields & BitMoves) != 0 && (!Moves.NetEquals(target.Moves) || Moves.SharesStorageWith(target.Moves)))
+            target.Moves = Moves.Copy();
     }
 
     /// <summary>
@@ -867,6 +882,19 @@ public class PokemonData
         if ((fields & BitHeldItem) != 0) writer.Write7BitEncodedInt(_heldItem.type);
         if ((fields & BitEXP) != 0) writer.Write(TotalEXP);
         if ((fields & BitHP) != 0) writer.Write7BitEncodedInt(_hp);
+        if ((fields & BitEVs) != 0)
+        {
+            writer.Write(EVs.HP);
+            writer.Write(EVs.Attack);
+            writer.Write(EVs.Defense);
+            writer.Write(EVs.SpAttack);
+            writer.Write(EVs.SpDefense);
+            writer.Write(EVs.Speed);
+        }
+
+        if ((fields & BitIVs) != 0) writer.Write(IVs.Packed);
+        if ((fields & BitStatus) != 0) writer.Write((byte)Status);
+        if ((fields & BitMoves) != 0) Moves.NetWrite(writer);
     }
 
     /// <summary>
@@ -894,6 +922,18 @@ public class PokemonData
 
         if ((fields & BitEXP) != 0) TotalEXP = reader.ReadInt32();
         if ((fields & BitHP) != 0) _hp = (ushort)reader.Read7BitEncodedInt();
+        if ((fields & BitEVs) != 0)
+        {
+            EVs = new PokemonEVs
+            {
+                HP = reader.ReadByte(), Attack = reader.ReadByte(), Defense = reader.ReadByte(),
+                SpAttack = reader.ReadByte(), SpDefense = reader.ReadByte(), Speed = reader.ReadByte()
+            };
+        }
+
+        if ((fields & BitIVs) != 0) IVs = new PokemonIVs(reader.ReadUInt32());
+        if ((fields & BitStatus) != 0) Status = (NonVolatileStatus)reader.ReadByte();
+        if ((fields & BitMoves) != 0) Moves = PokemonMoves.NetRead(reader);
 
         return this;
     }
@@ -1320,6 +1360,40 @@ public readonly struct PokemonMoves : IEnumerable<MoveData>
         if (withStruggle)
             final += "Struggle";
         return final;
+    }
+
+    /// <summary>
+    ///     Whether both hold the same moves, PP and PP Ups. Used for network sync.
+    /// </summary>
+    public bool NetEquals(PokemonMoves other)
+    {
+        for (var i = 0; i < 4; i++)
+            if ((_moves?[i] ?? 0) != (other._moves?[i] ?? 0))
+                return false;
+        return true;
+    }
+
+    public bool SharesStorageWith(PokemonMoves other) => _moves != null && ReferenceEquals(_moves, other._moves);
+
+    public PokemonMoves Copy()
+    {
+        var arr = new uint[4];
+        _moves?.CopyTo(arr, 0);
+        return new PokemonMoves(arr);
+    }
+
+    public void NetWrite(BinaryWriter writer)
+    {
+        for (var i = 0; i < 4; i++)
+            writer.Write(_moves?[i] ?? 0u);
+    }
+
+    public static PokemonMoves NetRead(BinaryReader reader)
+    {
+        var arr = new uint[4];
+        for (var i = 0; i < 4; i++)
+            arr[i] = reader.ReadUInt32();
+        return new PokemonMoves(arr);
     }
 
     public TagCompound SerializeData()

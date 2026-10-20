@@ -342,9 +342,18 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         return false;
     }
 
+    /// <summary>
+    ///     What clients need to know about a wild Pokémon: how it looks, its level, HP and status (shown above it and in
+    ///     the catch rate), and everything kept when it's caught (the catching client adds its own copy to the party).
+    /// </summary>
+    private const int NetSyncFields = PokemonData.BitIsShiny | PokemonData.BitPersonalityValue | PokemonData.BitVariant |
+                                      PokemonData.BitLevel | PokemonData.BitEXP | PokemonData.BitHP |
+                                      PokemonData.BitStatus | PokemonData.BitIVs | PokemonData.BitEVs |
+                                      PokemonData.BitMoves;
+
     public override void SendExtraAI(BinaryWriter writer)
     {
-        Data.NetWrite(writer, PokemonData.BitIsShiny | PokemonData.BitPersonalityValue | PokemonData.BitVariant);
+        Data.NetWrite(writer, NetSyncFields);
         writer.WriteFlags(PlasmaState, _isSpawnedFromRelease);
     }
 
@@ -355,6 +364,16 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         Data.NetRead(reader);
         reader.ReadFlags(out var plasmaState, out var isSpawnedFromRelease);
+        if (PlasmaState && !plasmaState && !isFirstSync)
+        {
+            // Already inside the ball here, so the server let it break free (mid-battle): come back out too
+            if (NPC.scale < 0.02f)
+                RestoreFromBall();
+            // Otherwise it's a sync sent before the server learned about the ball hit, so keep going into the ball
+            else
+                plasmaState = true;
+        }
+
         PlasmaState = plasmaState;
         _isSpawnedFromRelease = isSpawnedFromRelease;
 
@@ -620,14 +639,21 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     /// </summary>
     public void BreakFree(Vector2 position)
     {
+        if (!PlasmaState)
+            return;
         PlasmaState = false;
+        RestoreFromBall();
+        NPC.Center = position;
+        NPC.netUpdate = true;
+    }
+
+    private void RestoreFromBall()
+    {
         _plasmaStateTime = 0;
         NPC.scale = 1f;
         NPC.alpha = 0;
         NPC.velocity = Vector2.Zero;
         NPC.noGravity = _noGravityBeforeCapture;
-        NPC.Center = position;
-        NPC.netUpdate = true;
         SpawnReleaseEffect();
     }
 

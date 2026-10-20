@@ -117,9 +117,49 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.Terramon();
 
+    /// <summary>
+    ///     How close (in pixels) another player has to be to be challenged to a battle.
+    /// </summary>
+    public const float ChallengeRange = 50 * 16f;
+
+    /// <summary>
+    ///     How long a challenge to another player waits for an answer before it's taken back. Longer than the
+    ///     popup's own timeout, so this only matters if the answer got lost (e.g. the other player left).
+    /// </summary>
+    private const int ChallengeGiveUpTicks = (ChallengePopupUI.TimeoutSeconds + 10) * 60;
+
+    private ulong _challengeSentAt;
+
+    private static string MultiplayerText(string key, params object[] args)
+        => Language.GetTextValue("Mods.Terramon.Multiplayer.Challenge." + key, args);
+
     public bool StartBattle(IBattleProvider other)
     {
         var c = other.BattleClient;
+        var isLocal = Player.whoAmI == Main.myPlayer;
+
+        // Challenging another player: they have to be nearby and free
+        if (other is TerramonPlayer target && isLocal)
+        {
+            if (target.Player.Distance(Player.Center) > ChallengeRange)
+            {
+                Main.NewText(MultiplayerText("TooFar", target.BattleName), Color.Orange);
+                return false;
+            }
+
+            if (c is null || c.State != ClientBattleState.None)
+            {
+                Main.NewText(MultiplayerText("Busy", target.BattleName), Color.Orange);
+                return false;
+            }
+
+            if (GetActivePokemon() is null)
+            {
+                Main.NewText(MultiplayerText("NeedPokemon"), Color.Orange);
+                return false;
+            }
+        }
+
         if (c is null || c.State != ClientBattleState.None)
             return false;
 
@@ -134,12 +174,37 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
             return false;
         }
 
+        // Starting a battle of our own turns down a challenge we haven't answered yet
+        if (isLocal && ChallengePopupUI.HasPending)
+            ChallengePopupUI.Answer(false);
+
+        if (other is TerramonPlayer && isLocal)
+        {
+            Main.NewText(MultiplayerText("Sent", other.BattleName), Color.LightSkyBlue);
+            _challengeSentAt = Main.GameUpdateCount;
+        }
+
         var question = new ChallengeQuestion
         {
             Sender = this
         };
         question.Send(other);
         return true;
+    }
+
+    /// <summary>
+    ///     Why this (local) player can't take on a challenge from <paramref name="challenger" /> right now,
+    ///     or null if they can.
+    /// </summary>
+    public string ChallengeRefusalReason(IBattleProvider challenger)
+    {
+        if (_battleClient is null || _battleClient.State != ClientBattleState.None)
+            return MultiplayerText("ReasonBusy");
+        if (GetActivePokemon() is not { HP: > 0 })
+            return MultiplayerText("ReasonNoPokemon");
+        if (challenger?.SyncedEntity is Player other && other.Distance(Player.Center) > ChallengeRange)
+            return MultiplayerText("ReasonTooFar");
+        return null;
     }
 
     public override void Load()
@@ -188,6 +253,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     public override void OnEnterWorld()
     {
         MoveLearnUI.Close();
+        ChallengePopupUI.Close();
 
         // Request a full sync of the World Dex from the server when joining a host in multiplayer
         if (Main.netMode == NetmodeID.MultiplayerClient) Mod.SendPacket(new RequestWorldDexRpc());
@@ -246,7 +312,8 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (KeybindSystem.AdminPanelKeybind.JustPressed)
             AdminPanelUI.Toggle();
 
-        if (_battleClient != null && _hoveredPlayer != -1 && _battleClient.State == ClientBattleState.None)
+        if (_battleClient != null && _hoveredPlayer != -1 && _hoveredPlayer != Main.myPlayer &&
+            _battleClient.State == ClientBattleState.None)
         {
             if (Main.mouseRight && Main.mouseRightRelease)
                 StartBattle(Main.player[_hoveredPlayer].Terramon());
@@ -364,6 +431,9 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
     public override void PostUpdate()
     {
+        if (Player.whoAmI == Main.myPlayer && Main.netMode == NetmodeID.MultiplayerClient)
+            UpdateChallenges();
+
         if (_battleClient is null)
         {
             switch (Main.netMode)
@@ -387,6 +457,30 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                     break;
             }
         }
+    }
+
+    private void UpdateChallenges()
+    {
+        ChallengePopupUI.Tick();
+
+        // Our challenge to another player got no answer: take it back so we aren't stuck waiting
+        if (_battleClient is { State: ClientBattleState.Requested, Foe: TerramonPlayer target } &&
+            Main.GameUpdateCount - _challengeSentAt > ChallengeGiveUpTicks)
+        {
+            var takeback = new ChallengeTakeback
+            {
+                Sender = this
+            };
+            takeback.Send(target);
+            Main.NewText(MultiplayerText("NoAnswer", target.BattleName), Color.Orange);
+        }
+    }
+
+    public override void PlayerDisconnect()
+    {
+        // A player who leaves forfeits their battle (or drops their pending challenge)
+        if (Main.netMode == NetmodeID.Server)
+            BattleManager.Instance?.ProviderLeft(this);
     }
 
     public override void PreUpdateBuffs()
@@ -866,13 +960,29 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     {
         switch (m)
         {
-            case ChallengeQuestion:
+            case ChallengeQuestion q:
 
-                // Open UI to accept challenge
-                Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.ChallengeReceived", m.Sender.BattleName));
+                // Can't battle right now (or already deciding on another challenge): decline straight away
+                var reason = ChallengeRefusalReason(m.Sender) ??
+                             (ChallengePopupUI.HasPending ? MultiplayerText("ReasonBusy") : null);
+                if (reason != null)
+                {
+                    Main.NewText(MultiplayerText("AutoDeclined", m.Sender.BattleName, reason), Color.Orange);
+                    m.Return(new ChallengeAnswer(yes: false));
+                    break;
+                }
 
-                // DEBUG: Accept immediately
-                m.Return(new ChallengeAnswer(yes: true));
+                // Ask the player with the accept/decline popup
+                Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.ChallengeReceived", m.Sender.BattleName),
+                    Color.LightSkyBlue);
+                ChallengePopupUI.Open(q);
+                break;
+            case ChallengeTakeback:
+                ChallengePopupUI.Close();
+                Main.NewText(MultiplayerText("TakenBack", m.Sender.BattleName), Color.Orange);
+                break;
+            case ChallengeError:
+                Main.NewText(MultiplayerText("Unavailable", m.Sender.BattleName), Color.Orange);
                 break;
             case ChallengeAnswer c:
 
@@ -942,6 +1052,18 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 m.Sender.State = ClientBattleState.None;
                 m.Sender.Foe = null;
                 break;
+            case ChallengeError:
+
+                // The server refused the challenge (or answer): unset the fields of whoever it was sent back to,
+                // as long as they were still waiting on this very foe
+                if (m.Recipient?.BattleClient is { } refused && refused.Foe == m.Sender &&
+                    refused.State is ClientBattleState.Requested or ClientBattleState.PollingSlot)
+                {
+                    refused.Battle = null;
+                    refused.Foe = null;
+                }
+
+                break;
             case ChallengeAnswer c:
 
                 if (c.Yes) // If the sender accepted
@@ -970,8 +1092,10 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
             case SlotChoice s:
                 m.Sender.Pick = s.Slot;
                 break;
-            case TeamAnswer:
+            case TeamAnswer t:
                 m.Sender.State = ClientBattleState.SetTeam;
+                if (m.Sender is TerramonPlayer { IsLocalProvider: false } remote)
+                    remote.UseTeamForBattle(t.Team);
                 break;
             case StartBattleStatement s:
 
@@ -1062,17 +1186,56 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
     public void SetActiveSlot(byte newSlot)
     {
-        ActiveSlot = newSlot;
+        // Only the owner really switches. Other machines just hold a copy of the active Pokémon (in Party[0]),
+        // which the active Pokémon sync updates once the owner has switched
+        if (IsLocalProvider)
+            ActiveSlot = newSlot;
+
+        if (Main.dedServ)
+            return;
 
         var loc = BattleClient.LocalClient;
+        var mon = _battleClient?.Side is { } side && newSlot < side.Team.Length
+            ? side.Team[newSlot].Data ?? GetActivePokemon()
+            : GetActivePokemon();
 
         if (loc == BattleClient)
         {
-            TestBattleUI.PlayerPanel.CurrentMon = GetActivePokemon();
+            TestBattleUI.PlayerPanel.CurrentMon = mon;
         }
         else if (loc.Foe == this)
         {
-            TestBattleUI.FoePanel.CurrentMon = GetActivePokemon();
+            TestBattleUI.FoePanel.CurrentMon = mon;
+        }
+    }
+
+    private bool IsLocalProvider => Main.netMode == NetmodeID.SinglePlayer || Player.whoAmI == Main.myPlayer;
+
+    /// <summary>
+    ///     Other machines only know this player's active Pokémon, so their battle side is filled in from the team
+    ///     the player sent for the battle (the same data the server battles with).
+    /// </summary>
+    private void UseTeamForBattle(SimplePackedPokemon[] team)
+    {
+        var side = _battleClient?.Battle is { } field ? field.A.Provider == this ? field.A : field.B : null;
+        if (side == null || team == null)
+            return;
+
+        side.TeamCount = 0;
+        for (var i = 0; i < side.Team.Length; i++)
+        {
+            if (i >= team.Length)
+            {
+                side.Team[i].Data = null;
+                continue;
+            }
+
+            var packed = team[i];
+            var data = PokemonData.Create(packed.Species, packed.Level).Build();
+            data.SetFromNetPacked(packed);
+            data.HP = packed.HP == SimplePackedPokemon.FullHP ? data.MaxHP : packed.HP;
+            side.Team[i].Data = data;
+            side.TeamCount++;
         }
     }
 
@@ -1083,9 +1246,9 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     /// <summary>
     ///     The bitmask of the <see cref="PokemonData" /> fields that require syncing for the player's active Pokémon.
     ///     These fields will be observed for changes and if they are changed, their new values will be forwarded to other
-    ///     clients.
+    ///     clients. Everything is synced so other players see the right HP bar, status tint, shininess and so on.
     /// </summary>
-    private const int ActivePokemonSyncFields = PokemonData.BitID | PokemonData.BitLevel;
+    private const int ActivePokemonSyncFields = PokemonData.AllFieldsBitmask;
 
     public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
     {
@@ -1115,8 +1278,10 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         var clone = (TerramonPlayer)clientPlayer;
         var activePokemonData = GetActivePokemon();
         var cloneActivePokemonData = clone.GetActivePokemon();
+        // A different Pokémon was sent out (even one of the same species and level): send all of it
         if ((activePokemonData == null && cloneActivePokemonData != null) ||
-            (activePokemonData != null && cloneActivePokemonData == null))
+            (activePokemonData != null && cloneActivePokemonData == null) ||
+            (activePokemonData != null && ActiveSlot != clone.ActiveSlot))
             Mod.SendPacket(new UpdateActivePokemonRpc((byte)Player.whoAmI, activePokemonData), -1, Main.myPlayer, true);
         else if (activePokemonData != null &&
                  activePokemonData.IsNetStateDirty(cloneActivePokemonData, ActivePokemonSyncFields,
