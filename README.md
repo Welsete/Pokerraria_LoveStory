@@ -20,13 +20,19 @@ Immerse yourself in the captivating crossover of Terraria and Pokémon with the 
 ## Terramon Brasil additions
 
 - **Turn-based battles** powered by Pokémon Showdown, against wild Pokémon and trainers.
-- **Gym leaders and badges:** Brock is the first leader, unlocked after defeating the Eye of Cthulhu, and beating him awards the Boulder Badge.
+- **Pokémon League:** 8 Gym Leaders (Brock to Giovanni), each unlocked by a Terraria boss and the previous badge, then the Elite Four (Lorelei, Bruno, Agatha, Lance) and the Champion, Blue, after the Moon Lord. Badges, money rewards, a saved Hall of Fame, and challenge items crafted at a Work Bench to summon each leader.
+- **Smarter trainers:** trainers pick moves by type matchup, STAB and status, use setup and healing moves sensibly, and sometimes switch to a better Pokémon.
+- **Wild Pokémon that grow with your world:** wild levels and evolution stages rise with boss progression and depth.
+- **Move learning and evolution:** Pokémon learn moves on level up (with a forget-a-move window) and evolve after the battle.
+- **Bag in battle:** use Potions and Revives in battle. Beds and the Nurse heal your party, and the Poké Mart Clerk sells more items as you progress.
+- **Fishing and items:** Old, Good and Super Rods with a Water-type fishing pool by biome, new evolution stone sources, apricorns from every tree type, and Exp. Candies from enemies and bosses.
+- **Multiplayer:** challenge other players with an accept/decline popup, friendly PvP battles, and synced Pokémon data for everyone.
 - **Battle log in chat:** every move used, effectiveness, critical hits, misses, stat changes and status conditions.
 - **Battle history window (L):** the whole battle turn by turn, plus details of both Pokémon (level, types, HP, status and stat changes).
 - **Fainting and experience:** Pokémon faint at 0 HP, defeated Pokémon give EXP, and level ups are shown in chat.
 - **Forced switch:** when your active Pokémon faints, the party panel opens so you can choose the next one.
 - **Improved catching:** catch rate rises up to 3x at low HP and with status conditions (sleep, freeze, paralysis, poison, burn).
-- **Capture during battle:** a successful catch ends the battle with an animation, while a Pokémon that breaks free costs you your turn.
+- **Capture during battle:** throw a Poké Ball on your turn; a successful catch ends the battle, while a Pokémon that breaks free costs you your turn. Defeated wild Pokémon stay knocked out for a few seconds so you can still catch them.
 - **Brazilian Portuguese translation** of the interface and Pokédex.
 - **Testing tools:** `/heal` and `/level` commands, plus an admin panel (F8) to heal, level up, spawn Pokémon and Brock, toggle bosses and reset badges. Requires cheat commands to be enabled.
 
@@ -36,7 +42,6 @@ Terramon is growing fast, and we have ambitious plans to bring even more of the 
 
 - A guide NPC, Professor Oak.
 - Gyms generated as structures in the world.
-- Seven more gym leaders.
 - Summon-style real-time Pokémon combat.
 - Pokémon breeding & eggs.
 - Interactive apricorn farming system.
