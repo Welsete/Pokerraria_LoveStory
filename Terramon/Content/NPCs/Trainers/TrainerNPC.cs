@@ -120,7 +120,7 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
         if (!inBattle)
         {
             var closest = Player.FindClosest(NPC.position, NPC.width, NPC.height);
-            if (closest >= 0 && Main.player[closest].active)
+            if (Main.player[closest].active)
                 NPC.spriteDirection = NPC.direction = Main.player[closest].Center.X > NPC.Center.X ? 1 : -1;
         }
 
