@@ -16,7 +16,11 @@ jobs:
                   dotnet-version: |
                       8.0.x
                       10.0.x
-            # Terramon needs this dependency mod for turn-based battles, so build it too
+            # Terramon needs this dependency mod for turn-based battles, so build it too.
+            # When a new tModLoader release is out (cache miss), the second build downloads it again and unzip
+            # fails over the files of the first download, so clear them first.
+            - name: Clear tModLoader download for the second build
+              run: rm -rf "$RUNNER_TEMP/tml"
             - uses: JamzOJamz/build-tmodloader-mod@v1
               with:
                   project: TmonRuntimes/TmonRuntimes.csproj
