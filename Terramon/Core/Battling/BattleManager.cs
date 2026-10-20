@@ -71,6 +71,10 @@ public sealed class BattleManager
 
                 // Received once for each participant
                 inst = _activeBattles[s.Sender.ID];
+
+                // Other clients only know a player's active Pokémon, so show everyone the team (see TerramonPlayer.Witness)
+                if (Main.dedServ && s.Sender is TerramonPlayer)
+                    Mod.SendPacket(new BattleMessage.BattleMessageRpc(s));
                 // Set state
                 Console.WriteLine($"Setting state of {s.Sender.BattleName} to SetTeam");
                 s.Sender.State = ClientBattleState.SetTeam;
@@ -125,10 +129,12 @@ public sealed class BattleManager
 
             case ChallengeQuestion:
 
-                // This only checks if the recipient is already in a battle,
-                // since the ability for a client to request a battle is handled clientside
-                if (_activeBattles.ContainsKey(m.Recipient.ID))
-                    // If they're already in a battle, intercept with an error
+                // Refuse if either side is already in a battle or a pending challenge (or isn't set up yet),
+                // since the ability for a client to request a battle is otherwise handled clientside
+                if (m.Sender?.BattleClient is null || m.Recipient?.BattleClient is null ||
+                    _activeBattles.ContainsKey(m.Recipient.ID) || _activeBattles.ContainsKey(m.Sender.ID) ||
+                    m.Recipient.Foe != null)
+                    // If so, intercept with an error
                     return m.Return<ChallengeError>();
 
                 var inst = BattleInstance.Create(
@@ -146,26 +152,41 @@ public sealed class BattleManager
 
                 // Sent by original requester
 
-                // Remove from active battles list
-                _activeBattles.Remove(m.Sender.ID, out inst);
+                // Nothing to take back, or it was accepted already
+                if (!_activeBattles.TryGetValue(m.Sender.ID, out inst) || inst.ClientA != m.Sender.BattleClient ||
+                    _activeBattles.ContainsKey(inst.ClientB.ID))
+                    return false;
 
-                // Reset requester's fields
-                inst.ClientA.Battle = null;
-                inst.ClientA.Foe = null;
-                inst.ClientA.State = ClientBattleState.None;
+                // Remove from active battles list
+                _activeBattles.Remove(m.Sender.ID);
+
+                // Reset both participants' fields
+                BattleInstance.Destroy(inst);
                 break;
             case ChallengeAnswer c:
 
                 // It's possible that when trying to answer a question,
                 // that provider's question has already been taken back.
                 // In that case, intercept, since they don't need the answer anymore
-                if (!_activeBattles.TryGetValue(m.Recipient.ID, out inst))
-                    return false;
+                // An accepting player then also has to be told it's off
+                if (!_activeBattles.TryGetValue(m.Recipient.ID, out inst) || inst.ClientB != m.Sender.BattleClient)
+                    return c.Yes ? m.Return<ChallengeError>() : false;
 
                 if (c.Yes) // If the sender accepted
                 {
-                    // Add the requestee
-                    _activeBattles.Add(m.Sender.ID, inst);
+                    // Add the requestee (refused if they somehow got into another battle meanwhile)
+                    if (!_activeBattles.TryAdd(m.Sender.ID, inst))
+                    {
+                        _activeBattles.Remove(m.Recipient.ID);
+                        inst.ClientA.Battle = null;
+                        inst.ClientA.Foe = null;
+                        var error = new ChallengeError
+                        {
+                            Sender = m.Sender
+                        };
+                        error.Send(m.Recipient);
+                        return false;
+                    }
 
                     // Set states
                     inst.State = BattleState.Picking;
@@ -217,6 +238,35 @@ public sealed class BattleManager
         return true;
     }
     
+    /// <summary>
+    ///     Ends the battle or pending challenge a provider is part of, e.g. because the player left the game.
+    /// </summary>
+    public void ProviderLeft(IBattleProvider provider)
+    {
+        if (_activeBattles.ContainsKey(provider.ID))
+        {
+            var forfeit = new ForfeitStatement(forfeiter: provider);
+            forfeit.Send();
+            return;
+        }
+
+        // Challenged but hadn't answered yet: the challenger is told they can't battle them
+        var pending = provider.BattleClient == null
+            ? null
+            : _activeBattles.Values.FirstOrDefault(i => i.ClientB == provider.BattleClient);
+        if (pending == null)
+            return;
+
+        var challenger = pending.ClientA.Provider;
+        _activeBattles.Remove(challenger.ID);
+        BattleInstance.Destroy(pending);
+        var error = new ChallengeError
+        {
+            Sender = provider
+        };
+        error.Send(challenger);
+    }
+
     public void HandleSingleElement(BattleInstance source, BinaryWriter w, ProtocolElement element, int toSide)
     {
         switch (element)
@@ -679,7 +729,8 @@ public sealed class BattleManager
     {
         if (!_activeBattles.TryGetValue(client.ID, out var b) || b.Stream is null || b.Stream.IsDisposed)
             return;
-        if (client.CurrentRequest != ShowdownRequest.Any)
+        // The server doesn't track players' requests (they go straight to the client), so it can't check this there
+        if (Main.netMode != NetmodeID.Server && client.CurrentRequest != ShowdownRequest.Any)
             return; // Already chose an action this turn
 
         var side = client == b.ClientA ? 1 : 2;

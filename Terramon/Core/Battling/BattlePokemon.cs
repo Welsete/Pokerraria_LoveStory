@@ -136,7 +136,15 @@ public struct BattlePokemon()
     {
         set
         {
-            HP = value.HP;
+            // Multiplayer clients only get the public half of the battle, where HP is a percentage (x/100).
+            // Turn it back into real HP so the party isn't left with the percentage after the battle
+            if (Main.netMode == NetmodeID.MultiplayerClient && Data != null && value.MaxHP == 100 && Data.MaxHP != 100)
+            {
+                var hp = value.HP == 0 ? 0 : Math.Max(1, (int)Math.Round(value.HP * Data.MaxHP / 100f));
+                HP = (ushort)Math.Min(hp, Data.MaxHP);
+            }
+            else
+                HP = value.HP;
             if (value.MaxHP == 0) // faint
             {
                 Faint();
@@ -212,9 +220,9 @@ public struct BattlePokemon()
         BattleLog.Say(Language.GetTextValue("Mods.Terramon.Battle.Fainted", BattleLog.HighlightMon(PokeMessage, own)),
             new Color(255, 120, 110));
 
-        // Reward the local player's Pokémon for knocking out a foe
+        // Reward the local player's Pokémon for knocking out a foe (battles between players give no EXP)
         var local = TerramonPlayer.LocalPlayer;
-        if (Side.Provider != local && local.BattleClient?.Foe == Side.Provider)
+        if (Side.Provider != local && Side.Provider is not TerramonPlayer && local.BattleClient?.Foe == Side.Provider)
             local.DefeatedPokemon(Data, true);
     }
     public void CureStatus()

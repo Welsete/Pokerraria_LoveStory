@@ -231,7 +231,9 @@ public abstract class BattleMessage : ILoadable
 
             if (Main.dedServ) // Sent from client
             {
-                BattleManager.Instance.Witness(msg);
+                // Intercepted (e.g. a challenge to someone already battling): don't pass it on
+                if (!BattleManager.Instance.Witness(msg))
+                    return;
                 if (target is null) // Sent to server
                 {
                     BattleManager.Instance.Reply(msg);

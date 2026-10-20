@@ -1212,3 +1212,23 @@ Projectiles: {
 	PokeBallBobber.DisplayName: Poké Ball Bobber
 	PokemonPetGenericAttackProjectile.DisplayName: Pokémon Companion Generic Attack Projectile
 }
+
+Multiplayer: {
+	Challenge: {
+		Accept: Accept
+		Decline: Decline
+		Countdown: Declines by itself in {0}s
+		Sent: Challenge sent to {0}. Waiting for an answer...
+		TooFar: "{0} is too far away. Get closer to challenge them!"
+		Busy: "{0} can't battle right now."
+		Unavailable: "{0} can't battle right now."
+		NoAnswer: "{0} didn't answer your challenge."
+		TakenBack: "{0} took back their challenge."
+		TimedOut: You didn't answer {0}'s challenge in time, so it was declined.
+		AutoDeclined: "Declined {0}'s challenge: {1}"
+		ReasonBusy: you're already in a battle or deciding on another challenge.
+		ReasonNoPokemon: your active Pokémon can't battle (send out a healthy one first).
+		NeedPokemon: Send out a healthy Pokémon before challenging someone!
+		ReasonTooFar: they're too far away.
+	}
+}

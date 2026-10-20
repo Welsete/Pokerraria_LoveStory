@@ -1212,3 +1212,23 @@ Projectiles: {
 	PokeBallBobber.DisplayName: Boia de Poké Bola
 	PokemonPetGenericAttackProjectile.DisplayName: Projétil de Ataque Genérico do Pokémon Companheiro
 }
+
+Multiplayer: {
+	Challenge: {
+		Accept: Aceitar
+		Decline: Recusar
+		Countdown: Recusa sozinho em {0}s
+		Sent: Desafio enviado para {0}. Aguardando resposta...
+		TooFar: "{0} está longe demais. Chegue mais perto para desafiar!"
+		Busy: "{0} não pode batalhar agora."
+		Unavailable: "{0} não pode batalhar agora."
+		NoAnswer: "{0} não respondeu ao seu desafio."
+		TakenBack: "{0} retirou o desafio."
+		TimedOut: Você não respondeu ao desafio de {0} a tempo, então ele foi recusado.
+		AutoDeclined: "Desafio de {0} recusado: {1}"
+		ReasonBusy: você já está em uma batalha ou decidindo outro desafio.
+		ReasonNoPokemon: seu Pokémon ativo não pode batalhar (chame um Pokémon saudável primeiro).
+		NeedPokemon: Chame um Pokémon saudável antes de desafiar alguém!
+		ReasonTooFar: a pessoa está longe demais.
+	}
+}

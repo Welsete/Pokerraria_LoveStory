@@ -516,10 +516,6 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         _capture.Encapsulate(Projectile.position); // Destroy Pokémon NPC
 
-        // In multiplayer the battle can't be resumed if the Pokémon breaks free, so end it right away
-        if (Projectile.owner == Main.myPlayer && Main.netMode != NetmodeID.SinglePlayer)
-            _capture.EndBattleForCapture();
-
         // Queue resync for the proojectile in multiplayer
         Projectile.netUpdate = true;
     }
@@ -530,10 +526,31 @@ internal abstract class BasePkballProjectile : ModProjectile
         SoundEngine.PlaySound(in TerramonSoundID.CatchFail, Projectile.position);
 
         // Broke free mid-battle: come back out and the foe gets a free turn, as throwing the ball used the player's turn
-        if (_capture.BattleClient?.Foe is TerramonPlayer thrower && Main.netMode == NetmodeID.SinglePlayer)
+        if (_capture.BattleClient?.Foe is TerramonPlayer thrower)
         {
-            _capture.BreakFree(Projectile.Center);
-            BattleManager.Instance.SkipTurn(thrower.BattleClient);
+            switch (Main.netMode)
+            {
+                case NetmodeID.SinglePlayer:
+                    _capture.BreakFree(Projectile.Center);
+                    BattleManager.Instance.SkipTurn(thrower.BattleClient);
+                    break;
+                case NetmodeID.MultiplayerClient:
+                    // The thrower decides the catch (it adds the Pokémon on a success), so the server follows its result.
+                    // Everyone else just shows it coming back out; the server's sync confirms it
+                    _capture.BreakFree(Projectile.Center);
+                    if (Projectile.owner == Main.myPlayer)
+                    {
+                        Mod.SendPacket(new BallBreakFreeRpc((byte)_capture.NPC.whoAmI, Projectile.Center));
+                        // Wait for the server to use up this turn before picking anything
+                        var local = BattleClient.LocalClient;
+                        if (thrower == TerramonPlayer.LocalPlayer && local.CurrentRequest == ShowdownRequest.Any)
+                            local.CurrentRequest = ShowdownRequest.Wait;
+                    }
+
+                    break;
+                // Server: wait for the thrower's BallBreakFreeRpc instead of deciding here
+            }
+
             _capture = null;
             _hasReleasedLocal = true;
             return;
