@@ -1,8 +1,10 @@
 ﻿using System.Runtime.InteropServices;
+using EasyPacketsLib;
 using ReLogic.Content;
 using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
+using Terramon.Content.Items;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Helpers;
 using Terramon.ID;
@@ -21,6 +23,8 @@ public sealed class TestBattleUI : SmartUIState
     private readonly static UIText _promptText;
     private readonly static UIElement _movesPanel;
     private readonly static UIElement _pokemonPanel;
+    private readonly static UIElement _bagPanel;
+    private readonly static UIElement _bagTargetPanel;
     private static DynamicPixelRatioElement _mainPanel;
 
     private static Point16 _screenDimensions;
@@ -133,6 +137,58 @@ public sealed class TestBattleUI : SmartUIState
             button.OnLeftClick += ClickPokemonButton;
             _pokemonPanel.Append(button);
         }
+
+        // Create Bag panel (blank): one button per recovery item the player carries
+        _bagPanel = new();
+        _bagPanel.Width.Percent = _bagPanel.Height.Percent = 1f;
+        for (int i = 0; i < 6; i++)
+        {
+            DynamicPixelRatioElement button = MakeGridButton(i, _bagPanel);
+            button.Append(new BagItemReference());
+            button.OnLeftClick += ClickBagItemButton;
+        }
+
+        // Create Bag target panel (blank): which party Pokémon to use the picked item on
+        _bagTargetPanel = new();
+        _bagTargetPanel.Width.Percent = _bagTargetPanel.Height.Percent = 1f;
+        for (int i = 0; i < 6; i++)
+        {
+            DynamicPixelRatioElement button = MakeGridButton(i, _bagTargetPanel);
+            button.Append(new PokemonReference());
+            button.OnLeftClick += ClickBagTargetButton;
+        }
+    }
+
+    /// <summary>
+    ///     A button in a 3x2 grid with an icon, a name and a smaller second line, like the Pokémon panel's buttons.
+    /// </summary>
+    private static DynamicPixelRatioElement MakeGridButton(int i, UIElement panel)
+    {
+        DynamicPixelRatioElement button = new("Terramon/Assets/GUI/TurnBased/Simple", buttonLike: true);
+        button.Left.Percent = i % 3 / 3f;
+        button.Top.Percent = i / 3 * 0.5f;
+        button.Width.Percent = 1f / 3f;
+        button.Height.Percent = 0.5f;
+        UIText label = new(string.Empty, 0.6f, true)
+        {
+            HAlign = 0.6f,
+            VAlign = 0.35f
+        };
+        UIText subLabel = new(string.Empty, 0.85f)
+        {
+            HAlign = 0.6f,
+            VAlign = 0.75f
+        };
+        UIImage image = new(TextureAssets.Npc[0])
+        {
+            VAlign = 0.5f
+        };
+        image.Left.Pixels = 4f;
+        button.Append(label);
+        button.Append(subLabel);
+        button.Append(image);
+        panel.Append(button);
+        return button;
     }
 
     public TestBattleUI()
@@ -168,6 +224,14 @@ public sealed class TestBattleUI : SmartUIState
 
     public static void GoBack()
     {
+        // From picking a target, go back to picking an item
+        if (_bagTargetPanel.Parent != null)
+        {
+            SoundEngine.PlaySound(in TerramonSoundID.BattleCancel);
+            ChangePanel(_bagPanel);
+            return;
+        }
+
         // A replacement for a fainted Pokémon has to be picked first
         if (_optionsPanel.Parent != null || BattleClient.LocalClient.CurrentRequest == ShowdownRequest.ForcedSwitch)
         {
@@ -220,6 +284,7 @@ public sealed class TestBattleUI : SmartUIState
         FoePanel.ResetAnimation();
 
         UpdatePrompt();
+        _bagPending = false;
         Instance.Recalculate();
         _screenDimensions = new(Main.screenWidth, Main.screenHeight);
         if (Main.playerInventory)
@@ -243,6 +308,10 @@ public sealed class TestBattleUI : SmartUIState
             UpdateMoves();
         else if (to == _pokemonPanel)
             UpdatePokemon();
+        else if (to == _bagPanel)
+            UpdateBag();
+        else if (to == _bagTargetPanel)
+            UpdateBagTargets();
         _mainPanel.RecalculateChildren();
     }
 
@@ -369,10 +438,213 @@ public sealed class TestBattleUI : SmartUIState
 
     private static void BagButton(UIMouseEvent evt, UIElement listeningElement)
     {
-        // TODO: Using items in battle
-        _promptText.SetText(Language.GetTextValue("Mods.Terramon.Battle.BagUnavailable"));
-        _promptText.Recalculate();
+        if (!BattleClient.LocalClient.CanMakeChoice(BattleChoice.Move) ||
+            BattleClient.LocalClient.CurrentRequest != ShowdownRequest.Any)
+            return;
+
+        if (!BagItems.Any(t => Main.LocalPlayer.CountItem(t, 1) > 0))
+        {
+            _promptText.SetText(Language.GetTextValue("Mods.Terramon.Bag.Empty"));
+            _promptText.Recalculate();
+            return;
+        }
+
+        ChangePanel(_bagPanel);
     }
+
+    #region Bag
+
+    /// <summary>
+    ///     The items that can be used from the Bag in battle, in the order they're listed.
+    /// </summary>
+    private static int[] BagItems =>
+    [
+        ModContent.ItemType<Potion>(),
+        ModContent.ItemType<SuperPotion>(),
+        ModContent.ItemType<HyperPotion>(),
+        ModContent.ItemType<MaxPotion>(),
+        ModContent.ItemType<Revive>(),
+        ModContent.ItemType<MaxRevive>()
+    ];
+
+    private static int _bagSelectedItem;
+
+    // Waiting for the server to accept a Bag item (multiplayer only)
+    private static bool _bagPending;
+
+    private static (UIText Label, UIText SubLabel, UIImage Image) GridParts(UIElement button)
+        => ((UIText)button.Children.First(e => e is UIText),
+            (UIText)button.Children.Where(e => e is UIText).ElementAt(1),
+            (UIImage)button.Children.First(e => e is UIImage));
+
+    public static void UpdateBag()
+    {
+        var owned = BagItems.Select(t => (Type: t, Count: Main.LocalPlayer.CountItem(t, 9999)))
+            .Where(t => t.Count > 0).ToArray();
+
+        for (int i = 0; i < _bagPanel.Children.Count(); i++)
+        {
+            var button = (DynamicPixelRatioElement)_bagPanel.Children.ElementAt(i);
+            var (label, subLabel, image) = GridParts(button);
+            var itemRef = (BagItemReference)button.Children.First(e => e is BagItemReference);
+
+            if (i >= owned.Length)
+            {
+                button.UpdateTextures(null);
+                button.BlockInteractions = true;
+                label.SetText(string.Empty);
+                subLabel.SetText(string.Empty);
+                image.Color = Color.Transparent;
+                itemRef.ItemType = 0;
+                continue;
+            }
+
+            var (type, count) = owned[i];
+            Main.instance.LoadItem(type);
+            button.UpdateTextures("Terramon/Assets/GUI/TurnBased/Simple");
+            button.BlockInteractions = false;
+            button.Color = Color.White;
+            label.SetText(Lang.GetItemNameValue(type));
+            subLabel.SetText(Language.GetTextValue("Mods.Terramon.Bag.Count", count));
+            image.SetImage(TextureAssets.Item[type]);
+            image.Color = Color.White;
+            itemRef.ItemType = type;
+        }
+    }
+
+    private static void ClickBagItemButton(UIMouseEvent evt, UIElement listeningElement)
+    {
+        var itemRef = (BagItemReference)listeningElement.Children.First(e => e is BagItemReference);
+        if (itemRef.ItemType == 0)
+            return;
+
+        SoundEngine.PlaySound(in TerramonSoundID.BattleDecide);
+        _bagSelectedItem = itemRef.ItemType;
+        ChangePanel(_bagTargetPanel);
+    }
+
+    private static bool CanUseOn(int itemType, PokemonData data)
+        => data != null && ModContent.GetModItem(itemType) is RecoveryItem item && item.AffectedByPokemonDirectUse(data);
+
+    public static void UpdateBagTargets()
+    {
+        var team = TerramonPlayer.LocalPlayer.Party;
+        for (int i = 0; i < team.Length; i++)
+        {
+            var button = (DynamicPixelRatioElement)_bagTargetPanel.Children.ElementAt(i);
+            var (label, subLabel, image) = GridParts(button);
+            var poke = (PokemonReference)button.Children.First(e => e is PokemonReference);
+            var pokemon = team[i];
+            if (pokemon is null)
+            {
+                button.UpdateTextures(null);
+                button.BlockInteractions = true;
+                label.SetText(string.Empty);
+                subLabel.SetText(string.Empty);
+                image.Color = Color.Transparent;
+                poke.DataRef = null;
+                continue;
+            }
+
+            button.UpdateTextures("Terramon/Assets/GUI/TurnBased/Simple");
+            label.SetText(pokemon.DisplayName);
+            subLabel.SetText(pokemon.HP <= 0
+                ? Language.GetTextValue("Mods.Terramon.Bag.Fainted")
+                : Language.GetTextValue("Mods.Terramon.Bag.HP", pokemon.HP, pokemon.MaxHP));
+            image.SetImage(pokemon.GetMiniSprite());
+
+            // Potions only work on hurt Pokémon still standing, Revives only on fainted ones
+            var usable = CanUseOn(_bagSelectedItem, pokemon);
+            button.BlockInteractions = !usable;
+            image.Color = button.Color = usable ? Color.White : Color.Gray;
+            poke.DataRef = pokemon;
+            poke.PartySlot = i;
+        }
+    }
+
+    private static void ClickBagTargetButton(UIMouseEvent evt, UIElement listeningElement)
+    {
+        var pokeRef = (PokemonReference)listeningElement.Children.First(e => e is PokemonReference);
+        var client = BattleClient.LocalClient;
+        var type = _bagSelectedItem;
+        if (pokeRef.DataRef is null || !CanUseOn(type, pokeRef.DataRef) || _bagPending ||
+            !client.CanMakeChoice(BattleChoice.Move) || client.CurrentRequest != ShowdownRequest.Any ||
+            Main.LocalPlayer.CountItem(type, 1) <= 0)
+        {
+            SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
+            return;
+        }
+
+        SoundEngine.PlaySound(in TerramonSoundID.BattleDecide);
+        var slot = (byte)pokeRef.PartySlot;
+        var name = pokeRef.DataRef.DisplayName;
+
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+        {
+            // The battle runs on the server; the item is only spent once it says the item was used
+            _bagPending = true;
+            client.CurrentRequest = ShowdownRequest.Wait;
+            Terramon.Instance.SendPacket(new BagItemRpc(type, slot, name));
+        }
+        else if (BattleManager.Instance.UseItem(client, type, slot, name))
+        {
+            // The battle itself sets the exact new HP here
+            ApplyBagItem(type, slot, applyHP: false);
+        }
+
+        ChangePanel(_optionsPanel);
+    }
+
+    /// <summary>
+    ///     Called on the client that used a Bag item once the server has answered.
+    /// </summary>
+    public static void BagItemResult(bool accepted, int itemType, int partySlot)
+    {
+        _bagPending = false;
+        if (accepted)
+        {
+            ApplyBagItem(itemType, partySlot, applyHP: true);
+            return;
+        }
+
+        // Nothing happened, so the turn can still be used
+        var client = BattleClient.LocalClient;
+        if (client.BattleOngoing && client.CurrentRequest == ShowdownRequest.Wait)
+            client.CurrentRequest = ShowdownRequest.Any;
+        Main.NewText(Language.GetTextValue("Mods.Terramon.Bag.Failed"), Color.Orange);
+    }
+
+    /// <summary>
+    ///     Spends the item and applies its effect to the local copy of the Pokémon.
+    ///     In multiplayer the battle only sends HP as a percentage, so the exact HP is applied here too.
+    /// </summary>
+    private static void ApplyBagItem(int itemType, int partySlot, bool applyHP)
+    {
+        var player = Main.LocalPlayer;
+        player.ConsumeItem(itemType);
+
+        var data = TerramonPlayer.LocalPlayer.Party[partySlot];
+        switch (ModContent.GetModItem(itemType))
+        {
+            case BasePotionItem potion when data != null:
+                if (applyHP)
+                    data.Heal(potion.BattleHealAmount);
+                SoundEngine.PlaySound(in SoundID.Item13);
+                break;
+            case BaseReviveItem revive when data != null:
+                if (applyHP)
+                    data.HP = (ushort)Math.Max(1, Math.Ceiling(data.MaxHP * revive.BattleRestorationPercentage));
+                // Clear the fainted status in the battle too, so the Pokémon can be switched back in
+                var side = BattleSide.LocalSide;
+                if (side != null)
+                    side[partySlot].Status = NonVolatileStatus.None;
+                data.Status = NonVolatileStatus.None;
+                SoundEngine.PlaySound(in SoundID.Item29);
+                break;
+        }
+    }
+
+    #endregion
 
     private static void PokemonButton(UIMouseEvent evt, UIElement listeningElement)
     {
@@ -421,6 +693,11 @@ public sealed class MoveReference : UIElement
 {
     public PokemonData DataRef;
     public int Move;
+}
+
+public sealed class BagItemReference : UIElement
+{
+    public int ItemType;
 }
 
 public sealed class PokemonReference : UIElement

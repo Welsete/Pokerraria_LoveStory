@@ -6,6 +6,8 @@ public class SuperPotion : BasePotionItem
 {
     protected override ushort HealAmount => 50;
 
+    protected override int BuyPrice => Item.buyPrice(silver: 35);
+
     protected override int UseRarity => ModContent.RarityType<SuperPotionRarity>();
 
     public override void SetStaticDefaults()

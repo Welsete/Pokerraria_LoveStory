@@ -689,7 +689,76 @@ public sealed class BattleManager
         b.Stream.Write($">eval battle.sides[{side - 1}].active[0].addVolatile('mustrecharge')");
         b.SubmitChoice(side, BattleChoice.Move, 1);
     }
-    
+
+    /// <summary>
+    ///     Uses a recovery item from the Bag on one of a participant's Pokémon (by party slot), which uses up their turn.
+    ///     Showdown has no Bag, so the heal is applied with >eval and announced with a -heal line so every viewer updates.
+    ///     Returns false if the item can't be used right now.
+    /// </summary>
+    public bool UseItem(BattleClient client, int itemType, int partySlot, string pokemonName)
+    {
+        if (!_activeBattles.TryGetValue(client.ID, out var b) || b.Stream is null || b.Stream.IsDisposed)
+            return false;
+        // Multiplayer clients check this themselves, as the server doesn't track their requests
+        if (!Main.dedServ && client.CurrentRequest != ShowdownRequest.Any)
+            return false;
+        if (partySlot is < 0 or > 5 || itemType < ItemID.Count || itemType >= ItemLoader.ItemCount)
+            return false;
+
+        var side = client == b.ClientA ? 1 : 2;
+        var item = ModContent.GetModItem(itemType);
+        var inv = System.Globalization.CultureInfo.InvariantCulture;
+
+        // Nicknames are party slots plus one (see SimplePackedPokemon.Team)
+        var find = $"const s = battle.sides[{side - 1}]; const p = s.pokemon.find(m => m.name === '{partySlot + 1}');";
+        var effect = item switch
+        {
+            Content.Items.BasePotionItem potion =>
+                $"{find} if (!p || p.fainted || !p.hp || p.hp >= p.maxhp) return false; p.heal({potion.BattleHealAmount}); " +
+                $"battle.add('-heal', p, p.getHealth, '[from] item: {item.Name}'); return true;",
+            Content.Items.BaseReviveItem revive =>
+                $"{find} if (!p || !p.fainted) return false; p.fainted = false; p.faintQueued = false; p.switchFlag = false; " +
+                $"p.status = ''; p.hp = Math.max(1, Math.ceil(p.maxhp * {revive.BattleRestorationPercentage.ToString(inv)})); " +
+                $"s.pokemonLeft++; battle.add('-heal', p, p.getHealth, '[from] item: {item.Name}'); return true;",
+            _ => null
+        };
+        if (effect is null)
+            return false;
+
+        client.CurrentRequest = ShowdownRequest.Wait;
+        LatestInteractor = side;
+
+        // "{player} used {item} on {Pokémon}!"
+        var user = client.Provider is TerramonPlayer plr ? plr.Player.name : client.Provider.BattleName;
+        const string key = "Mods.Terramon.Bag.Used";
+        var color = new Color(110, 224, 110);
+        if (!Main.dedServ)
+        {
+            BattleLog.Say(Terraria.Localization.Language.GetTextValue(key, user, item.DisplayName.Value,
+                BattleLog.HighlightMon(pokemonName, client.Provider == TerramonPlayer.LocalPlayer)), color);
+        }
+        else
+        {
+            for (var viewer = 1; viewer <= 2; viewer++)
+            {
+                if (b[viewer].Provider is not TerramonPlayer watcher)
+                    continue;
+                var text = Terraria.Localization.NetworkText.FromKey(key,
+                    Terraria.Localization.NetworkText.FromLiteral(user),
+                    Terraria.Localization.NetworkText.FromKey(item.DisplayName.Key),
+                    Terraria.Localization.NetworkText.FromLiteral(BattleLog.HighlightMon(pokemonName, viewer == side)));
+                Terraria.Chat.ChatHelper.SendChatMessageToClient(text, color, watcher.Player.whoAmI);
+            }
+        }
+
+        // The item takes the turn: same trick as SkipTurn, without the "must recharge" line
+        BattleLog.ExpectSkippedTurn(b, side);
+        b.Stream.Write($">eval (() => {{ {effect} }})()");
+        b.Stream.Write($">eval battle.sides[{side - 1}].active[0].addVolatile('mustrecharge')");
+        b.SubmitChoice(side, BattleChoice.Move, 1);
+        return true;
+    }
+
     public void HandleChoice(BattleParticipant participant, BattleChoice choice, int operand)
     {
         var b = _activeBattles[participant];

@@ -66,11 +66,12 @@ public readonly record struct SimpleHP
         else
         {
             var maxHp = uint.Parse(parts[1]);
-            Packed = (maxHp << 8) | hp;
+            // 16 bits each, as HP goes past 255 at higher levels
+            Packed = (maxHp << 16) | hp;
         }
     }
-    public readonly ushort HP => (ushort)(Packed & 0xFF);
-    public readonly ushort MaxHP => (ushort)(Packed >> 8);
+    public readonly ushort HP => (ushort)(Packed & 0xFFFF);
+    public readonly ushort MaxHP => (ushort)(Packed >> 16);
 
 }
 public readonly record struct SimpleDetails

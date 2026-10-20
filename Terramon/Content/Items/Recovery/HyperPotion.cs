@@ -6,6 +6,8 @@ public class HyperPotion : BasePotionItem
 {
     protected override ushort HealAmount => 200;
 
+    protected override int BuyPrice => Item.buyPrice(gold: 1, silver: 50);
+
     protected override int UseRarity => ModContent.RarityType<HyperPotionRarity>();
 
     public override void SetStaticDefaults()

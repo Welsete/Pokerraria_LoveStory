@@ -82,6 +82,18 @@ public static class BattleLog
     private static readonly Color Muted = new(160, 160, 175);
     private static readonly Color StatusColor = new(200, 150, 255);
 
+    // Sides whose next "must recharge" line is hidden, because their turn was used up on purpose (e.g. by a Bag item)
+    private static readonly HashSet<(BattleInstance, int Side)> SkippedTurns = [];
+
+    /// <summary>
+    ///     Hides the "must recharge" line of a side whose turn is skipped with the mustrecharge trick this turn.
+    /// </summary>
+    public static void ExpectSkippedTurn(BattleInstance source, int side)
+    {
+        lock (SkippedTurns)
+            SkippedTurns.Add((source, side));
+    }
+
     // Last known HP of every Pokémon, used to tell how much damage a hit did
     private static readonly Dictionary<(BattleInstance, int Side, int Slot), (int HP, int MaxHP)> LastHP = [];
 
@@ -92,7 +104,13 @@ public static class BattleLog
     {
         switch (element)
         {
-            case TurnElement when !Main.dedServ:
+            case CantElement { Reason: "recharge" } skipped when ConsumeSkippedTurn(source, new SimpleMon(skipped.Pokemon).Side):
+                break;
+            case TurnElement:
+                lock (SkippedTurns)
+                    SkippedTurns.RemoveWhere(t => t.Item1 == source);
+                if (Main.dedServ)
+                    break;
                 Record(Language.GetTextValue("Mods.Terramon.GUI.BattleLog.Turn", _turn + 1), TurnColor,
                     source.Omniscient);
                 _turn++;
@@ -162,6 +180,12 @@ public static class BattleLog
                     Mon(source, cant.Pokemon));
                 break;
         }
+    }
+
+    private static bool ConsumeSkippedTurn(BattleInstance source, int side)
+    {
+        lock (SkippedTurns)
+            return SkippedTurns.Remove((source, side));
     }
 
     /// <summary>

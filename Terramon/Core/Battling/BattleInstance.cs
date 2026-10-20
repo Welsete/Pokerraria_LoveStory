@@ -209,6 +209,10 @@ public sealed class BattleInstance
 
                 if (frame is UpdateFrame)
                 {
+                    // An update with no side update after it (e.g. from >eval, like a Bag item's heal) still has to be applied
+                    if (inMainFrame)
+                        Observe(ref pWriter, ref sWriter);
+
                     pWriter?.Dispose();
                     sWriter?.Dispose();
 
