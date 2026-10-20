@@ -16,6 +16,10 @@ jobs:
                   dotnet-version: |
                       8.0.x
                       10.0.x
+            # On a tModLoader cache miss the first build leaves tModLoader unzipped here, and the second
+            # download then stops at unzip's "replace?" prompt, so clear it first
+            - name: Clear tModLoader download
+              run: rm -rf "$RUNNER_TEMP/tml"
             # Terramon needs this dependency mod for turn-based battles, so build it too
             - uses: JamzOJamz/build-tmodloader-mod@v1
               with:
