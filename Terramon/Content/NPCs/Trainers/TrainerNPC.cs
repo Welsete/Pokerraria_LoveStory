@@ -72,7 +72,12 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
     /// </summary>
     protected virtual int LeaveDelayAfterBattle => 30 * 60;
 
-    public override string Texture => $"Terraria/Images/NPC_{LookAlike}";
+    /// <summary>
+    ///     A texture of this trainer's own (a single standing frame), used instead of <see cref="LookAlike" />.
+    /// </summary>
+    protected virtual string CustomTexture => null;
+
+    public override string Texture => CustomTexture ?? $"Terraria/Images/NPC_{LookAlike}";
 
     /// <summary>
     ///     Whether the player is allowed to challenge this trainer, e.g. only after a certain boss is defeated.
@@ -88,7 +93,7 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
 
     public override void SetStaticDefaults()
     {
-        Main.npcFrameCount[Type] = Main.npcFrameCount[LookAlike];
+        Main.npcFrameCount[Type] = CustomTexture == null ? Main.npcFrameCount[LookAlike] : 1;
         NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers { Hide = true });
     }
 
@@ -102,7 +107,7 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
         NPC.dontTakeDamage = true;
         NPC.knockBackResist = 0f;
         NPC.HitSound = SoundID.NPCHit1;
-        AnimationType = LookAlike;
+        AnimationType = CustomTexture == null ? LookAlike : -1;
 
         BattleClient = new BattleClient(this);
     }

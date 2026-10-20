@@ -173,6 +173,7 @@ internal sealed class TerramonItemRegistration : ModSystem
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Uncategorized)
             .Add<ErikaPaintingItem>()
+            .Add<BrockPaintingItem>()
             .Add<ShimmerStateDrive>();
     }
 }

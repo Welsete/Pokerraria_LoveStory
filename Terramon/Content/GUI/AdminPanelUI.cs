@@ -4,6 +4,7 @@ using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.NPCs;
 using Terramon.Content.NPCs.Trainers;
+using Terramon.Content.WorldGeneration;
 using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
@@ -77,6 +78,8 @@ public sealed class AdminPanelUI : SmartUIState
             ("LeagueItems", GiveLeagueItems),
             ("ResetBadges", ResetBadges),
             ("ClearBattles", ClearBattles),
+            ("TeleportBrockGym", TeleportToBrockGym),
+            ("BuildBrockGym", BuildBrockGymHere),
             ("Close", Toggle)
         ];
 
@@ -317,5 +320,42 @@ public sealed class AdminPanelUI : SmartUIState
     {
         new ResetEverythingStatement().Send();
         Say("BattlesCleared");
+    }
+
+    private static void TeleportToBrockGym()
+    {
+        if (!BrockGymSystem.Exists)
+        {
+            Main.NewText(Text("NoBrockGym"), TerramonCommand.ChatColorRed);
+            return;
+        }
+
+        var player = Main.LocalPlayer;
+        var position = BrockGymSystem.EntranceSpot - new Vector2(player.width / 2f, player.height);
+        player.Teleport(position, TeleportationStyleID.RodOfDiscord);
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, player.whoAmI, position.X, position.Y,
+                TeleportationStyleID.RodOfDiscord);
+    }
+
+    /// <summary>
+    ///     Builds Brock's Gym around the player, for worlds made before it existed. Singleplayer only, since the
+    ///     tiles it changes aren't sent to other players.
+    /// </summary>
+    private static void BuildBrockGymHere()
+    {
+        if (Main.netMode != NetmodeID.SinglePlayer)
+        {
+            Main.NewText(Text("SingleplayerOnly"), TerramonCommand.ChatColorRed);
+            return;
+        }
+
+        var player = Main.LocalPlayer;
+        var feet = player.Bottom.ToTileCoordinates();
+        var left = Math.Clamp(feet.X - 8, 60, Main.maxTilesX - BrockGymBuilder.Width - 60);
+        var top = Math.Clamp(feet.Y - BrockGymBuilder.Height + 4, 60, Main.maxTilesY - BrockGymBuilder.Height - 60);
+        BrockGymBuilder.Build(left, top);
+        TeleportToBrockGym();
+        Say("BrockGymBuilt");
     }
 }

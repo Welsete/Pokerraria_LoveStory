@@ -396,6 +396,11 @@ GUI: {
 		LeagueItems: Dar itens de desafio
 		ResetBadges: Zerar insígnias
 		ClearBattles: Encerrar batalhas travadas
+		TeleportBrockGym: Ir ao Ginásio do Brock
+		BuildBrockGym: Construir Ginásio do Brock aqui
+		NoBrockGym: Este mundo não tem Ginásio do Brock. Crie um mundo novo ou use "Construir Ginásio do Brock aqui".
+		SingleplayerOnly: Isso só funciona no modo de um jogador.
+		BrockGymBuilt: O Ginásio do Brock foi construído ao seu redor.
 		Close: Fechar
 		ItemsGiven: Você recebeu Poké Bolas, Poções, Reviveres e Doces Raros
 		BossDowned: "{0}: agora conta como derrotado"
@@ -1591,4 +1596,15 @@ Items.LeaguePedestalItem: {
 		Clique com o botão direito para chamar o próximo oponente do seu desafio da Liga Pokémon
 		Requer as oito insígnias e ter derrotado o Cultista Lunático
 		'''
+}
+
+BrockGym: {
+	Welcome: "{0} está te esperando no palco. Fale com ele para desafiar o Ginásio de Pewter!"
+}
+
+WorldGen.BrockGymPass: Escavando o Ginásio do Brock
+
+Items.BrockPaintingItem: {
+	DisplayName: Quadro do Ginásio de Pewter
+	Tooltip: "'O primeiro passo de toda grande jornada'"
 }

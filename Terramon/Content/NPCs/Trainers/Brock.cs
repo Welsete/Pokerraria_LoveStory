@@ -17,6 +17,8 @@ public class Brock : GymLeader
 
     protected override int LookAlike => NPCID.Guide;
 
+    protected override string CustomTexture => "Terramon/Assets/NPCs/Trainers/Brock";
+
     protected override bool GateBossDefeated => Terraria.NPC.downedBoss1;
 
     protected override int RewardItemType => ModContent.ItemType<BoulderBadge>();

@@ -396,6 +396,11 @@ GUI: {
 		LeagueItems: Give challenge items
 		ResetBadges: Reset badges
 		ClearBattles: End stuck battles
+		TeleportBrockGym: Go to Brock's Gym
+		BuildBrockGym: Build Brock's Gym here
+		NoBrockGym: This world has no Brock's Gym. Create a new world or use "Build Brock's Gym here".
+		SingleplayerOnly: This only works in singleplayer.
+		BrockGymBuilt: Brock's Gym was built around you.
 		Close: Close
 		ItemsGiven: Received Poké Balls, Potions, Revives and Rare Candies
 		BossDowned: "{0} now counts as defeated"
@@ -1591,4 +1596,15 @@ Items.LeaguePedestalItem: {
 		Right-click it to call the next opponent of your Pokémon League challenge
 		Requires all eight badges and defeating the Lunatic Cultist
 		'''
+}
+
+BrockGym: {
+	Welcome: "{0} is waiting for you on the stage. Talk to him to challenge the Pewter City Gym!"
+}
+
+WorldGen.BrockGymPass: Digging out Brock's Gym
+
+Items.BrockPaintingItem: {
+	DisplayName: Pewter City Gym Painting
+	Tooltip: "'The first step of every great journey'"
 }
