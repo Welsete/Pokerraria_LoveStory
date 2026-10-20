@@ -62,6 +62,11 @@ public sealed class BattleInstance
     // 1-indices
     public BattleStream Stream; // battle stream
 
+    /// <summary>
+    ///     The side (1 or 2) whose side update is being read right now, or 0 outside of one. Errors belong to that side.
+    /// </summary>
+    public int SideUpdatePlayer;
+
     public bool ShouldStart =>
         State == BattleState.Picking &&
         ClientA.Pick != 0 &&
@@ -163,8 +168,12 @@ public sealed class BattleInstance
         ClientA.Provider.StartBattleEffects(before: false);
     }
 
+    // Set once the battle was ended on purpose (win, tie, forfeit), so the stream closing isn't treated as a crash
+    private volatile bool _stopped;
+
     public void Stop()
     {
+        _stopped = true;
         if (Main.netMode == NetmodeID.Server)
         {
             ClientA.BattleStopped();
@@ -199,8 +208,8 @@ public sealed class BattleInstance
             var inMainFrame = false;
 
             // Kept per-round
-            BinaryWriter pWriter = null;
-            BinaryWriter sWriter = null;
+            BinaryWriter pWriter = new(new MemoryStream());
+            BinaryWriter sWriter = new(new MemoryStream());
 
             await foreach (var output in Stream.ReadOutputsAsync())
             {
@@ -213,6 +222,7 @@ public sealed class BattleInstance
                     if (inMainFrame)
                         Observe(ref pWriter, ref sWriter);
 
+                    SideUpdatePlayer = 0;
                     pWriter?.Dispose();
                     sWriter?.Dispose();
 
@@ -221,8 +231,9 @@ public sealed class BattleInstance
 
                     inMainFrame = true;
                 }
-                else if (frame is SideUpdateFrame)
+                else if (frame is SideUpdateFrame sideUpdate)
                 {
+                    SideUpdatePlayer = sideUpdate.Player is { Length: >= 2 } who ? who[1] - '0' : 0;
                     if (inMainFrame)
                     {
                         Observe(ref pWriter, ref sWriter);
@@ -245,18 +256,23 @@ public sealed class BattleInstance
                     if (element is ISplitElement split)
                     {
                         var tgt = (split.PlayerID is 1 or 2) ? split.PlayerID : -1;
-                        mgr.HandleSingleElement(this, sWriter, split.Secret, toSide: -1);
-                        mgr.HandleSingleElement(this, pWriter, split.Public, toSide: tgt);
+                        HandleSafely(mgr, sWriter, split.Secret, toSide: -1);
+                        HandleSafely(mgr, pWriter, split.Public, toSide: tgt);
                         // The secret half has exact HP numbers, so damage can be shown in HP instead of %
-                        BattleLog.Handle(this, split.Secret is DamageElement or HealElement or SwitchElement or DragElement
+                        LogSafely(split.Secret is DamageElement or HealElement or SwitchElement or DragElement
                             ? split.Secret
                             : split.Public);
                         continue;
                     }
-                    BattleLog.Handle(this, element);
-                    mgr.HandleSingleElement(this, pWriter, element, toSide: -1);
+                    LogSafely(element);
+                    HandleSafely(mgr, pWriter, element, toSide: -1);
                 }
             }
+        }
+        catch (Exception ex) when (_stopped)
+        {
+            // The battle already ended normally and its stream was closed under us
+            Log($"Battle stream closed after the battle ended ({ex.GetType().Name})", ConsoleColor.Yellow);
         }
         catch (Exception ex)
         {
@@ -276,6 +292,39 @@ public sealed class BattleInstance
     }
 
     /// <summary>
+    ///     Handles one protocol element, so that a single element we can't handle doesn't end the whole battle.
+    ///     Anything half-written for that element is removed from the buffer so readers don't desync.
+    /// </summary>
+    private void HandleSafely(BattleManager mgr, BinaryWriter w, ProtocolElement element, int toSide)
+    {
+        var start = w.BaseStream.Position;
+        try
+        {
+            mgr.HandleSingleElement(this, w, element, toSide);
+        }
+        catch (Exception ex) when (ex is not ObjectDisposedException)
+        {
+            Log($"Couldn't handle {element.GetType().Name} ({element}): {ex.GetType().Name}: {ex.Message}", ConsoleColor.Red);
+            Terramon.Instance.Logger.Error($"Battle element {element} couldn't be handled: {ex}");
+            w.Flush();
+            w.BaseStream.SetLength(start);
+            w.BaseStream.Position = start;
+        }
+    }
+
+    private void LogSafely(ProtocolElement element)
+    {
+        try
+        {
+            BattleLog.Handle(this, element);
+        }
+        catch (Exception ex)
+        {
+            Terramon.Instance.Logger.Error($"Battle log failed for {element}: {ex}");
+        }
+    }
+
+    /// <summary>
     ///     Reads and handles all <see cref="BattleAction"/>s currently written to the buffers
     ///     Also resets those buffers
     /// </summary>
@@ -291,23 +340,45 @@ public sealed class BattleInstance
             {
                 Console.WriteLine($"Sent payload with {p.BaseStream.Length} bytes of content.");
 
+                // The server's own view needs the public actions too (statuses, boosts, turns), e.g. for the battle AI
+                ObserveSafely(owner.ID, (MemoryStream)p.BaseStream, onlyToSelf: true);
+
                 var payload = new BattlePayloadRpc(owner, (MemoryStream)p.BaseStream);
                 Terramon.Instance.SendPacket(payload);
-                p.Dispose();
-                p = null;
             }
             else
             {
-                BattleManager.Instance.Observe(owner.ID, (MemoryStream)p.BaseStream, onlyToSelf: false);
-                p = null;
+                ObserveSafely(owner.ID, (MemoryStream)p.BaseStream, onlyToSelf: false);
             }
+
+            // Fresh buffers, in case more elements arrive before the next update frame
+            p.Dispose();
+            p = new BinaryWriter(new MemoryStream());
         }
 
         if (s.BaseStream.Length != 0)
         {
             s.BaseStream.WriteByte(0); // footer
-            BattleManager.Instance.Observe(owner.ID, (MemoryStream)s.BaseStream, onlyToSelf: true);
-            p = null;
+            ObserveSafely(owner.ID, (MemoryStream)s.BaseStream, onlyToSelf: true);
+
+            // Clients need the exact HP too, or their own Pokémon end up with the public percentage as HP
+            if (Main.dedServ)
+                Terramon.Instance.SendPacket(new BattlePayloadRpc(owner, (MemoryStream)s.BaseStream));
+            s.Dispose();
+            s = new BinaryWriter(new MemoryStream());
+        }
+    }
+
+    private static void ObserveSafely(BattleParticipant owner, MemoryStream buffer, bool onlyToSelf)
+    {
+        try
+        {
+            BattleManager.Instance.Observe(owner, buffer, onlyToSelf);
+        }
+        catch (Exception ex) when (ex is not ObjectDisposedException)
+        {
+            // A bad action only breaks the mirrored view, not the simulation itself
+            Terramon.Instance.Logger.Error($"Couldn't apply battle actions: {ex}");
         }
     }
 

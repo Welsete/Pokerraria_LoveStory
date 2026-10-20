@@ -43,7 +43,10 @@ public sealed class BattleField
                 GetMon(r).PlayMoveAnimation(r.ReadUInt16());
                 break;
             case BattleActionID.SwitchPokemon:
-                GetMon(r).SetAsActive();
+                ref var switchedIn = ref GetMon(r);
+                switchedIn.SetAsActive();
+                // Whatever was charging or recharging has left the field
+                switchedIn.Side.Trapped = 0;
                 break;
             case BattleActionID.ActionFail:
                 break;

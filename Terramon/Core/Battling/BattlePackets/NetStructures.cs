@@ -56,18 +56,18 @@ public readonly record struct SimpleHP
     }
     public SimpleHP(string showdownHP)
     {
-        var parts = showdownHP.Split('/', 2);
-        var hp = uint.Parse(parts[0]);
+        // "CURRENT/MAX", possibly followed by a status ("0 fnt"); anything unreadable counts as 0
+        var parts = (showdownHP ?? string.Empty).Split(' ')[0].Split('/', 2);
+        uint.TryParse(parts[0], out var hp);
 
-        if (parts.Length != 2)
+        if (parts.Length != 2 || !uint.TryParse(parts[1], out var maxHp))
         {
-            Packed = hp;
+            Packed = Math.Min(hp, 0xFFFFu);
         }
         else
         {
-            var maxHp = uint.Parse(parts[1]);
-            // 16 bits each, as HP goes past 255 at higher levels
-            Packed = (maxHp << 16) | hp;
+            // 16 bits each, since HP goes past 255 at higher levels
+            Packed = (Math.Min(maxHp, 0xFFFFu) << 16) | Math.Min(hp, 0xFFFFu);
         }
     }
     public readonly ushort HP => (ushort)(Packed & 0xFFFF);

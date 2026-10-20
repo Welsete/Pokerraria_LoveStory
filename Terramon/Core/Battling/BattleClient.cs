@@ -26,6 +26,11 @@ public sealed class BattleClient(IBattleProvider provider)
     public ClientBattleState State;
     public ShowdownRequest CurrentRequest;
 
+    /// <summary>
+    ///     The latest request that asked for a choice, restored when Showdown rejects a choice so it can be made again.
+    /// </summary>
+    public ShowdownRequest LastRequest;
+
     // Instance is shared between both battlers
     public BattleField Battle;
 
@@ -87,7 +92,8 @@ public sealed class BattleClient(IBattleProvider provider)
     {
         if (State != ClientBattleState.Ongoing)
             return false;
-        if (Side.Trapped != 0)
+        // A forced switch (e.g. after fainting mid-charge) must always be answerable
+        if (Side.Trapped != 0 && CurrentRequest != ShowdownRequest.ForcedSwitch)
             return false;
         // Wait for the Poké Ball to finish shaking
         if (Foe is Content.NPCs.PokemonNPC { PlasmaState: true })
@@ -139,6 +145,7 @@ public sealed class BattleClient(IBattleProvider provider)
         TieRequest = false;
         Foe = null;
         CurrentRequest = ShowdownRequest.None;
+        LastRequest = ShowdownRequest.None;
         SwitchOrder = null;
     }
 }

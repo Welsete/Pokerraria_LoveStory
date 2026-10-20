@@ -334,7 +334,7 @@ public sealed class BattleManager
                 Write(BattleActionID.SetPokemonSpecies);
                 {
                     w.Write(pk);
-                    w.Write(NationalDexID.FromSpecies(dc.Species));
+                    w.Write(ParseSpecies(dc.Species));
                 }
                 Write(BattleActionID.SetPokemonHP);
                 {
@@ -451,17 +451,13 @@ public sealed class BattleManager
             case WeatherElement wth:
                 Write(BattleActionID.SetWeather, wth.Upkeep);
                 {
-                    if (wth.Weather is null || wth.Weather[0] is 'n')
-                        w.Write((byte)0);
-                    else
-                        w.Write((byte)Enum.Parse<BattleWeather>(wth.Weather));
+                    w.Write((byte)ParseWeather(wth.Weather));
                 }
                 break;
             case FieldStartElement fld:
                 Write(BattleActionID.SetFieldCondition);
                 {
-                    var sanitizedName = fld.Condition[6..].Replace(" ", string.Empty);
-                    w.Write((byte)Enum.Parse<FieldCondition>(sanitizedName));
+                    w.Write((byte)ParseOrNone<FieldCondition>(fld.Condition));
                 }
                 break;
             case FieldEndElement:
@@ -473,9 +469,8 @@ public sealed class BattleManager
             case SideStartElement sd:
                 Write(BattleActionID.SetSideCondition, sd.Tags != null && sd.Tags.Contains("[persistent]"));
                 {
-                    var sanitizedName = (sd.Condition[0] is 'm' ? sd.Condition[6..] : sd.Condition).Replace(" ", string.Empty);
                     w.Write((byte)sd.Side.Player);
-                    w.Write((byte)Enum.Parse<SideCondition>(sanitizedName));
+                    w.Write((byte)ParseOrNone<SideCondition>(sd.Condition));
                 }
                 break;
             case SideEndElement sd:
@@ -508,7 +503,7 @@ public sealed class BattleManager
                 Write(BattleActionID.PokemonItem, true); // is reveal
                 {
                     w.Write(new SimpleMon(it.Pokemon));
-                    w.Write(ItemID.Search.Terramon(it.Item));
+                    w.Write(ParseItem(it.Item));
                 }
                 break;
             case EndItemElement it:
@@ -523,7 +518,7 @@ public sealed class BattleManager
                 Write(BattleActionID.PokemonAbility, true); // is reveal
                 {
                     w.Write(new SimpleMon(ab.Pokemon));
-                    w.Write((ushort)Enum.Parse<AbilityID>(ab.Ability));
+                    w.Write((ushort)ParseOrNone<AbilityID>(ab.Ability));
                 }
                 break;
             case EndAbilityElement ab:
@@ -537,7 +532,8 @@ public sealed class BattleManager
                 HandleRequest(source, req.Request);
                 break;
             case ErrorElement err:
-                HandleError(source, err, LatestInteractor);
+                // Errors arrive in the side update of the side that made the bad choice
+                HandleError(source, err, source.SideUpdatePlayer is 1 or 2 ? source.SideUpdatePlayer : LatestInteractor);
                 break;
             case WinElement win:
                 var winner = source[win.Username[0] - '0'].Provider;
@@ -560,39 +556,107 @@ public sealed class BattleManager
         }
     }
     
+    private static readonly HashSet<string> LoggedUnknownNames = [];
+
+    /// <summary>
+    ///     Logs an unrecognized protocol name only the first time it shows up.
+    /// </summary>
+    private static void LogUnknownOnce(string kind, string name)
+    {
+        lock (LoggedUnknownNames)
+        {
+            if (!LoggedUnknownNames.Add($"{kind}:{name}"))
+                return;
+        }
+        Mod.Logger.Warn($"Unrecognized {kind} '{name}' from Showdown; ignoring it");
+    }
+
+    /// <summary>
+    ///     Strips an effect prefix ("move: ", "ability: ", "item: ") and spaces/punctuation from a Showdown effect name.
+    /// </summary>
+    private static string SanitizeEffect(string rawName)
+    {
+        if (string.IsNullOrEmpty(rawName))
+            return string.Empty;
+        var colon = rawName.IndexOf(": ", StringComparison.Ordinal);
+        var name = colon >= 0 ? rawName[(colon + 2)..] : rawName;
+        return new string(name.Where(char.IsLetterOrDigit).ToArray());
+    }
+
+    private static T ParseOrNone<T>(string rawName) where T : struct, Enum
+    {
+        var sanitized = SanitizeEffect(rawName);
+        if (sanitized.Length != 0 && Enum.TryParse<T>(sanitized, true, out var value))
+            return value;
+        LogUnknownOnce(typeof(T).Name, rawName);
+        return default;
+    }
+
+    private static BattleWeather ParseWeather(string rawName)
+    {
+        if (string.IsNullOrEmpty(rawName) || rawName is "none")
+            return BattleWeather.None;
+        // Gen 9 calls Snowscape's weather "Snow"
+        if (SanitizeEffect(rawName).Equals("Snow", StringComparison.OrdinalIgnoreCase))
+            return BattleWeather.Snowscape;
+        return ParseOrNone<BattleWeather>(rawName);
+    }
+
+    private static ushort ParseItem(string rawName)
+    {
+        try
+        {
+            return ItemID.Search.Terramon(SanitizeEffect(rawName));
+        }
+        catch (Exception)
+        {
+            LogUnknownOnce("item", rawName);
+            return 0;
+        }
+    }
+
+    private static ushort ParseSpecies(string rawName)
+    {
+        try
+        {
+            return NationalDexID.FromSpecies(rawName);
+        }
+        catch (Exception)
+        {
+            // Formes like "Castform-Sunny" aren't in the dex list; fall back to the base species
+            try
+            {
+                return NationalDexID.FromSpecies(rawName.Split('-')[0]);
+            }
+            catch (Exception)
+            {
+                LogUnknownOnce("species", rawName);
+                return 0;
+            }
+        }
+    }
+
     private static VolatileEffect GetVolatile(string rawName)
     {
         // ooh boy
-        var effect = VolatileEffect.None;
+        var sanitized = SanitizeEffect(rawName);
+        if (sanitized.Length == 0)
+            return VolatileEffect.None;
 
-        var extraThing = 0;
-        var sanitized = (rawName[0] is 'm' ? rawName[6..] : rawName).Replace(" ", string.Empty);
-        if (sanitized.StartsWith("perish"))
-        {
-            extraThing = sanitized[^1] - '0';
-            effect = VolatileEffect.Perish;
-        }
-        else if (sanitized.StartsWith("fallen"))
-        {
-            extraThing = sanitized[^1] - '0';
-            effect = VolatileEffect.Fallen;
-        }
-
-        if (effect != VolatileEffect.None)
-            return effect;
+        // Perish Song counters and Supreme Overlord's fallen allies carry a number at the end
+        if (sanitized.StartsWith("perish", StringComparison.OrdinalIgnoreCase))
+            return VolatileEffect.Perish;
+        if (sanitized.StartsWith("fallen", StringComparison.OrdinalIgnoreCase))
+            return VolatileEffect.Fallen;
 
         if (Enum.TryParse<VolatileEffect>(sanitized, true, out var vol))
             return vol;
-        if (Enum.TryParse<NatureID>(sanitized, out var nat))
-        {
-            extraThing = (int)nat;
-            _ = extraThing;
+        if (Enum.TryParse<NatureID>(sanitized, out _))
             return VolatileEffect.NatureEffect;
-        }
 
-        _ = extraThing;
-
-        throw new Exception($"'{rawName}' wasn't recognized as a valid volatile effect");
+        // Unknown volatiles are only cosmetic on our side, so don't let them end the battle
+        LogUnknownOnce("volatile effect", rawName);
+        return VolatileEffect.None;
     }
     
     public static void HandleError(BattleInstance source, ErrorElement error, int toSide)
@@ -602,6 +666,17 @@ public sealed class BattleManager
 
         var id = BattleErrorParser.Parse(error.Message);
         var client = source[toSide];
+        if (client is null)
+            return;
+
+        // NPCs have nobody to fix their choice, so retry with the default one
+        if (client.Provider is not TerramonPlayer)
+        {
+            client.CurrentRequest = ShowdownRequest.None;
+            BattleAI.OnChoiceError(source, toSide);
+            return;
+        }
+
         if (Main.dedServ && client.Provider is TerramonPlayer plr)
         {
             var sendErr = new BattleErrorRpc(error.Type, id);
@@ -609,7 +684,8 @@ public sealed class BattleManager
         }
         else
         {
-            client.CurrentRequest = ShowdownRequest.None;
+            // Showdown keeps waiting for a choice after rejecting one, so let the player choose again
+            client.CurrentRequest = client.LastRequest;
             // do stuff with error type and subtype
         }
     }
@@ -640,36 +716,59 @@ public sealed class BattleManager
 
         var sr = forceSwitch ? ShowdownRequest.ForcedSwitch : wait ? ShowdownRequest.Wait : ShowdownRequest.Any;
 
+        // Nicknames are party slots plus one (see SimplePackedPokemon.Team), e.g. "p1: 3" is party slot 2
+        if (side.TryGetProperty("pokemon", out var pokemon))
+        {
+            client.SwitchOrder = pokemon.EnumerateArray()
+                .Select(p => p.TryGetProperty("ident", out var ident) &&
+                             int.TryParse(ident.GetString()?.Split(": ", 2)[^1], out var n) ? n - 1 : -1)
+                .ToArray();
+        }
+
+        // Kept on the server too, so server-side code (e.g. skipping a turn) knows what's being asked
+        client.CurrentRequest = sr;
+        if (sr != ShowdownRequest.Wait)
+            client.LastRequest = sr;
+
         if (Main.dedServ && client.Provider.SyncedEntity is Player plr)
         {
-            var sendReq = new ShowdownRequestRpc(sr);
+            var sendReq = new ShowdownRequestRpc(sr, client.SwitchOrder);
             Mod.SendPacket(sendReq, toClient: plr.whoAmI);
         }
         else
         {
-            client.CurrentRequest = sr;
-
-            // Nicknames are party slots plus one (see SimplePackedPokemon.Team), e.g. "p1: 3" is party slot 2
-            if (side.TryGetProperty("pokemon", out var pokemon))
-            {
-                client.SwitchOrder = pokemon.EnumerateArray()
-                    .Select(p => int.TryParse(p.GetProperty("ident").GetString()?.Split(": ", 2)[^1], out var n) ? n - 1 : -1)
-                    .ToArray();
-            }
-
-            if (client.Provider is PokemonNPC npc)
-            {
-                Console.WriteLine($"{npc.BattleName} is responding automatically...");
-                npc.AutoBattleChoice();
-            }
-            else if (client.Provider is TrainerNPC trainer)
-            {
-                Console.WriteLine($"{trainer.BattleName} is responding automatically...");
-                trainer.AutoBattleChoice();
-            }
+            // Nothing to answer while waiting for the foe
+            if (sr != ShowdownRequest.Wait && client.Provider is PokemonNPC or TrainerNPC)
+                RespondAutomatically(source, client, root);
         }
     }
     
+    /// <summary>
+    ///     Lets an NPC answer a request with <see cref="BattleAI"/>, falling back to the default choice if anything goes wrong.
+    /// </summary>
+    private static void RespondAutomatically(BattleInstance source, BattleClient client, JsonElement root)
+    {
+        Console.WriteLine($"{client.Provider.BattleName} is responding automatically...");
+
+        var chosen = false;
+        try
+        {
+            chosen = BattleAI.TryChoose(source, client, root);
+        }
+        catch (Exception ex)
+        {
+            Mod.Logger.Error($"BattleAI failed for {client.Provider.BattleName}, using the default choice: {ex}");
+        }
+
+        if (chosen)
+            return;
+
+        if (client.Provider is PokemonNPC npc)
+            npc.AutoBattleChoice();
+        else if (client.Provider is TrainerNPC trainer)
+            trainer.AutoBattleChoice();
+    }
+
     public int LatestInteractor;
 
     /// <summary>
@@ -778,7 +877,9 @@ public sealed class BattleManager
         b.Omniscient.Receive(reader);
         buffer.Position = 0;
 
-        if (!onlyToSelf)
+        // In singleplayer and on the server the participants share the omniscient field,
+        // so reading the same actions twice would double boosts, turns and the like
+        if (!onlyToSelf && b.ClientA.Battle != null && b.ClientA.Battle != b.Omniscient)
         {
             b.ClientA.Battle.Receive(reader);
         }

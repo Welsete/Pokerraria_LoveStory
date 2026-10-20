@@ -29,7 +29,10 @@ public struct BattlePayloadRpc(IBattleProvider battleOwner, MemoryStream buffer)
 
         using var reader = new BinaryReader(_buffer);
         var c = _battleOwner.BattleClient;
-        var o = c.Battle;
+        var o = c?.Battle;
+        // Clients that never saw this battle start have no field to apply it to
+        if (o is null)
+            return;
         o.Receive(reader);
     }
 }
