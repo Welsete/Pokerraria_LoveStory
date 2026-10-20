@@ -70,6 +70,20 @@ public static class StatusVisuals
     }
 
     /// <summary>
+    ///     Draws little stars circling over a knocked out Pokémon.
+    /// </summary>
+    public static void DrawDizzyStars(SpriteBatch spriteBatch, Vector2 center, Vector2 screenPos, int seed)
+    {
+        var time = (float)Main.timeForVisualEffects / 18f + seed;
+        for (var i = 0; i < 3; i++)
+        {
+            var angle = time + i * MathHelper.TwoPi / 3f;
+            var pos = center - screenPos + new Vector2(MathF.Cos(angle) * 10f, MathF.Sin(angle) * 3f);
+            Utils.DrawBorderString(spriteBatch, "*", pos, new Color(255, 225, 90), 0.8f, 0.5f, 0.5f);
+        }
+    }
+
+    /// <summary>
     ///     Spawns the occasional particle around a Pokémon with a status condition. Call once per tick.
     /// </summary>
     public static void SpawnDust(NonVolatileStatus status, Rectangle hitbox)

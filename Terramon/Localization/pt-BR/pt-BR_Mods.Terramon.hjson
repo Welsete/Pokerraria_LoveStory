@@ -15,6 +15,7 @@ Battle: {
 	TieAgreed: "{0} e {1} combinaram um empate!"
 	TieForced: "A batalha entre {0} e {1} foi encerrada à força!"
 	Fainted: "{0} desmaiou!"
+	KnockedOutHint: "{0} está desmaiado! Jogue uma Poké Bola rápido para tentar capturar."
 	GainedExp: "{0} ganhou {1} pontos de Exp.!"
 	LevelUp: "{0} subiu para o Nv. {1}!"
 	ChooseNext: Escolha outro Pokémon para mandar à batalha.

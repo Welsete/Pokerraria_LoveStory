@@ -427,6 +427,9 @@ internal abstract class BasePkballProjectile : ModProjectile
         var ballName = GetType().Name.Split("Projectile")[0];
         _capture.Data.Ball = Enum.Parse<BallID>(ballName);
         var player = TerramonPlayer.LocalPlayer;
+        // Caught while knocked out: it comes to in the ball with a sliver of HP
+        if (_capture.Data.HP == 0)
+            _capture.Data.HP = 1;
         var addSuccess = player.AddPartyPokemon(_capture.Data, out var justRegistered);
         if (addSuccess)
         {
@@ -547,6 +550,8 @@ internal abstract class BasePkballProjectile : ModProjectile
             newPoke.Data = _capture.Data;
             newPoke.NPC.spriteDirection = _capture.NPC.spriteDirection;
             newPoke.NPC.FindFrame();
+            if (newPoke.Data.HP == 0)
+                newPoke.LeaveSoon();
             //newPoke.isShimmer = capture.isShimmer;
             //newPoke.level = capture.level;
             //newPoke.catchAttempts = capture.catchAttempts + 1;

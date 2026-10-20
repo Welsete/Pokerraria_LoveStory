@@ -31,9 +31,9 @@ public abstract class NPCAIComponent : NPCComponent
     protected bool PlasmaState => NPC.Pokemon().PlasmaState;
 
     /// <summary>
-    ///     Shorthand for <c>((PokemonNPC)NPC.ModNPC).BattleClient.BattleOngoing</c>.
+    ///     Whether the Pokémon should stand still: it's in a battle, or it fainted and is lying knocked out.
     /// </summary>
-    protected bool InBattle => NPC.Pokemon().BattleClient.BattleOngoing;
+    protected bool InBattle => NPC.Pokemon().BattleClient.BattleOngoing || NPC.Pokemon().Data is { HP: 0 };
 
     public override void SetDefaults(NPC npc)
     {

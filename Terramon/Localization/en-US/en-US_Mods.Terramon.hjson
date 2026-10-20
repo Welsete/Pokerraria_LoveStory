@@ -15,6 +15,7 @@ Battle: {
 	TieAgreed: "{0} and {1} agreed to a tie!"
 	TieForced: "{0} and {1}'s battle was forcibly ended!"
 	Fainted: "{0} fainted!"
+	KnockedOutHint: "{0} is knocked out! Throw a Poké Ball quickly to try to catch it."
 	GainedExp: "{0} gained {1} Exp. Points!"
 	LevelUp: "{0} grew to Lv. {1}!"
 	ChooseNext: Choose another Pokémon to send out.

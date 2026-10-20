@@ -47,6 +47,14 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     ];
 
     private int _cryTimer;
+
+    /// <summary>
+    ///     How long a fainted wild Pokémon lies on the ground after its battle, so it can still be caught.
+    /// </summary>
+    private const int KnockedOutTicks = 60 * 8;
+    private int _faintTime;
+    private int _knockedOutTime;
+    private int _lastFoe = -1;
     private bool _isSpawnedFromRelease;
     private Asset<Texture2D> _mainTexture;
     private int _mouseHoverTimer;
@@ -219,7 +227,13 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        if (!PlasmaState && Data is { Status: NonVolatileStatus.Slp })
+        if (PlasmaState)
+            return;
+
+        if (Data is { HP: 0 })
+            StatusVisuals.DrawDizzyStars(spriteBatch, NPC.Bottom - new Vector2(0f, NPC.frame.Width + 2f), screenPos,
+                NPC.whoAmI);
+        else if (Data is { Status: NonVolatileStatus.Slp })
             StatusVisuals.DrawSleepZ(spriteBatch, NPC.Top, screenPos, NPC.whoAmI);
     }
 
@@ -233,6 +247,18 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         var drawPos = NPC.Center - screenPos +
                       new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4);
+        var rotation = NPC.rotation;
+
+        if (Data is { HP: 0 } && !PlasmaState)
+        {
+            // Knocked out: tips over backwards onto its side, darkens, and blinks just before leaving
+            var fall = Math.Min(_faintTime / 15f, 1f);
+            rotation = fall * MathHelper.PiOver2 * (NPC.spriteDirection == 1 ? -1 : 1);
+            drawPos = Vector2.Lerp(drawPos, NPC.Bottom - screenPos - new Vector2(0f, frameSize.X / 2f - 2f), fall);
+            drawColor = Color.Lerp(drawColor, drawColor.MultiplyRGB(new Color(150, 150, 170)), fall);
+            if (KnockedOutTicks - _knockedOutTime < 90 && _knockedOutTime % 10 < 5)
+                drawColor *= 0.3f;
+        }
 
         var isHighlighted = NPC.whoAmI == _highlightedNPCIndex;
 
@@ -265,7 +291,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 ? PokemonPet.GrayscaleColor(drawColor)
                 : drawColor;
 
-            spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, adjustedColor, NPC.rotation,
+            spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, adjustedColor, rotation,
                 frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
 
             if (isHighlighted)
@@ -282,7 +308,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             {
                 drawColor = Color.White;
                 if (ID == NationalDexID.Gastly) drawColor.A = 128;
-                spriteBatch.Draw(glowTexture.Value, drawPos, NPC.frame, drawColor, NPC.rotation,
+                spriteBatch.Draw(glowTexture.Value, drawPos, NPC.frame, drawColor, rotation,
                     frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
             }
         }
@@ -352,15 +378,15 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         if (Data != null && !PlasmaState)
             StatusVisuals.SpawnDust(Data.Status, NPC.Hitbox);
 
-        // A wild Pokémon that fainted in battle leaves once the battle is over
-        if (Data is { HP: 0 } && BattleClient?.Foe == null && Main.netMode != NetmodeID.MultiplayerClient)
+        if (Data is { HP: 0 } && !PlasmaState)
         {
-            for (var i = 0; i < 20; i++)
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke);
-            NPC.active = false;
-            if (Main.dedServ)
-                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-            return;
+            UpdateKnockedOut();
+            if (!NPC.active)
+                return;
+        }
+        else
+        {
+            _faintTime = 0;
         }
         if (PlasmaState)
         {
@@ -405,6 +431,43 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         ShinyEffect();
     }
+
+    /// <summary>
+    ///     A fainted wild Pokémon falls over and lies there. Once its battle is over, the player has a few seconds to
+    ///     throw a Poké Ball at it before it leaves.
+    /// </summary>
+    private void UpdateKnockedOut()
+    {
+        if (_faintTime++ == 0 && !Main.dedServ)
+            SoundEngine.PlaySound(Data.GetCry() with { Pitch = -0.5f }, NPC.position);
+
+        NPC.velocity.X *= 0.8f;
+
+        if (BattleClient?.Foe != null)
+        {
+            if (BattleClient.Foe is TerramonPlayer foe)
+                _lastFoe = foe.Player.whoAmI;
+            return;
+        }
+
+        if (_knockedOutTime++ == 0 && _lastFoe == Main.myPlayer && !Main.dedServ)
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.KnockedOutHint", Data.DisplayName),
+                new Color(255, 215, 94));
+
+        if (_knockedOutTime < KnockedOutTicks || Main.netMode == NetmodeID.MultiplayerClient)
+            return;
+
+        for (var i = 0; i < 20; i++)
+            Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke);
+        NPC.active = false;
+        if (Main.dedServ)
+            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+    }
+
+    /// <summary>
+    ///     A knocked out Pokémon that broke out of a Poké Ball wakes up and runs off shortly after.
+    /// </summary>
+    public void LeaveSoon() => _knockedOutTime = Math.Max(_knockedOutTime, KnockedOutTicks - 30);
 
     private void ShinyEffect()
     {
