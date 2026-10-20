@@ -281,6 +281,9 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 
     public override void PostDraw(Color lightColor)
     {
+        if (!Projectile.isAPreviewDummy && Data is { Status: NonVolatileStatus.Slp })
+            StatusVisuals.DrawSleepZ(Main.spriteBatch, Projectile.Top, Main.screenPosition, Projectile.whoAmI);
+
         // Marks this pet for HP bar rendering if it needs one
         if (!Projectile.isAPreviewDummy && !BattleClient.LocalBattleOngoing && Data != null && Data.HP != Data.MaxHP)
             PetsNeedingHPBars.Add(Projectile.whoAmI);

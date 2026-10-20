@@ -217,6 +217,12 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         }
     }
 
+    public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+    {
+        if (!PlasmaState && Data is { Status: NonVolatileStatus.Slp })
+            StatusVisuals.DrawSleepZ(spriteBatch, NPC.Top, screenPos, NPC.whoAmI);
+    }
+
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
         drawColor = StatusVisuals.Tint(Data?.Status ?? NonVolatileStatus.None, drawColor);

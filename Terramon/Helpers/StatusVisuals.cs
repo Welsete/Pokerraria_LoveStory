@@ -51,6 +51,25 @@ public static class StatusVisuals
     }
 
     /// <summary>
+    ///     Draws little "z"s floating up from a sleeping Pokémon's head.
+    /// </summary>
+    /// <param name="head">The top of the Pokémon, in world coordinates.</param>
+    /// <param name="seed">Any per-Pokémon number, so nearby sleepers don't float in sync.</param>
+    public static void DrawSleepZ(SpriteBatch spriteBatch, Vector2 head, Vector2 screenPos, int seed)
+    {
+        const float period = 110f;
+        var time = (float)Main.timeForVisualEffects + seed * 37;
+        for (var i = 0; i < 3; i++)
+        {
+            // Each z rises from 0 to 1, a third of a loop apart from the previous one
+            var t = (time / period + i / 3f) % 1f;
+            var pos = head - screenPos + new Vector2(6f + t * 12f + MathF.Sin(t * MathHelper.TwoPi) * 3f, -4f - t * 24f);
+            var alpha = t < 0.15f ? t / 0.15f : 1f - (t - 0.15f) / 0.85f;
+            Utils.DrawBorderString(spriteBatch, "z", pos, new Color(225, 230, 255) * alpha, 0.55f + t * 0.45f, 0.5f, 0.5f);
+        }
+    }
+
+    /// <summary>
     ///     Spawns the occasional particle around a Pokémon with a status condition. Call once per tick.
     /// </summary>
     public static void SpawnDust(NonVolatileStatus status, Rectangle hitbox)
