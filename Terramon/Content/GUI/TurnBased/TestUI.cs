@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using EasyPacketsLib;
 using ReLogic.Content;
 using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets;
