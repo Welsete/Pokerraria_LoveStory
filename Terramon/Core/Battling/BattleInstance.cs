@@ -356,6 +356,10 @@ public sealed class BattleInstance
         {
             s.BaseStream.WriteByte(0); // footer
             ObserveSafely(owner.ID, (MemoryStream)s.BaseStream, onlyToSelf: true);
+
+            // Clients need the exact HP too, or their own Pokémon end up with the public percentage as HP
+            if (Main.dedServ)
+                Terramon.Instance.SendPacket(new BattlePayloadRpc(owner, (MemoryStream)s.BaseStream));
             s.Dispose();
             s = new BinaryWriter(new MemoryStream());
         }

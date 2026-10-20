@@ -259,6 +259,7 @@ public static class BattleAI
                 catch (Exception)
                 {
                     // Unknown species name; leave its types empty
+                    mon.Types = [];
                 }
             }
 
