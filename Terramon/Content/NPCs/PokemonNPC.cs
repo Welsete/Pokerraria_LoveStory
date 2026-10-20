@@ -219,6 +219,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
+        drawColor = StatusVisuals.Tint(Data?.Status ?? NonVolatileStatus.None, drawColor);
         _mainTexture ??= PokemonEntityLoader.RequestTexture(this);
         var mainTextureValue = _mainTexture.Value;
 
@@ -341,6 +342,9 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         }
 
         if (Data != null && Data.HP != 0) NPC.life = Data.HP;
+
+        if (Data != null && !PlasmaState)
+            StatusVisuals.SpawnDust(Data.Status, NPC.Hitbox);
 
         // A wild Pokémon that fainted in battle leaves once the battle is over
         if (Data is { HP: 0 } && BattleClient?.Foe == null && Main.netMode != NetmodeID.MultiplayerClient)

@@ -197,7 +197,7 @@ public class PokemonData
         int cur = 0;
         foreach ((StatID stat, byte effortIncrease) in evs)
         {
-            var overflow = TrainEV(stat, effortIncrease);
+            var overflow = (byte)(effortIncrease - TrainEV(stat, effortIncrease));
             if (overflow != 0)
                 overflows[cur++] = (stat, overflow);
         }
@@ -572,6 +572,9 @@ public class PokemonData
         if (_hp != MaxHP)
             tag["hp"] = _hp;
 
+        if (EVs.Sum != 0)
+            tag["evs"] = new[] { EVs.HP, EVs.Attack, EVs.Defense, EVs.SpAttack, EVs.SpDefense, EVs.Speed };
+
         if (Ball != BallID.PokeBall)
             tag["ball"] = (byte)Ball;
 
@@ -658,6 +661,12 @@ public class PokemonData
         data.IVs = tag.TryGet<uint>("ivs", out var ivs)
             ? new PokemonIVs(ivs)
             : PokemonIVs.Random();
+
+        if (tag.TryGet<byte[]>("evs", out var evs) && evs.Length == 6)
+            data.EVs = new PokemonEVs
+            {
+                HP = evs[0], Attack = evs[1], Defense = evs[2], SpAttack = evs[3], SpDefense = evs[4], Speed = evs[5]
+            };
 
         data.Moves = tag.TryGet<TagCompound>("moves", out var moves)
             ? PokemonMoves.Load(moves)
@@ -898,7 +907,7 @@ public struct PokemonIVs
         readonly get
         {
             var move = 5 * (int)iv;
-            return (byte)(Packed & (HPMask << (move)) >> (move));
+            return (byte)((Packed >> move) & HPMask);
         }
         set
         {
@@ -995,7 +1004,7 @@ public struct PokemonEVs
         fixed (byte* p = &HP)
         {
             ref var stat = ref *(p + (int)ev);
-            var applied = (byte)(amount - (byte)(byte.MaxValue - stat));
+            var applied = Math.Min(amount, stat);
             stat -= applied;
             return applied;
         }

@@ -1,6 +1,7 @@
 using Showdown.NET.Definitions;
 using Terramon.Core.Battling;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -288,7 +289,8 @@ public sealed class PokemonCard(LocalizedText title, Func<PokemonData> source) :
         var statusKey = "Mods.Terramon.GUI.BattleLog.Status." + mon.Status;
         var status = mon.HP == 0 ? Text("Status.Fnt") :
             Language.Exists(statusKey) ? Language.GetTextValue(statusKey) : Text("Status.None");
-        yield return Text("StatusLabel", status);
+        var statusHex = mon.HP == 0 ? "f05050" : StatusVisuals.ColorOf(mon.Status)?.Hex3();
+        yield return Text("StatusLabel", statusHex == null ? status : Colored(statusHex, status));
 
         var changes = new List<string>();
         foreach (var stat in new[] { StatID.Atk, StatID.Def, StatID.SpA, StatID.SpD, StatID.Spe })

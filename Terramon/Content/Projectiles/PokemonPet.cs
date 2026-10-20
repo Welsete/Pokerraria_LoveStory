@@ -178,6 +178,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 
     public override bool PreDraw(ref Color lightColor)
     {
+        lightColor = StatusVisuals.Tint(Data?.Status ?? NonVolatileStatus.None, lightColor);
         _mainTexture ??= PokemonEntityLoader.RequestTexture(this);
 
         if (Projectile.isAPreviewDummy)
@@ -418,6 +419,9 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         var owningPlayer = Main.player[Projectile.owner];
         var modPlayer = owningPlayer.Terramon();
         var activePokemon = modPlayer.GetActivePokemon();
+
+        if (Data != null && !Projectile.isAPreviewDummy)
+            StatusVisuals.SpawnDust(Data.Status, Projectile.Hitbox);
 
         var isShiny = Data is { IsShiny: true };
 

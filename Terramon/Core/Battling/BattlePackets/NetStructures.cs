@@ -125,6 +125,12 @@ public readonly record struct SimplePackedPokemon
     ///     Contains 8 bits of move 4
     /// </summary>
     public readonly byte MovesB;
+    /// <summary>
+    ///     HP the Pokémon enters the battle with, or <see cref="FullHP" /> when it isn't hurt.
+    /// </summary>
+    public readonly ushort HP;
+
+    public const ushort FullHP = ushort.MaxValue;
 
     public readonly bool HasNickname => (Header & 0b1) != 0;
     public readonly bool HasItem => (Header & 0b10) != 0;
@@ -154,6 +160,7 @@ public readonly record struct SimplePackedPokemon
         }
         EVs = data.EVs;
         Level = data.Level;
+        HP = data.HP >= data.MaxHP ? FullHP : data.HP;
 
         Header |= (byte)((uint)data.Gender << 2);
         Header |= (byte)((uint)(data.Ball > BallID.CherishBall ? BallID.PokeBall - 1 : data.Ball - 1) << 4);
@@ -204,6 +211,7 @@ public readonly record struct SimplePackedPokemon
         Level = r.ReadByte();
         MovesA = r.ReadUInt32();
         MovesB = r.ReadByte();
+        HP = r.ReadUInt16();
     }
 
     public void Write(BinaryWriter w)
@@ -218,6 +226,7 @@ public readonly record struct SimplePackedPokemon
         w.Write(Level);
         w.Write(MovesA);
         w.Write(MovesB);
+        w.Write(HP);
     }
 
     public override string ToString()

@@ -90,6 +90,19 @@ public sealed class BattleInstance
         Console.WriteLine(setPlayer);
 
         Stream.Write(setPlayer);
+
+        // Showdown starts every Pokémon at full HP, so bring over the HP each one really has
+        for (var i = 0; i < packedTeam.Length; i++)
+        {
+            var hp = packedTeam[i].HP;
+            if (hp == SimplePackedPokemon.FullHP)
+                continue;
+
+            var mon = $"battle.sides[{plr - 1}].pokemon[{i}]";
+            Stream.Write(hp == 0
+                ? $">eval {mon}.hp = 0; {mon}.fainted = true; {mon}.status = 'fnt'; battle.sides[{plr - 1}].pokemonLeft--"
+                : $">eval {mon}.hp = Math.min({hp}, {mon}.maxhp)");
+        }
     }
 
     public void SubmitChoice(int plr, BattleChoice choice, int operand)

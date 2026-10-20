@@ -1,5 +1,6 @@
 using Showdown.NET.Protocol;
 using Terramon.Core.Battling.BattlePackets;
+using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.Chat;
 using Terraria.Localization;
@@ -150,13 +151,15 @@ public static class BattleLog
                     Stat(unboost.Stat.ToString()));
                 break;
             case StatusElement status:
-                Send(source, "Status." + status.Status, StatusColor, Mon(source, status.Pokemon));
+                Send(source, "Status." + status.Status, StatusVisuals.ColorOf(status.Status.ToString()) ?? StatusColor,
+                    Mon(source, status.Pokemon));
                 break;
             case CureStatusElement cure:
                 Send(source, "Cured", Good, Mon(source, cure.Pokemon));
                 break;
             case CantElement cant:
-                Send(source, "Cant." + cant.Reason, StatusColor, Mon(source, cant.Pokemon));
+                Send(source, "Cant." + cant.Reason, StatusVisuals.ColorOf(cant.Reason.ToString()) ?? StatusColor,
+                    Mon(source, cant.Pokemon));
                 break;
         }
     }
