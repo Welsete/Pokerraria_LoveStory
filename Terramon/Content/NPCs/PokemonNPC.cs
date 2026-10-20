@@ -515,7 +515,16 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public override bool? CanBeHitByProjectile(Projectile projectile)
     {
-        return projectile.ModProjectile is BasePkballProjectile && !PlasmaState && !BattleClient.BattleOngoing;
+        if (projectile.ModProjectile is not BasePkballProjectile || PlasmaState)
+            return false;
+        if (!BattleClient.BattleOngoing)
+            return true;
+
+        // Mid-battle, only the player fighting this Pokémon can throw a ball at it, and only when choosing an action
+        // (the throw then takes their turn, see BasePkballProjectile)
+        if (BattleClient.Foe is not TerramonPlayer thrower || thrower.Player.whoAmI != projectile.owner)
+            return false;
+        return projectile.owner != Main.myPlayer || BattleClient.LocalClient.CurrentRequest == ShowdownRequest.Any;
     }
     
     public override bool CanBeHitByNPC(NPC attacker)
