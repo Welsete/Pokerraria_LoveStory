@@ -8,6 +8,7 @@ using Terramon.Content.WorldGeneration;
 using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.ID;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
@@ -80,6 +81,7 @@ public sealed class AdminPanelUI : SmartUIState
             ("ClearBattles", ClearBattles),
             ("TeleportBrockGym", TeleportToBrockGym),
             ("BuildBrockGym", BuildBrockGymHere),
+            ("SpawnOnix", SpawnOnix),
             ("Close", Toggle)
         ];
 
@@ -218,6 +220,14 @@ public sealed class AdminPanelUI : SmartUIState
             return;
         var pos = InFrontOfPlayer();
         NPC.NewNPC(Main.LocalPlayer.GetSource_FromThis(), (int)pos.X, (int)pos.Y, Main.rand.Next(types));
+    }
+
+    private static void SpawnOnix()
+    {
+        if (!PokemonEntityLoader.IDToNPCType.TryGetValue(NationalDexID.Onix, out var type))
+            return;
+        var pos = InFrontOfPlayer();
+        NPC.NewNPC(Main.LocalPlayer.GetSource_FromThis(), (int)pos.X, (int)pos.Y, type);
     }
 
     private static void ClearWild()

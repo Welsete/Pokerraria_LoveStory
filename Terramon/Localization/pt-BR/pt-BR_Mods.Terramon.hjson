@@ -401,6 +401,7 @@ GUI: {
 		NoBrockGym: Este mundo não tem Ginásio do Brock. Crie um mundo novo ou use "Construir Ginásio do Brock aqui".
 		SingleplayerOnly: Isso só funciona no modo de um jogador.
 		BrockGymBuilt: O Ginásio do Brock foi construído ao seu redor.
+		SpawnOnix: Chamar Onix selvagem
 		Close: Fechar
 		ItemsGiven: Você recebeu Poké Bolas, Poções, Reviveres e Doces Raros
 		BossDowned: "{0}: agora conta como derrotado"
@@ -1600,6 +1601,10 @@ Items.LeaguePedestalItem: {
 
 BrockGym: {
 	Welcome: "{0} está te esperando no palco. Fale com ele para desafiar o Ginásio de Pewter!"
+	Sign: Ginásio de Pewter. Líder: Brock, o treinador Pokémon duro como pedra! Desça pela corda.
+	Announce: "O Ginásio do Brock fica nas cavernas, a {0} blocos a {1} do ponto de nascimento. Procure o arco de pedra com uma placa e uma corda descendo, ou a Insígnia Rocha no mapa."
+	MapName: Ginásio do Brock (Pewter)
+	MapEntrance: Entrada do Ginásio do Brock
 }
 
 WorldGen.BrockGymPass: Escavando o Ginásio do Brock

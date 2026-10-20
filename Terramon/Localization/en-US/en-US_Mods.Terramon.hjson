@@ -401,6 +401,7 @@ GUI: {
 		NoBrockGym: This world has no Brock's Gym. Create a new world or use "Build Brock's Gym here".
 		SingleplayerOnly: This only works in singleplayer.
 		BrockGymBuilt: Brock's Gym was built around you.
+		SpawnOnix: Spawn wild Onix
 		Close: Close
 		ItemsGiven: Received Poké Balls, Potions, Revives and Rare Candies
 		BossDowned: "{0} now counts as defeated"
@@ -1600,6 +1601,10 @@ Items.LeaguePedestalItem: {
 
 BrockGym: {
 	Welcome: "{0} is waiting for you on the stage. Talk to him to challenge the Pewter City Gym!"
+	Sign: Pewter City Gym. Leader: Brock, the rock-solid Pokémon trainer! Climb down the rope.
+	Announce: "Brock's Gym is in the caverns {0} tiles {1} of spawn. Look for the stone arch with a sign and a rope going down, or for the Boulder Badge on the map."
+	MapName: Brock's Gym (Pewter City)
+	MapEntrance: Entrance to Brock's Gym
 }
 
 WorldGen.BrockGymPass: Digging out Brock's Gym

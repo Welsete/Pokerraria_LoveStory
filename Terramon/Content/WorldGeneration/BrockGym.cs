@@ -1,9 +1,10 @@
 using Terramon.Content.NPCs.Trainers;
-using Terramon.Content.Tiles.Paintings;
 using Terraria.DataStructures;
 using Terraria.IO;
 using Terraria.Localization;
+using Terraria.Map;
 using Terraria.ModLoader.IO;
+using Terraria.UI;
 using Terraria.WorldBuilding;
 
 namespace Terramon.Content.WorldGeneration;
@@ -23,6 +24,11 @@ public class BrockGymSystem : ModSystem
     ///     Where Brock stands: the tile his feet rest on.
     /// </summary>
     public static Point LeaderSpot { get; internal set; }
+
+    /// <summary>
+    ///     The top of the rope shaft at the surface, under the stone arch.
+    /// </summary>
+    public static Point SurfaceEntrance { get; internal set; }
 
     public static bool Exists => Interior != Rectangle.Empty;
 
@@ -44,6 +50,7 @@ public class BrockGymSystem : ModSystem
     {
         Interior = Rectangle.Empty;
         LeaderSpot = Point.Zero;
+        SurfaceEntrance = Point.Zero;
         _occupied = false;
     }
 
@@ -51,15 +58,20 @@ public class BrockGymSystem : ModSystem
     {
         if (!Exists)
             return;
-        tag["brockGym"] = new[] { Interior.X, Interior.Y, Interior.Width, Interior.Height, LeaderSpot.X, LeaderSpot.Y };
+        tag["brockGym"] = new[]
+        {
+            Interior.X, Interior.Y, Interior.Width, Interior.Height, LeaderSpot.X, LeaderSpot.Y, SurfaceEntrance.X,
+            SurfaceEntrance.Y
+        };
     }
 
     public override void LoadWorldData(TagCompound tag)
     {
-        if (tag.TryGet<int[]>("brockGym", out var data) && data.Length == 6)
+        if (tag.TryGet<int[]>("brockGym", out var data) && data.Length >= 6)
         {
             Interior = new Rectangle(data[0], data[1], data[2], data[3]);
             LeaderSpot = new Point(data[4], data[5]);
+            SurfaceEntrance = data.Length >= 8 ? new Point(data[6], data[7]) : Point.Zero;
         }
     }
 
@@ -71,12 +83,15 @@ public class BrockGymSystem : ModSystem
         writer.Write(Interior.Height);
         writer.Write(LeaderSpot.X);
         writer.Write(LeaderSpot.Y);
+        writer.Write(SurfaceEntrance.X);
+        writer.Write(SurfaceEntrance.Y);
     }
 
     public override void NetReceive(BinaryReader reader)
     {
         Interior = new Rectangle(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32());
         LeaderSpot = new Point(reader.ReadInt32(), reader.ReadInt32());
+        SurfaceEntrance = new Point(reader.ReadInt32(), reader.ReadInt32());
     }
 
     public override void PostUpdateWorld()
@@ -126,6 +141,66 @@ public class BrockGymSystem : ModSystem
 }
 
 /// <summary>
+///     Shows the Boulder Badge on the map over Brock's Gym, and over its entrance at the surface.
+/// </summary>
+public class BrockGymMapLayer : ModMapLayer
+{
+    public override void Draw(ref MapOverlayDrawContext context, ref string text)
+    {
+        if (!BrockGymSystem.Exists)
+            return;
+
+        var icon = ModContent.Request<Texture2D>("Terramon/Assets/Items/Badges/BoulderBadge").Value;
+        var gym = BrockGymSystem.Interior.Center.ToVector2();
+        if (context.Draw(icon, gym, Color.White, new SpriteFrame(1, 1, 0, 0), 0.9f, 1.4f, Alignment.Center)
+            .IsMouseOver)
+            text = Language.GetTextValue("Mods.Terramon.BrockGym.MapName");
+
+        if (BrockGymSystem.SurfaceEntrance == Point.Zero)
+            return;
+        if (context.Draw(icon, BrockGymSystem.SurfaceEntrance.ToVector2(), Color.White * 0.8f,
+                new SpriteFrame(1, 1, 0, 0), 0.6f, 1f, Alignment.Bottom).IsMouseOver)
+            text = Language.GetTextValue("Mods.Terramon.BrockGym.MapEntrance");
+    }
+}
+
+/// <summary>
+///     Tells each player once per world where Brock's Gym is.
+/// </summary>
+public class BrockGymPlayer : ModPlayer
+{
+    private readonly HashSet<string> _toldWorlds = [];
+
+    public override void OnEnterWorld()
+    {
+        var world = Main.ActiveWorldFileData?.UniqueId.ToString();
+        if (!BrockGymSystem.Exists || string.IsNullOrEmpty(world) || !_toldWorlds.Add(world))
+            return;
+
+        var entrance = BrockGymSystem.SurfaceEntrance == Point.Zero
+            ? BrockGymSystem.Interior.Center
+            : BrockGymSystem.SurfaceEntrance;
+        var offset = entrance.X - Main.spawnTileX;
+        var direction = Language.GetTextValue("Mods.Terramon.Pedestals." + (offset < 0 ? "West" : "East"));
+        Main.NewText(Language.GetTextValue("Mods.Terramon.BrockGym.Announce", Math.Abs(offset), direction),
+            new Color(200, 170, 120));
+    }
+
+    public override void SaveData(TagCompound tag)
+    {
+        if (_toldWorlds.Count > 0)
+            tag["brockGymTold"] = _toldWorlds.ToList();
+    }
+
+    public override void LoadData(TagCompound tag)
+    {
+        _toldWorlds.Clear();
+        foreach (var world in tag.GetList<string>("brockGymTold"))
+            _toldWorlds.Add(world);
+    }
+}
+
+/// <summary>
 ///     Finds a spot in the caverns close to spawn and builds Brock's Gym there.
 /// </summary>
 public class BrockGymPass(string name, float loadWeight) : GenPass(name, loadWeight)
@@ -153,12 +228,17 @@ public class BrockGymPass(string name, float loadWeight) : GenPass(name, loadWei
 public static class BrockGymBuilder
 {
     // Outer size, shell included
-    public const int Width = 56;
-    public const int Height = 24;
+    public const int Width = 62;
+    public const int Height = 26;
     private const int Shell = 2;
     private const int EntranceGap = 6; // Tunnel between the left door and the rope shaft
+    private const int StageHeight = 3;
 
-    private const ushort Brick = TileID.GrayBrick;
+    private const byte NoPaint = 0;
+
+    // Lantern styles of TileID.HangingLanterns
+    private const int ChainLantern = 0;
+    private const int BrassLantern = 1;
 
     /// <summary>
     ///     Tries random spots underground, a short walk from spawn, and builds the gym in the first that fits.
@@ -167,7 +247,7 @@ public static class BrockGymBuilder
     {
         var minDepth = (int)Main.worldSurface + 20;
         var maxDepth = Math.Max(minDepth + 10, (int)Main.rockLayer + 40);
-        for (var attempt = 0; attempt < 600; attempt++)
+        for (var attempt = 0; attempt < 800; attempt++)
         {
             var offset = WorldGen.genRand.Next(50, 200);
             var left = Main.spawnTileX + (WorldGen.genRand.NextBool() ? offset : -offset - Width);
@@ -176,8 +256,7 @@ public static class BrockGymBuilder
                 continue;
 
             Build(left, top);
-            GenVars.structures?.AddProtectedStructure(
-                new Rectangle(left - EntranceGap - 4, top - 2, Width + EntranceGap + 8, Height + 4), 4);
+            GenVars.structures?.AddProtectedStructure(Footprint(left, top), 4);
             Terramon.Instance.Logger.Info($"Built Brock's Gym at ({left}, {top}).");
             return true;
         }
@@ -185,15 +264,40 @@ public static class BrockGymBuilder
         return false;
     }
 
+    private static Rectangle Footprint(int left, int top)
+        => new(left - EntranceGap - 4, top - 2, Width + EntranceGap + 8, Height + 4);
+
     private static bool CanPlace(int left, int top)
     {
-        var area = new Rectangle(left - EntranceGap - 4, top - 2, Width + EntranceGap + 8, Height + 4);
+        var area = Footprint(left, top);
         if (area.Left < 100 || area.Right > Main.maxTilesX - 100 || area.Bottom > Main.UnderworldLayer - 20)
             return false;
         if (Math.Abs(left + Width / 2 - Main.dungeonX) < 200)
             return false;
         if (GenVars.structures != null && !GenVars.structures.CanPlace(area))
             return false;
+
+        // No water, lava or shimmer anywhere near, since it would pour into the hall
+        var wet = new Rectangle(area.X - 10, area.Y - 10, area.Width + 20, area.Height + 20);
+        for (var x = wet.Left; x < wet.Right; x++)
+        {
+            for (var y = wet.Top; y < wet.Bottom; y++)
+            {
+                if (Main.tile[x, y].LiquidAmount > 0)
+                    return false;
+            }
+        }
+
+        // ...nor in the shaft up to the surface
+        var shaftX = left - EntranceGap;
+        for (var x = shaftX - 4; x <= shaftX + 4; x++)
+        {
+            for (var y = (int)(Main.worldSurface * 0.35); y < area.Top; y++)
+            {
+                if (Main.tile[x, y].LiquidAmount > 0)
+                    return false;
+            }
+        }
 
         // Mostly buried in natural ground (a cave running through it is fine), with nothing built in the way
         var solid = 0;
@@ -202,18 +306,14 @@ public static class BrockGymBuilder
             for (var y = area.Top; y < area.Bottom; y++)
             {
                 var tile = Main.tile[x, y];
-                if (tile.HasTile)
-                {
-                    if (TileID.Sets.BasicChest[tile.TileType] || tile.TileType is TileID.LihzahrdBrick
-                            or TileID.BlueDungeonBrick or TileID.GreenDungeonBrick or TileID.PinkDungeonBrick
-                            or TileID.Hive or TileID.LivingWood)
-                        return false;
-                    if (Main.tileSolid[tile.TileType])
-                        solid++;
-                }
-
-                if (tile.LiquidType == LiquidID.Shimmer && tile.LiquidAmount > 0)
+                if (!tile.HasTile)
+                    continue;
+                if (TileID.Sets.BasicChest[tile.TileType] || tile.TileType is TileID.LihzahrdBrick
+                        or TileID.BlueDungeonBrick or TileID.GreenDungeonBrick or TileID.PinkDungeonBrick
+                        or TileID.Hive or TileID.LivingWood)
                     return false;
+                if (Main.tileSolid[tile.TileType])
+                    solid++;
             }
         }
 
@@ -231,68 +331,203 @@ public static class BrockGymBuilder
         var floorY = bottom - Shell; // First row of the floor; the air ends just above it
         var inLeft = left + Shell;
         var inRight = right - Shell;
-        var centerLeft = left + 19;
-        var centerRight = right - 19;
+        var ceilingY = top + Shell;
+        var centerLeft = left + 17;
+        var centerRight = right - 17;
+        var stageLeft = centerRight + 2;
+        var stageTop = floorY - StageHeight;
 
-        // Shell of stone bricks, hollow inside
+        // Shell: gray brick outside, a layer of stone slab inside, hollow in the middle
         for (var x = left; x <= right; x++)
         {
             for (var y = top; y <= bottom; y++)
             {
                 var tile = Main.tile[x, y];
                 tile.ClearEverything();
-                var inside = x >= inLeft && x <= inRight && y >= top + Shell && y < floorY;
-                if (!inside)
-                    PlaceBlock(x, y, Brick);
+                var inside = x >= inLeft && x <= inRight && y >= ceilingY && y < floorY;
+                if (inside)
+                    continue;
+                var outer = x == left || x == right || y == top || y == bottom;
+                PlaceBlock(x, y, outer ? TileID.GrayBrick : TileID.StoneSlab);
             }
         }
 
-        // The side halls have a lower ceiling than the middle one, and the outer corners are sloped
+        // The side halls have a lower ceiling than the arena, and the outer corners are sloped
         for (var x = inLeft; x <= inRight; x++)
         {
             var sideHall = x < centerLeft || x > centerRight;
-            var ceiling = top + Shell + (sideHall ? 3 : 0) + Math.Max(0, 3 - Math.Min(x - inLeft, inRight - x));
-            for (var y = top + Shell; y < ceiling; y++)
-                PlaceBlock(x, y, Brick);
+            var ceiling = ceilingY + (sideHall ? 3 : 0) + Math.Max(0, 3 - Math.Min(x - inLeft, inRight - x));
+            for (var y = ceilingY; y < ceiling; y++)
+                PlaceBlock(x, y, y == ceiling - 1 ? TileID.GrayBrick : TileID.StoneSlab);
         }
 
-        // Back walls: rough stone, gray brick around the beams, and wooden bands
-        var beams = new[] { inLeft + 7, centerLeft - 1, centerRight + 1, inRight - 7 };
+        BuildWalls(inLeft, inRight, ceilingY, floorY, centerLeft, centerRight);
+        BuildArenaFloor(centerLeft - 3, stageLeft - 1, floorY);
+
+        // Brock's raised stage: gray brick with a stone slab top, and steps down to the arena
+        for (var x = stageLeft; x <= inRight; x++)
+        {
+            for (var y = stageTop; y < floorY; y++)
+                PlaceBlock(x, y, y == stageTop ? TileID.StoneSlab : TileID.GrayBrick);
+        }
+
+        for (var step = 1; step < StageHeight; step++)
+        {
+            for (var y = floorY - step; y < floorY; y++)
+                PlaceBlock(stageLeft - step, y, TileID.GrayBrick);
+        }
+
+        for (var step = 0; step < StageHeight; step++)
+            WorldGen.SlopeTile(stageLeft - step, floorY - StageHeight + step, (int)SlopeType.SlopeDownRight);
+
+        BuildMural((centerLeft + centerRight) / 2 - 15, ceilingY + 1);
+        BuildDoors(left, right, floorY, stageTop);
+        Decorate(inLeft, inRight, ceilingY, floorY, centerLeft, centerRight, stageLeft, stageTop);
+        BuildEntrance(left, floorY);
+
+        WorldGen.RangeFrame(left - EntranceGap - 4, top - 2, right + 2, bottom + 2);
+
+        BrockGymSystem.Interior = new Rectangle(inLeft, ceilingY, inRight - inLeft + 1, floorY - ceilingY);
+        BrockGymSystem.LeaderSpot = new Point(inRight - 6, stageTop);
+    }
+
+    /// <summary>
+    ///     Carved cave walls, stone slab and palladium column pillars, and a slab band under the ceiling.
+    /// </summary>
+    private static void BuildWalls(int inLeft, int inRight, int ceilingY, int floorY, int centerLeft,
+        int centerRight)
+    {
+        var cave = WallByName("Cave8Unsafe", WallID.Stone);
+        var dirt = WallByName("Cave6Unsafe", WallID.DirtUnsafe);
+        var pillars = new[] { inLeft + 7, centerLeft - 1, centerRight + 1, inRight - 7 };
         for (var x = inLeft; x <= inRight; x++)
         {
-            for (var y = top + Shell; y < floorY; y++)
+            for (var y = ceilingY; y < floorY; y++)
             {
-                ushort wall = WallID.Stone;
-                if (beams.Any(b => Math.Abs(b - x) <= 1))
-                    wall = WallID.GrayBrick;
-                if (y == top + Shell + 6 || y == floorY - 5)
-                    wall = WallID.Wood;
-                Main.tile[x, y].WallType = wall;
+                var tile = Main.tile[x, y];
+                tile.WallType = WorldGen.genRand.NextBool(5) ? dirt : cave;
+                tile.WallColor = NoPaint;
+
+                var pillar = pillars.Select(p => Math.Abs(p - x)).Min();
+                if (pillar == 0)
+                    tile.WallType = WallID.StoneSlab;
+                else if (pillar == 1)
+                {
+                    tile.WallType = WallID.PalladiumColumn;
+                    tile.WallColor = PaintID.GrayPaint;
+                }
+                else if (y <= ceilingY + 3 && (x < centerLeft || x > centerRight) || y == ceilingY)
+                    tile.WallType = WallID.StoneSlab;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     The middle of the arena: uneven ground of stone, mudstone and dirt, with ramps between the steps.
+    /// </summary>
+    private static void BuildArenaFloor(int from, int to, int floorY)
+    {
+        var mud = WorldGen.genRand.NextBool() ? TileID.Mud : TileID.Dirt;
+        var heights = new int[to - from + 1];
+        var height = 0;
+        for (var i = 0; i < heights.Length; i++)
+        {
+            // A gentle random walk, flat near both ends so the halls join up
+            var nearEnd = i < 3 || i > heights.Length - 4;
+            if (nearEnd)
+                height = 0;
+            else if (WorldGen.genRand.NextBool(3))
+                height = Math.Clamp(height + WorldGen.genRand.Next(-1, 2), 0, 2);
+            heights[i] = height;
+        }
+
+        for (var i = 0; i < heights.Length; i++)
+        {
+            var x = from + i;
+            for (var y = floorY - heights[i]; y <= floorY; y++)
+            {
+                var roll = WorldGen.genRand.Next(10);
+                var type = roll < 6 ? TileID.Stone : roll < 8 ? TileID.StoneSlab : (ushort)mud;
+                PlaceBlock(x, y, type);
             }
         }
 
-        // Wooden beams from floor to ceiling (they're background tiles, so they don't block anyone)
-        foreach (var x in beams)
+        // Ramps wherever the ground steps up or down, so walking across never needs a jump
+        for (var i = 1; i < heights.Length - 1; i++)
         {
-            for (var y = top + Shell; y < floorY; y++)
+            var x = from + i;
+            var y = floorY - heights[i];
+            if (heights[i] <= 0)
+                continue;
+            if (heights[i - 1] < heights[i])
+                WorldGen.SlopeTile(x, y, (int)SlopeType.SlopeDownRight);
+            else if (heights[i + 1] < heights[i])
+                WorldGen.SlopeTile(x, y, (int)SlopeType.SlopeDownLeft);
+        }
+    }
+
+    /// <summary>
+    ///     The mural of a Poké Ball and the Boulder Badge, drawn tile by tile with gemspark walls (turned off) and paint.
+    /// </summary>
+    private static void BuildMural(int left, int top)
+    {
+        const int w = 31;
+        const int h = 15;
+        var white = WallByName("DiamondGemsparkOff", WallID.MarbleBlock);
+        var red = WallByName("RubyGemsparkOff", WallID.MarbleBlock);
+        var amber = WallByName("AmberGemsparkOff", WallID.MarbleBlock);
+        var marble = WallByName("MarbleBlock", WallID.MarbleBlock);
+
+        for (var i = 0; i < w; i++)
+        {
+            for (var j = 0; j < h; j++)
             {
-                if (!Main.tile[x, y].HasTile)
-                    PlaceBlock(x, y, TileID.WoodenBeam);
+                var tile = Main.tile[left + i, top + j];
+                ushort wall;
+                byte paint = NoPaint;
+
+                if (i == 0 || j == 0 || i == w - 1 || j == h - 1 || i == w / 2)
+                    (wall, paint) = (WallID.StoneSlab, NoPaint); // Frame and the line between the halves
+                else if (i < w / 2)
+                    (wall, paint) = PokeBallPixel(i - 8, j - 7, white, red, marble);
+                else
+                    (wall, paint) = BadgePixel(i - 23, j - 7, white, amber);
+
+                tile.WallType = wall;
+                tile.WallColor = paint;
             }
         }
+    }
 
-        // A raised stage on the right where Brock stands, with a step
-        var stageLeft = centerRight - 4;
-        for (var x = stageLeft; x <= inRight; x++)
-            PlaceBlock(x, floorY - 1, Brick);
-        var step = Main.tile[stageLeft, floorY - 1];
-        step.IsHalfBlock = true;
+    private static (ushort, byte) PokeBallPixel(int dx, int dy, ushort white, ushort red, ushort background)
+    {
+        var dist = Math.Sqrt(dx * dx + dy * dy);
+        if (dist > 6.2)
+            return (background, PaintID.GrayPaint);
+        if (dist > 5.3 || Math.Abs(dy) == 0 || dist <= 2.2 && dist > 1.2)
+            return (white, PaintID.BlackPaint); // Outline, middle band and the button's ring
+        if (dist <= 1.2)
+            return (white, NoPaint); // Button
+        return dy < 0 ? (red, NoPaint) : (white, NoPaint);
+    }
 
-        // Doors on both sides
-        foreach (var x in new[] { left + 1, right - 1 })
+    private static (ushort, byte) BadgePixel(int dx, int dy, ushort white, ushort amber)
+    {
+        // An octagon, like the Boulder Badge
+        var size = Math.Max(Math.Abs(dx), Math.Abs(dy)) + Math.Min(Math.Abs(dx), Math.Abs(dy)) / 2.0;
+        if (Math.Abs(dx) > 6 || Math.Abs(dy) > 6 || size > 7.5)
+            return (amber, NoPaint);
+        if (Math.Abs(dx) == 6 || Math.Abs(dy) == 6 || size > 6.5)
+            return (white, PaintID.BlackPaint);
+        if (dx is -3 or -2 && dy is -3 or -2)
+            return (white, NoPaint); // Shine
+        return (white, PaintID.GrayPaint);
+    }
+
+    private static void BuildDoors(int left, int right, int floorY, int stageTop)
+    {
+        foreach (var (x, outer, doorFloor) in new[] { (left + 1, left, floorY), (right - 1, right, stageTop) })
         {
-            var outer = x == left + 1 ? left : right;
-            var doorFloor = x == right - 1 ? floorY - 1 : floorY;
             for (var y = doorFloor - 3; y < doorFloor; y++)
             {
                 Main.tile[x, y].ClearTile();
@@ -301,39 +536,83 @@ public static class BrockGymBuilder
 
             WorldGen.PlaceTile(x, doorFloor - 2, TileID.ClosedDoor, true, true);
         }
+    }
 
-        // The painting: a Poké Ball and the Boulder Badge
-        var paintingX = (centerLeft + centerRight) / 2 - 3;
-        WorldGen.PlaceObject(paintingX, top + Shell + 2, ModContent.TileType<BrockPaintingTile>(), true);
+    private static void Decorate(int inLeft, int inRight, int ceilingY, int floorY, int centerLeft, int centerRight,
+        int stageLeft, int stageTop)
+    {
+        // Brass and chain lanterns hanging on chains
+        var arenaMid = (centerLeft + centerRight) / 2;
+        foreach (var (x, length, style) in new[]
+                 {
+                     (centerLeft + 2, 4, BrassLantern), (arenaMid - 9, 2, ChainLantern),
+                     (arenaMid + 9, 2, ChainLantern), (centerRight - 2, 4, BrassLantern)
+                 })
+            HangLantern(x, ceilingY, length, style);
+        foreach (var x in new[] { inLeft + 4, inLeft + 11, inRight - 4 })
+            HangLantern(x, ceilingY + 3, 2, BrassLantern);
 
-        // Lanterns under the ceiling of every hall
-        foreach (var x in new[] { centerLeft + 2, (centerLeft + centerRight) / 2, centerRight - 2 })
-            WorldGen.PlaceObject(x, top + Shell, TileID.HangingLanterns, true, 0);
-        foreach (var x in new[] { inLeft + 4, inRight - 4 })
-            WorldGen.PlaceObject(x, top + Shell + 3, TileID.HangingLanterns, true, 0);
+        // Torches on the pillars
+        foreach (var x in new[] { inLeft + 7, centerLeft - 1, centerRight + 1, inRight - 7 })
+            WorldGen.PlaceTile(x, x > centerRight ? stageTop - 4 : floorY - 4, TileID.Torches, true, false, -1, 0);
 
-        // Torches along the walls
-        foreach (var x in new[] { inLeft, inRight, beams[0] - 2, beams[3] + 2, centerLeft + 1, centerRight - 1 })
-            WorldGen.PlaceTile(x, floorY - 4, TileID.Torches, true, false, -1, 0);
+        // Weapon racks on the side walls
+        WorldGen.PlaceObject(inLeft + 2, floorY - 5, TileID.WeaponsRack2, true);
+        WorldGen.PlaceObject(inRight - 2, stageTop - 5, TileID.WeaponsRack2, true);
 
-        // Some furniture: pots, a bookcase, a table and chairs
-        foreach (var x in new[] { inLeft + 2, inLeft + 10, centerLeft + 3, centerRight - 6 })
+        // Clay pots along the walls and on the stage
+        foreach (var x in new[] { inLeft + 1, inLeft + 9, inLeft + 13 })
             WorldGen.PlaceTile(x, floorY - 1, TileID.Pots, true, false, -1, WorldGen.genRand.Next(4));
-        WorldGen.PlaceObject(inLeft + 13, floorY - 1, TileID.Bookcases, true, 0);
-        WorldGen.PlaceObject(centerLeft + 8, floorY - 1, TileID.Tables, true, 0);
-        WorldGen.PlaceObject(centerLeft + 6, floorY - 1, TileID.Chairs, true, 0, direction: 1);
-        WorldGen.PlaceObject(centerLeft + 10, floorY - 1, TileID.Chairs, true, 0, direction: -1);
+        foreach (var x in new[] { inRight - 1, stageLeft + 1 })
+            WorldGen.PlaceTile(x, stageTop - 1, TileID.Pots, true, false, -1, WorldGen.genRand.Next(4));
 
-        BuildEntrance(left, floorY);
+        // Boulders resting on flat spots of the arena (they only roll if someone digs under them)
+        var placed = 0;
+        for (var x = centerLeft + 2; x < stageLeft - 4 && placed < 3; x += WorldGen.genRand.Next(5, 9))
+        {
+            var ground = GroundBelow(x, ceilingY, floorY);
+            if (ground == GroundBelow(x + 1, ceilingY, floorY) && Main.tile[x, ground].Slope == SlopeType.Solid &&
+                Main.tile[x + 1, ground].Slope == SlopeType.Solid &&
+                WorldGen.PlaceObject(x, ground - 1, TileID.Boulder, true))
+                placed++;
+        }
+    }
 
-        WorldGen.RangeFrame(left - EntranceGap - 4, top - 2, right + 2, bottom + 2);
+    private static int GroundBelow(int x, int fromY, int floorY)
+    {
+        for (var y = fromY; y <= floorY; y++)
+        {
+            if (Main.tile[x, y].HasTile && Main.tileSolid[Main.tile[x, y].TileType])
+                return y;
+        }
 
-        BrockGymSystem.Interior = new Rectangle(inLeft, top + Shell, inRight - inLeft + 1, floorY - top - Shell);
-        BrockGymSystem.LeaderSpot = new Point(inRight - 5, floorY - 1);
+        return floorY;
     }
 
     /// <summary>
-    ///     A short brick tunnel out of the left door, then a shaft with a rope all the way up to the surface.
+    ///     A chain from the ceiling with a lantern at its end. If the lantern doesn't hold on the chain, it goes right
+    ///     under the ceiling instead.
+    /// </summary>
+    private static void HangLantern(int x, int ceilingY, int chainLength, int style)
+    {
+        for (var y = ceilingY; y < ceilingY + chainLength; y++)
+        {
+            var chain = Main.tile[x, y];
+            chain.HasTile = true;
+            chain.TileType = TileID.Chain;
+        }
+
+        if (WorldGen.PlaceObject(x, ceilingY + chainLength, TileID.HangingLanterns, true, style))
+            return;
+
+        for (var y = ceilingY; y < ceilingY + chainLength; y++)
+            Main.tile[x, y].ClearTile();
+        WorldGen.PlaceObject(x, ceilingY, TileID.HangingLanterns, true, style);
+    }
+
+    /// <summary>
+    ///     A short brick tunnel out of the left door, then a shaft with a rope all the way up to the surface, under a
+    ///     stone arch with a sign.
     /// </summary>
     private static void BuildEntrance(int left, int floorY)
     {
@@ -345,11 +624,11 @@ public static class BrockGymBuilder
             for (var y = floorY - 4; y <= floorY; y++)
             {
                 var tile = Main.tile[x, y];
-                tile.ClearTile();
+                tile.ClearEverything();
                 if (y == floorY || y == floorY - 4)
-                    PlaceBlock(x, y, Brick);
+                    PlaceBlock(x, y, TileID.GrayBrick);
                 else
-                    tile.WallType = WallID.GrayBrick;
+                    tile.WallType = WallID.StoneSlab;
             }
         }
 
@@ -371,6 +650,7 @@ public static class BrockGymBuilder
             {
                 var tile = Main.tile[x, y];
                 tile.ClearTile();
+                tile.LiquidAmount = 0;
                 if (y > surface + 2)
                     tile.WallType = WallID.GrayBrick;
             }
@@ -381,24 +661,57 @@ public static class BrockGymBuilder
             rope.TileType = TileID.Rope;
         }
 
-        // A little brick arch marking the entrance at the surface
-        for (var x = shaftX - 2; x <= shaftX + 2; x++)
-            PlaceBlock(x, surface - 5, Brick);
-        foreach (var x in new[] { shaftX - 2, shaftX + 2 })
+        // A stone arch marking the entrance at the surface
+        for (var x = shaftX - 3; x <= shaftX + 3; x++)
         {
-            for (var y = surface - 4; y < surface; y++)
-                PlaceBlock(x, y, Brick);
-            WorldGen.PlaceTile(x, surface - 6, TileID.Torches, true, false, -1, 0);
+            PlaceBlock(x, surface - 6, TileID.StoneSlab);
+            if (Math.Abs(x - shaftX) <= 2)
+                PlaceBlock(x, surface - 7, TileID.GrayBrick);
         }
 
-        for (var y = surface - 4; y < surface - 1; y++)
+        foreach (var x in new[] { shaftX - 3, shaftX + 3 })
+        {
+            for (var y = surface - 5; y < surface; y++)
+                PlaceBlock(x, y, TileID.GrayBrick);
+            WorldGen.PlaceTile(x, surface - 7, TileID.Torches, true, false, -1, 0);
+        }
+
+        for (var y = surface - 5; y < surface - 1; y++)
         {
             var rope = Main.tile[shaftX, y];
             rope.ClearTile();
             rope.HasTile = true;
             rope.TileType = TileID.Rope;
         }
+
+        // A sign next to the arch
+        var signX = shaftX + 5;
+        var signGround = surface;
+        for (var y = surface - 6; y < surface + 6; y++)
+        {
+            if (Main.tile[signX, y].HasTile && Main.tileSolid[Main.tile[signX, y].TileType])
+            {
+                signGround = y;
+                break;
+            }
+        }
+
+        if (WorldGen.PlaceObject(signX, signGround - 1, TileID.Signs, true))
+        {
+            var sign = Sign.ReadSign(signX, signGround - 2, true);
+            if (sign >= 0)
+                Sign.TextSign(sign, Language.GetTextValue("Mods.Terramon.BrockGym.Sign"));
+        }
+
+        BrockGymSystem.SurfaceEntrance = new Point(shaftX, surface);
     }
+
+    /// <summary>
+    ///     Looks up a wall by its internal name, so a wall missing from this tModLoader version doesn't break the
+    ///     build.
+    /// </summary>
+    private static ushort WallByName(string name, ushort fallback)
+        => WallID.Search.TryGetId(name, out var id) ? (ushort)id : fallback;
 
     private static void PlaceBlock(int x, int y, ushort type)
     {
