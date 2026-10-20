@@ -342,7 +342,7 @@ public class GymBuildingsPass(string name, float loadWeight) : GenPass(name, loa
         {
             for (var y = floorY - 3; y < floorY; y++)
                 Main.tile[x, y].ClearTile();
-            WorldGen.PlaceTile(x, floorY - 2, TileID.ClosedDoors, true, true);
+            WorldGen.PlaceTile(x, floorY - 2, TileID.ClosedDoor, true, true);
         }
 
         // A balcony of platforms along both side walls
