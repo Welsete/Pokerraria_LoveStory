@@ -15,6 +15,7 @@ using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders;
 using Terramon.Core.NPCComponents;
+using Terramon.Core.Systems;
 using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.Audio;
@@ -208,7 +209,12 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         if (Main.netMode == NetmodeID.MultiplayerClient) return;
 
         var spawningPlayer = Player.FindClosest(NPC.Center, NPC.width, NPC.height);
-        Data = PokemonData.Create(ID, 5).ForPlayer(Main.player[spawningPlayer]).Build();
+        // Released Pokémon get their data from the ball right after spawning; wild ones scale with world progression
+        var level = _isSpawnedFromRelease
+            ? (byte)5
+            : WildPokemonLevels.GetSpawnLevel(ID, NPC.Center == Vector2.Zero ? Main.player[spawningPlayer].Center : NPC.Center,
+                source);
+        Data = PokemonData.Create(ID, level).ForPlayer(Main.player[spawningPlayer]).Build();
         NPC.netUpdate = true;
     }
 

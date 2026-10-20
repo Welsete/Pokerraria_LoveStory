@@ -63,6 +63,7 @@ public class RareCandy : Vitamin, IPokemonDirectUse
         }
 
         data.ID = origSpecies; // Reset the ID to the original species (hacky)
+        data.PendingEvolutionCheck = false; // Evolution is handled right here; new moves are learned by the player
 
         Main.NewText(
             Language.GetTextValue("Mods.Terramon.Misc.RareCandyUse", data.DisplayName, data.Level));

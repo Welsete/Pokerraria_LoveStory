@@ -268,6 +268,8 @@ public class PokemonData
         Level++;
 
         AdjustHPForMaxHPChange(oldMaxHP, oldHP);
+        QueueLearnsetMoves(Level);
+        PendingEvolutionCheck = true;
 
         if (ensureMinimumExperience)
             TotalEXP = Math.Max(TotalEXP, ExperienceLookupTable.GetLevelTotalExp(Level, Schema.GrowthRate));
@@ -316,7 +318,76 @@ public class PokemonData
         ID = id;
 
         AdjustHPForMaxHPChange(oldMaxHP, oldHP);
+
+        // Like the main games: moves the new species learns on evolution or at its current level
+        QueueLearnsetMoves(0);
+        QueueLearnsetMoves(Level);
     }
+
+    #region Move Learning
+
+    /// <summary>
+    ///     Moves this Pokémon reached by leveling up or evolving and still has to learn (or decline).
+    ///     Processed by <see cref="TerramonPlayer" /> once the owner is out of battle. Not saved.
+    /// </summary>
+    public List<MoveID> PendingMoves { get; private set; } = [];
+
+    /// <summary>
+    ///     Set when the Pokémon levels up, so its owner checks for a level-up evolution once out of battle. Not saved.
+    /// </summary>
+    public bool PendingEvolutionCheck;
+
+    public bool KnowsMove(MoveID move)
+    {
+        for (var i = 0; i < 4; i++)
+            if (Moves[i].ID == move)
+                return true;
+        return false;
+    }
+
+    private void QueueLearnsetMoves(byte level)
+    {
+        if (Schema?.LevelUpLearnset == null || Moves.IsDefault)
+            return;
+        PendingMoves ??= [];
+        foreach (var entry in Schema.LevelUpLearnset)
+        {
+            if (entry.AtLevel != level)
+                continue;
+            var move = (MoveID)entry.ID;
+            if (move == MoveID.None || KnowsMove(move) || PendingMoves.Contains(move) ||
+                Terramon.DatabaseV2.GetMove(move) == null)
+                continue;
+            PendingMoves.Add(move);
+        }
+    }
+
+    /// <summary>
+    ///     Puts a move in the given slot (0-3) with full PP, replacing whatever was there.
+    /// </summary>
+    public void SetMove(int slot, MoveID move)
+    {
+        var pp = Math.Min((int)Terramon.DatabaseV2.GetMove(move).PP, 63);
+        Moves[slot] = new MoveData(move, (byte)pp, 0);
+    }
+
+    /// <summary>
+    ///     Learns a move in the first free slot. Returns false if all four slots are taken.
+    /// </summary>
+    public bool TryLearnMove(MoveID move)
+    {
+        for (var i = 0; i < 4; i++)
+        {
+            if (Moves[i].ID != MoveID.None)
+                continue;
+            SetMove(i, move);
+            return true;
+        }
+
+        return false;
+    }
+
+    #endregion
 
     public static Builder Create(ushort id, byte level = 1)
     {
@@ -1140,6 +1211,11 @@ public readonly struct PokemonMoves : IEnumerable<MoveData>
 {
     private const ushort IDMask = 0x3FF;
     private readonly uint[] _moves = new uint[4];
+
+    /// <summary>
+    ///     True for an uninitialized (default) instance, which has no move storage.
+    /// </summary>
+    public bool IsDefault => _moves == null;
 
     public int Count
     {

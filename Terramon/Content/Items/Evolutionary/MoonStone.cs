@@ -6,6 +6,12 @@ public class MoonStone : EvolutionaryItem
 {
     protected override int UseRarity => ModContent.RarityType<BlackApricornRarity>();
 
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<DuskStone>();
+    }
+
     public override void SetDefaults()
     {
         base.SetDefaults();

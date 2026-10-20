@@ -8,7 +8,7 @@ public class PinkApricorn : ApricornItem
     
     public override void SetStaticDefaults()
     {
-        TerramonItemAPI.Sets.Unobtainable.Add(Type);
+        base.SetStaticDefaults();
     }
 }
 

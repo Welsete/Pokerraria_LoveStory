@@ -1,4 +1,6 @@
-﻿namespace Terramon.Content.Items;
+﻿using Terramon.Content.Items.PokeBalls;
+
+namespace Terramon.Content.Items;
 
 public sealed class OldRod : FishingRod
 {
@@ -14,5 +16,15 @@ public sealed class OldRod : FishingRod
         base.ModifyFishingLine(bobber, ref lineOriginOffset, ref lineColor);
         lineOriginOffset.X += 30f;
         lineOriginOffset.Y -= 28f;
+    }
+
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+            .AddRecipeGroup(RecipeGroupID.Wood, 12)
+            .AddIngredient(ItemID.Cobweb, 5)
+            .AddIngredient<PokeBallItem>()
+            .AddTile(TileID.WorkBenches)
+            .Register();
     }
 }

@@ -9,7 +9,7 @@ public class IceStone : EvolutionaryItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        TerramonItemAPI.Sets.Unobtainable.Add(Type);
+        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<ThunderStone>();
     }
 
     public override void SetDefaults()

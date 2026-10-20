@@ -1212,3 +1212,23 @@ Projectiles: {
 	PokeBallBobber.DisplayName: Poké Ball Bobber
 	PokemonPetGenericAttackProjectile.DisplayName: Pokémon Companion Generic Attack Projectile
 }
+
+MoveLearn: {
+	Wants: "{0} wants to learn {1}!"
+	Prompt: "{0} wants to learn {1}. Forget a move?"
+	DontLearn: Don't learn
+	Learned: "{0} learned {1}!"
+	Forgot: "1, 2 and... Poof! {0} forgot {1} and learned {2}!"
+	DidNotLearn: "{0} did not learn {1}."
+	EvolveHint: (Talk to the {$NPCs.PokemartClerk.DisplayName} or turn on Fast Evolution in the config.)
+}
+
+Loot: {
+	PreHardmode: Before Hardmode
+	AfterEvilBoss: After defeating the Eater of Worlds or Brain of Cthulhu, until Plantera
+	Hardmode: In Hardmode
+	AfterPlantera: After defeating Plantera
+	AfterMoonLord: After defeating the Moon Lord
+	InSnow: In the Snow biome
+	AtNightEvil: At night in the Corruption, Crimson or a Graveyard
+}
