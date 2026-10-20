@@ -1560,3 +1560,35 @@ Multiplayer: {
 		ReasonTooFar: a pessoa está longe demais.
 	}
 }
+
+WorldGen.GymsPass: Construindo o Ginásio Pokémon e a Liga
+
+Pedestals: {
+	Locked: "{0}: {1}"
+	AllBadges: Você já tem as oito insígnias! Sua próxima parada é o pedestal da Liga Pokémon.
+	GymBuilt: Um Ginásio Pokémon foi construído a {0} blocos a {1} do ponto de nascimento. Clique com o botão direito no pedestal para desafiar os Líderes de Ginásio!
+	LeagueBuilt: A Liga Pokémon fica a {0} blocos a {1} do ponto de nascimento. O pedestal dela chama a Elite dos Quatro e o Campeão.
+	East: leste
+	West: oeste
+}
+
+Tiles.GymPedestal.MapEntry: Pedestal do Ginásio
+Tiles.LeaguePedestal.MapEntry: Pedestal da Liga
+
+Items.GymPedestalItem: {
+	DisplayName: Pedestal do Ginásio
+	Tooltip:
+		'''
+		Clique com o botão direito para chamar o próximo Líder de Ginásio que você pode desafiar
+		Os Líderes de Ginásio são enfrentados em ordem, cada um depois de um chefe do Terraria
+		'''
+}
+
+Items.LeaguePedestalItem: {
+	DisplayName: Pedestal da Liga
+	Tooltip:
+		'''
+		Clique com o botão direito para chamar o próximo oponente do seu desafio da Liga Pokémon
+		Requer as oito insígnias e ter derrotado o Cultista Lunático
+		'''
+}
