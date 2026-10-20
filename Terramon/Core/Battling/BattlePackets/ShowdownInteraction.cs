@@ -26,7 +26,9 @@ public struct BattleErrorRpc(ErrorType error, ErrorSubtype specificError) : IEas
         handled = true;
 
         // Packet is received by a single client
-        BattleClient.LocalClient.CurrentRequest = ShowdownRequest.None;
+        // Showdown keeps waiting for a choice after rejecting one, so let the player choose again
+        var client = BattleClient.LocalClient;
+        client.CurrentRequest = client.LastRequest;
         // do stuff with error type and subtype
     }
 }
