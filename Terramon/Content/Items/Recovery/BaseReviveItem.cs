@@ -10,6 +10,11 @@ public abstract class BaseReviveItem : RecoveryItem
     /// </summary>
     protected abstract float RestorationPercentage { get; }
 
+    /// <summary>
+    ///     The share of max HP a fainted Pokémon gets back when revived from the Bag in battle.
+    /// </summary>
+    public float BattleRestorationPercentage => RestorationPercentage;
+
     public override string Texture => "Terramon/Assets/Items/Recovery/Revives/" + GetType().Name;
 
     public override bool AffectedByPokemonDirectUse(PokemonData data)

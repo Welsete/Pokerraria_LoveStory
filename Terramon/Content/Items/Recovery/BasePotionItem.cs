@@ -9,6 +9,11 @@ public abstract class BasePotionItem : RecoveryItem
     ///     The amount of HP restored by this potion.
     /// </summary>
     protected abstract ushort HealAmount { get; }
+
+    /// <summary>
+    ///     The amount of HP restored when used from the Bag in battle.
+    /// </summary>
+    public ushort BattleHealAmount => HealAmount;
     
     public override string Texture => "Terramon/Assets/Items/Recovery/Potions/" + GetType().Name;
 

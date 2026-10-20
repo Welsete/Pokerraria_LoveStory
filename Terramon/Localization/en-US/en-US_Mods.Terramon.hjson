@@ -1212,3 +1212,17 @@ Projectiles: {
 	PokeBallBobber.DisplayName: Poké Ball Bobber
 	PokemonPetGenericAttackProjectile.DisplayName: Pokémon Companion Generic Attack Projectile
 }
+
+Bag: {
+	Used: "{0} used {1} on {2}!"
+	Empty: You don't have any items that can be used in battle.
+	Count: x{0}
+	HP: HP {0}/{1}
+	Fainted: Fainted
+	Failed: That item couldn't be used right now.
+}
+
+Healing: {
+	Bed: You had a good rest. Your Pokémon are fully healed!
+	Nurse: "{0} also took care of your Pokémon. They're fully healed!"
+}

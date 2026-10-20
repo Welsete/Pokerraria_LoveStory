@@ -4,6 +4,8 @@ public class MaxRevive : BaseReviveItem
 {
     protected override float RestorationPercentage => 1f;
     
+    protected override int BuyPrice => Item.buyPrice(gold: 6);
+
     protected override int UseRarity => ModContent.RarityType<FireStoneRarity>();
     
     public override void SetDefaults()

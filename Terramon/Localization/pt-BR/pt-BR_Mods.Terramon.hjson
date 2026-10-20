@@ -1212,3 +1212,17 @@ Projectiles: {
 	PokeBallBobber.DisplayName: Boia de Poké Bola
 	PokemonPetGenericAttackProjectile.DisplayName: Projétil de Ataque Genérico do Pokémon Companheiro
 }
+
+Bag: {
+	Used: "{0} usou {1} em {2}!"
+	Empty: Você não tem nenhum item que possa ser usado em batalha.
+	Count: x{0}
+	HP: PS {0}/{1}
+	Fainted: Desmaiado
+	Failed: Não foi possível usar esse item agora.
+}
+
+Healing: {
+	Bed: Você descansou bem. Seus Pokémon estão totalmente recuperados!
+	Nurse: "{0} também cuidou dos seus Pokémon. Eles estão totalmente recuperados!"
+}

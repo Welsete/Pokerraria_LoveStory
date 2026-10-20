@@ -253,6 +253,13 @@ public class PokemartClerk : ModNPC
             .Add<PokeBallItem>()
             .Add<GreatBallItem>()
             .Add<UltraBallItem>()
+            // Recovery items unlock as the world progresses
+            .Add<Potion>()
+            .Add<SuperPotion>(Condition.DownedEyeOfCthulhu)
+            .Add<Revive>(Condition.DownedSkeletron)
+            .Add<HyperPotion>(Condition.Hardmode)
+            .Add<MaxPotion>(Condition.DownedMechBossAny)
+            .Add<MaxRevive>(Condition.DownedPlantera)
             .Add<TrainerCap>(TrainerSetCondition)
             .Add<TrainerTorso>(TrainerSetCondition)
             .Add<TrainerLegs>(TrainerSetCondition)
