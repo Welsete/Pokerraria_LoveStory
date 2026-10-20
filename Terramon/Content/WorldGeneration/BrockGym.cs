@@ -241,24 +241,38 @@ public static class BrockGymBuilder
     private const int BrassLantern = 1;
 
     /// <summary>
-    ///     Tries random spots underground, a short walk from spawn, and builds the gym in the first that fits.
+    ///     Tries random spots underground, a short walk from spawn, and builds the gym in the first that fits. If
+    ///     nothing fits, the rules are loosened step by step (farther away, more open caves, more liquid around) so
+    ///     every world still gets its gym.
     /// </summary>
     public static bool TryPlaceNearSpawn()
     {
-        var minDepth = (int)Main.worldSurface + 20;
-        var maxDepth = Math.Max(minDepth + 10, (int)Main.rockLayer + 40);
-        for (var attempt = 0; attempt < 800; attempt++)
-        {
-            var offset = WorldGen.genRand.Next(50, 200);
-            var left = Main.spawnTileX + (WorldGen.genRand.NextBool() ? offset : -offset - Width);
-            var top = WorldGen.genRand.Next(minDepth, maxDepth);
-            if (!CanPlace(left, top))
-                continue;
+        (int MaxOffset, int SolidPercent, bool StrictStructures)[] tiers =
+        [
+            (200, 45, true),
+            (350, 30, true),
+            (500, 15, true),
+            (Main.maxTilesX / 2, 0, false)
+        ];
 
-            Build(left, top);
-            GenVars.structures?.AddProtectedStructure(Footprint(left, top), 4);
-            Terramon.Instance.Logger.Info($"Built Brock's Gym at ({left}, {top}).");
-            return true;
+        var minDepth = (int)Main.worldSurface + 15;
+        var maxDepth = Math.Max(minDepth + 10, (int)Main.rockLayer + 60);
+        foreach (var (maxOffset, solidPercent, strictStructures) in tiers)
+        {
+            for (var attempt = 0; attempt < 1500; attempt++)
+            {
+                var offset = WorldGen.genRand.Next(50, Math.Max(51, maxOffset));
+                var left = Main.spawnTileX + (WorldGen.genRand.NextBool() ? offset : -offset - Width);
+                var top = WorldGen.genRand.Next(minDepth, maxDepth);
+                if (!CanPlace(left, top, solidPercent, strictStructures))
+                    continue;
+
+                Build(left, top);
+                GenVars.structures?.AddProtectedStructure(Footprint(left, top), 4);
+                Terramon.Instance.Logger.Info(
+                    $"Built Brock's Gym at ({left}, {top}) (offset {maxOffset}, solid {solidPercent}%).");
+                return true;
+            }
         }
 
         return false;
@@ -267,32 +281,23 @@ public static class BrockGymBuilder
     private static Rectangle Footprint(int left, int top)
         => new(left - EntranceGap - 4, top - 2, Width + EntranceGap + 8, Height + 4);
 
-    private static bool CanPlace(int left, int top)
+    private static bool CanPlace(int left, int top, int solidPercent, bool strictStructures)
     {
         var area = Footprint(left, top);
         if (area.Left < 100 || area.Right > Main.maxTilesX - 100 || area.Bottom > Main.UnderworldLayer - 20)
             return false;
         if (Math.Abs(left + Width / 2 - Main.dungeonX) < 200)
             return false;
-        if (GenVars.structures != null && !GenVars.structures.CanPlace(area))
+        if (strictStructures && GenVars.structures != null && !GenVars.structures.CanPlace(area))
             return false;
 
-        // No water, lava or shimmer anywhere near, since it would pour into the hall
-        var wet = new Rectangle(area.X - 10, area.Y - 10, area.Width + 20, area.Height + 20);
-        for (var x = wet.Left; x < wet.Right; x++)
-        {
-            for (var y = wet.Top; y < wet.Bottom; y++)
-            {
-                if (Main.tile[x, y].LiquidAmount > 0)
-                    return false;
-            }
-        }
-
-        // ...nor in the shaft up to the surface
+        // The shell is solid, so liquid can only get in through the tunnel and the rope shaft: keep those dry.
+        // Liquid inside the footprint itself is drained when building.
         var shaftX = left - EntranceGap;
-        for (var x = shaftX - 4; x <= shaftX + 4; x++)
+        for (var x = shaftX - 4; x <= left + 2; x++)
         {
-            for (var y = (int)(Main.worldSurface * 0.35); y < area.Top; y++)
+            var fromY = x <= shaftX + 4 ? (int)(Main.worldSurface * 0.35) : top + Height - 9;
+            for (var y = fromY; y < top + Height + 2; y++)
             {
                 if (Main.tile[x, y].LiquidAmount > 0)
                     return false;
@@ -317,7 +322,7 @@ public static class BrockGymBuilder
             }
         }
 
-        return solid > area.Width * area.Height / 2;
+        return solid * 100 >= area.Width * area.Height * solidPercent;
     }
 
     /// <summary>
@@ -380,15 +385,29 @@ public static class BrockGymBuilder
         for (var step = 0; step < StageHeight; step++)
             WorldGen.SlopeTile(stageLeft - step, floorY - StageHeight + step, (int)SlopeType.SlopeDownRight);
 
-        BuildMural((centerLeft + centerRight) / 2 - 15, ceilingY + 1);
-        BuildDoors(left, right, floorY, stageTop);
-        Decorate(inLeft, inRight, ceilingY, floorY, centerLeft, centerRight, stageLeft, stageTop);
-        BuildEntrance(left, floorY);
-
-        WorldGen.RangeFrame(left - EntranceGap - 4, top - 2, right + 2, bottom + 2);
-
         BrockGymSystem.Interior = new Rectangle(inLeft, ceilingY, inRight - inLeft + 1, floorY - ceilingY);
         BrockGymSystem.LeaderSpot = new Point(inRight - 6, stageTop);
+
+        // The hall itself is done: a failing detail below shouldn't cost the whole gym
+        TryStep("doors", () => BuildDoors(left, right, floorY, stageTop));
+        TryStep("entrance", () => BuildEntrance(left, floorY));
+        TryStep("mural", () => BuildMural((centerLeft + centerRight) / 2 - 15, ceilingY + 1));
+        TryStep("decorations",
+            () => Decorate(inLeft, inRight, ceilingY, floorY, centerLeft, centerRight, stageLeft, stageTop));
+
+        WorldGen.RangeFrame(left - EntranceGap - 4, top - 2, right + 2, bottom + 2);
+    }
+
+    private static void TryStep(string name, Action step)
+    {
+        try
+        {
+            step();
+        }
+        catch (Exception e)
+        {
+            Terramon.Instance.Logger.Error($"Brock's Gym: building the {name} failed", e);
+        }
     }
 
     /// <summary>
