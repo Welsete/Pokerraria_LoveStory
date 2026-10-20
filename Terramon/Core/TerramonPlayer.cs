@@ -951,7 +951,23 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     public void StopBattleEffects()
     {
         if (Player.whoAmI == Main.myPlayer)
+        {
             BattleUI.ApplyEndEffects();
+
+            // Battles between players are friendly: both teams are restored afterwards
+            if (_battleClient?.Foe is TerramonPlayer)
+            {
+                foreach (var data in Party)
+                {
+                    if (data == null)
+                        continue;
+                    data.Heal(data.MaxHP);
+                    data.Status = NonVolatileStatus.None;
+                }
+
+                Main.NewText(Language.GetTextValue("Mods.Terramon.Healing.Friendly"), Color.LightGreen);
+            }
+        }
         if (ActivePetProjectile != null)
             ActivePetProjectile.CustomTargetPosition = null;
     }

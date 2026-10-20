@@ -1538,7 +1538,8 @@ Bag: {
 
 Healing: {
 	Bed: You had a good rest. Your Pokémon are fully healed!
-	Nurse: "{0} also took care of your Pokémon. They're fully healed!"
+	Nurse: "{0	Friendly: That was a friendly battle, so your Pokémon are fully healed.
+} also took care of your Pokémon. They're fully healed!"
 }
 Multiplayer: {
 	Challenge: {
