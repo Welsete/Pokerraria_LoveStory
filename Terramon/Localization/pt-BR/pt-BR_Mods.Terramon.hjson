@@ -1538,8 +1538,8 @@ Bag: {
 
 Healing: {
 	Bed: Você descansou bem. Seus Pokémon estão totalmente recuperados!
-	Nurse: "{0	Friendly: Foi uma batalha amistosa, então seus Pokémon foram totalmente recuperados.
-} também cuidou dos seus Pokémon. Eles estão totalmente recuperados!"
+	Nurse: "{0} também cuidou dos seus Pokémon. Eles estão totalmente recuperados!"
+	Friendly: Foi uma batalha amistosa, então seus Pokémon foram totalmente recuperados.
 }
 Multiplayer: {
 	Challenge: {
