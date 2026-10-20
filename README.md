@@ -21,6 +21,7 @@ Immerse yourself in the captivating crossover of Terraria and Pokémon with the 
 
 - **Turn-based battles** powered by Pokémon Showdown, against wild Pokémon and trainers.
 - **Pokémon League:** 8 Gym Leaders (Brock to Giovanni), each unlocked by a Terraria boss and the previous badge, then the Elite Four (Lorelei, Bruno, Agatha, Lance) and the Champion, Blue, after the Moon Lord. Badges, money rewards, a saved Hall of Fame, and challenge items crafted at a Work Bench to summon each leader.
+- **Gym and League buildings:** new worlds generate a Pokémon Gym and a Pokémon League on the surface, each with a pedestal that calls your next opponent. Pedestals can also be crafted for older worlds.
 - **Smarter trainers:** trainers pick moves by type matchup, STAB and status, use setup and healing moves sensibly, and sometimes switch to a better Pokémon.
 - **Wild Pokémon that grow with your world:** wild levels and evolution stages rise with boss progression and depth.
 - **Move learning and evolution:** Pokémon learn moves on level up (with a forget-a-move window) and evolve after the battle.
@@ -41,7 +42,6 @@ Immerse yourself in the captivating crossover of Terraria and Pokémon with the 
 Terramon is growing fast, and we have ambitious plans to bring even more of the Pokémon experience into Terraria. Here are some of the major features currently in development:
 
 - A guide NPC, Professor Oak.
-- Gyms generated as structures in the world.
 - Summon-style real-time Pokémon combat.
 - Pokémon breeding & eggs.
 - Interactive apricorn farming system.
