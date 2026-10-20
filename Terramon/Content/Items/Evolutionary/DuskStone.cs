@@ -9,7 +9,7 @@ public class DuskStone : EvolutionaryItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        TerramonItemAPI.Sets.Unobtainable.Add(Type);
+        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<MoonStone>();
     }
 
     public override void SetDefaults()

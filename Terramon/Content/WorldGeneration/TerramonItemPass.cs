@@ -28,6 +28,9 @@ public class TerramonItemPass(string name, float loadWeight) : GenPass(name, loa
         ChestGen.AddChestLoot(ModContent.ItemType<FireStone>(), ChestID.Shadow_Locked, chance: 0.1f);
         ChestGen.AddChestLoot(ModContent.ItemType<LeafStone>(), ChestID.LivingTrees, chance: 0.15f);
         ChestGen.AddChestLoot(ModContent.ItemType<MoonStone>(), ChestID.Gold, chance: 0.025f);
+        ChestGen.AddChestLoot(ModContent.ItemType<IceStone>(), [ChestID.Frozen, ChestID.Ice], chance: 0.25f);
+        ChestGen.AddChestLoot(ModContent.ItemType<DuskStone>(), [ChestID.Gold, ChestID.Shadow], chance: 0.05f);
+        ChestGen.AddChestLoot(ModContent.ItemType<ExpCandyXS>(), chest => chest.y > Main.worldSurface, 1, 3, 0.3f);
     }
 
     private static void AddChestLoot_PokeBalls()

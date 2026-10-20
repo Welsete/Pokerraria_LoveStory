@@ -10,7 +10,7 @@ public class WaterStone : EvolutionaryItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<ThunderStone>();
+        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<IceStone>();
     }
 
     public override void SetDefaults()

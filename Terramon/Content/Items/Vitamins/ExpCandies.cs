@@ -43,6 +43,7 @@ public abstract class ExpCandy : Vitamin, IPokemonDirectUse
         var oldLevel = data.Level;
         var totalExpToGain = Points * amount;
         data.GainExperience(totalExpToGain, out var levelsGained, out var overflow);
+        data.PendingEvolutionCheck = false; // Evolution is handled right here; new moves are learned by the player
         Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.ExpCandyUse", totalExpToGain - overflow));
         while (overflow > 0) // Use overflow to calculate actual amount of candies used
         {
@@ -104,7 +105,6 @@ public abstract class ExpCandy : Vitamin, IPokemonDirectUse
     {
         base.SetStaticDefaults();
         Item.ResearchUnlockCount = 50;
-        TerramonItemAPI.Sets.Unobtainable.Add(Type); // To be made obtainable in a future update post-0.1 beta
     }
 
     public override void SetDefaults()

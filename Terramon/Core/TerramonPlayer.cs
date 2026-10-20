@@ -187,6 +187,8 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
     public override void OnEnterWorld()
     {
+        MoveLearnUI.Close();
+
         // Request a full sync of the World Dex from the server when joining a host in multiplayer
         if (Main.netMode == NetmodeID.MultiplayerClient) Mod.SendPacket(new RequestWorldDexRpc());
     }
@@ -315,6 +317,8 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     {
         if (Player.whoAmI != Main.myPlayer) return;
 
+        ProcessPartyGrowth();
+
         if ((Player.chest != -1 || (!Main.playerInventory && !HubUI.Active)) && ActivePCTileEntityID != -1)
             TurnOffUsedPC();
 
@@ -422,22 +426,17 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
         if (Main.rand.NextBool(3)) // pokemon are less likely
         {
-            itemDrop = -1;
-            // make ts also an AliasRandom eventually
-            // it also needs to be based on an actual pool with conditions
-            // for instance we might want luvdisc (example) to have a larger chance of being fished up during february
-            // or for fishing up certain pokemon to be disabled
-            // i guess you could make a similar argument for items but i think that's less important
-            var dexID = Main.rand.Next(2) switch
+            var dexID = FishingPool.Choose(attempt, Player);
+            if (dexID == 0 || !PokemonEntityLoader.IDToNPCType.TryGetValue(dexID, out var npcType))
             {
-                0 => NationalDexID.Magikarp,
-                1 => NationalDexID.Goldeen,
-                _ => NationalDexID.Missingno
-            };
+                itemDrop = ValuableItem.Pool.Get();
+                return;
+            }
 
+            itemDrop = -1;
             SoundEngine.PlaySound(TerramonSoundID.GetCry(dexID), sonarPosition);
 
-            npcSpawn = PokemonEntityLoader.IDToNPCType[dexID];
+            npcSpawn = npcType;
         }
         else // items are more likely
         {
@@ -734,6 +733,104 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
             BattleInstance.Log($"{recipient.DisplayName}'s {stat} EV increased by {increase}!",
                 BattleInstance.MetaFollowup);
     }
+
+    #region Growth (move learning and evolution after level ups)
+
+    /// <summary>
+    ///     Once out of battle, evolves party Pokémon that reached their evolution level and teaches them the moves
+    ///     they reached, asking which move to forget when they already know four. Runs on the owning client only;
+    ///     species and level changes reach other players through the regular player sync.
+    /// </summary>
+    private void ProcessPartyGrowth()
+    {
+        if (Main.GameUpdateCount % 10 != 0 || MoveLearnUI.IsOpen || Player.dead)
+            return;
+        if (_battleClient != null && (_battleClient.Foe != null || _battleClient.State != ClientBattleState.None))
+            return;
+        if (TestBattleUI.Instance is { Visible: true })
+            return;
+
+        for (var i = 0; i < Party.Length; i++)
+        {
+            var mon = Party[i];
+            if (mon == null)
+                continue;
+
+            if (mon.PendingEvolutionCheck)
+            {
+                mon.PendingEvolutionCheck = false;
+                TryLevelUpEvolution(mon);
+            }
+
+            var pending = mon.PendingMoves;
+            while (pending is { Count: > 0 })
+            {
+                var move = pending[0];
+                if (mon.KnowsMove(move) || Terramon.DatabaseV2.GetMove(move) == null)
+                {
+                    pending.RemoveAt(0);
+                    continue;
+                }
+
+                if (mon.TryLearnMove(move))
+                {
+                    pending.RemoveAt(0);
+                    Main.NewText(Language.GetTextValue("Mods.Terramon.MoveLearn.Learned", mon.DisplayName,
+                        MoveLearnUI.MoveName(move)), new Color(50, 255, 130));
+                    SoundEngine.PlaySound(SoundID.Item4);
+                    continue;
+                }
+
+                // All four slots are taken: ask the player, one move at a time
+                MoveLearnUI.Open(mon, move);
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Evolves a Pokémon that is ready for a level-up evolution (when Fast Evolution is on), or tells the player
+    ///     how to evolve it.
+    /// </summary>
+    private void TryLevelUpEvolution(PokemonData mon)
+    {
+        var queued = mon.GetQueuedEvolution(EvolutionTrigger.LevelUp);
+        if (queued == 0)
+            return;
+
+        var clientConfig = Content.Configs.ClientConfig.Instance;
+        if (!clientConfig.FastEvolution)
+        {
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolutionReady", mon.DisplayName) + " " +
+                         Language.GetTextValue("Mods.Terramon.MoveLearn.EvolveHint"), new Color(50, 255, 130));
+            return;
+        }
+
+        TerramonWorld.PlaySoundOverBGM(TerramonSoundID.PkballCatchPla);
+        for (var step = 0; step < 3 && queued != 0; step++)
+        {
+            var oldName = mon.DisplayName;
+            var evolvedSpeciesName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(queued);
+            mon.EvolveInto(queued);
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", oldName, evolvedSpeciesName),
+                new Color(50, 255, 130));
+            var justRegistered = UpdatePokedex(queued, PokedexEntryStatus.Registered, shiny: mon.IsShiny);
+            if (justRegistered && clientConfig.ShowPokedexRegistrationMessages)
+                Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", evolvedSpeciesName),
+                    new Color(159, 162, 173));
+            queued = mon.GetQueuedEvolution(EvolutionTrigger.LevelUp);
+        }
+
+        // Evolution sparkles around the player
+        for (var j = 0; j < 40; j++)
+        {
+            var speed = Main.rand.NextVector2CircularEdge(1f, 1f);
+            var d = Dust.NewDustPerfect(Player.Center + speed * 26, DustID.FrostHydra);
+            d.noGravity = true;
+        }
+    }
+
+    #endregion
 
     #region IBattleProvider
 

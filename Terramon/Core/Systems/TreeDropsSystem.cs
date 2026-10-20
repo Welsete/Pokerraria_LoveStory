@@ -9,9 +9,24 @@ public class TreeDropsSystem : ModSystem
 {
     public override void PostSetupContent()
     {
-        TreeDropsGlobalTile.ApricornItems =
-            ModContent.GetContent<ApricornItem>().Where(item => !TerramonItemAPI.Sets.Unobtainable.Contains(item.Type))
-                .ToArray();
+        var obtainable = ModContent.GetContent<ApricornItem>()
+            .Where(item => !TerramonItemAPI.Sets.Unobtainable.Contains(item.Type)).Select(item => item.Type)
+            .ToHashSet();
+
+        int[] Pool(params int[] types) => types.Where(obtainable.Contains).ToArray();
+
+        // Each kind of tree drops the Apricorns of its biome
+        TreeDropsGlobalTile.ApricornsByTree = new Dictionary<TreeTypes, int[]>
+        {
+            [TreeTypes.Forest] = Pool(ModContent.ItemType<RedApricorn>(), ModContent.ItemType<BlueApricorn>(),
+                ModContent.ItemType<YellowApricorn>(), ModContent.ItemType<BlackApricorn>()),
+            [TreeTypes.Jungle] = Pool(ModContent.ItemType<GreenApricorn>(), ModContent.ItemType<GreenApricorn>(),
+                ModContent.ItemType<YellowApricorn>()),
+            [TreeTypes.Snow] = Pool(ModContent.ItemType<WhiteApricorn>(), ModContent.ItemType<WhiteApricorn>(),
+                ModContent.ItemType<BlueApricorn>()),
+            [TreeTypes.Hallowed] = Pool(ModContent.ItemType<PinkApricorn>(), ModContent.ItemType<PinkApricorn>(),
+                ModContent.ItemType<WhiteApricorn>())
+        };
     }
 }
 
@@ -26,7 +41,19 @@ public class TreeDropsGlobalTile : GlobalTile
     /*private const int
         ApricornDropChanceDenominator = 8; // TODO: Make this configurable through a gameplay config option*/
 
-    public static ApricornItem[] ApricornItems { private get; set; }
+    public static Dictionary<TreeTypes, int[]> ApricornsByTree { private get; set; }
+
+    /// <summary>
+    ///     Picks a random Apricorn for the given tree type, or returns false if that tree drops none.
+    /// </summary>
+    private static bool TryGetApricorn(TreeTypes treeType, out int apricorn)
+    {
+        apricorn = 0;
+        if (ApricornsByTree == null || !ApricornsByTree.TryGetValue(treeType, out var pool) || pool.Length == 0)
+            return false;
+        apricorn = pool[WorldGen.genRand.Next(pool.Length)];
+        return true;
+    }
 
     public override void Load()
     {
@@ -36,7 +63,7 @@ public class TreeDropsGlobalTile : GlobalTile
 
     public override void Unload()
     {
-        ApricornItems = null;
+        ApricornsByTree = null;
     }
 
     /// <summary>
@@ -50,12 +77,11 @@ public class TreeDropsGlobalTile : GlobalTile
 
         WorldGen.GetTreeBottom(i, j, out var x, out var y);
         var treeType = WorldGen.GetTreeType(Main.tile[x, y].TileType);
-        if (treeType is not (TreeTypes.Forest or TreeTypes.Snow or TreeTypes.Hallowed)) return;
+        if (ApricornsByTree?.ContainsKey(treeType) != true) return;
 
         var shouldDrop = WorldGen.genRand.NextBool(5);
-        if (!shouldDrop) return;
+        if (!shouldDrop || !TryGetApricorn(treeType, out var randomApricorn)) return;
 
-        var randomApricorn = ApricornItems[WorldGen.genRand.Next(ApricornItems.Length)].Type;
         Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32,
             randomApricorn,
             randomApricorn == ModContent.ItemType<RedApricorn>() && WorldGen.genRand.NextBool(6, 10)
@@ -108,7 +134,7 @@ public class TreeDropsGlobalTile : GlobalTile
 
     private static void WorldGenShakeTree_Detour(On_WorldGen.orig_ShakeTree orig, int i, int j)
     {
-        if (ApricornItems.Length == 0)
+        if (ApricornsByTree == null || ApricornsByTree.Count == 0)
         {
             orig(i, j);
             return;
@@ -130,14 +156,13 @@ public class TreeDropsGlobalTile : GlobalTile
         if (!_vanillaTreeShakeFailed) return;
 
         var treeType = WorldGen.GetTreeType(Main.tile[x, y].TileType);
-        if (!WorldGen.genRand.NextBool(5) ||
-            treeType is not (TreeTypes.Forest or TreeTypes.Snow or TreeTypes.Hallowed)) return;
+        if (!WorldGen.genRand.NextBool(5) || ApricornsByTree?.ContainsKey(treeType) != true) return;
         y--;
         while (y > 10 && Main.tile[x, y].HasTile && TileID.Sets.IsShakeable[Main.tile[x, y].TileType]) y--;
         y++;
         if (!WorldGen.IsTileALeafyTreeTop(x, y) || Collision.SolidTiles(x - 2, x + 2, y - 2, y + 2))
             return;
-        var randomApricorn = ApricornItems[WorldGen.genRand.Next(ApricornItems.Length)].Type;
+        if (!TryGetApricorn(treeType, out var randomApricorn)) return;
         Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), new Rectangle(x * 16, y * 16, 16, 16),
             randomApricorn, WorldGen.genRand.Next(1, 3));
     }

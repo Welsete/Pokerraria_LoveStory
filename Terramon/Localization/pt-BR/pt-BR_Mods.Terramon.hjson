@@ -1506,3 +1506,23 @@ Items.LeagueInvitation: {
 		Não é consumido
 		'''
 }
+
+MoveLearn: {
+	Wants: "{0} quer aprender {1}!"
+	Prompt: "{0} quer aprender {1}. Esquecer um golpe?"
+	DontLearn: Não aprender
+	Learned: "{0} aprendeu {1}!"
+	Forgot: "1, 2 e... Puf! {0} esqueceu {1} e aprendeu {2}!"
+	DidNotLearn: "{0} não aprendeu {1}."
+	EvolveHint: (Fale com o {$NPCs.PokemartClerk.DisplayName} ou ative a Evolução Rápida na configuração.)
+}
+
+Loot: {
+	PreHardmode: Antes do Hardmode
+	AfterEvilBoss: Depois de derrotar o Devorador de Mundos ou o Cérebro de Cthulhu, até a Plantera
+	Hardmode: No Hardmode
+	AfterPlantera: Depois de derrotar a Plantera
+	AfterMoonLord: Depois de derrotar o Senhor da Lua
+	InSnow: No bioma de Neve
+	AtNightEvil: À noite na Corrupção, no Carmim ou em um Cemitério
+}

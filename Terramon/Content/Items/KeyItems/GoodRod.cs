@@ -1,4 +1,6 @@
-﻿namespace Terramon.Content.Items;
+﻿using Terramon.Content.Items.PokeBalls;
+
+namespace Terramon.Content.Items;
 
 public sealed class GoodRod : FishingRod
 {
@@ -14,5 +16,16 @@ public sealed class GoodRod : FishingRod
         base.ModifyFishingLine(bobber, ref lineOriginOffset, ref lineColor);
         lineOriginOffset.X += 38f;
         lineOriginOffset.Y -= 32f;
+    }
+
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+            .AddIngredient<OldRod>()
+            .AddRecipeGroup($"{nameof(Terramon)}:GoldBar", 8)
+            .AddIngredient<GreatBallItem>()
+            .AddTile(TileID.Anvils)
+            .AddCondition(Condition.DownedEyeOfCthulhu)
+            .Register();
     }
 }

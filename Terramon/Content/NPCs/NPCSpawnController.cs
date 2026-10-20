@@ -1,6 +1,8 @@
 using System.Reflection;
 using Terramon.Content.Configs;
+using Terramon.Core.Loaders;
 using Terramon.Core.NPCComponents;
+using Terramon.Core.Systems;
 using Terramon.ID;
 using Terraria.ModLoader.Utilities;
 
@@ -205,6 +207,31 @@ public class NPCSpawnController : NPCComponent
         var totalTypesAdded = typesAdded.Count;
         foreach (var type in typesAdded)
             pool[type] = pool[type] / totalTypesAdded * spawnRateMultiplier;
+
+        if (totalTypesAdded > 0)
+            ApplyEvolutionStages(pool, typesAdded, spawnInfo);
+    }
+
+    /// <summary>
+    ///     Picks the level of this spawn and swaps every Pokémon in the pool for the stage of its evolution line that
+    ///     matches it (e.g. Charmeleon instead of Charmander at level 16+), keeping the base form's spawn conditions.
+    /// </summary>
+    private static void ApplyEvolutionStages(IDictionary<int, float> pool, HashSet<int> typesAdded,
+        NPCSpawnInfo spawnInfo)
+    {
+        var level = WildPokemonLevels.RollLevel(spawnInfo.SpawnTileY);
+        WildPokemonLevels.SetPendingSpawnLevel(level);
+
+        foreach (var type in typesAdded)
+        {
+            if (NPCLoader.GetNPC(type) is not PokemonNPC pokemon || !pool.TryGetValue(type, out var weight))
+                continue;
+            var stage = WildPokemonLevels.GetStageForLevel(pokemon.ID, level);
+            if (stage == pokemon.ID || !PokemonEntityLoader.IDToNPCType.TryGetValue(stage, out var stageType))
+                continue;
+            pool.Remove(type);
+            pool[stageType] = pool.TryGetValue(stageType, out var existing) ? existing + weight : weight;
+        }
     }
 
     private static bool SimpleEditSpawnPool(IDictionary<int, float> pool, int type, NPCSpawnController spawnController,
