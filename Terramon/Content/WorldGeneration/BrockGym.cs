@@ -285,7 +285,8 @@ public static class BrockGymBuilder
         var stageLeft = centerRight - 4;
         for (var x = stageLeft; x <= inRight; x++)
             PlaceBlock(x, floorY - 1, Brick);
-        Main.tile[stageLeft, floorY - 1].IsHalfBlock = true;
+        var step = Main.tile[stageLeft, floorY - 1];
+        step.IsHalfBlock = true;
 
         // Doors on both sides
         foreach (var x in new[] { left + 1, right - 1 })
