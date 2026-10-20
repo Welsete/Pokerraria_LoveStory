@@ -114,6 +114,27 @@ internal sealed class TerramonItemRegistration : ModSystem
             .Add<GoodRod>()
             .Add<SuperRod>();
 
+        // Add Gym badges and Pokémon League challenge items (league)
+        TerramonItemRegistry
+            .RegisterGroup("League")
+            .Add<BoulderBadge>()
+            .Add<CascadeBadge>()
+            .Add<ThunderBadge>()
+            .Add<RainbowBadge>()
+            .Add<SoulBadge>()
+            .Add<MarshBadge>()
+            .Add<VolcanoBadge>()
+            .Add<EarthBadge>()
+            .Add<BrockChallenge>()
+            .Add<MistyChallenge>()
+            .Add<LtSurgeChallenge>()
+            .Add<ErikaChallenge>()
+            .Add<KogaChallenge>()
+            .Add<SabrinaChallenge>()
+            .Add<BlaineChallenge>()
+            .Add<GiovanniChallenge>()
+            .Add<LeagueInvitation>();
+
         // Add interactive items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Interactive)

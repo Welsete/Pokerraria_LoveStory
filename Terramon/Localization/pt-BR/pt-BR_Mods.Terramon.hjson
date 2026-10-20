@@ -382,7 +382,7 @@ GUI: {
 		}
 	}
 	AdminPanel: {
-		Title: Painel de Testes (depuração)
+		Title: Painel de Testes (depuração) - clique com o botão direito no botão do treinador para trocar de treinador
 		HealParty: Curar equipe
 		LevelUp1: Ativo +1 nível
 		LevelUp5: Ativo +5 níveis
@@ -390,15 +390,31 @@ GUI: {
 		GiveItems: Dar itens de teste
 		SpawnWild: Chamar Pokémon selvagem
 		ClearWild: Remover selvagens
-		SpawnBrock: Chamar Brock
-		ToggleEye: Alternar Olho de Cthulhu
+		SpawnTrainer: "Chamar: {0}"
+		NextBoss: Derrotar próximo chefe da Liga
+		GiveBadges: Dar as 8 insígnias
+		LeagueItems: Dar itens de desafio
 		ResetBadges: Zerar insígnias
 		ClearBattles: Encerrar batalhas travadas
 		Close: Fechar
 		ItemsGiven: Você recebeu Poké Bolas, Poções, Reviveres e Doces Raros
-		EyeDefeated: O Olho de Cthulhu agora conta como derrotado
-		EyeNotDefeated: O Olho de Cthulhu agora conta como não derrotado
-		BadgesReset: Todas as insígnias foram zeradas
+		BossDowned: "{0}: agora conta como derrotado"
+		BossesReset: Todos os chefes da Liga agora contam como não derrotados
+		BadgesGiven: Você recebeu as 8 insígnias de ginásio
+		LeagueItemsGiven: Você recebeu todos os itens de desafio e o Convite da Liga
+		Boss: {
+			EyeOfCthulhu: Olho de Cthulhu
+			EvilBoss: Devorador de Mundos / Cérebro de Cthulhu
+			Skeletron: Esqueletron
+			WallOfFlesh: Parede de Carne (Modo Difícil)
+			AnyMech: Um chefe mecânico
+			AllMechs: Os três chefes mecânicos
+			Plantera: Plantera
+			Golem: Golem
+			Cultist: Cultista Lunático
+			MoonLord: Senhor da Lua
+		}
+		BadgesReset: Insígnias, desafio da Liga e Hall da Fama foram zerados
 		BattlesCleared: Todas as batalhas foram encerradas
 	}
 
@@ -1211,4 +1227,282 @@ Misc: {
 Projectiles: {
 	PokeBallBobber.DisplayName: Boia de Poké Bola
 	PokemonPetGenericAttackProjectile.DisplayName: Projétil de Ataque Genérico do Pokémon Companheiro
+}
+
+// Liga Pokémon: Líderes de Ginásio, Elite dos Quatro, Campeão, insígnias e itens de desafio (league)
+CommonTooltips.BadgeCase: "Insígnias: {0}/{1}"
+CommonTooltips.HallOfFame: "Hall da Fama: Campeão desde {0}"
+
+NPCs.Trainers: {
+	Busy: "{0} está no meio de uma batalha. Espere a sua vez!"
+	PrizeMoney: Você recebeu {0} de prêmio!
+	Arrived: "{0} chegou!"
+	AlreadyHere: "{0} já está por aqui!"
+
+	League: {
+		NextOpponent: "{0} está a caminho... Cure seus Pokémon e prepare-se para a próxima batalha!"
+		ChampionNeedsMoonLord: "Você venceu a Elite dos Quatro! Mas {0}, o Campeão, só enfrenta treinadores que derrotaram o Senhor da Lua."
+		RunOver: Seu desafio da Liga Pokémon acabou. Use o Convite da Liga para recomeçar a partir de Lorelei.
+		HallOfFame: "{0} defende o título de Campeão! Equipe: {1}"
+		HallOfFameFirst: "Parabéns! {0} e sua equipe ({1}) entraram para o Hall da Fama da Liga Pokémon!"
+	}
+}
+
+NPCs.Misty: {
+	DisplayName: Misty
+
+	Dialogue: {
+		Greeting: Eu sou Misty, a Líder do Ginásio de Cerulean! Minha estratégia é atacar com tudo usando Pokémon do tipo Água. Pronto para se molhar?
+		Locked: Alto lá! Volte depois de derrotar o Devorador de Mundos ou o Cérebro de Cthulhu, e traga a Insígnia Rocha do Brock!
+		Rematch: Voltou para mais um mergulho? A água está ótima, mas meus Pokémon não vão pegar leve!
+		Defeated: Uau! Você é demais! Tá bom, fique com a Insígnia Cascata... e esta Water Stone. Não vá se afogar no sucesso!
+	}
+}
+
+NPCs.LtSurge: {
+	DisplayName: Lt. Surge
+
+	Dialogue: {
+		Greeting: Ei, garoto! Eu sou o Lt. Surge, o Americano Relâmpago! Pokémon Elétricos salvaram minha vida na guerra, e vão te dar um choque do mesmo jeito!
+		Locked: Você não duraria nada em combate, garoto! Volte depois de derrotar o Esqueletron na Masmorra e me mostre a Insígnia Cascata da Misty!
+		Rematch: Voltou para mais um choque? Seu cabelo ainda está em pé desde a última vez!
+		Defeated: Uau! Você é dos bons, garoto! Pegue a Insígnia Trovão, e este Exp. Share para o seu time inteiro ficar mais forte!
+	}
+}
+
+NPCs.Erika: {
+	DisplayName: Erika
+
+	Dialogue: {
+		Greeting: Ah, olá... Eu sou Erika, a Líder do Ginásio de Celadon. Estava admirando as flores que a Dríade plantou. Vamos batalhar?
+		Locked: Ai, ai, você me acordou do meu cochilo... Por favor, volte quando a Parede de Carne tiver caído, trazendo a Insígnia Trovão do Lt. Surge.
+		Rematch: Que bom ver você de novo. Meus Pokémon do tipo Planta floresceram desde a nossa última batalha.
+		Defeated: Oh! Eu admito a derrota... Você é extraordinariamente forte. Por favor, aceite a Insígnia Arco-Íris, e esta Leaf Stone.
+	}
+}
+
+NPCs.Koga: {
+	DisplayName: Koga
+
+	Dialogue: {
+		Greeting: Fwahahaha! Uma mera criança ousa me desafiar? Eu sou Koga, Líder de Fuchsia. Prepare-se para provar veneno e desespero!
+		Locked: Fwahaha! Falta-lhe habilidade! Destrua um dos horrores mecânicos que rondam a noite e traga-me a Insígnia Arco-Íris da Erika.
+		Rematch: Você volta ao meu dojo? Sua resistência a veneno deve estar crescendo. Vamos testá-la!
+		Defeated: Hunf! Você provou o seu valor! Pegue a Insígnia Alma... e este Lucky Egg. Um ninja recompensa um oponente digno.
+	}
+}
+
+NPCs.Sabrina: {
+	DisplayName: Sabrina
+
+	Dialogue: {
+		Greeting: Tive uma visão da sua chegada. Eu sou Sabrina, Líder de Saffron. Eu já sei como esta batalha termina... ou será que não?
+		Locked: Eu vejo o seu futuro... e nele você não me vence. Não até que Os Gêmeos, O Destruidor e o Esqueletron Alfa tenham caído, e você traga a Insígnia Alma do Koga.
+		Rematch: Eu previ esta revanche. Meus poderes psíquicos só ficaram mais fortes.
+		Defeated: Esta derrota me choca... mas, de certa forma, eu a previ. Pegue a Insígnia Pântano, e estas Ultra Balls.
+	}
+}
+
+NPCs.Blaine: {
+	DisplayName: Blaine
+
+	Dialogue: {
+		Greeting: Rá! Eu sou Blaine, o Líder escaldante do Ginásio de Cinnabar! Meus Pokémon de fogo vão incinerar qualquer desafiante! Espero que tenha trazido Burn Heal!
+		Locked: Rá! Você ainda não está quente o bastante! Queime a Plantera na selva e depois me traga a Insígnia Pântano da Sabrina!
+		Rematch: Voltou para ser chamuscado de novo? Meus Pokémon andaram treinando na lava do Submundo!
+		Defeated: Fui reduzido a nada! Nem as cinzas sobraram! Você mereceu a Insígnia Vulcão, e esta Fire Stone!
+	}
+}
+
+NPCs.Giovanni: {
+	DisplayName: Giovanni
+
+	Dialogue: {
+		Greeting: Então! Você chegou até aqui. Eu sou Giovanni, Líder do Ginásio de Viridian... e muito mais. Deixe-me mostrar o verdadeiro poder!
+		Locked: Você não vale o meu tempo. Esmague o Golem no Templo Lihzahrd e volte com a Insígnia Vulcão do Blaine... se conseguir.
+		Rematch: Você de novo? Muito bem. A Equipe Rocket não esquece, e eu também não.
+		Defeated: Rá! Foi uma luta realmente intensa. Você venceu! Como prova, aqui está a Insígnia Terra. Leve este Exp. Charm também.
+	}
+}
+
+NPCs.Lorelei: {
+	DisplayName: Lorelei
+
+	Dialogue: {
+		Greeting: Bem-vindo à Liga Pokémon! Eu sou Lorelei, da Elite dos Quatro. Ninguém me vence quando o assunto é Pokémon de gelo!
+		Locked: Só treinadores com as oito insígnias de ginásio que derrotaram o Cultista Lunático podem entrar na Liga Pokémon.
+		Rematch: Voltou para recomeçar a Liga? Seus Pokémon estarão à minha mercê quando estiverem congelados!
+		Defeated: Você é melhor do que eu pensava! Siga em frente, Bruno está esperando. Isso foi só uma amostra do poder da Liga!
+	}
+}
+
+NPCs.Bruno: {
+	DisplayName: Bruno
+
+	Dialogue: {
+		Greeting: Eu sou Bruno, da Elite dos Quatro! Com treino rigoroso, pessoas e Pokémon podem ficar mais fortes. Hu-rá!
+		Locked: Hu-rá! Você precisa derrotar Lorelei primeiro, neste mesmo desafio da Liga, antes de encarar meus punhos!
+		Rematch: Seus músculos parecem mais fortes! Ótimo! Vamos testá-los, hu-rá!
+		Defeated: Por quê? Como eu pude perder? Meu trabalho acabou... vá enfrentar seu próximo desafio!
+	}
+}
+
+NPCs.Agatha: {
+	DisplayName: Agatha
+
+	Dialogue: {
+		Greeting: Eu sou Agatha, da Elite dos Quatro. O Oak se interessou muito por você, criança. Vou te mostrar o que é um treinador de verdade!
+		Locked: Hunf! Derrote o Bruno primeiro, neste mesmo desafio da Liga, criança. Não desperdiço meus fantasmas com quem não merece.
+		Rematch: De volta? Meus fantasmas nunca descansam... assim como os mortos da Masmorra.
+		Defeated: Oh ho! Você é especial, criança! Tudo bem, pode ir! Lance está esperando.
+	}
+}
+
+NPCs.Lance: {
+	DisplayName: Lance
+
+	Dialogue: {
+		Greeting: Eu sou Lance, o mestre dos dragões! Dragões são Pokémon místicos, difíceis de capturar e criar, mas seus poderes são superiores!
+		Locked: Você precisa derrotar Agatha primeiro, neste mesmo desafio da Liga. Só então meus dragões vão te enfrentar.
+		Rematch: Sua jornada continua... assim como a fome de batalha dos meus dragões!
+		Defeated: Ainda não acredito que meus dragões perderam para você! Agora você é o Campeão da Liga... ou seria, se não faltasse mais um treinador!
+	}
+}
+
+NPCs.Blue: {
+	DisplayName: Blue
+
+	Dialogue: {
+		Greeting: E aí! Eu estava ansioso para te ver! Enquanto você estava ocupado derrotando chefões, eu virei o Campeão! Fui? Hoje não!
+		Locked: Hehe! Só quem derrotou o Senhor da Lua E toda a Elite dos Quatro de uma vez só pode batalhar contra o Campeão. Ou seja, eu!
+		Rematch: Voltou para tomar meu título de novo? Eu treinei sem parar desde então. Desta vez eu ganho!
+		Defeated: NÃO! Não pode ser! Você venceu o meu melhor! Depois de tanto esforço para virar o Campeão da Liga... Tome, fique com esta Master Ball. Você mereceu.
+	}
+}
+
+Items.CascadeBadge: {
+	DisplayName: Insígnia Cascata
+	Tooltip: Prova da vitória sobre Misty, a Líder de Ginásio de Cerulean
+}
+
+Items.ThunderBadge: {
+	DisplayName: Insígnia Trovão
+	Tooltip: Prova da vitória sobre Lt. Surge, o Líder de Ginásio de Vermilion
+}
+
+Items.RainbowBadge: {
+	DisplayName: Insígnia Arco-Íris
+	Tooltip: Prova da vitória sobre Erika, a Líder de Ginásio de Celadon
+}
+
+Items.SoulBadge: {
+	DisplayName: Insígnia Alma
+	Tooltip: Prova da vitória sobre Koga, o Líder de Ginásio de Fuchsia
+}
+
+Items.MarshBadge: {
+	DisplayName: Insígnia Pântano
+	Tooltip: Prova da vitória sobre Sabrina, a Líder de Ginásio de Saffron
+}
+
+Items.VolcanoBadge: {
+	DisplayName: Insígnia Vulcão
+	Tooltip: Prova da vitória sobre Blaine, o Líder de Ginásio de Cinnabar
+}
+
+Items.EarthBadge: {
+	DisplayName: Insígnia Terra
+	Tooltip: Prova da vitória sobre Giovanni, o Líder de Ginásio de Viridian
+}
+
+Items.BrockChallenge: {
+	DisplayName: Desafio do Ginásio de Pewter
+	Tooltip:
+		'''
+		Chama Brock, o Líder de Ginásio de Pewter
+		Brock aceita desafiantes que derrotaram o Olho de Cthulhu
+		Não é consumido
+		'''
+}
+
+Items.MistyChallenge: {
+	DisplayName: Desafio do Ginásio de Cerulean
+	Tooltip:
+		'''
+		Chama Misty, a Líder de Ginásio de Cerulean
+		Requer a Insígnia Rocha e derrotar o Devorador de Mundos ou o Cérebro de Cthulhu
+		Não é consumido
+		'''
+}
+
+Items.LtSurgeChallenge: {
+	DisplayName: Desafio do Ginásio de Vermilion
+	Tooltip:
+		'''
+		Chama Lt. Surge, o Líder de Ginásio de Vermilion
+		Requer a Insígnia Cascata e derrotar o Esqueletron
+		Não é consumido
+		'''
+}
+
+Items.ErikaChallenge: {
+	DisplayName: Desafio do Ginásio de Celadon
+	Tooltip:
+		'''
+		Chama Erika, a Líder de Ginásio de Celadon
+		Requer a Insígnia Trovão e derrotar a Parede de Carne
+		Não é consumido
+		'''
+}
+
+Items.KogaChallenge: {
+	DisplayName: Desafio do Ginásio de Fuchsia
+	Tooltip:
+		'''
+		Chama Koga, o Líder de Ginásio de Fuchsia
+		Requer a Insígnia Arco-Íris e derrotar qualquer chefe mecânico
+		Não é consumido
+		'''
+}
+
+Items.SabrinaChallenge: {
+	DisplayName: Desafio do Ginásio de Saffron
+	Tooltip:
+		'''
+		Chama Sabrina, a Líder de Ginásio de Saffron
+		Requer a Insígnia Alma e derrotar os três chefes mecânicos
+		Não é consumido
+		'''
+}
+
+Items.BlaineChallenge: {
+	DisplayName: Desafio do Ginásio de Cinnabar
+	Tooltip:
+		'''
+		Chama Blaine, o Líder de Ginásio de Cinnabar
+		Requer a Insígnia Pântano e derrotar a Plantera
+		Não é consumido
+		'''
+}
+
+Items.GiovanniChallenge: {
+	DisplayName: Desafio do Ginásio de Viridian
+	Tooltip:
+		'''
+		Chama Giovanni, o Líder de Ginásio de Viridian
+		Requer a Insígnia Vulcão e derrotar o Golem
+		Não é consumido
+		'''
+}
+
+Items.LeagueInvitation: {
+	DisplayName: Convite da Liga Pokémon
+	Tooltip:
+		'''
+		Chama o próximo oponente do seu desafio da Liga Pokémon, começando por Lorelei
+		Requer as oito insígnias e derrotar o Cultista Lunático
+		Vença a Elite dos Quatro em sequência, e depois o Campeão se o Senhor da Lua tiver caído
+		Perder uma batalha te manda de volta ao começo
+		Não é consumido
+		'''
 }
