@@ -1,6 +1,5 @@
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.NPCs.Trainers;
-using Terraria.Localization;
 
 namespace Terramon.Content.Items;
 
@@ -58,18 +57,7 @@ public abstract class ChallengeItem : TerramonItem
         if (player.whoAmI != Main.myPlayer)
             return true;
 
-        var type = GetTrainerType(player);
-        if (type <= 0)
-            return true;
-
-        if (NPC.AnyNPCs(type))
-        {
-            Main.NewText(Language.GetTextValue("Mods.Terramon.NPCs.Trainers.AlreadyHere", Lang.GetNPCNameValue(type)),
-                Color.Orange);
-            return true;
-        }
-
-        League.RequestSpawn(player, type);
+        League.Challenge(player, GetTrainerType(player));
         return true;
     }
 
@@ -164,23 +152,5 @@ public sealed class LeagueInvitation : ChallengeItem
         (ItemID.FragmentNebula, 1), (ItemID.FragmentStardust, 1)
     ];
 
-    protected override int GetTrainerType(Player player)
-    {
-        var progress = player.GetModPlayer<GymPlayer>().LeagueRunProgress;
-        var lastIndex = League.EliteFourAndChampion.Length - 1;
-
-        // Without the Moon Lord, the Champion doesn't show up, so a finished Elite Four starts over
-        if (progress <= 0 || progress > lastIndex || (progress == lastIndex && !NPC.downedMoonlord))
-            progress = 0;
-
-        // Don't call anyone while a League member is still around
-        foreach (var name in League.EliteFourAndChampion)
-        {
-            var type = League.TrainerType(name);
-            if (type > 0 && NPC.AnyNPCs(type))
-                return type;
-        }
-
-        return League.TrainerType(League.EliteFourAndChampion[progress]);
-    }
+    protected override int GetTrainerType(Player player) => League.NextLeagueOpponent(player);
 }

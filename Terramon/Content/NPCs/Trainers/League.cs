@@ -65,6 +65,66 @@ public static class League
     }
 
     /// <summary>
+    ///     The first Gym Leader the player doesn't have the badge of yet, or null once they have all eight.
+    /// </summary>
+    public static string NextGymLeader(Player player)
+    {
+        var badges = player.GetModPlayer<GymPlayer>().Badges;
+        return GymLeaders.FirstOrDefault(name => !badges.Contains(name));
+    }
+
+    /// <summary>
+    ///     The next opponent of the player's Elite Four run (Lorelei when no run is going), or the League member
+    ///     already in the world if there is one.
+    /// </summary>
+    public static int NextLeagueOpponent(Player player)
+    {
+        var progress = player.GetModPlayer<GymPlayer>().LeagueRunProgress;
+        var lastIndex = EliteFourAndChampion.Length - 1;
+
+        // Without the Moon Lord, the Champion doesn't show up, so a finished Elite Four starts over
+        if (progress <= 0 || progress > lastIndex || (progress == lastIndex && !NPC.downedMoonlord))
+            progress = 0;
+
+        // Don't call anyone while a League member is still around
+        foreach (var name in EliteFourAndChampion)
+        {
+            var type = TrainerType(name);
+            if (type > 0 && NPC.AnyNPCs(type))
+                return type;
+        }
+
+        return TrainerType(EliteFourAndChampion[progress]);
+    }
+
+    /// <summary>
+    ///     Calls a trainer for the local player, telling them if it's already here. When checkLocked is set, a
+    ///     trainer that won't accept the player's challenge yet isn't called: their "locked" line is shown instead.
+    ///     Call it on the client that owns the player.
+    /// </summary>
+    public static void Challenge(Player player, int npcType, bool checkLocked = false)
+    {
+        if (npcType <= 0)
+            return;
+
+        if (NPC.AnyNPCs(npcType))
+        {
+            Main.NewText(Language.GetTextValue("Mods.Terramon.NPCs.Trainers.AlreadyHere",
+                Lang.GetNPCNameValue(npcType)), Color.Orange);
+            return;
+        }
+
+        if (checkLocked && NPCLoader.GetNPC(npcType) is TrainerNPC trainer && !trainer.CanChallenge(player))
+        {
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Pedestals.Locked", Lang.GetNPCNameValue(npcType),
+                Language.GetTextValue(trainer.GetLocalizationKey("Dialogue.Locked"))), Color.Orange);
+            return;
+        }
+
+        RequestSpawn(player, npcType);
+    }
+
+    /// <summary>
     ///     Summons a trainer a few tiles in front of the given player, unless one of them is already in the world.
     ///     Can be called from any side: clients ask the server to do it.
     /// </summary>

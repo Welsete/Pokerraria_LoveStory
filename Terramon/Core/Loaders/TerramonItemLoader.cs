@@ -133,7 +133,9 @@ internal sealed class TerramonItemRegistration : ModSystem
             .Add<SabrinaChallenge>()
             .Add<BlaineChallenge>()
             .Add<GiovanniChallenge>()
-            .Add<LeagueInvitation>();
+            .Add<LeagueInvitation>()
+            .Add<GymPedestalItem>()
+            .Add<LeaguePedestalItem>();
 
         // Add interactive items
         TerramonItemRegistry
