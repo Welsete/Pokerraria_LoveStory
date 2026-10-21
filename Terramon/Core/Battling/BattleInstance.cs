@@ -213,7 +213,7 @@ public sealed class BattleInstance
 
             await foreach (var output in Stream.ReadOutputsAsync())
             {
-                var frame = ProtocolCodec.Parse(output);
+                var frame = ParseSafely(output);
                 if (frame is null || frame.Elements == null) continue;
 
                 if (frame is UpdateFrame)
@@ -245,6 +245,14 @@ public sealed class BattleInstance
                 foreach (var element in CollectionsMarshal.AsSpan(frame.Elements))
                 {
                     Log(element.ToString());
+
+                    if (element is MessageElement { Message: { } note } && note.StartsWith(StageNote))
+                    {
+                        var parts = note[StageNote.Length..].Split(';');
+                        if (parts.Length == 4 && int.TryParse(parts[3], out var amount))
+                            BattleLog.AccuracyStage(this, parts[0], parts[1], parts[2], amount);
+                        continue;
+                    }
 
                     // No side update follows the end of a battle, so apply the final hits (and faints) before it ends
                     if (inMainFrame && element is WinElement or TieElement)
@@ -289,6 +297,56 @@ public sealed class BattleInstance
                 Stream.Dispose();
             }
         }
+    }
+
+    /// <summary>
+    ///     Marks a stage change of accuracy or evasion that <see cref="ParseSafely" /> turned into a message line.
+    /// </summary>
+    private const string StageNote = "terramon-stage;";
+
+    /// <summary>
+    ///     Parses a chunk of simulator output without letting a single line we can't read end the battle.
+    ///     Showdown.NET only knows the five main stats, so accuracy and evasion changes (Sand Attack, Double Team...)
+    ///     are turned into message lines that the battle log reads by itself.
+    /// </summary>
+    private static ProtocolFrame ParseSafely(string output)
+    {
+        var lines = output.Split('\n');
+        for (var i = 0; i < lines.Length; i++)
+        {
+            var parts = lines[i].Split('|');
+            if (parts.Length >= 5 && parts[1] is "-boost" or "-unboost" or "-setboost" &&
+                parts[3] is "accuracy" or "evasion")
+                lines[i] = $"|-message|{StageNote}{parts[1]};{parts[2]};{parts[3]};{parts[4]}";
+        }
+
+        output = string.Join('\n', lines);
+        try
+        {
+            return ProtocolCodec.Parse(output);
+        }
+        catch (Exception ex)
+        {
+            Log($"Couldn't parse simulator output ({ex.GetType().Name}: {ex.Message}), skipping the bad lines",
+                ConsoleColor.Yellow);
+        }
+
+        var header = lines.TakeWhile(l => !l.StartsWith('|')).ToList();
+        var kept = new List<string>(header);
+        foreach (var line in lines.Skip(header.Count))
+        {
+            try
+            {
+                ProtocolCodec.Parse(string.Join('\n', header.Append(line)));
+                kept.Add(line);
+            }
+            catch (Exception)
+            {
+                Log($"Skipped a line the battle can't read: {line}", ConsoleColor.Yellow);
+            }
+        }
+
+        return ProtocolCodec.Parse(string.Join('\n', kept));
     }
 
     /// <summary>
