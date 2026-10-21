@@ -1,5 +1,6 @@
 using System.Text;
 using ReLogic.Content;
+using Terramon.Core.Loaders;
 using Terramon.ID;
 
 namespace Terramon.Core;
@@ -278,6 +279,54 @@ public sealed class PokemonAnimations : ModSystem
         texture = (shiny ? anim.ShinyTexture ?? anim.Texture : anim.Texture).Value;
         source = new Rectangle(frame * anim.FrameWidth, 0, anim.FrameWidth, anim.FrameHeight);
         origin = new Vector2(anim.FrameWidth / 2f, anim.FrameHeight / 2f + set.Ground);
+    }
+
+    /// <summary>
+    ///     Draws a Pokémon's animation in a UI (summary, Pokédex...), standing on <paramref name="feet" /> (in screen
+    ///     pixels). Pokémon without an animation set draw the first frame of their normal sprite sheet instead.
+    ///     <paramref name="state" /> loops; pass a different one to show attacks, sleeping, etc.
+    /// </summary>
+    public static void DrawInUI(SpriteBatch spriteBatch, ushort id, bool shiny, Vector2 feet, float scale,
+        PokemonAnimState state = PokemonAnimState.Idle, bool facingRight = false, Color? color = null)
+    {
+        var identifier = Terramon.DatabaseV2.GetPokemon(id)?.Identifier;
+        if (identifier == null)
+            return;
+        var effects = facingRight ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+        var set = Get(identifier);
+        if (set == null)
+        {
+            var path = $"Terramon/Assets/Pokemon/{identifier}{(shiny ? "_S" : string.Empty)}";
+            if (!ModContent.RequestIfExists<Texture2D>(path, out var sheet, AssetRequestMode.ImmediateLoad))
+                return;
+            var frames = PokemonEntityLoader.IDToNPCType.TryGetValue(id, out var npcType)
+                ? Main.npcFrameCount[npcType]
+                : 1;
+            var frame = sheet.Frame(1, Math.Max(frames, 1));
+            spriteBatch.Draw(sheet.Value, feet, frame, color ?? Color.White, 0f,
+                new Vector2(frame.Width / 2f, frame.Height), scale, effects, 0f);
+            return;
+        }
+
+        if (!TryGet(set, ref state, out var anim))
+            return;
+        var t = Main.GameUpdateCount % (uint)anim.Total;
+        var index = anim.Durations.Length - 1;
+        for (var i = 0; i < anim.Durations.Length; i++)
+        {
+            if (t < (uint)anim.Durations[i])
+            {
+                index = i;
+                break;
+            }
+
+            t -= (uint)anim.Durations[i];
+        }
+
+        var texture = (shiny ? anim.ShinyTexture ?? anim.Texture : anim.Texture).Value;
+        spriteBatch.Draw(texture, feet, new Rectangle(index * anim.FrameWidth, 0, anim.FrameWidth, anim.FrameHeight),
+            color ?? Color.White, 0f, new Vector2(anim.FrameWidth / 2f, anim.FrameHeight / 2f + set.Ground),
+            scale * set.Scale, effects, 0f);
     }
 
     public override void ClearWorld()
