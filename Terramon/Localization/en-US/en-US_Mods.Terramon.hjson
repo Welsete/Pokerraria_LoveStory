@@ -86,6 +86,11 @@ Buffs: {
 		DisplayName: Pokémon Banner
 		Description: Bonuses active for nearby companions:
 	}
+
+	PokemonPassiveBuff: {
+		DisplayName: Pokémon Passive
+		Description: Bonuses from your active Pokémon
+	}
 }
 
 Commands: {
@@ -326,6 +331,11 @@ Configs: {
 		ShinyLockedStarters: {
 			Label: Shiny-Locked First Partner Pokémon
 			Tooltip: Prevents first partner (starter) Pokémon from being shiny
+		}
+
+		PokemonPassives: {
+			Label: Pokémon Passives
+			Tooltip: "Your active (following) Pokémon gives small bonuses based on its species and types, like light from Fire types or Lucario sensing ores"
 		}
 
 		DebugMode: {
@@ -1829,4 +1839,113 @@ Natures: {
 EvolutionScene: {
 	Evolving: What? {0} is evolving!
 	Skip: Press {0} to skip
+}
+
+Passives: {
+	From: "{0} is helping you:"
+	FieldAbilities: "Field abilities: {0}"
+
+	AuraResonance: {
+		Name: Aura Resonance
+		Description: "its aura resonates with ores and crystals: ores, gems and Life Crystals nearby glow blue"
+	}
+
+	Pickup: {
+		Name: Pickup
+		Description: "picks things up for you, increasing item pickup range"
+	}
+
+	FightingSpirit: {
+		Name: Fighting Spirit
+		Description: 5% increased melee damage
+	}
+
+	Featherfall: {
+		Name: Tailwind
+		Description: slow falling (hold down to fall faster)
+	}
+
+	Antidote: {
+		Name: Antidote
+		Description: immunity to Poisoned
+	}
+
+	Burrower: {
+		Name: Burrower
+		Description: 10% increased mining speed
+	}
+
+	Sturdy: {
+		Name: Sturdy
+		Description: increases defense by 3
+	}
+
+	Swarm: {
+		Name: Swarm
+		Description: 5% increased movement speed
+	}
+
+	SpiritSight: {
+		Name: Spirit Sight
+		Description: shows the location of enemies
+	}
+
+	SteelSkin: {
+		Name: Steel Skin
+		Description: 3% reduced damage taken
+	}
+
+	Flame: {
+		Name: Flame
+		Description: "glows warmly, lighting up the area"
+	}
+
+	DeepBreath: {
+		Name: Deep Breath
+		Description: increases breath underwater by 50%
+	}
+
+	Photosynthesis: {
+		Name: Photosynthesis
+		Description: faster life regeneration in sunlight
+	}
+
+	Static: {
+		Name: Static
+		Description: glows with electricity and gives 5% increased movement speed
+	}
+
+	Foresight: {
+		Name: Foresight
+		Description: senses nearby traps and danger
+	}
+
+	IceSkater: {
+		Name: Ice Skater
+		Description: walks on ice with ease and gives immunity to Chilled
+	}
+
+	DragonForce: {
+		Name: Dragon Force
+		Description: 4% increased damage
+	}
+
+	DarkVision: {
+		Name: Dark Vision
+		Description: improves vision in the dark
+	}
+
+	FairyLuck: {
+		Name: Fairy Luck
+		Description: slightly increases luck
+	}
+}
+
+FieldAbilities: {
+	Surf: Surf
+	Fly: Fly
+	Dig: Dig
+	Ride: Ride
+	Flash: Flash
+	Strength: Strength
 }

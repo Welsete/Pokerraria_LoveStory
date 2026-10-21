@@ -33,6 +33,9 @@ public class GameplayConfig : ModConfig
     [Header("Miscellaneous")] [DefaultValue(false)]
     public bool ShinyLockedStarters;
 
+    [DefaultValue(true)]
+    public bool PokemonPassives;
+
     [Header("Advanced")] [DefaultValue(false)]
     public bool DebugMode;
 
