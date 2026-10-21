@@ -416,6 +416,30 @@ public sealed class PokemonAnimations : ModSystem
             scale * set.Scale, effects, 0f);
     }
 
+    /// <summary>
+    ///     The first frame of a Pokémon's normal sprite sheet (its shiny one if it has it), for drawing something as a
+    ///     Pokémon that has no animation set, e.g. a Ditto transformed into it. False if there's no sheet.
+    /// </summary>
+    public static bool TryGetSheetFrame(ushort id, bool shiny, out Texture2D texture, out Rectangle source)
+    {
+        texture = null;
+        source = Rectangle.Empty;
+        var identifier = Terramon.DatabaseV2.GetPokemon(id)?.Identifier;
+        if (Main.dedServ || identifier == null)
+            return false;
+        var path = $"Terramon/Assets/Pokemon/{identifier}";
+        Asset<Texture2D> sheet = null;
+        if ((!shiny || !ModContent.RequestIfExists(path + "_S", out sheet, AssetRequestMode.ImmediateLoad)) &&
+            !ModContent.RequestIfExists(path, out sheet, AssetRequestMode.ImmediateLoad))
+            return false;
+        var frames = PokemonEntityLoader.IDToNPCType.TryGetValue(id, out var npcType)
+            ? Math.Max(1, Main.npcFrameCount[npcType])
+            : 1;
+        texture = sheet.Value;
+        source = sheet.Frame(1, frames);
+        return true;
+    }
+
     public override void ClearWorld()
     {
         OneShots.Clear();

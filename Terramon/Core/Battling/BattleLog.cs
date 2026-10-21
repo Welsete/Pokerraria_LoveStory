@@ -174,6 +174,15 @@ public static class BattleLog
                 Send(source, "Status." + status.Status, StatusVisuals.ColorOf(status.Status.ToString()) ?? StatusColor,
                     Mon(source, status.Pokemon));
                 break;
+            case TransformElement transform:
+            {
+                var target = new SimpleMon(transform.Species);
+                var species = (ushort)(source.Omniscient[target.Side]?[target.Slot].Species ?? 0);
+                if (species != 0)
+                    Send(source, "Transformed", Notable, Mon(source, transform.Pokemon),
+                        Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(species));
+                break;
+            }
             case CureStatusElement cure:
                 Send(source, "Cured", Good, Mon(source, cure.Pokemon));
                 break;

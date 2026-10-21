@@ -1,0 +1,527 @@
+Stench: {
+	Description: "Os ataques deste Pokémon que não fazem o alvo recuar ganham 10% de chance de fazer isso."
+}
+
+SpeedBoost: {
+	Description: "A Velocidade deste Pokémon sobe 1 nível no fim de cada turno completo em campo."
+}
+
+BattleArmor: {
+	Description: "Este Pokémon não pode sofrer acertos críticos."
+}
+
+Sturdy: {
+	Description: "Com o PS cheio, aguenta um golpe que o derrotaria e fica com 1 PS. Imune a golpes de nocaute instantâneo."
+}
+
+Damp: {
+	Description: "Impede Explosion, Self-Destruct, Mind Blown, Misty Explosion e Aftermath enquanto está em campo."
+}
+
+Limber: {
+	Description: "Este Pokémon não pode ser paralisado. Se ganhar a habilidade paralisado, é curado."
+}
+
+SandVeil: {
+	Description: "Durante uma tempestade de areia, sua evasão é 1,25x e não sofre dano da areia."
+}
+
+Static: {
+	Description: "30% de chance de paralisar quem fizer contato com este Pokémon."
+}
+
+VoltAbsorb: {
+	Description: "Recupera 1/4 do PS máximo ao ser atingido por golpes Elétricos; imune a golpes Elétricos."
+}
+
+WaterAbsorb: {
+	Description: "Recupera 1/4 do PS máximo ao ser atingido por golpes de Água; imune a golpes de Água."
+}
+
+Oblivious: {
+	Description: "Este Pokémon não pode ser atraído nem provocado. Imune a Intimidate."
+}
+
+CloudNine: {
+	Description: "Enquanto este Pokémon está em campo, os efeitos do clima são anulados."
+}
+
+CompoundEyes: {
+	Description: "A precisão dos golpes deste Pokémon é multiplicada por 1,3."
+}
+
+Insomnia: {
+	Description: "Este Pokémon não pode adormecer. Se ganhar a habilidade dormindo, acorda."
+}
+
+Immunity: {
+	Description: "Este Pokémon não pode ser envenenado. Se ganhar a habilidade envenenado, é curado."
+}
+
+FlashFire: {
+	Description: "Imune a golpes de Fogo; ao ser atingido por um, seus ataques de Fogo causam 1,5x de dano."
+}
+
+ShieldDust: {
+	Description: "Este Pokémon não sofre os efeitos secundários dos ataques de outros Pokémon."
+}
+
+OwnTempo: {
+	Description: "Este Pokémon não pode ficar confuso. Imune a Intimidate."
+}
+
+Intimidate: {
+	Description: "Ao entrar em campo, diminui o Ataque dos oponentes em 1 nível."
+}
+
+ShadowTag: {
+	Description: "Impede que os oponentes troquem de Pokémon, a menos que também tenham esta habilidade."
+}
+
+Levitate: {
+	Description: "Este Pokémon é imune a golpes do tipo Terrestre."
+}
+
+EffectSpore: {
+	Description: "30% de chance de envenenar, paralisar ou fazer dormir quem fizer contato com este Pokémon."
+}
+
+Synchronize: {
+	Description: "Se outro Pokémon queimar, envenenar ou paralisar este Pokémon, ele recebe o mesmo problema."
+}
+
+ClearBody: {
+	Description: "Impede que outros Pokémon diminuam os atributos deste Pokémon."
+}
+
+NaturalCure: {
+	Description: "Os problemas de status deste Pokémon são curados quando ele sai de campo."
+}
+
+LightningRod: {
+	Description: "Atrai golpes Elétricos para si e aumenta o Ataque Especial em 1 nível; imune a golpes Elétricos."
+}
+
+SereneGrace: {
+	Description: "A chance dos efeitos secundários dos golpes deste Pokémon é dobrada."
+}
+
+SwiftSwim: {
+	Description: "Durante a chuva, a Velocidade deste Pokémon é dobrada."
+}
+
+Chlorophyll: {
+	Description: "Sob sol forte, a Velocidade deste Pokémon é dobrada."
+}
+
+Illuminate: {
+	Description: "A precisão deste Pokémon não pode ser diminuída e ele ignora a evasão dos alvos."
+}
+
+Trace: {
+	Description: "Ao entrar em campo, copia a habilidade de um oponente."
+}
+
+HugePower: {
+	Description: "O Ataque deste Pokémon é dobrado."
+}
+
+PoisonPoint: {
+	Description: "30% de chance de envenenar quem fizer contato com este Pokémon."
+}
+
+InnerFocus: {
+	Description: "Este Pokémon nunca recua. Imune a Intimidate."
+}
+
+WaterVeil: {
+	Description: "Este Pokémon não pode ser queimado. Se ganhar a habilidade queimado, é curado."
+}
+
+MagnetPull: {
+	Description: "Impede que Pokémon do tipo Aço adversários troquem de lugar."
+}
+
+Soundproof: {
+	Description: "Este Pokémon é imune a golpes baseados em som."
+}
+
+RainDish: {
+	Description: "Durante a chuva, recupera 1/16 do PS máximo a cada turno."
+}
+
+Pressure: {
+	Description: "Golpes de oponentes usados contra este Pokémon gastam 1 PP a mais."
+}
+
+ThickFat: {
+	Description: "Golpes de Fogo e Gelo contra este Pokémon causam metade do dano."
+}
+
+EarlyBird: {
+	Description: "Este Pokémon acorda duas vezes mais rápido."
+}
+
+FlameBody: {
+	Description: "30% de chance de queimar quem fizer contato com este Pokémon."
+}
+
+RunAway: {
+	Description: "Este Pokémon sempre consegue fugir de Pokémon selvagens."
+}
+
+KeenEye: {
+	Description: "A precisão deste Pokémon não pode ser diminuída e ele ignora a evasão dos alvos."
+}
+
+HyperCutter: {
+	Description: "Impede que outros Pokémon diminuam o Ataque deste Pokémon."
+}
+
+Pickup: {
+	Description: "Se não estiver segurando um item, pega um item que outro Pokémon usou neste turno."
+}
+
+Hustle: {
+	Description: "O Ataque deste Pokémon é 1,5x, mas a precisão dos seus golpes físicos é 0,8x."
+}
+
+CuteCharm: {
+	Description: "30% de chance de atrair Pokémon do gênero oposto que fizerem contato com ele."
+}
+
+StickyHold: {
+	Description: "Este Pokémon não pode perder o item que segura por causa de golpes ou habilidades de outros."
+}
+
+ShedSkin: {
+	Description: "33% de chance de curar seus problemas de status no fim de cada turno."
+}
+
+Guts: {
+	Description: "Com um problema de status, seu Ataque é 1,5x; a queimadura não reduz seu dano físico."
+}
+
+MarvelScale: {
+	Description: "Com um problema de status, sua Defesa é multiplicada por 1,5."
+}
+
+LiquidOoze: {
+	Description: "Quem drenar PS deste Pokémon perde o PS em vez de recuperar."
+}
+
+Overgrow: {
+	Description: "Com 1/3 do PS ou menos, seus golpes de Planta ficam 1,5x mais fortes."
+}
+
+Blaze: {
+	Description: "Com 1/3 do PS ou menos, seus golpes de Fogo ficam 1,5x mais fortes."
+}
+
+Torrent: {
+	Description: "Com 1/3 do PS ou menos, seus golpes de Água ficam 1,5x mais fortes."
+}
+
+Swarm: {
+	Description: "Com 1/3 do PS ou menos, seus golpes de Inseto ficam 1,5x mais fortes."
+}
+
+RockHead: {
+	Description: "Este Pokémon não sofre dano de recuo dos próprios golpes."
+}
+
+Drought: {
+	Description: "Ao entrar em campo, faz o sol brilhar forte (Sunny Day)."
+}
+
+ArenaTrap: {
+	Description: "Impede que os oponentes troquem de Pokémon, a menos que estejam voando ou levitando."
+}
+
+VitalSpirit: {
+	Description: "Este Pokémon não pode adormecer. Se ganhar a habilidade dormindo, acorda."
+}
+
+ShellArmor: {
+	Description: "Este Pokémon não pode sofrer acertos críticos."
+}
+
+TangledFeet: {
+	Description: "A evasão deste Pokémon é dobrada enquanto ele está confuso."
+}
+
+Rivalry: {
+	Description: "Causa 1,25x de dano em alvos do mesmo gênero e 0,75x em alvos do gênero oposto."
+}
+
+Steadfast: {
+	Description: "Quando este Pokémon recua, sua Velocidade sobe 1 nível."
+}
+
+SnowCloak: {
+	Description: "Durante a neve, a evasão deste Pokémon é 1,25x."
+}
+
+Gluttony: {
+	Description: "Come suas Berries com metade do PS em vez de esperar chegar a 1/4."
+}
+
+AngerPoint: {
+	Description: "Ao sofrer um acerto crítico, o Ataque deste Pokémon vai ao máximo."
+}
+
+Unburden: {
+	Description: "A Velocidade dobra quando perde ou usa o item que segura."
+}
+
+DrySkin: {
+	Description: "Recupera PS com golpes de Água e na chuva; sofre mais dano de Fogo e perde PS sob sol forte."
+}
+
+Download: {
+	Description: "Ao entrar em campo, aumenta o Ataque ou o Ataque Especial conforme a defesa mais fraca do oponente."
+}
+
+IronFist: {
+	Description: "Os golpes de soco deste Pokémon ficam 1,2x mais fortes."
+}
+
+Adaptability: {
+	Description: "O bônus de golpes do mesmo tipo do Pokémon (STAB) é 2x em vez de 1,5x."
+}
+
+SkillLink: {
+	Description: "Golpes de vários acertos deste Pokémon sempre acertam o número máximo de vezes."
+}
+
+Hydration: {
+	Description: "Durante a chuva, cura seus problemas de status no fim de cada turno."
+}
+
+SolarPower: {
+	Description: "Sob sol forte, seu Ataque Especial é 1,5x, mas perde 1/8 do PS máximo a cada turno."
+}
+
+QuickFeet: {
+	Description: "Com um problema de status, sua Velocidade é 1,5x; a paralisia não a reduz."
+}
+
+Sniper: {
+	Description: "Os acertos críticos deste Pokémon causam 1,5x de dano a mais."
+}
+
+MagicGuard: {
+	Description: "Este Pokémon só sofre dano de ataques diretos."
+}
+
+NoGuard: {
+	Description: "Todos os golpes usados por ou contra este Pokémon sempre acertam."
+}
+
+Technician: {
+	Description: "Golpes deste Pokémon com poder 60 ou menos ficam 1,5x mais fortes."
+}
+
+LeafGuard: {
+	Description: "Sob sol forte, este Pokémon não pode receber problemas de status."
+}
+
+MoldBreaker: {
+	Description: "Os golpes deste Pokémon ignoram as habilidades dos outros Pokémon."
+}
+
+Aftermath: {
+	Description: "Se for derrotado por um golpe de contato, quem o derrotou perde 1/4 do PS máximo."
+}
+
+Anticipation: {
+	Description: "Ao entrar em campo, estremece se algum oponente tiver um golpe superefetivo ou de nocaute instantâneo."
+}
+
+Forewarn: {
+	Description: "Ao entrar em campo, descobre o golpe mais forte do oponente."
+}
+
+Unaware: {
+	Description: "Este Pokémon ignora as mudanças de atributo dos outros ao atacar e ao receber dano."
+}
+
+TintedLens: {
+	Description: "Golpes pouco efetivos deste Pokémon causam o dobro de dano."
+}
+
+Filter: {
+	Description: "Este Pokémon recebe só 3/4 do dano de ataques superefetivos."
+}
+
+Scrappy: {
+	Description: "Golpes Normais e Lutador acertam Pokémon Fantasma. Imune a Intimidate."
+}
+
+IceBody: {
+	Description: "Durante a neve, recupera 1/16 do PS máximo a cada turno."
+}
+
+Frisk: {
+	Description: "Ao entrar em campo, descobre os itens que os oponentes estão segurando."
+}
+
+Reckless: {
+	Description: "Golpes com dano de recuo deste Pokémon ficam 1,2x mais fortes."
+}
+
+SheerForce: {
+	Description: "Golpes com efeitos secundários ficam 1,3x mais fortes, mas perdem esses efeitos."
+}
+
+Contrary: {
+	Description: "As mudanças de atributo deste Pokémon são invertidas: o que subiria desce, e vice-versa."
+}
+
+Unnerve: {
+	Description: "Enquanto está em campo, os oponentes não conseguem comer Berries."
+}
+
+Defiant: {
+	Description: "O Ataque sobe 2 níveis sempre que um oponente diminui um dos seus atributos."
+}
+
+CursedBody: {
+	Description: "Ao ser atingido, 30% de chance de desativar o golpe que o atingiu."
+}
+
+Healer: {
+	Description: "30% de chance de curar o problema de status de um aliado no fim de cada turno."
+}
+
+FriendGuard: {
+	Description: "Os aliados deste Pokémon recebem só 3/4 do dano de ataques."
+}
+
+WeakArmor: {
+	Description: "Ao sofrer um golpe físico, a Defesa cai 1 nível e a Velocidade sobe 2."
+}
+
+Multiscale: {
+	Description: "Com o PS cheio, recebe metade do dano de ataques."
+}
+
+Harvest: {
+	Description: "Se a última Berry usada foi consumida, 50% de chance de recuperá-la a cada turno (100% sob sol forte)."
+}
+
+Overcoat: {
+	Description: "Imune a golpes de pó, ao dano da tempestade de areia e a Effect Spore."
+}
+
+PoisonTouch: {
+	Description: "Os golpes de contato deste Pokémon têm 30% de chance de envenenar."
+}
+
+Regenerator: {
+	Description: "Recupera 1/3 do PS máximo ao sair de campo."
+}
+
+BigPecks: {
+	Description: "Impede que outros Pokémon diminuam a Defesa deste Pokémon."
+}
+
+SandRush: {
+	Description: "Durante a tempestade de areia, a Velocidade dobra e não sofre dano da areia."
+}
+
+WonderSkin: {
+	Description: "Golpes de status com teste de precisão têm só 50% de chance de acertar este Pokémon."
+}
+
+Analytic: {
+	Description: "Os ataques deste Pokémon ficam 1,3x mais fortes se ele for o último a agir no turno."
+}
+
+Imposter: {
+	Description: "Ao entrar em campo, se transforma no Pokémon adversário à sua frente."
+}
+
+Infiltrator: {
+	Description: "Os golpes deste Pokémon atravessam Substitute, Reflect, Light Screen, Safeguard e Mist."
+}
+
+Moxie: {
+	Description: "O Ataque sobe 1 nível sempre que este Pokémon derrota outro com um golpe."
+}
+
+Justified: {
+	Description: "O Ataque sobe 1 nível ao ser atingido por um golpe do tipo Sombrio."
+}
+
+Rattled: {
+	Description: "A Velocidade sobe 1 nível ao ser atingido por golpes de Inseto, Sombrio ou Fantasma, ou ao ser intimidado."
+}
+
+MagicBounce: {
+	Description: "Rebate de volta para quem usou certos golpes de status."
+}
+
+SandForce: {
+	Description: "Na tempestade de areia, golpes Terrestres, de Pedra e de Aço ficam 1,3x mais fortes; imune à areia."
+}
+
+Protean: {
+	Description: "O tipo deste Pokémon muda para o tipo do golpe que ele usa. Uma vez por entrada em campo."
+}
+
+Magician: {
+	Description: "Se não estiver segurando um item, rouba o item do Pokémon que atingir com um ataque."
+}
+
+Bulletproof: {
+	Description: "Este Pokémon é imune a golpes de bola e projéteis."
+}
+
+Competitive: {
+	Description: "O Ataque Especial sobe 2 níveis sempre que um oponente diminui um dos seus atributos."
+}
+
+MegaLauncher: {
+	Description: "Golpes de pulso deste Pokémon ficam 1,5x mais fortes."
+}
+
+ToughClaws: {
+	Description: "Os golpes de contato deste Pokémon ficam 1,3x mais fortes."
+}
+
+Aerilate: {
+	Description: "Golpes do tipo Normal deste Pokémon viram do tipo Voador e ficam 1,2x mais fortes."
+}
+
+ParentalBond: {
+	Description: "Os golpes de dano deste Pokémon acertam duas vezes; o segundo acerto causa 1/4 do dano."
+}
+
+LongReach: {
+	Description: "Os ataques deste Pokémon não fazem contato com o alvo."
+}
+
+LiquidVoice: {
+	Description: "Os golpes de som deste Pokémon viram do tipo Água."
+}
+
+InnardsOut: {
+	Description: "Se for derrotado por um golpe, quem o derrotou perde PS igual ao dano final recebido."
+}
+
+ElectricSurge: {
+	Description: "Ao entrar em campo, cria um Electric Terrain."
+}
+
+GrassySurge: {
+	Description: "Ao entrar em campo, cria um Grassy Terrain."
+}
+
+Libero: {
+	Description: "O tipo deste Pokémon muda para o tipo do golpe que ele usa. Uma vez por entrada em campo."
+}
+
+NeutralizingGas: {
+	Description: "Enquanto este Pokémon está em campo, as habilidades não têm efeito."
+}

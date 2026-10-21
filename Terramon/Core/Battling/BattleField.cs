@@ -55,6 +55,8 @@ public sealed class BattleField
                 break;
             case BattleActionID.SwitchPokemon:
                 ref var switchedIn = ref GetMon(r);
+                // A transformed Pokémon goes back to its own looks when it leaves the field
+                switchedIn.Side.ClearTransforms();
                 switchedIn.SetAsActive();
                 // Whatever was charging or recharging has left the field
                 switchedIn.Side.Trapped = 0;
@@ -142,6 +144,9 @@ public sealed class BattleField
                     mon.AbilitySuppressed = true;
                 break;
             case BattleActionID.PokemonTransformDetails:
+                ref var transformed = ref GetMon(r);
+                transformed.TransformedInto = r.ReadUInt16();
+                transformed.TransformedShiny = a.Flags[0];
                 break;
         }
     }

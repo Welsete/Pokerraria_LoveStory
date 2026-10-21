@@ -257,17 +257,49 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         // Pokémon with a full animation set pick their frame from what they're doing instead
         var animSet = PokemonAnimations.Get(Schema.Identifier, Data);
+        var shiny = Data?.IsShiny ?? false;
+        var shownID = ID;
+
+        // Transformed in battle (Transform or Imposter): looks like the Pokémon it copied, from its animation set or,
+        // for Pokémon without one, from the first frame of its sprite sheet
+        Texture2D transformedSheet = null;
+        var transformedFrame = Rectangle.Empty;
+        if (BattleSide.TryGetTransformed(this, out var transformedInto, out var transformedShiny))
+        {
+            if (PokemonAnimations.Get(Terramon.DatabaseV2.GetPokemon(transformedInto)?.Identifier) is { } transformedSet)
+            {
+                animSet = transformedSet;
+                shiny = transformedShiny;
+                shownID = transformedInto;
+            }
+            else if (PokemonAnimations.TryGetSheetFrame(transformedInto, transformedShiny, out transformedSheet,
+                         out transformedFrame))
+            {
+                animSet = null;
+                shownID = transformedInto;
+            }
+        }
+
         Texture2D animTexture = null;
         var animSource = Rectangle.Empty;
         var animOrigin = Vector2.Zero;
         if (animSet != null)
         {
             var battling = BattleClient?.Foe != null;
-            PokemonAnimations.GetFrame(animSet, this, Data?.IsShiny ?? false, Math.Abs(NPC.velocity.X) > 0.2f,
+            PokemonAnimations.GetFrame(animSet, this, shiny, Math.Abs(NPC.velocity.X) > 0.2f,
                 !battling && Math.Abs(NPC.velocity.Y) > 1f, battling, Data is { Status: NonVolatileStatus.Slp },
                 Data is { HP: 0 }, out animTexture, out animSource, out animOrigin, NPC.noGravity);
             drawPos = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY + 1f);
         }
+        else if (transformedSheet != null)
+        {
+            animTexture = transformedSheet;
+            animSource = transformedFrame;
+            animOrigin = new Vector2(transformedFrame.Width / 2f, transformedFrame.Height);
+            drawPos = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY + 1f);
+        }
+
+        var animScale = animSet?.Scale ?? 1f;
 
         if (Data is { HP: 0 } && !PlasmaState)
         {
@@ -311,13 +343,13 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         if (_plasmaStateTime <= 20)
         {
             // Desaturate the lightColor for Gastly
-            var adjustedColor = ID == NationalDexID.Gastly
+            var adjustedColor = shownID == NationalDexID.Gastly
                 ? PokemonPet.GrayscaleColor(drawColor)
                 : drawColor;
 
             if (animTexture != null)
                 spriteBatch.Draw(animTexture, drawPos, animSource, adjustedColor, rotation, animOrigin,
-                    NPC.scale * animSet.Scale, effects, 0f);
+                    NPC.scale * animScale, effects, 0f);
             else
                 spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, adjustedColor, rotation,
                     frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
@@ -333,7 +365,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 ? PokemonEntityLoader.ShinyGlowTextureCache
                 : PokemonEntityLoader.GlowTextureCache;
             // Glowmasks are drawn over the old sprite sheet's frames, so not over animation sets
-            if (animSet == null && glowCache.TryGetValue(ID, out var glowTexture) && !PlasmaState)
+            if (animSet == null && transformedSheet == null && glowCache.TryGetValue(ID, out var glowTexture) &&
+                !PlasmaState)
             {
                 drawColor = Color.White;
                 if (ID == NationalDexID.Gastly) drawColor.A = 128;
@@ -357,7 +390,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         if (animTexture != null)
             spriteBatch.Draw(animTexture, drawPos, animSource, drawColor, NPC.rotation, animOrigin,
-                NPC.scale * animSet.Scale, effects, 0f);
+                NPC.scale * animScale, effects, 0f);
         else
             spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, drawColor, NPC.rotation,
                 frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);

@@ -392,6 +392,15 @@ public sealed class BattleManager
                     w.Write(new SimpleHP(dc.HP));
                 }
                 break;
+            case TransformElement tf:
+                // Transform and Imposter: the user takes on the target's looks (species and shininess) until it leaves
+                ref var transformTarget = ref source.Omniscient.GetMon(new SimpleMon(tf.Species));
+                Write(BattleActionID.PokemonTransformDetails, transformTarget.IsShiny);
+                {
+                    w.Write(new SimpleMon(tf.Pokemon));
+                    w.Write(transformTarget.Species);
+                }
+                break;
             case ReplaceElement dc:
                 Write(BattleActionID.SetPokemonDetails);
                 {

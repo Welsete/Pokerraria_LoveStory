@@ -439,7 +439,7 @@ public sealed class TestBattleUI : SmartUIState
             if (move.ID == MoveID.None || schema == null)
                 return;
             var maxPP = schema.PP + schema.PP * move.PPUp / 5;
-            Main.instance.MouseText(MoveTooltip.Build(move.ID, move.PP, maxPP));
+            MoveTooltip.Show(MoveTooltip.Build(move.ID, move.PP, maxPP));
             return;
         }
     }
@@ -846,6 +846,15 @@ public sealed class TestBattleUI : SmartUIState
         }
     }
 
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        base.Draw(spriteBatch);
+
+        // After the buttons, so the move's tooltip panel covers them instead of mixing with them
+        DrawMoveTooltip();
+        MoveTooltip.DrawPending(spriteBatch);
+    }
+
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         Point16 newDim = new(Main.screenWidth, Main.screenHeight);
@@ -855,7 +864,6 @@ public sealed class TestBattleUI : SmartUIState
             _screenDimensions = newDim;
         }
 
-        DrawMoveTooltip();
         /*
         RemoveAllChildren();
         OnInitialize();

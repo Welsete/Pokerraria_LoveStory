@@ -49,6 +49,7 @@ Battle: {
 		StatFell: "{1} de {0} diminuiu!"
 		StatFellHarshly: "{1} de {0} diminuiu muito!"
 		Cured: "{0} se curou do seu problema de status!"
+		Transformed: "{0} se transformou em {1}!"
 		Stats: {
 			Atk: O Ataque
 			Def: A Defesa
@@ -638,7 +639,28 @@ GUI: {
 		}
 		PerfectLegend: Perfeito (31)
 		MaxedLegend: No máximo (252)
-		IVsInfo: Os IVs nascem com o Pokémon: de 0 a 31 em cada atributo. Eles nunca mudam, e quanto maior, melhor.
+		IVsInfo: O talento natural do seu Pokémon, de 0 a 31 em cada atributo, definido quando ele foi encontrado. 31 é perfeito, e um Pokémon pode ter IVs perfeitos. IVs maiores dão atributos maiores no mesmo nível. Treinar não muda os IVs.
+		IVsWhat: O que são IVs?
+		IVRating: {
+			Perfect: Perfeito
+			Great: Ótimo
+			Good: Bom
+			Fair: Razoável
+			None: Nenhum
+		}
+		HiddenAbility: (habilidade oculta)
+		Relearn: {
+			Change: Trocar golpe
+			Learn: Aprender golpe
+			ButtonHint: Troque por um golpe que ele já poderia ter aprendido subindo de nível (inclusive os que você pulou).
+			TitleEmpty: Aprender um golpe
+			TitleReplace: "Trocar {0} por..."
+			Hint: Golpes que ele já pode saber no nível atual. Passe o mouse para ler, clique para aprender.
+			NoMoves: Não há outros golpes que ele possa aprender por nível agora.
+			Level: Nv. {0}
+			Evolution: Evol.
+			Cancel: Cancelar
+		}
 		EVsInfo: Os EVs crescem quando este Pokémon derrota outros. Até 252 por atributo e 510 no total; cada 4 EVs somam 1 ponto ao atributo no nível 100.
 		EVsLeft: "Ainda pode ganhar {0} EVs"
 		EVsFull: Ganhou todos os 510 EVs!

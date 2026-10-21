@@ -131,6 +131,10 @@ internal sealed class PokedexInfoSection() : PokedexSection("Mods.Terramon.GUI.P
     private readonly List<(string Label, string[] Lines)> _rows = [];
     private float _labelWidth;
 
+    // The abilities row (-1 if none) and what hovering it shows: every ability with its description
+    private int _abilityRow = -1;
+    private string _abilityTooltip = string.Empty;
+
     /// <summary>"SolarPower" -> "Solar Power". Ability names stay in English, like move names.</summary>
     public static string AbilityName(AbilityID ability)
         => Regex.Replace(ability.ToString(), "(?<=[a-z])(?=[A-Z])", " ");
@@ -142,6 +146,8 @@ internal sealed class PokedexInfoSection() : PokedexSection("Mods.Terramon.GUI.P
     public void SetPokemon(ushort pokemon, Func<ushort, bool> known)
     {
         _rows.Clear();
+        _abilityRow = -1;
+        _abilityTooltip = string.Empty;
         var schema = Terramon.DatabaseV2.GetPokemon(pokemon);
         if (schema == null)
             return;
@@ -157,7 +163,14 @@ internal sealed class PokedexInfoSection() : PokedexSection("Mods.Terramon.GUI.P
         if (schema.Abilities.Hidden != AbilityID.None)
             abilities.Add(Text("HiddenAbility", AbilityName(schema.Abilities.Hidden)));
         if (abilities.Count > 0)
+        {
+            _abilityRow = rows.Count;
+            _abilityTooltip = AbilityTooltip.Build([
+                (schema.Abilities.Ability1, false), (schema.Abilities.Ability2, false),
+                (schema.Abilities.Hidden, true)
+            ]);
             rows.Add((Text("Abilities"), string.Join(" / ", abilities)));
+        }
 
         rows.Add((Text("CatchRate"), $"{schema.CatchRate}/255"));
         rows.Add((Text("GrowthRate"), Text($"GrowthRates.{schema.GrowthRate}")));
@@ -209,8 +222,22 @@ internal sealed class PokedexInfoSection() : PokedexSection("Mods.Terramon.GUI.P
     protected override void DrawContent(SpriteBatch spriteBatch, Vector2 topLeft)
     {
         var y = topLeft.Y;
-        foreach (var (label, lines) in _rows)
+        for (var i = 0; i < _rows.Count; i++)
         {
+            var (label, lines) = _rows[i];
+
+            // Hovering the abilities shows what each one does
+            if (i == _abilityRow && _abilityTooltip.Length > 0)
+            {
+                var row = new Rectangle((int)topLeft.X - 3, (int)y - 1, (int)InnerWidth + 6,
+                    (int)(lines.Length * Line) + 1);
+                if (IsMouseHovering && row.Contains(Main.MouseScreen.ToPoint()))
+                {
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, row, NavyLight);
+                    MoveTooltip.Show(_abilityTooltip);
+                }
+            }
+
             DrawFitted(spriteBatch, label, new Vector2(topLeft.X, y), LabelColor, _labelWidth - 6f);
             foreach (var line in lines)
             {
@@ -398,7 +425,7 @@ internal sealed class PokedexLearnsetSection() : PokedexSection("Mods.Terramon.G
         DrawFitted(spriteBatch, Text("MovesHint"), new Vector2(x, y + 4f), HintColor, InnerWidth, 0.7f);
 
         if (hover != null)
-            Main.instance.MouseText(hover);
+            MoveTooltip.Show(hover);
     }
 }
 
