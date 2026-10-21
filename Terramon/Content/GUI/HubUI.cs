@@ -1024,6 +1024,10 @@ internal sealed class PokedexOverviewPanel : UIPanel
     private readonly UIImage _header;
     private readonly UIText _heightText;
     private readonly UIContainer _heightWeightContainer;
+    private readonly PokedexHintSection _hintSection;
+    private readonly PokedexInfoSection _infoSection;
+    private readonly PokedexLearnsetSection _learnsetSection;
+    private readonly PokedexStatsSection _statsSection;
     private readonly UIList _list;
     private readonly UIPanel _mainTypePanel;
     private readonly UIText _mainTypeText;
@@ -1096,7 +1100,7 @@ internal sealed class PokedexOverviewPanel : UIPanel
             Height = { Pixels = 48 },
             BackgroundColor = new Color(37, 49, 90)
         };
-        var typeDesc = new UIText("Type", 0.84f)
+        var typeDesc = new UIText(Language.GetText("Mods.Terramon.GUI.Pokedex.Type"), 0.84f)
         {
             VAlign = 0.5f
         };
@@ -1136,8 +1140,7 @@ internal sealed class PokedexOverviewPanel : UIPanel
         _dexEntryContainer = new UIContainer(new Vector2(307, 113))
         {
             Left = { Pixels = 25 },
-            MarginTop = 18,
-            MarginBottom = 18
+            MarginTop = 18
         };
         var dexEntryPanel = new UIPanel
         {
@@ -1209,6 +1212,11 @@ internal sealed class PokedexOverviewPanel : UIPanel
         weightPanel.Append(_weightText);
         _heightWeightContainer.Append(weightPanel);
         //_list.Add(heightWeightContainer);
+        // Data boxes in the style of Isa's Pokédex concept (registered Pokémon only)
+        _infoSection = new PokedexInfoSection();
+        _statsSection = new PokedexStatsSection();
+        _learnsetSection = new PokedexLearnsetSection { MarginBottom = 18 };
+        _hintSection = new PokedexHintSection { MarginBottom = 18 };
         Append(_list);
         _header = new UIImage(OverviewHeaderTexture)
         {
@@ -1242,6 +1250,18 @@ internal sealed class PokedexOverviewPanel : UIPanel
 
     public ushort Pokemon { get; private set; }
 
+    /// <summary>
+    ///     Whether the player has at least seen <paramref name="pokemon" /> (in the Pokédex shown), so its name can be
+    ///     shown as another Pokémon's evolution. Pokémon outside the Pokédex are always named.
+    /// </summary>
+    private static bool IsKnown(ushort pokemon)
+    {
+        var dex = HubUI.WorldDexMode ? TerramonWorld.GetWorldDex() : TerramonPlayer.LocalPlayer.GetPokedex();
+        if (dex == null || !dex.Entries.TryGetValue(pokemon, out var entry))
+            return true;
+        return entry.Status != PokedexEntryStatus.Undiscovered;
+    }
+
     /*public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
@@ -1274,6 +1294,10 @@ internal sealed class PokedexOverviewPanel : UIPanel
         _list.Remove(_heightWeightContainer);
         _list.Remove(_typeContainer);
         _list.Remove(_speciesPanel);
+        _list.Remove(_infoSection);
+        _list.Remove(_statsSection);
+        _list.Remove(_learnsetSection);
+        _list.Remove(_hintSection);
 
         if (pokemon == 0)
         {
@@ -1317,14 +1341,30 @@ internal sealed class PokedexOverviewPanel : UIPanel
                 _weightText.SetText(weightFmtString, 0.84f - diff / 172f, false);
             }
 
-            // Types
-            var mainType = schema.Types[0];
+            // Abilities, catch rate, evolution..., base stats and level-up moves
+            _infoSection.SetPokemon(pokemon, IsKnown);
+            _statsSection.SetPokemon(pokemon);
+            _learnsetSection.SetPokemon(pokemon);
+        }
+        else
+        {
+            _speciesText.SetText("???");
+            _dexEntryText.SetText("???");
+            _heightText.SetText("???");
+            _weightText.SetText("???");
+            _hintSection.Refresh();
+        }
+
+        // Types are shown once the Pokémon has been seen
+        if (status != PokedexEntryStatus.Undiscovered)
+        {
+            var types = Terramon.DatabaseV2.GetPokemon(pokemon).Types;
+            var mainType = types[0];
             _mainTypeText.SetText(Language.GetTextValue($"Mods.Terramon.Types.{mainType}"));
             _mainTypePanel.BackgroundColor = mainType.GetColor();
-            var dualType = schema.Types.Count > 1;
-            if (dualType)
+            if (types.Count > 1)
             {
-                var altType = schema.Types[1];
+                var altType = types[1];
                 _altTypeText.SetText(Language.GetTextValue($"Mods.Terramon.Types.{altType}"));
                 _altTypePanel.BackgroundColor = altType.GetColor();
             }
@@ -1336,10 +1376,6 @@ internal sealed class PokedexOverviewPanel : UIPanel
         }
         else
         {
-            _speciesText.SetText("???");
-            _dexEntryText.SetText("???");
-            _heightText.SetText("???");
-            _weightText.SetText("???");
             _mainTypePanel.BackgroundColor = new Color(50, 62, 114);
             _altTypePanel.BackgroundColor = new Color(50, 62, 114);
             _mainTypeText.SetText(string.Empty);
@@ -1350,6 +1386,16 @@ internal sealed class PokedexOverviewPanel : UIPanel
         _list.Add(_typeContainer);
         _list.Add(_heightWeightContainer);
         _list.Add(_dexEntryContainer);
+        if (status == PokedexEntryStatus.Registered)
+        {
+            _list.Add(_infoSection);
+            _list.Add(_statsSection);
+            _list.Add(_learnsetSection);
+        }
+        else
+        {
+            _list.Add(_hintSection);
+        }
         _header.Color = Color.White;
         _divider.Color = Color.White;
         _preview.IDToDraw = pokemon;
@@ -1361,6 +1407,11 @@ internal sealed class PokedexOverviewPanel : UIPanel
 internal sealed class PokedexPreviewCanvas : UIImage
 {
     private static readonly Asset<Texture2D> OverviewPreviewTexture;
+
+    /// <summary>The animations the Pokémon shown has (null when it uses a normal sprite sheet).</summary>
+    private List<PokemonAnimState> _animStates;
+
+    private int _animIndex;
     private NPC _dummyNPCForDrawing;
     private ushort _idToDraw;
     private UIImage _previewBackground;
@@ -1385,6 +1436,10 @@ internal sealed class PokedexPreviewCanvas : UIImage
         set
         {
             _idToDraw = value;
+            _animIndex = 0;
+            _animStates = value == 0
+                ? null
+                : PokemonAnimations.Get(Terramon.DatabaseV2.GetPokemonName(value))?.Anims.Keys.Order().ToList();
             if (value == 0)
             {
                 Color = Color.Transparent;
@@ -1401,6 +1456,7 @@ internal sealed class PokedexPreviewCanvas : UIImage
             _previewBackgroundOverlay.SetImage(overlay ?? TextureAssets.MagicPixel);
             _previewBackgroundOverlay.Color = overlayColor;
 
+            _dummyNPCForDrawing = null;
             if (!PokemonEntityLoader.IDToNPCType.TryGetValue(value, out var type)) return;
             _dummyNPCForDrawing = new NPC
             {
@@ -1450,8 +1506,29 @@ internal sealed class PokedexPreviewCanvas : UIImage
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        if (_idToDraw == 0) return;
+        if (_idToDraw == 0 || _dummyNPCForDrawing == null) return;
         _dummyNPCForDrawing.FindFrame();
+    }
+
+    /// <summary>Left click shows the next animation of a Pokémon with an animation set.</summary>
+    public override void LeftClick(UIMouseEvent evt)
+    {
+        base.LeftClick(evt);
+        CycleAnimation(1);
+    }
+
+    /// <summary>Right click shows the previous animation.</summary>
+    public override void RightClick(UIMouseEvent evt)
+    {
+        base.RightClick(evt);
+        CycleAnimation(-1);
+    }
+
+    private void CycleAnimation(int direction)
+    {
+        if (_idToDraw == 0 || _animStates is not { Count: > 1 }) return;
+        _animIndex = (_animIndex + direction + _animStates.Count) % _animStates.Count;
+        SoundEngine.PlaySound(in SoundID.MenuTick);
     }
 
     public override void Draw(SpriteBatch spriteBatch)
@@ -1460,6 +1537,40 @@ internal sealed class PokedexPreviewCanvas : UIImage
         if (_idToDraw == 0) return;
 
         var position = GetOuterDimensions().Position();
+        if (_animStates != null)
+            DrawAnimated(spriteBatch, position);
+        else if (_dummyNPCForDrawing != null)
+            DrawNPC(spriteBatch, position);
+
+        DrawCaughtCount(spriteBatch, position);
+    }
+
+    /// <summary>
+    ///     Draws a Pokémon with a Mystery Dungeon-style animation set in the chosen animation, with a "&lt; Idle &gt;"
+    ///     label to click through the others.
+    /// </summary>
+    private void DrawAnimated(SpriteBatch spriteBatch, Vector2 position)
+    {
+        var state = _animStates[_animIndex];
+        var feet = position + new Vector2(Width.Pixels / 2f, Height.Pixels - 10f);
+        PokemonAnimations.DrawInUI(spriteBatch, _idToDraw, HubUI.ShinyActive, feet.Floor(), 0.6f, state);
+
+        if (_animStates.Count < 2) return;
+        var stateName = Language.GetTextValue($"Mods.Terramon.GUI.Pokedex.AnimStates.{state}");
+        var label = Language.GetTextValue("Mods.Terramon.GUI.Pokedex.AnimState", stateName);
+        const float scale = 0.7f;
+        var size = FontAssets.MouseText.Value.MeasureString(label) * scale;
+        var chip = new Rectangle((int)(position.X + Width.Pixels - size.X - 40), (int)position.Y + 26,
+            (int)size.X + 14, (int)size.Y);
+        PokedexSection.DrawFrame(spriteBatch, chip, null);
+        Utils.DrawBorderString(spriteBatch, label, new Vector2(chip.X + 7, chip.Y + 3), PokedexSection.Gold, scale);
+
+        if (IsMouseHovering)
+            Main.instance.MouseText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.AnimHint", stateName));
+    }
+
+    private void DrawNPC(SpriteBatch spriteBatch, Vector2 position)
+    {
         var drawNPCPosition = position;
         drawNPCPosition.X += (int)(Width.Pixels / 2 - _dummyNPCForDrawing.width / 2f);
         drawNPCPosition.Y += (int)(Height.Pixels - _dummyNPCForDrawing.height + 2);
@@ -1472,7 +1583,10 @@ internal sealed class PokedexPreviewCanvas : UIImage
             _dummyNPCForDrawing.frame.Y = TextureAssets.Npc[_dummyNPCForDrawing.type].Height() /
                                           Main.npcFrameCount[_dummyNPCForDrawing.type];
         Main.instance.DrawNPCDirect(spriteBatch, _dummyNPCForDrawing, false, -drawNPCPosition);
+    }
 
+    private void DrawCaughtCount(SpriteBatch spriteBatch, Vector2 position)
+    {
         if (HubUI.WorldDexMode) return; // Not supported in World Dex mode yet
 
         var ballIcon = BallAssets.GetBallIcon(GetBallTypeForCaughtCount(CaughtCount));

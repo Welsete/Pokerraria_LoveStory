@@ -4,6 +4,7 @@ using ReLogic.Content;
 using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
+using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.NPCs;
@@ -417,6 +418,32 @@ public sealed class TestBattleUI : SmartUIState
         }
     }
 
+    /// <summary>
+    ///     While the moves are shown, hovering a move button shows what the move does (its description, type,
+    ///     category, power, accuracy and PP), like hovering an item.
+    /// </summary>
+    private static void DrawMoveTooltip()
+    {
+        if (_movesPanel.Parent == null)
+            return;
+        foreach (var child in _movesPanel.Children)
+        {
+            if (child is not DynamicPixelRatioElement { BlockInteractions: false } button ||
+                !button.ContainsPoint(Main.MouseScreen))
+                continue;
+            var moveRef = button.Children.OfType<MoveReference>().FirstOrDefault();
+            if (moveRef?.DataRef == null)
+                return;
+            var move = moveRef.DataRef.Moves[moveRef.Move];
+            var schema = move.Schema;
+            if (move.ID == MoveID.None || schema == null)
+                return;
+            var maxPP = schema.PP + schema.PP * move.PPUp / 5;
+            Main.instance.MouseText(MoveTooltip.Build(move.ID, move.PP, maxPP));
+            return;
+        }
+    }
+
     private static void ClickMoveButton(UIMouseEvent evt, UIElement listeningElement)
     {
         SoundEngine.PlaySound(in TerramonSoundID.BattleDecide);
@@ -827,6 +854,8 @@ public sealed class TestBattleUI : SmartUIState
             Recalculate();
             _screenDimensions = newDim;
         }
+
+        DrawMoveTooltip();
         /*
         RemoveAllChildren();
         OnInitialize();

@@ -606,6 +606,107 @@ GUI: {
 		Height: Altura
 		Weight: Peso
 		Entry: Registro
+		Type: Tipo
+		Info: Dados da Pokédex
+		BaseStats: Atributos Base
+		Moves: Golpes por Nível
+		SeenHint: Capture este Pokémon para ver suas habilidades, atributos base e os golpes que aprende.
+		NoMoves: Não aprende golpes subindo de nível.
+		MovesHint: Passe o mouse sobre um golpe para ler o que ele faz.
+		LevelShort: Nv. {0}
+		EvolutionMove: Evo.
+		MoveStats: "Poder {0}  ·  Prec. {1}  ·  PP {2}"
+		Columns: {
+			Level: Nv.
+			Move: Golpe
+			Type: Tipo
+			Category: Cat.
+			Power: Poder
+		}
+		CategoryShort: {
+			Physical: Fís.
+			Special: Esp.
+			Status: Status
+			Dynamic: Var.
+		}
+		Abilities: Habilidades
+		HiddenAbility: "{0} (oculta)"
+		CatchRate: Captura
+		GrowthRate: Crescimento
+		Gender: Gênero
+		Genderless: Sem gênero
+		GenderRatio: "Macho {0}% · Fêmea {1}%"
+		Habitat: Habitat
+		Evolution: Evolução
+		EvolvesInto: "Evolui para {0} no Nv. {1}"
+		EvolvesFrom: "Evolui de {0} no Nv. {1}"
+		NoEvolution: Não evolui subindo de nível
+		Total: Total
+		EVYield: EVs dados
+		Stats: {
+			HP: PS
+			Attack: Ataque
+			Defense: Defesa
+			SpAtk: At. Esp.
+			SpDef: Def. Esp.
+			Speed: Velocidade
+		}
+		GrowthRates: {
+			Erratic: Errático
+			Fast: Rápido
+			MediumFast: Médio-rápido
+			MediumSlow: Médio-lento
+			Slow: Lento
+			Fluctuating: Flutuante
+		}
+		Biomes: {
+			Forest: Floresta
+			Underworld: Submundo
+			Meteorite: Meteorito
+			Dungeon: Masmorra
+			Beach: Praia
+			Rain: Chuva
+			Surface: Superfície
+			Space: Espaço
+			Jungle: Selva
+			Corruption: Corrupção
+			Crimson: Carmim
+			Desert: Deserto
+			Underground: Subterrâneo
+			Caverns: Cavernas
+			GlowingMushroom: Cogumelos Brilhantes
+			GemCave: Cavernas de Gemas
+			Marble: Cavernas de Mármore
+			Granite: Cavernas de Granito
+			Snow: Neve
+			Hallow: Consagrado
+			HallowRain: Consagrado na chuva
+			Graveyard: Cemitério
+			Night: Noite
+		}
+		AnimState: "< {0} >"
+		AnimHint: "Animação: {0}\nClique esquerdo: próxima  ·  Clique direito: anterior"
+		AnimStates: {
+			Idle: Parado
+			Walk: Andando
+			Attack: Ataque
+			SpAttack: Ataque Especial
+			Status: Golpe de Status
+			Hurt: Ferido
+			Sleep: Dormindo
+			Faint: Desmaio
+			Strike: Golpe
+			QuickStrike: Golpe Rápido
+			Swing: Corte
+			Double: Golpe Duplo
+			Hop: Pulo
+			Sit: Sentado
+			Laying: Deitado
+			Wake: Acordando
+			Trip: Tropeço
+			Eat: Comendo
+			Pose: Pose
+		}
 	}
 
 	TurnBased: {

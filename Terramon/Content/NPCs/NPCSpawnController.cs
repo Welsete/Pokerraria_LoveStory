@@ -97,6 +97,53 @@ public class NPCSpawnController : NPCComponent
         }
     };
 
+    /// <summary>
+    ///     The biomes of <see cref="SimpleSpawnConditions" /> for each type, as keys of
+    ///     <c>Mods.Terramon.GUI.Pokedex.Biomes</c>, so the Pokédex can say where a Pokémon lives. Keep both in sync.
+    /// </summary>
+    public static readonly Dictionary<PokemonType, string[]> HabitatBiomes = new()
+    {
+        { PokemonType.Normal, ["Forest"] },
+        { PokemonType.Fire, ["Underworld", "Meteorite"] },
+        { PokemonType.Fighting, ["Meteorite", "Dungeon"] },
+        { PokemonType.Water, ["Beach", "Rain"] },
+        { PokemonType.Flying, ["Surface", "Space"] },
+        { PokemonType.Grass, ["Jungle", "Forest"] },
+        { PokemonType.Poison, ["Jungle", "Corruption", "Crimson"] },
+        { PokemonType.Electric, ["Rain"] },
+        { PokemonType.Ground, ["Desert", "Underground"] },
+        { PokemonType.Psychic, ["GlowingMushroom", "GemCave", "Marble"] },
+        { PokemonType.Rock, ["Caverns", "Meteorite", "Marble", "Granite"] },
+        { PokemonType.Ice, ["Snow"] },
+        { PokemonType.Bug, ["Forest", "Jungle", "Rain"] },
+        { PokemonType.Dragon, ["Space", "HallowRain"] },
+        { PokemonType.Ghost, ["Graveyard", "Night"] },
+        { PokemonType.Dark, ["Corruption", "Crimson"] },
+        { PokemonType.Steel, ["Underworld", "Granite", "Meteorite"] },
+        { PokemonType.Fairy, ["Hallow", "GlowingMushroom"] }
+    };
+
+    /// <summary>
+    ///     The biomes where a Pokémon with these types spawns: those of its first type, plus those of its second type
+    ///     unless it's Flying (like <see cref="SimpleEditSpawnPool" />).
+    /// </summary>
+    public static List<string> GetHabitatBiomes(IReadOnlyList<PokemonType> types)
+    {
+        var biomes = new List<string>();
+        for (var i = 0; i < types.Count && i < 2; i++)
+        {
+            if (i == 1 && types[i] == PokemonType.Flying)
+                continue;
+            if (!HabitatBiomes.TryGetValue(types[i], out var list))
+                continue;
+            foreach (var biome in list)
+                if (!biomes.Contains(biome))
+                    biomes.Add(biome);
+        }
+
+        return biomes;
+    }
+
     // Continue to support legacy system for setting spawn conditions
     public float Chance;
     public string Condition;

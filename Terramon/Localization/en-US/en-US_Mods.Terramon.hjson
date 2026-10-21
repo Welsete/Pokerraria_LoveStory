@@ -606,6 +606,107 @@ GUI: {
 		Height: Height
 		Weight: Weight
 		Entry: Entry
+		Type: Type
+		Info: Pokédex Data
+		BaseStats: Base Stats
+		Moves: Level-Up Moves
+		SeenHint: Catch this Pokémon to see its abilities, base stats and the moves it learns.
+		NoMoves: It doesn't learn any moves by leveling up.
+		MovesHint: Hover over a move to read what it does.
+		LevelShort: Lv. {0}
+		EvolutionMove: Evo.
+		MoveStats: "Power {0}  ·  Acc. {1}  ·  PP {2}"
+		Columns: {
+			Level: Lv.
+			Move: Move
+			Type: Type
+			Category: Cat.
+			Power: Pow.
+		}
+		CategoryShort: {
+			Physical: Phys.
+			Special: Spec.
+			Status: Status
+			Dynamic: Var.
+		}
+		Abilities: Abilities
+		HiddenAbility: "{0} (hidden)"
+		CatchRate: Catch rate
+		GrowthRate: Growth
+		Gender: Gender
+		Genderless: Genderless
+		GenderRatio: "Male {0}% · Female {1}%"
+		Habitat: Habitat
+		Evolution: Evolution
+		EvolvesInto: "Evolves into {0} at Lv. {1}"
+		EvolvesFrom: "Evolves from {0} at Lv. {1}"
+		NoEvolution: Doesn't evolve by leveling up
+		Total: Total
+		EVYield: EV yield
+		Stats: {
+			HP: HP
+			Attack: Attack
+			Defense: Defense
+			SpAtk: Sp. Atk
+			SpDef: Sp. Def
+			Speed: Speed
+		}
+		GrowthRates: {
+			Erratic: Erratic
+			Fast: Fast
+			MediumFast: Medium Fast
+			MediumSlow: Medium Slow
+			Slow: Slow
+			Fluctuating: Fluctuating
+		}
+		Biomes: {
+			Forest: Forest
+			Underworld: Underworld
+			Meteorite: Meteorite
+			Dungeon: Dungeon
+			Beach: Beach
+			Rain: Rain
+			Surface: Surface
+			Space: Space
+			Jungle: Jungle
+			Corruption: Corruption
+			Crimson: Crimson
+			Desert: Desert
+			Underground: Underground
+			Caverns: Caverns
+			GlowingMushroom: Glowing Mushroom
+			GemCave: Gem Caves
+			Marble: Marble Caves
+			Granite: Granite Caves
+			Snow: Snow
+			Hallow: Hallow
+			HallowRain: Hallow in the rain
+			Graveyard: Graveyard
+			Night: Night
+		}
+		AnimState: "< {0} >"
+		AnimHint: "Animation: {0}\nLeft click: next  ·  Right click: previous"
+		AnimStates: {
+			Idle: Idle
+			Walk: Walk
+			Attack: Attack
+			SpAttack: Special Attack
+			Status: Status Move
+			Hurt: Hurt
+			Sleep: Sleep
+			Faint: Faint
+			Strike: Strike
+			QuickStrike: Quick Strike
+			Swing: Swing
+			Double: Double Hit
+			Hop: Hop
+			Sit: Sit
+			Laying: Lying Down
+			Wake: Wake Up
+			Trip: Trip
+			Eat: Eat
+			Pose: Pose
+		}
 	}
 
 	TurnBased: {
