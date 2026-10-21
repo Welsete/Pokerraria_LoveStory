@@ -101,7 +101,8 @@ public sealed class AdminPanelUI : SmartUIState
             ("LeagueItems", GiveLeagueItems),
             ("ResetBadges", ResetBadges),
             ("TeleportBrockGym", TeleportToBrockGym),
-            ("BuildBrockGym", BuildBrockGymHere)
+            ("BuildBrockGym", BuildBrockGymHere),
+            ("CallOak", CallProfessorOak)
         ]),
         ("TabTerraria", [
             ("ToggleTime", ToggleTime),
@@ -749,6 +750,16 @@ public sealed class AdminPanelUI : SmartUIState
     {
         new ResetEverythingStatement().Send();
         Say("BattlesCleared");
+    }
+
+    /// <summary>
+    ///     Forgets that the player met Professor Oak and calls him over, to test his welcome.
+    /// </summary>
+    private static void CallProfessorOak()
+    {
+        Main.LocalPlayer.GetModPlayer<OakPlayer>().MetOak = false;
+        ProfessorOak.RequestVisit(Main.LocalPlayer, test: true);
+        Say("OakCalled");
     }
 
     private static void TeleportToBrockGym()

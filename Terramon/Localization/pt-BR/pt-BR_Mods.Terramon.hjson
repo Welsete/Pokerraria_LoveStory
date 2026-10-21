@@ -425,6 +425,8 @@ GUI: {
 		SingleplayerOnly: Isso só funciona no modo de um jogador.
 		BrockGymBuilt: O Ginásio do Brock foi construído ao seu redor.
 		SpawnOnix: Chamar Onix selvagem
+		CallOak: Chamar o Professor Carvalho
+		OakCalled: O Professor Carvalho está chegando (dá para ouvir a história de novo).
 		SpawnLucario: Chamar Lucario selvagem
 		GiveLucario: Ganhar Lucario (Nv. 30)
 		LucarioGiven: Um Lucario entrou na sua equipe.
@@ -2205,4 +2207,33 @@ FieldAbilities: {
 	Ride: Montar
 	Flash: Iluminar
 	Strength: Força
+}
+
+// Professor Carvalho: recebe os novos treinadores e leva à escolha do inicial (art-fixes)
+NPCs.ProfessorOak: {
+	DisplayName: Professor Carvalho
+
+	Dialogue: {
+		Intro1: Olá, {0}! Bem-vindo ao mundo dos Pokémon! Meu nome é Carvalho, mas todos me chamam de Professor Pokémon.
+		Intro2: Este mundo é habitado por criaturas chamadas Pokémon! Elas vivem em todos os biomas: florestas, desertos, neve, cavernas, o oceano... Explore e você sempre vai encontrar novas.
+		Intro3: Para capturar um Pokémon selvagem, jogue uma Poké Bola nele. Alguns resistem bastante, então não desista na primeira tentativa!
+		Intro4: Os Líderes de Ginásio também estão à sua espera. Derrote os grandes chefes deste mundo e eles aceitarão o seu desafio, com uma Insígnia para quem vencer.
+		Intro5: Aperte {1} para ver o Resumo dos seus Pokémon e {2} para abrir a sua Pokédex. Completá-la é o meu sonho... você me ajuda a preencher as páginas?
+		Intro6: Mas antes, todo treinador precisa de um parceiro. Tenho alguns Pokémon aqui comigo. Vamos, escolha um!
+		StillChoosing: Ah, {0}! Ainda decidindo? Sem pressa. O primeiro parceiro é um amigo para a vida toda!
+		Tip1: Cada Pokémon vive em um bioma diferente. Se um deles for difícil de achar, explore outro lugar!
+		Tip2: A Grande Bola e a Ultra Bola capturam Pokémon com mais facilidade que uma Poké Bola comum. Valem cada moeda!
+		Tip3: Seus Pokémon podem segurar um item. Restos ou uma Fruta Oran ajudam muito numa batalha difícil.
+		Tip4: Brock, o Líder de Ginásio de Pewter City, aceita desafios depois que o Olho de Cthulhu for derrotado.
+		Tip5: Aperte {0} para ver o Resumo de um Pokémon: atributos, golpes, natureza e mais.
+		Tip6: Todo Pokémon que você vê ou captura fica registrado na sua Pokédex. Aperte {1} para abri-la.
+		Tip7: Os Pokémon ficam mais fortes batalhando, e muitos deles evoluem. Mal posso esperar para ver os seus!
+		NextButton: Próximo
+		SkipButton: Pular
+		ChooseButton: Escolher meu parceiro!
+		ThanksButton: Obrigado, Professor!
+		TipButton: Alguma dica?
+		AgainButton: Conte de novo
+		Unbound: (sem tecla definida)
+	}
 }
