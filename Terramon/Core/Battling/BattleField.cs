@@ -42,6 +42,12 @@ public sealed class BattleField
                 hurt.HPData = r.ReadPokemonHP();
                 if (hurt.HP < hpBefore && hurt.HP > 0)
                     PokemonAnimations.Play(hurt.Side?.Provider, PokemonAnimState.Hurt);
+                else if (hurt.HP > hpBefore && hpBefore > 0)
+                    // Healing that isn't from a move (items, berries, Leftovers): eats
+                    PokemonAnimations.PlayIfQuiet(hurt.Side?.Provider, PokemonAnimState.Eat);
+                else if (hurt.HP == 0 && hpBefore > 0)
+                    // The other side celebrates the knockout
+                    PokemonAnimations.Play(hurt.Side?.Opposite?.Provider, PokemonAnimState.Pose);
                 break;
             case BattleActionID.MoveAnimation:
                 ref var user = ref GetMon(r);

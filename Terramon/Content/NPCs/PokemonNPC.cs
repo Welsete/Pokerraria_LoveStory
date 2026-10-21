@@ -262,9 +262,10 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         var animOrigin = Vector2.Zero;
         if (animSet != null)
         {
+            var battling = BattleClient?.Foe != null;
             PokemonAnimations.GetFrame(animSet, this, Data?.IsShiny ?? false, Math.Abs(NPC.velocity.X) > 0.2f,
-                Data is { Status: NonVolatileStatus.Slp }, Data is { HP: 0 }, out animTexture, out animSource,
-                out animOrigin);
+                !battling && Math.Abs(NPC.velocity.Y) > 1f, battling, Data is { Status: NonVolatileStatus.Slp },
+                Data is { HP: 0 }, out animTexture, out animSource, out animOrigin);
             drawPos = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY + 1f);
         }
 
