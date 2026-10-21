@@ -30,6 +30,7 @@ public class ProjectileFlyingPet : ProjectileComponent
         
         var petProj = (PokemonPet)proj.ModProjectile;
         petProj.FindFrame = FindFrame;
+        petProj.Flying = true;
     }
     
     private static void CustomAnimation(Projectile proj, bool walking)

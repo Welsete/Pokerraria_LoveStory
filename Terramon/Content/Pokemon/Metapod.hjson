@@ -1,10 +1,11 @@
 {
+  // Drawn with the Mystery Dungeon-style animations in Assets/Pokemon/Anim (see PokemonAnimations)
   Common:
   {
     Transform:
     {
-      Width: 26
-      Height: 28
+      Width: 43
+      Height: 37
     }
   }
   NPC:
@@ -18,7 +19,8 @@
       HorizontalSpeedMax: 0.7
       ChangeDirectionChance: 0.5
       MaxJumpClearance: 1
-      FrameCount: 4
+      FrameCount: 10
+      FrameTime: 3
     }
     SpawnController:
     {
@@ -37,7 +39,8 @@
   {
     GenericPet:
     {
-      FrameCount: 4
+      FrameCount: 10
+      FrameTime: 3
       IsClassic: false
     }
   }

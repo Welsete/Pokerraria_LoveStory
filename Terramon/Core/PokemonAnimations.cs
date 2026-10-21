@@ -66,6 +66,10 @@ public sealed class PokemonAnimations : ModSystem
     {
         public Asset<Texture2D> Texture;
         public Asset<Texture2D> ShinyTexture;
+
+        /// <summary>Shiny version made from <see cref="Texture" /> with <see cref="AnimSet.ShinyColors" />.</summary>
+        public Texture2D Recolored;
+
         public int FrameWidth;
         public int FrameHeight;
         public int[] Durations;
@@ -81,6 +85,17 @@ public sealed class PokemonAnimations : ModSystem
 
         /// <summary>How much bigger to draw it (Mystery Dungeon sprites are small next to Terraria's).</summary>
         public float Scale = 1f;
+
+        /// <summary>
+        ///     For floating Pokémon: how far above <see cref="Ground" /> its lowest pixel stays. Pokémon that fly around
+        ///     (and have no ground under them) are drawn from there instead.
+        /// </summary>
+        public int Float;
+
+        /// <summary>
+        ///     Shiny colors as a palette swap (packed RGB, normal to shiny), for sets without <c>_S</c> strips.
+        /// </summary>
+        public Dictionary<uint, uint> ShinyColors;
     }
 
     /// <summary>
@@ -105,6 +120,10 @@ public sealed class PokemonAnimations : ModSystem
                     set.Ground = int.Parse(parts[1]);
                 if (parts.Length == 2 && parts[0] == "Scale")
                     set.Scale = float.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture);
+                if (parts.Length == 2 && parts[0] == "Float")
+                    set.Float = int.Parse(parts[1]);
+                if (parts.Length > 1 && parts[0] == "Shiny")
+                    set.ShinyColors = ParseColors(parts.Skip(1));
                 if (parts.Length != 4 || !Enum.TryParse(parts[0], out PokemonAnimState state))
                     continue;
                 var durations = parts[3].Split(',').Select(int.Parse).ToArray();
@@ -127,6 +146,68 @@ public sealed class PokemonAnimations : ModSystem
 
         Sets[identifier] = set;
         return set;
+    }
+
+    /// <summary>
+    ///     The animation set of a Pokémon as it looks: its female form has its own set when there is one
+    ///     (<c>Anim/&lt;Name&gt;F</c>).
+    /// </summary>
+    public static AnimSet Get(string identifier, PokemonData data)
+    {
+        if (data is { Gender: Gender.Female } && identifier != null && Get(identifier + "F") is { } female)
+            return female;
+        return Get(identifier);
+    }
+
+    /// <summary>Reads <c>RRGGBB&gt;RRGGBB</c> pairs into packed colors (the way <see cref="Color.PackedValue" /> has them).</summary>
+    private static Dictionary<uint, uint> ParseColors(IEnumerable<string> pairs)
+    {
+        static uint Pack(string hex)
+        {
+            var rgb = Convert.ToUInt32(hex, 16);
+            return ((rgb >> 16) & 0xFF) | (rgb & 0xFF00) | ((rgb & 0xFF) << 16);
+        }
+
+        var colors = new Dictionary<uint, uint>();
+        foreach (var pair in pairs)
+        {
+            var sides = pair.Split('>');
+            if (sides.Length == 2 && sides[0].Length == 6 && sides[1].Length == 6)
+                colors[Pack(sides[0])] = Pack(sides[1]);
+        }
+
+        return colors;
+    }
+
+    /// <summary>
+    ///     The texture to draw. Shiny sets either have their own <c>_S</c> strips or get their normal strips recolored
+    ///     here, the first time they're drawn (always on the main thread, since it's while drawing).
+    /// </summary>
+    private static Texture2D TextureOf(AnimSet set, Anim anim, bool shiny)
+    {
+        if (!shiny)
+            return anim.Texture.Value;
+        if (anim.ShinyTexture != null)
+            return anim.ShinyTexture.Value;
+        if (set.ShinyColors == null || set.ShinyColors.Count == 0)
+            return anim.Texture.Value;
+        if (anim.Recolored != null)
+            return anim.Recolored;
+
+        var source = Terramon.Instance.Assets.Request<Texture2D>(anim.Texture.Name, AssetRequestMode.ImmediateLoad)
+            .Value;
+        var pixels = new Color[source.Width * source.Height];
+        source.GetData(pixels);
+        for (var i = 0; i < pixels.Length; i++)
+        {
+            var packed = pixels[i].PackedValue;
+            if ((packed & 0xFF000000) != 0 && set.ShinyColors.TryGetValue(packed & 0xFFFFFF, out var swap))
+                pixels[i].PackedValue = (packed & 0xFF000000) | swap;
+        }
+
+        anim.Recolored = new Texture2D(Main.graphics.GraphicsDevice, source.Width, source.Height);
+        anim.Recolored.SetData(pixels);
+        return anim.Recolored;
     }
 
     /// <summary>
@@ -185,6 +266,8 @@ public sealed class PokemonAnimations : ModSystem
             or PokemonAnimState.Double => PokemonAnimState.Attack,
         PokemonAnimState.Laying => PokemonAnimState.Sit,
         PokemonAnimState.Hop => PokemonAnimState.Walk,
+        // Lying there with its eyes closed looks the most like fainting
+        PokemonAnimState.Faint => PokemonAnimState.Sleep,
         _ => PokemonAnimState.Idle
     };
 
@@ -203,11 +286,15 @@ public sealed class PokemonAnimations : ModSystem
 
     /// <summary>
     ///     Picks the frame to draw right now. <paramref name="origin" /> is the point of the frame that goes on the
-    ///     Pokémon's feet.
+    ///     Pokémon's feet. <paramref name="hovering" /> is for Pokémon that fly around: they don't hop or sit down, and
+    ///     are drawn from their lowest pixel instead of from the ground under them.
     /// </summary>
     public static void GetFrame(AnimSet set, object owner, bool shiny, bool moving, bool airborne, bool inBattle,
-        bool asleep, bool fainted, out Texture2D texture, out Rectangle source, out Vector2 origin)
+        bool asleep, bool fainted, out Texture2D texture, out Rectangle source, out Vector2 origin,
+        bool hovering = false)
     {
+        if (hovering)
+            airborne = false;
         var now = Main.GameUpdateCount;
         var state = airborne ? PokemonAnimState.Hop : moving ? PokemonAnimState.Walk : PokemonAnimState.Idle;
         var elapsed = now;
@@ -220,7 +307,7 @@ public sealed class PokemonAnimations : ModSystem
             Play(owner, PokemonAnimState.Wake);
 
         // Standing around for a while outside battle: sits down, then lies down
-        if (state != PokemonAnimState.Idle || inBattle || asleep || fainted || OneShots.ContainsKey(owner))
+        if (state != PokemonAnimState.Idle || inBattle || asleep || fainted || hovering || OneShots.ContainsKey(owner))
             IdleSince[owner] = now;
         else if (!IdleSince.ContainsKey(owner))
             IdleSince[owner] = now;
@@ -276,9 +363,9 @@ public sealed class PokemonAnimations : ModSystem
             t -= (uint)anim.Durations[i];
         }
 
-        texture = (shiny ? anim.ShinyTexture ?? anim.Texture : anim.Texture).Value;
+        texture = TextureOf(set, anim, shiny);
         source = new Rectangle(frame * anim.FrameWidth, 0, anim.FrameWidth, anim.FrameHeight);
-        origin = new Vector2(anim.FrameWidth / 2f, anim.FrameHeight / 2f + set.Ground);
+        origin = new Vector2(anim.FrameWidth / 2f, anim.FrameHeight / 2f + set.Ground - (hovering ? set.Float : 0));
     }
 
     /// <summary>
@@ -323,7 +410,7 @@ public sealed class PokemonAnimations : ModSystem
             t -= (uint)anim.Durations[i];
         }
 
-        var texture = (shiny ? anim.ShinyTexture ?? anim.Texture : anim.Texture).Value;
+        var texture = TextureOf(set, anim, shiny);
         spriteBatch.Draw(texture, feet, new Rectangle(index * anim.FrameWidth, 0, anim.FrameWidth, anim.FrameHeight),
             color ?? Color.White, 0f, new Vector2(anim.FrameWidth / 2f, anim.FrameHeight / 2f + set.Ground),
             scale * set.Scale, effects, 0f);
@@ -338,6 +425,10 @@ public sealed class PokemonAnimations : ModSystem
 
     public override void Unload()
     {
+        var recolored = Sets.Values.Where(set => set != null).SelectMany(set => set.Anims.Values)
+            .Select(anim => anim.Recolored).Where(texture => texture != null).ToList();
+        if (recolored.Count > 0)
+            Main.QueueMainThreadAction(() => recolored.ForEach(texture => texture.Dispose()));
         Sets.Clear();
         ClearWorld();
     }

@@ -54,6 +54,9 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
     public Vector2? CustomTargetPosition;
     public CustomFindFrame FindFrame;
 
+    /// <summary>Whether this pet flies around (<see cref="ProjectileFlyingPet" />) instead of walking.</summary>
+    public bool Flying;
+
     static PokemonPet()
     {
         // Don't run this on the server
@@ -237,14 +240,14 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         var texture = _mainTexture.Value;
 
         // Pokémon with a full animation set pick their frame from what they're doing instead
-        var animSet = PokemonAnimations.Get(Schema.Identifier);
+        var animSet = PokemonAnimations.Get(Schema.Identifier, Data);
         if (animSet != null)
         {
             var battling = AnimOwner is TerramonPlayer { BattleClient.Foe: not null };
             PokemonAnimations.GetFrame(animSet, AnimOwner, Data?.IsShiny ?? false,
                 Math.Abs(Projectile.velocity.X) > 0.2f, !battling && Math.Abs(Projectile.velocity.Y) > 1f, battling,
                 Data is { Status: NonVolatileStatus.Slp }, Data is { HP: 0 }, out texture, out sourceRect,
-                out origin);
+                out origin, Flying);
             frameSize = sourceRect.Size() * animSet.Scale;
             drawPos.Y -= 3f;
         }

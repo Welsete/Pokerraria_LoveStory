@@ -496,6 +496,19 @@ public class PokemonData
             mode);
     }
 
+    /// <summary>
+    ///     The 40x40 Mystery Dungeon-style portrait (<c>Assets/Pokemon/Portraits</c>), shiny when this Pokémon is, or null
+    ///     if there is none.
+    /// </summary>
+    public Asset<Texture2D> GetPortrait()
+    {
+        return ModContent.RequestIfExists<Texture2D>(
+            $"Terramon/Assets/Pokemon/Portraits/{Schema.Identifier}{(IsShiny ? "_S" : string.Empty)}",
+            out var portrait, AssetRequestMode.ImmediateLoad)
+            ? portrait
+            : null;
+    }
+
     public string GetPacked(int? partyIndex = null)
     {
         var nickname = partyIndex.HasValue ? partyIndex.Value.ToString() : Nickname ?? Schema.Identifier;

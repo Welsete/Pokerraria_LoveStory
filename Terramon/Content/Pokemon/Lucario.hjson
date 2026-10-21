@@ -1,11 +1,11 @@
 {
-  // Drawn with the Mystery Dungeon-style animations in Assets/Pokemon/Anim/Lucario (see PokemonAnimations)
+  // Drawn with the Mystery Dungeon-style animations in Assets/Pokemon/Anim (see PokemonAnimations)
   Common:
   {
     Transform:
     {
-      Width: 26
-      Height: 46
+      Width: 35
+      Height: 51
     }
   }
   NPC:

@@ -1,11 +1,20 @@
 {
+  // Drawn with the Mystery Dungeon-style animations in Assets/Pokemon/Anim (see PokemonAnimations)
   Common:
   {
-    Transform: {}
+    Transform:
+    {
+      Width: 45
+      Height: 62
+    }
   }
   NPC:
   {
-    WanderingHoverBehaviour: {}
+    WanderingHoverBehaviour:
+    {
+      FrameCount: 4
+      FrameTime: 10
+    }
     SpawnController:
     {
       Stage: 3
@@ -21,6 +30,10 @@
   }
   Projectile:
   {
-    FlyingPet: {}
+    FlyingPet:
+    {
+      FrameCount: 4
+      FrameTime: 10
+    }
   }
 }
