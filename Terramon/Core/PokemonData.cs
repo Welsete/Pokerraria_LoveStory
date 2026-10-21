@@ -337,6 +337,7 @@ public class PokemonData
     {
         var oldMaxHP = MaxHP;
         var oldHP = HP;
+        var oldID = ID;
 
         ID = id;
 
@@ -345,7 +346,15 @@ public class PokemonData
         // Like the main games: moves the new species learns on evolution or at its current level
         QueueLearnsetMoves(0);
         QueueLearnsetMoves(Level);
+
+        Evolved?.Invoke(this, oldID);
     }
+
+    /// <summary>
+    ///     Raised right after any Pokémon evolves (the data has already changed), with its species from before.
+    ///     Used for the evolution animation; never needed to make the evolution itself happen.
+    /// </summary>
+    public static event Action<PokemonData, ushort> Evolved;
 
     #region Move Learning
 

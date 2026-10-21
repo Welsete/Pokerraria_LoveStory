@@ -861,6 +861,10 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 TryLevelUpEvolution(mon);
             }
 
+            // New moves wait until the evolution sequence is over
+            if (EvolutionScene.IsPlaying)
+                continue;
+
             var pending = mon.PendingMoves;
             while (pending is { Count: > 0 })
             {

@@ -1276,6 +1276,7 @@ Keybinds: {
 	NextPokemon.DisplayName: Chamar Próximo Pokémon
 	AdminPanel.DisplayName: Painel de Testes (depuração)
 	PrevPokemon.DisplayName: Chamar Pokémon Anterior
+	SkipEvolution.DisplayName: Pular Animação de Evolução
 }
 
 Tiles: {
@@ -1413,6 +1414,7 @@ Projectiles: {
 	PokeBallBobber.DisplayName: Boia de Poké Bola
 	PokemonPetGenericAttackProjectile.DisplayName: Projétil de Ataque Genérico do Pokémon Companheiro
 	OnixRockSpikes.DisplayName: Espinhos de Pedra do Onix
+	EvolutionGlow.DisplayName: Brilho da Evolução
 }
 
 // Liga Pokémon: Líderes de Ginásio, Elite dos Quatro, Campeão, insígnias e itens de desafio (league)
@@ -1822,4 +1824,9 @@ Natures: {
 	Sassy: Atrevida
 	Careful: Cuidadosa
 	Quirky: Excêntrica
+}
+
+EvolutionScene: {
+	Evolving: O quê? {0} está evoluindo!
+	Skip: Aperte {0} para pular
 }

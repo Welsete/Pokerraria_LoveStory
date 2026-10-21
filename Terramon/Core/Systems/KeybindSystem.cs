@@ -10,6 +10,7 @@ public class KeybindSystem : ModSystem
     public static ModKeybind PrevPokemonKeybind { get; private set; }
     public static ModKeybind AdminPanelKeybind { get; private set; }
     public static ModKeybind BattleLogKeybind { get; private set; }
+    public static ModKeybind SkipEvolutionKeybind { get; private set; }
 
     public override void Load()
     {
@@ -21,6 +22,7 @@ public class KeybindSystem : ModSystem
         PrevPokemonKeybind = KeybindLoader.RegisterKeybind(Mod, "PrevPokemon", "OemOpenBrackets");
         AdminPanelKeybind = KeybindLoader.RegisterKeybind(Mod, "AdminPanel", "F8");
         BattleLogKeybind = KeybindLoader.RegisterKeybind(Mod, "BattleLog", "L");
+        SkipEvolutionKeybind = KeybindLoader.RegisterKeybind(Mod, "SkipEvolution", "B");
     }
 
     public override void Unload()
@@ -33,5 +35,6 @@ public class KeybindSystem : ModSystem
         PrevPokemonKeybind = null;
         AdminPanelKeybind = null;
         BattleLogKeybind = null;
+        SkipEvolutionKeybind = null;
     }
 }

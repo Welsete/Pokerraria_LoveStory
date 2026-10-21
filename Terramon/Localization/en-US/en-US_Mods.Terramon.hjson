@@ -1276,6 +1276,7 @@ Keybinds: {
 	NextPokemon.DisplayName: Summon Next Pokémon
 	AdminPanel.DisplayName: Test Panel (debug)
 	PrevPokemon.DisplayName: Summon Previous Pokémon
+	SkipEvolution.DisplayName: Skip Evolution Animation
 }
 
 Tiles: {
@@ -1413,6 +1414,7 @@ Projectiles: {
 	PokeBallBobber.DisplayName: Poké Ball Bobber
 	PokemonPetGenericAttackProjectile.DisplayName: Pokémon Companion Generic Attack Projectile
 	OnixRockSpikes.DisplayName: Onix Rock Spikes
+	EvolutionGlow.DisplayName: Evolution Glow
 }
 
 // Pokémon League: Gym Leaders, Elite Four, Champion, badges and challenge items (league)
@@ -1822,4 +1824,9 @@ Natures: {
 	Sassy: Sassy
 	Careful: Careful
 	Quirky: Quirky
+}
+
+EvolutionScene: {
+	Evolving: What? {0} is evolving!
+	Skip: Press {0} to skip
 }
