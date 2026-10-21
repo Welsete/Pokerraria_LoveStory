@@ -1,18 +1,19 @@
 {
+  // Drawn with the Mystery Dungeon-style animations in Assets/Pokemon/Anim (see PokemonAnimations)
   Common:
   {
     Transform:
     {
-      Width: 48
-      Height: 38
+      Width: 42
+      Height: 43
     }
   }
   NPC:
   {
     WanderingHoverBehaviour:
     {
-      FrameCount: 7
-      FrameTime: 6
+      FrameCount: 4
+      FrameTime: 10
     }
     SpawnController:
     {
@@ -31,8 +32,8 @@
   {
     FlyingPet:
     {
-      FrameCount: 7
-      FrameTime: 6
+      FrameCount: 4
+      FrameTime: 10
     }
   }
 }

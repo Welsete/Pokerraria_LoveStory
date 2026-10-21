@@ -658,13 +658,17 @@ internal sealed class CustomPartyItemSlot : UIImage
             }
 
             _tooltipName = Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotName", data.DisplayName, data.Level);
-            _minispriteImage = new UIImage(data.GetMiniSprite())
+            // The 40x40 portrait at 1x fits inside the slot's background; the mini icon if there's no portrait
+            var portrait = data.GetPortrait();
+            _minispriteImage = new UIImage(portrait ?? data.GetMiniSprite())
             {
-                ImageScale = 0.7f,
-                IgnoresMouseInteraction = true
+                ImageScale = portrait != null ? 1f : 0.7f,
+                IgnoresMouseInteraction = true,
+                OverrideSamplerState = SamplerState.PointClamp,
+                RemoveFloatingPointsFromDrawPosition = true
             };
-            _minispriteImage.Top.Set(-6, 0f);
-            _minispriteImage.Left.Set(-14, 0f);
+            _minispriteImage.Top.Set(portrait != null ? 6 : -6, 0f);
+            _minispriteImage.Left.Set(portrait != null ? 6 : -14, 0f);
             _minispriteImage.Color = Color;
             Append(_minispriteImage);
 

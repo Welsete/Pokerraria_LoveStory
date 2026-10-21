@@ -62,3 +62,7 @@ The Pokémon franchise
 
 - Little Robot Sound Factory -
 Sound effects (button_locked.wav)
+
+- PMDCollab (PMD Sprite Repository) and Spike Chunsoft -
+Mystery Dungeon-style Pokémon sprites and portraits (CC BY-NC 4.0)
+Full list of artists: Assets/Pokemon/Anim/CREDITS.md

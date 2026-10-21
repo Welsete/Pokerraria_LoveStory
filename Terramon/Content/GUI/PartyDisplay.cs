@@ -329,7 +329,9 @@ public sealed class PartySidebarSlot : UICompositeImage
         _spriteBox.Left.Set(59, 0f);
         _pokemonSprite = new UIImage(emptyTex)
         {
-            ImageScale = 0.7f
+            ImageScale = 0.7f,
+            OverrideSamplerState = SamplerState.PointClamp,
+            RemoveFloatingPointsFromDrawPosition = true
         };
         _pokemonSprite.Top.Set(-12, 0f);
         _pokemonSprite.Left.Set(-20, 0f);
@@ -666,7 +668,12 @@ public sealed class PartySidebarSlot : UICompositeImage
             _nameText.SetText(data.DisplayName);
             _levelText.SetText(Language.GetText("Mods.Terramon.GUI.Party.LevelDisplay").WithFormatArgs(data.Level));
             Append(_heldItemBox);
-            _pokemonSprite.SetImage(data.GetMiniSprite());
+            // The portrait fills the sprite box exactly (both 40x40), at 1x so it stays pixel-perfect
+            var portrait = data.GetPortrait();
+            _pokemonSprite.SetImage(portrait ?? data.GetMiniSprite());
+            _pokemonSprite.ImageScale = portrait != null ? 1f : 0.7f;
+            _pokemonSprite.Top.Set(portrait != null ? 0 : -12, 0f);
+            _pokemonSprite.Left.Set(portrait != null ? 0 : -20, 0f);
             Append(_spriteBox);
             if (data.Gender != Gender.Unspecified)
             {
