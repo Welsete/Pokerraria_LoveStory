@@ -423,12 +423,21 @@ public sealed class PartySidebarSlot : UICompositeImage
             return;
         }
 
+        if (SummaryUI.OpenRequested())
+        {
+            SummaryUI.Open(TerramonPlayer.LocalPlayer.Party, Data);
+            return;
+        }
+
         var hoverText = Language.GetTextValue(_isActiveSlot
             ? "Mods.Terramon.GUI.Party.SlotHoverActive"
             : "Mods.Terramon.GUI.Party.SlotHover");
 
         if (TerramonPlayer.LocalPlayer.NextFreePartyIndex() > 1)
             hoverText += Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHoverExtra");
+
+        if (!BattleClient.LocalBattleOngoing)
+            hoverText += '\n' + SummaryUI.HintText();
 
         Main.hoverItemName = hoverText;
     }

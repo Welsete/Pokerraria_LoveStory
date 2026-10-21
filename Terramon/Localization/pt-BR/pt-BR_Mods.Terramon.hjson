@@ -491,16 +491,6 @@ GUI: {
 			PS: {0}/{1}
 			EXP: {2}/{3}
 			'''
-		SummaryHint: "[c/9FA2AD:Segure Shift para ver o resumo]"
-		Summary: {
-			Nature: "Natureza: {0}"
-			Ability: "Habilidade: {0}"
-			Item: "Item: {0}"
-			NoItem: Nenhum
-			IVs: "IVs: PS {0} · Atq {1} · Def {2} · AtE {3} · DfE {4} · Vel {5} ({6}/186)"
-			EVs: "EVs: PS {0} · Atq {1} · Def {2} · AtE {3} · DfE {4} · Vel {5} ({6}/510)"
-			Legend: "[c/9FA2AD:IVs (0-31) nascem com o Pokémon; EVs crescem ao derrotar Pokémon.]"
-		}
 		SlotTooltipMaxLevel:
 			'''
 			PS: {0}/{1}
@@ -581,6 +571,149 @@ GUI: {
 
 			Clique e arraste para reordenar
 			'''
+	}
+
+	Summary: {
+		Title: Resumo do Pokémon
+		Hint: "[c/9FA2AD:Clique do meio ou {0}: abrir resumo]"
+		Close: Fechar (Esc)
+		Previous: Pokémon anterior (←)
+		Next: Próximo Pokémon (→)
+		CryHint: Clique para ouvir o grito
+		AnimHint: Clique para ver outra animação
+		Tabs: {
+			Stats: Atributos
+			IVs: IVs
+			EVs: EVs
+			Moves: Golpes
+			Other: Outros
+		}
+		Stat: {
+			HP: PS
+			Atk: Atq
+			Def: Def
+			SpA: At. Esp.
+			SpD: Def. Esp.
+			Spe: Veloc.
+		}
+		StatLong: {
+			HP: PS
+			Atk: Ataque
+			Def: Defesa
+			SpA: Ataque Especial
+			SpD: Defesa Especial
+			Spe: Velocidade
+		}
+		Nature: Natureza
+		NatureNeutral: Neutra: não altera atributos
+		Ability: Habilidade
+		Item: Item
+		NoItem: Nenhum
+		Trainer: Treinador
+		Unknown: Desconhecido
+		HP: PS
+		EXP: EXP
+		ToNextLevel: "Faltam {0} de EXP para o Nv. {1}"
+		MaxLevel: Nível máximo alcançado!
+		BaseStats: Atributos base
+		BaseTotal: "Total base: {0}"
+		StatsHint: Atributo em vermelho: a natureza aumenta. Em azul: diminui.
+		Total: Total
+		Judge: {
+			Decent: Potencial razoável
+			AboveAverage: Potencial acima da média
+			RelativelySuperior: Potencial relativamente superior
+			Outstanding: Potencial excepcional
+			Perfect: Potencial perfeito!
+		}
+		PerfectLegend: Perfeito (31)
+		MaxedLegend: No máximo (252)
+		IVsInfo: Os IVs nascem com o Pokémon: de 0 a 31 em cada atributo. Eles nunca mudam, e quanto maior, melhor.
+		EVsInfo: Os EVs crescem quando este Pokémon derrota outros. Até 252 por atributo e 510 no total; cada 4 EVs somam 1 ponto ao atributo no nível 100.
+		EVsLeft: "Ainda pode ganhar {0} EVs"
+		EVsFull: Ganhou todos os 510 EVs!
+		PowerAccuracy: "Poder {0}  ·  Prec. {1}"
+		PP: PP {0}/{1}
+		NoMoveSelected: Passe o mouse sobre um golpe para ler sobre ele.
+		MetSection: Encontro
+		CaughtIn: Capturado com
+		OT: Treinador original
+		Met: Encontrado
+		MetValue: Nv. {0}  ·  {1}
+		World: Mundo
+		Friendship: Amizade
+		FriendshipLevel: {
+			0: Ainda não confia em você.
+			1: Está se acostumando com você.
+			2: É amigável com você.
+			3: Gosta bastante de você.
+			4: Confia muito em você!
+			5: Adora você!
+		}
+		Characteristic: Característica
+		Characteristics: {
+			HP0: Adora comer.
+			HP1: Tira muitas sonecas.
+			HP2: Cochila bastante.
+			HP3: Vive espalhando as coisas.
+			HP4: Gosta de relaxar.
+			Atk0: Orgulha-se da sua força.
+			Atk1: Gosta de se debater.
+			Atk2: É um pouco esquentado.
+			Atk3: Gosta de lutar.
+			Atk4: É esquentado.
+			Def0: Tem um corpo resistente.
+			Def1: Aguenta bem os golpes.
+			Def2: É muito persistente.
+			Def3: Tem boa resistência.
+			Def4: Tem muita perseverança.
+			Spe0: Adora correr.
+			Spe1: Fica atento aos sons.
+			Spe2: É impetuoso e bobo.
+			Spe3: É meio palhaço.
+			Spe4: Foge rápido.
+			SpA0: É muito curioso.
+			SpA1: É travesso.
+			SpA2: É muito astuto.
+			SpA3: Vive perdido em pensamentos.
+			SpA4: É muito exigente.
+			SpD0: Tem muita força de vontade.
+			SpD1: É um pouco vaidoso.
+			SpD2: É muito desafiador.
+			SpD3: Odeia perder.
+			SpD4: É um pouco teimoso.
+		}
+		FieldAbilities: Habilidades de campo
+		Field: {
+			Ride: Montar
+			Fly: Voar
+			Surf: Surfar
+			Dig: Cavar
+		}
+		FieldSoon: Em breve: montar, voar, surfar e cavar com seu Pokémon pelo mundo.
+		FieldHint: Os emblemas acesos são o que este Pokémon pode fazer pelo mundo.
+		FieldNone: Este Pokémon não tem habilidades de campo.
+		Anim: {
+			Idle: Parado
+			Walk: Andando
+			Attack: Ataque
+			SpAttack: Ataque esp.
+			Status: Golpe de status
+			Hurt: Ferido
+			Sleep: Dormindo
+			Faint: Desmaiando
+			Strike: Golpe
+			QuickStrike: Golpe rápido
+			Swing: Corte
+			Double: Golpe duplo
+			Hop: Pulando
+			Sit: Sentado
+			Laying: Deitado
+			Wake: Acordando
+			Trip: Tropeçando
+			Eat: Comendo
+			Pose: Pose
+		}
 	}
 
 	Pokedex: {
@@ -1369,6 +1502,7 @@ MegaStoneNames: {
 }
 
 Keybinds: {
+	OpenSummary.DisplayName: Abrir Resumo do Pokémon
 	BattleLog.DisplayName: Histórico da Batalha
 	ToggleParty.DisplayName: Equipe
 	OpenPokedex.DisplayName: Pokédex

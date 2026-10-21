@@ -105,6 +105,26 @@ public class PokemonData
 
     public ref Item HeldItem => ref _heldItem;
 
+    /// <summary>
+    ///     The name of the player who first caught this Pokémon (its original trainer), or null if unknown.
+    /// </summary>
+    public string OT => _ot;
+
+    /// <summary>
+    ///     When this Pokémon was caught or received, if known.
+    /// </summary>
+    public DateTime? MetDate => _metDate;
+
+    /// <summary>
+    ///     The level this Pokémon was at when it was caught or received.
+    /// </summary>
+    public byte MetLevel => _metLevel;
+
+    /// <summary>
+    ///     The name of the world this Pokémon was caught or received in, or null if unknown.
+    /// </summary>
+    public string MetWorld => _worldName;
+
     public void Damage(ushort amount, bool isRealtime = false)
     {
         if (isRealtime && RegenHP == 0)
