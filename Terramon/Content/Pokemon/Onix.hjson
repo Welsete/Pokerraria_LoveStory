@@ -5,7 +5,11 @@
   }
   NPC:
   {
-    WalkingBehaviour: {}
+    WalkingBehaviour:
+    {
+      FrameCount: 8
+      FrameTime: 6
+    }
     SpawnController:
     {
       Stage: 1
@@ -21,6 +25,10 @@
   }
   Projectile:
   {
-    GenericPet: {}
+    GenericPet:
+    {
+      FrameCount: 8
+      FrameTime: 6
+    }
   }
 }
