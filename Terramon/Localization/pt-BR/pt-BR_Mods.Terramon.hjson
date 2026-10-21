@@ -393,7 +393,7 @@ GUI: {
 		}
 	}
 	AdminPanel: {
-		Title: Painel de Testes (depuração) - clique com o botão direito no botão do treinador para trocar de treinador
+		Title: Painel de Testes (depuração) - arraste para mover; clique direito no botão do treinador para trocar
 		HealParty: Curar equipe
 		LevelUp1: Ativo +1 nível
 		LevelUp5: Ativo +5 níveis
@@ -413,6 +413,45 @@ GUI: {
 		SingleplayerOnly: Isso só funciona no modo de um jogador.
 		BrockGymBuilt: O Ginásio do Brock foi construído ao seu redor.
 		SpawnOnix: Chamar Onix selvagem
+		TabPokemon: Pokémon
+		TabLeague: Liga
+		TabTerraria: Terraria
+		LevelUp10: Ativo +10 níveis
+		EvolveActive: Evoluir Pokémon ativo
+		PerfectIVs: IVs perfeitos (ativo)
+		ToggleShiny: Alternar shiny (ativo)
+		GiveHeldItems: Dar itens de segurar
+		GiveStones: Dar pedras de evolução
+		ToggleTime: Dia / noite
+		ToggleRain: Chuva liga / desliga
+		GodMode: Modo deus
+		HealPlayer: Curar jogador
+		TeleportSpawn: Ir para o spawn
+		TeleportCursor: Teleportar no próximo clique
+		KillHostiles: Matar monstros por perto
+		GiveMoney: Dar 10 de platina
+		GiveGear: Dar equipamentos
+		GiveBossItems: Dar invocadores de chefe
+		RevealMap: Revelar mapa
+		NoEvolution: "{0} não evolui por nível."
+		PerfectIVsDone: "{0} agora tem 31 em todos os IVs."
+		ShinyOn: "{0} agora é shiny."
+		ShinyOff: "{0} não é mais shiny."
+		HeldItemsGiven: Você recebeu um de cada item de segurar.
+		StonesGiven: Você recebeu 3 de cada item de evolução.
+		NowDay: Agora é dia.
+		NowNight: Agora é noite.
+		RainOn: Começou a chover.
+		RainOff: A chuva parou.
+		GodModeOn: Modo deus ligado: nada te machuca.
+		GodModeOff: Modo deus desligado.
+		PlayerHealed: Vida e mana recuperadas, efeitos negativos removidos.
+		ClickToTeleport: Clique em qualquer lugar do mundo para teleportar.
+		HostilesKilled: "{0} monstros derrotados."
+		MoneyGiven: Você recebeu 10 moedas de platina.
+		GearGiven: Você recebeu Concha-celular, Gancho Lunar, Botas Terrafaísca, Asas de Peixe-dragão, Broca Laser e tochas.
+		BossItemsGiven: Você recebeu o item de invocar de cada chefe.
+		MapRevealed: O mapa inteiro foi revelado.
 		Close: Fechar
 		ItemsGiven: Você recebeu Poké Bolas, Poções, Reviveres e Doces Raros
 		BossDowned: "{0}: agora conta como derrotado"
@@ -445,6 +484,16 @@ GUI: {
 			PS: {0}/{1}
 			EXP: {2}/{3}
 			'''
+		SummaryHint: "[c/9FA2AD:Segure Shift para ver o resumo]"
+		Summary: {
+			Nature: "Natureza: {0}"
+			Ability: "Habilidade: {0}"
+			Item: "Item: {0}"
+			NoItem: Nenhum
+			IVs: "IVs: PS {0} · Atq {1} · Def {2} · AtE {3} · DfE {4} · Vel {5} ({6}/186)"
+			EVs: "EVs: PS {0} · Atq {1} · Def {2} · AtE {3} · DfE {4} · Vel {5} ({6}/510)"
+			Legend: "[c/9FA2AD:IVs (0-31) nascem com o Pokémon; EVs crescem ao derrotar Pokémon.]"
+		}
 		SlotTooltipMaxLevel:
 			'''
 			PS: {0}/{1}
@@ -940,6 +989,116 @@ Items: {
 			Companheiros {0} próximos crescem mais rápido e usam ataques mais fortes
 			Clique direito enquanto segura para alternar entre os estilos visuais
 			'''
+	}
+
+	Leftovers: {
+		DisplayName: Restos
+		Tooltip: Recupera um pouco de PS no fim de cada turno da batalha.
+	}
+
+	OranBerry: {
+		DisplayName: Fruta Oran
+		Tooltip: Recupera 10 PS uma vez quando os PS ficam baixos na batalha.
+	}
+
+	SitrusBerry: {
+		DisplayName: Fruta Sitrus
+		Tooltip: Recupera 1/4 dos PS uma vez quando os PS caem abaixo da metade na batalha.
+	}
+
+	Charcoal: {
+		DisplayName: Carvão
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Fogo.
+	}
+
+	MysticWater: {
+		DisplayName: Água Mística
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Água.
+	}
+
+	MiracleSeed: {
+		DisplayName: Semente Milagrosa
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Planta.
+	}
+
+	Magnet: {
+		DisplayName: Ímã
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Elétrico.
+	}
+
+	NeverMeltIce: {
+		DisplayName: Gelo Eterno
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Gelo.
+	}
+
+	HardStone: {
+		DisplayName: Pedra Dura
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Pedra.
+	}
+
+	SoftSand: {
+		DisplayName: Areia Macia
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Terra.
+	}
+
+	BlackBelt: {
+		DisplayName: Faixa Preta
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Lutador.
+	}
+
+	PoisonBarb: {
+		DisplayName: Farpa Venenosa
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Veneno.
+	}
+
+	SharpBeak: {
+		DisplayName: Bico Afiado
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Voador.
+	}
+
+	SpellTag: {
+		DisplayName: Etiqueta Amaldiçoada
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Fantasma.
+	}
+
+	MetalCoat: {
+		DisplayName: Revestimento Metálico
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Aço.
+	}
+
+	BlackGlasses: {
+		DisplayName: Óculos Escuros
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Sombrio.
+	}
+
+	SilkScarf: {
+		DisplayName: Lenço de Seda
+		Tooltip: Aumenta em 20% o poder dos golpes do tipo Normal.
+	}
+
+	QuickClaw: {
+		DisplayName: Garra Rápida
+		Tooltip: Às vezes faz quem segura atacar primeiro.
+	}
+
+	FocusSash: {
+		DisplayName: Faixa do Foco
+		Tooltip: Com PS cheio, aguenta com 1 PS um golpe que o derrotaria. Some depois de usada.
+	}
+
+	LifeOrb: {
+		DisplayName: Orbe da Vida
+		Tooltip: Aumenta em 30% o poder dos golpes, mas quem segura perde um pouco de PS a cada ataque.
+	}
+
+	KingsRock: {
+		DisplayName: Pedra do Rei
+		Tooltip: Os ataques podem fazer o alvo recuar.
+	}
+
+	ShellBell: {
+		DisplayName: Sino de Concha
+		Tooltip: Recupera PS igual a 1/8 do dano que quem segura causa.
 	}
 
 	LuckyEgg: {
@@ -1627,4 +1786,32 @@ WorldGen.BrockGymPass: Escavando o Ginásio do Brock
 Items.BrockPaintingItem: {
 	DisplayName: Quadro do Ginásio de Pewter
 	Tooltip: "'O primeiro passo de toda grande jornada'"
+}
+
+Natures: {
+	Hardy: Firme
+	Lonely: Solitária
+	Brave: Corajosa
+	Adamant: Rígida
+	Naughty: Travessa
+	Bold: Audaciosa
+	Docile: Dócil
+	Relaxed: Relaxada
+	Impish: Brincalhona
+	Lax: Desleixada
+	Timid: Tímida
+	Hasty: Apressada
+	Serious: Séria
+	Jolly: Alegre
+	Naive: Ingênua
+	Modest: Modesta
+	Mild: Suave
+	Quiet: Quieta
+	Bashful: Envergonhada
+	Rash: Imprudente
+	Calm: Calma
+	Gentle: Gentil
+	Sassy: Atrevida
+	Careful: Cuidadosa
+	Quirky: Excêntrica
 }

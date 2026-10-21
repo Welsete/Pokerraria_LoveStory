@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text;
 using EasyPacketsLib;
 using MonoMod.Cil;
@@ -844,13 +844,18 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (TestBattleUI.Instance is { Visible: true })
             return;
 
+        var fastEvolution = Content.Configs.ClientConfig.Instance.FastEvolution;
+
         for (var i = 0; i < Party.Length; i++)
         {
             var mon = Party[i];
             if (mon == null)
                 continue;
 
-            if (mon.PendingEvolutionCheck)
+            // Also catches Pokémon that reached their evolution level some other way (commands, the test panel,
+            // a level set by the battle), since the flag only comes from LevelUp
+            if (mon.PendingEvolutionCheck ||
+                (fastEvolution && mon.GetQueuedEvolution(EvolutionTrigger.LevelUp) != 0))
             {
                 mon.PendingEvolutionCheck = false;
                 TryLevelUpEvolution(mon);

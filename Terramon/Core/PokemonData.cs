@@ -477,7 +477,8 @@ public class PokemonData
     {
         var nickname = partyIndex.HasValue ? partyIndex.Value.ToString() : Nickname ?? Schema.Identifier;
         var speciesName = nickname == Schema.Identifier ? null : Schema.Identifier;
-        var heldItem = _heldItem.IsAir ? null : ItemID.Search.GetName(_heldItem.type);
+        // Showdown knows held items by name (the class names match), and gives them their effects
+        var heldItem = _heldItem.ModItem is HeldItem held ? held.Name : null;
         var shiny = IsShiny ? "S" : null;
         const string hiddenPowerType = null;
         const string gmax = null;

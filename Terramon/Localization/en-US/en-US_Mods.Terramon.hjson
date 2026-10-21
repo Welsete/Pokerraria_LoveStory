@@ -393,7 +393,7 @@ GUI: {
 		}
 	}
 	AdminPanel: {
-		Title: Test Panel (debug) - right-click the trainer button to pick another trainer
+		Title: Test Panel (debug) - drag to move; right click the trainer button to switch trainer
 		HealParty: Heal party
 		LevelUp1: Active +1 level
 		LevelUp5: Active +5 levels
@@ -413,6 +413,45 @@ GUI: {
 		SingleplayerOnly: This only works in singleplayer.
 		BrockGymBuilt: Brock's Gym was built around you.
 		SpawnOnix: Spawn wild Onix
+		TabPokemon: Pokémon
+		TabLeague: League
+		TabTerraria: Terraria
+		LevelUp10: Active +10 levels
+		EvolveActive: Evolve active Pokémon
+		PerfectIVs: Perfect IVs (active)
+		ToggleShiny: Toggle shiny (active)
+		GiveHeldItems: Give held items
+		GiveStones: Give evolution stones
+		ToggleTime: Day / night
+		ToggleRain: Rain on / off
+		GodMode: God mode
+		HealPlayer: Heal player
+		TeleportSpawn: Go to spawn
+		TeleportCursor: Teleport on next click
+		KillHostiles: Kill nearby monsters
+		GiveMoney: Give 10 platinum
+		GiveGear: Give gear
+		GiveBossItems: Give boss summons
+		RevealMap: Reveal map
+		NoEvolution: "{0} doesn't evolve by level."
+		PerfectIVsDone: "{0} now has 31 in every IV."
+		ShinyOn: "{0} is now shiny."
+		ShinyOff: "{0} is no longer shiny."
+		HeldItemsGiven: You got one of each held item.
+		StonesGiven: You got 3 of each evolution item.
+		NowDay: It's day now.
+		NowNight: It's night now.
+		RainOn: It started raining.
+		RainOff: The rain stopped.
+		GodModeOn: God mode on: nothing can hurt you.
+		GodModeOff: God mode off.
+		PlayerHealed: Life and mana restored, debuffs removed.
+		ClickToTeleport: Click anywhere in the world to teleport there.
+		HostilesKilled: "{0} monsters defeated."
+		MoneyGiven: You got 10 platinum coins.
+		GearGiven: You got a Shellphone, Lunar Hook, Terraspark Boots, Fishron Wings, Laser Drill and torches.
+		BossItemsGiven: You got the summoning item of every boss.
+		MapRevealed: The whole map was revealed.
 		Close: Close
 		ItemsGiven: Received Poké Balls, Potions, Revives and Rare Candies
 		BossDowned: "{0} now counts as defeated"
@@ -445,6 +484,16 @@ GUI: {
 			HP: {0}/{1}
 			EXP: {2}/{3}
 			'''
+		SummaryHint: "[c/9FA2AD:Hold Shift for the summary]"
+		Summary: {
+			Nature: "Nature: {0}"
+			Ability: "Ability: {0}"
+			Item: "Item: {0}"
+			NoItem: None
+			IVs: "IVs: HP {0} · Atk {1} · Def {2} · SpA {3} · SpD {4} · Spe {5} ({6}/186)"
+			EVs: "EVs: HP {0} · Atk {1} · Def {2} · SpA {3} · SpD {4} · Spe {5} ({6}/510)"
+			Legend: "[c/9FA2AD:IVs (0-31) are born with the Pokémon; EVs grow by defeating Pokémon.]"
+		}
 		SlotTooltipMaxLevel:
 			'''
 			HP: {0}/{1}
@@ -940,6 +989,116 @@ Items: {
 			Nearby {0} companions grow quicker and unleash stronger attacks
 			Right click while holding to cycle through visual styles
 			'''
+	}
+
+	Leftovers: {
+		DisplayName: Leftovers
+		Tooltip: Restores a little HP at the end of every turn in battle.
+	}
+
+	OranBerry: {
+		DisplayName: Oran Berry
+		Tooltip: Restores 10 HP once when HP gets low in battle.
+	}
+
+	SitrusBerry: {
+		DisplayName: Sitrus Berry
+		Tooltip: Restores 1/4 of max HP once when HP drops below half in battle.
+	}
+
+	Charcoal: {
+		DisplayName: Charcoal
+		Tooltip: Powers up Fire-type moves by 20%.
+	}
+
+	MysticWater: {
+		DisplayName: Mystic Water
+		Tooltip: Powers up Water-type moves by 20%.
+	}
+
+	MiracleSeed: {
+		DisplayName: Miracle Seed
+		Tooltip: Powers up Grass-type moves by 20%.
+	}
+
+	Magnet: {
+		DisplayName: Magnet
+		Tooltip: Powers up Electric-type moves by 20%.
+	}
+
+	NeverMeltIce: {
+		DisplayName: Never-Melt Ice
+		Tooltip: Powers up Ice-type moves by 20%.
+	}
+
+	HardStone: {
+		DisplayName: Hard Stone
+		Tooltip: Powers up Rock-type moves by 20%.
+	}
+
+	SoftSand: {
+		DisplayName: Soft Sand
+		Tooltip: Powers up Ground-type moves by 20%.
+	}
+
+	BlackBelt: {
+		DisplayName: Black Belt
+		Tooltip: Powers up Fighting-type moves by 20%.
+	}
+
+	PoisonBarb: {
+		DisplayName: Poison Barb
+		Tooltip: Powers up Poison-type moves by 20%.
+	}
+
+	SharpBeak: {
+		DisplayName: Sharp Beak
+		Tooltip: Powers up Flying-type moves by 20%.
+	}
+
+	SpellTag: {
+		DisplayName: Spell Tag
+		Tooltip: Powers up Ghost-type moves by 20%.
+	}
+
+	MetalCoat: {
+		DisplayName: Metal Coat
+		Tooltip: Powers up Steel-type moves by 20%.
+	}
+
+	BlackGlasses: {
+		DisplayName: Black Glasses
+		Tooltip: Powers up Dark-type moves by 20%.
+	}
+
+	SilkScarf: {
+		DisplayName: Silk Scarf
+		Tooltip: Powers up Normal-type moves by 20%.
+	}
+
+	QuickClaw: {
+		DisplayName: Quick Claw
+		Tooltip: Sometimes lets the holder move first.
+	}
+
+	FocusSash: {
+		DisplayName: Focus Sash
+		Tooltip: With full HP, survives one hit that would knock it out, with 1 HP left. Used up after.
+	}
+
+	LifeOrb: {
+		DisplayName: Life Orb
+		Tooltip: Powers up moves by 30%, but the holder loses a little HP after each attack.
+	}
+
+	KingsRock: {
+		DisplayName: King's Rock
+		Tooltip: Attacks may make the target flinch.
+	}
+
+	ShellBell: {
+		DisplayName: Shell Bell
+		Tooltip: Restores HP equal to 1/8 of the damage the holder deals.
 	}
 
 	LuckyEgg: {
@@ -1627,4 +1786,32 @@ WorldGen.BrockGymPass: Digging out Brock's Gym
 Items.BrockPaintingItem: {
 	DisplayName: Pewter City Gym Painting
 	Tooltip: "'The first step of every great journey'"
+}
+
+Natures: {
+	Hardy: Hardy
+	Lonely: Lonely
+	Brave: Brave
+	Adamant: Adamant
+	Naughty: Naughty
+	Bold: Bold
+	Docile: Docile
+	Relaxed: Relaxed
+	Impish: Impish
+	Lax: Lax
+	Timid: Timid
+	Hasty: Hasty
+	Serious: Serious
+	Jolly: Jolly
+	Naive: Naive
+	Modest: Modest
+	Mild: Mild
+	Quiet: Quiet
+	Bashful: Bashful
+	Rash: Rash
+	Calm: Calm
+	Gentle: Gentle
+	Sassy: Sassy
+	Careful: Careful
+	Quirky: Quirky
 }

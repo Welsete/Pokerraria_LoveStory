@@ -97,7 +97,8 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add held items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.HeldItems)
-            .Add<LuckyEgg>();
+            .Add<LuckyEgg>()
+            .AddAllOfType<BattleHeldItem>();
 
         // Register mega stone group (populated in MegaStones)
         TerramonItemRegistry

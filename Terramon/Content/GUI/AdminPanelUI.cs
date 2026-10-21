@@ -25,8 +25,9 @@ public sealed class AdminPanelUI : SmartUIState
     private const float ButtonWidth = 190f;
     private const float ButtonHeight = 36f;
     private const float Gap = 8f;
+    private const float GridTop = 76f;
 
-    private UIPanel _panel;
+    private DragPanel _panel;
 
     /// <summary>
     ///     Every trainer in League order, for the trainer spawn button.
@@ -35,6 +36,12 @@ public sealed class AdminPanelUI : SmartUIState
 
     private static int _trainerIndex;
     private UITextPanel<LocalizedText> _trainerButton;
+
+    // Where the player dragged the panel to; null until it's moved (then it opens centered)
+    private static Vector2? _position;
+    private static int _tab;
+    private readonly List<UIElement> _buttons = [];
+    private readonly List<UITextPanel<LocalizedText>> _tabButtons = [];
 
     private void UpdateTrainerButton()
         => _trainerButton?.SetText(Label("SpawnTrainer")
@@ -62,48 +69,106 @@ public sealed class AdminPanelUI : SmartUIState
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
         => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 
-    public override void OnInitialize()
-    {
-        (string Key, Action Action)[] actions =
-        [
+    /// <summary>
+    ///     The buttons of each tab: Pokémon, League and Terraria.
+    /// </summary>
+    private static (string Tab, (string Key, Action Action)[] Actions)[] Tabs =>
+    [
+        ("TabPokemon", [
             ("HealParty", HealParty),
             ("LevelUp1", () => LevelUpActive(1)),
             ("LevelUp5", () => LevelUpActive(5)),
+            ("LevelUp10", () => LevelUpActive(10)),
+            ("EvolveActive", EvolveActive),
             ("FaintActive", FaintActive),
+            ("PerfectIVs", PerfectIVs),
+            ("ToggleShiny", ToggleShiny),
             ("GiveItems", GiveItems),
+            ("GiveHeldItems", GiveHeldItems),
+            ("GiveStones", GiveEvolutionStones),
             ("SpawnWild", SpawnWild),
+            ("SpawnOnix", SpawnOnix),
             ("ClearWild", ClearWild),
+            ("ClearBattles", ClearBattles)
+        ]),
+        ("TabLeague", [
             ("SpawnTrainer", SpawnSelectedTrainer),
             ("NextBoss", AdvanceBossProgress),
             ("GiveBadges", GiveAllBadges),
             ("LeagueItems", GiveLeagueItems),
             ("ResetBadges", ResetBadges),
-            ("ClearBattles", ClearBattles),
             ("TeleportBrockGym", TeleportToBrockGym),
-            ("BuildBrockGym", BuildBrockGymHere),
-            ("SpawnOnix", SpawnOnix),
-            ("Close", Toggle)
-        ];
+            ("BuildBrockGym", BuildBrockGymHere)
+        ]),
+        ("TabTerraria", [
+            ("ToggleTime", ToggleTime),
+            ("ToggleRain", ToggleRain),
+            ("GodMode", ToggleGodMode),
+            ("HealPlayer", HealPlayer),
+            ("TeleportSpawn", TeleportToSpawn),
+            ("TeleportCursor", TeleportToCursor),
+            ("KillHostiles", KillHostiles),
+            ("GiveMoney", GiveMoney),
+            ("GiveGear", GiveGear),
+            ("GiveBossItems", GiveBossItems),
+            ("RevealMap", RevealMap)
+        ])
+    ];
 
-        var rows = (actions.Length + Columns - 1) / Columns;
-        _panel = new UIPanel
-        {
-            HAlign = 0.5f,
-            VAlign = 0.5f
-        };
+    public override void OnInitialize()
+    {
+        var tabs = Tabs;
+        var rows = tabs.Max(t => (t.Actions.Length + 1 + Columns - 1) / Columns); // +1 for Close
+        _panel = new DragPanel();
         _panel.Width.Pixels = Columns * (ButtonWidth + Gap) + Gap + _panel.PaddingLeft + _panel.PaddingRight;
-        _panel.Height.Pixels = 40f + rows * (ButtonHeight + Gap) + _panel.PaddingTop + _panel.PaddingBottom;
+        _panel.Height.Pixels = GridTop + rows * (ButtonHeight + Gap) + _panel.PaddingTop + _panel.PaddingBottom;
         Append(_panel);
 
-        _panel.Append(new UIText(Label("Title"), 0.9f)
+        _panel.Append(new UIText(Label("Title"), 0.8f)
         {
-            HAlign = 0.5f
+            HAlign = 0.5f,
+            IgnoresMouseInteraction = true // Dragging works from the title too
         });
 
+        for (var i = 0; i < tabs.Length; i++)
+        {
+            var tabIndex = i;
+            var tab = new UITextPanel<LocalizedText>(Label(tabs[i].Tab), 0.85f);
+            tab.Width.Pixels = ButtonWidth;
+            tab.Height.Pixels = ButtonHeight - 4f;
+            tab.Left.Pixels = Gap + i * (ButtonWidth + Gap);
+            tab.Top.Pixels = 30f;
+            tab.OnLeftClick += (_, _) =>
+            {
+                SoundEngine.PlaySound(SoundID.MenuTick);
+                _tab = tabIndex;
+                ShowTab();
+            };
+            _tabButtons.Add(tab);
+            _panel.Append(tab);
+        }
+
+        ShowTab();
+    }
+
+    private void ShowTab()
+    {
+        foreach (var button in _buttons)
+            button.Remove();
+        _buttons.Clear();
+        _trainerButton = null;
+
+        for (var i = 0; i < _tabButtons.Count; i++)
+        {
+            _tabButtons[i].BackgroundColor = i == _tab ? new Color(90, 115, 200) : new Color(44, 57, 105) * 0.9f;
+            _tabButtons[i].BorderColor = i == _tab ? Color.Gold : Color.Black;
+        }
+
+        (string Key, Action Action)[] actions = [..Tabs[_tab].Actions, ("Close", (Action)Toggle)];
         for (var i = 0; i < actions.Length; i++)
         {
             var (key, action) = actions[i];
-            var button = new UITextPanel<LocalizedText>(Label(key), 0.85f);
+            var button = new UITextPanel<LocalizedText>(Label(key), 0.8f);
             if (key == "SpawnTrainer")
             {
                 // Right click picks which trainer the button spawns
@@ -120,7 +185,7 @@ public sealed class AdminPanelUI : SmartUIState
             button.Width.Pixels = ButtonWidth;
             button.Height.Pixels = ButtonHeight;
             button.Left.Pixels = Gap + i % Columns * (ButtonWidth + Gap);
-            button.Top.Pixels = 40f + i / Columns * (ButtonHeight + Gap);
+            button.Top.Pixels = GridTop + i / Columns * (ButtonHeight + Gap);
             button.OnMouseOver += (_, el) => ((UIPanel)el).BackgroundColor = new Color(73, 94, 171);
             button.OnMouseOut += (_, el) => ((UIPanel)el).BackgroundColor = new Color(63, 82, 151) * 0.7f;
             button.OnLeftClick += (_, _) =>
@@ -128,14 +193,34 @@ public sealed class AdminPanelUI : SmartUIState
                 SoundEngine.PlaySound(SoundID.MenuTick);
                 action();
             };
+            _buttons.Add(button);
             _panel.Append(button);
         }
+
+        _panel.Recalculate();
     }
 
     public override void SafeUpdate(GameTime gameTime)
     {
         if (!Visible || _panel == null)
             return;
+
+        // Open centered the first time, then wherever it was dragged to
+        var screen = GetDimensions();
+        var position = _position ?? new Vector2((screen.Width - _panel.Width.Pixels) / 2f,
+            (screen.Height - _panel.Height.Pixels) / 2f);
+        if (_panel.Dragging)
+            position = _panel.DragPosition();
+        position.X = Math.Clamp(position.X, 0f, Math.Max(0f, screen.Width - _panel.Width.Pixels));
+        position.Y = Math.Clamp(position.Y, 0f, Math.Max(0f, screen.Height - _panel.Height.Pixels));
+        if (_panel.Dragging || _position.HasValue)
+            _position = position;
+        if (_panel.Left.Pixels != position.X || _panel.Top.Pixels != position.Y)
+        {
+            _panel.Left.Pixels = position.X;
+            _panel.Top.Pixels = position.Y;
+            _panel.Recalculate();
+        }
 
         // Don't use items or click the world through the panel
         if (_panel.ContainsPoint(Main.MouseScreen))
@@ -144,6 +229,39 @@ public sealed class AdminPanelUI : SmartUIState
         // Close if Debug Mode gets turned off
         if (!GameplayConfig.Instance.DebugMode)
             Visible = false;
+    }
+
+    /// <summary>
+    ///     A panel that can be dragged around by clicking anywhere that isn't a button.
+    /// </summary>
+    private sealed class DragPanel : UIPanel
+    {
+        private Vector2 _grabOffset;
+        public bool Dragging { get; private set; }
+
+        public Vector2 DragPosition() => Main.MouseScreen - _grabOffset;
+
+        public override void LeftMouseDown(UIMouseEvent evt)
+        {
+            base.LeftMouseDown(evt);
+            if (evt.Target != this)
+                return;
+            _grabOffset = evt.MousePosition - new Vector2(Left.Pixels, Top.Pixels);
+            Dragging = true;
+        }
+
+        public override void LeftMouseUp(UIMouseEvent evt)
+        {
+            base.LeftMouseUp(evt);
+            Dragging = false;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (Dragging && !Main.mouseLeft)
+                Dragging = false;
+        }
     }
 
     private static void Say(string key, params object[] args)
@@ -183,7 +301,211 @@ public sealed class AdminPanelUI : SmartUIState
 
         Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.RareCandyUse", data.DisplayName, data.Level),
             TerramonCommand.ChatColorYellow);
+        // The party growth check then evolves it (if it reached its level) and teaches the new moves
     }
+
+    /// <summary>
+    ///     Evolves the active Pokémon into its next level-up evolution, whatever its level.
+    /// </summary>
+    private static void EvolveActive()
+    {
+        var data = GetActiveOrWarn();
+        if (data == null)
+            return;
+        var evolution = data.Schema.Evolution;
+        if (evolution == null || evolution.ID == data.ID)
+        {
+            Say("NoEvolution", data.DisplayName);
+            return;
+        }
+
+        var oldName = data.DisplayName;
+        data.EvolveInto(evolution.ID);
+        TerramonPlayer.LocalPlayer.UpdatePokedex(evolution.ID, PokedexEntryStatus.Registered, shiny: data.IsShiny);
+        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", oldName,
+            Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(evolution.ID)), new Color(50, 255, 130));
+        SoundEngine.PlaySound(SoundID.Item4);
+    }
+
+    private static void PerfectIVs()
+    {
+        var data = GetActiveOrWarn();
+        if (data == null)
+            return;
+        var oldMaxHP = data.MaxHP;
+        data.IVs = new PokemonIVs(31, 31, 31, 31, 31, 31);
+        data.HP = (ushort)Math.Clamp(data.HP + data.MaxHP - oldMaxHP, 0, data.MaxHP);
+        Say("PerfectIVsDone", data.DisplayName);
+    }
+
+    private static void ToggleShiny()
+    {
+        var data = GetActiveOrWarn();
+        if (data == null)
+            return;
+        data.IsShiny = !data.IsShiny;
+        Say(data.IsShiny ? "ShinyOn" : "ShinyOff", data.DisplayName);
+    }
+
+    private static void GiveHeldItems()
+    {
+        var player = Main.LocalPlayer;
+        foreach (var item in ModContent.GetContent<BattleHeldItem>())
+            player.QuickSpawnItem(player.GetSource_GiftOrReward(), item.Type);
+        Say("HeldItemsGiven");
+    }
+
+    private static void GiveEvolutionStones()
+    {
+        var player = Main.LocalPlayer;
+        foreach (var item in ModContent.GetContent<EvolutionaryItem>())
+            player.QuickSpawnItem(player.GetSource_GiftOrReward(), item.Type, 3);
+        Say("StonesGiven");
+    }
+
+    #region Terraria
+
+    private static void ToggleTime()
+    {
+        // Jump to 4:30 in the morning or 7:30 at night
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+        {
+            Main.NewText(Text("SingleplayerOnly"), TerramonCommand.ChatColorRed);
+            return;
+        }
+
+        Main.dayTime = !Main.dayTime;
+        Main.time = 0;
+        Say(Main.dayTime ? "NowDay" : "NowNight");
+    }
+
+    private static void ToggleRain()
+    {
+        if (Main.raining)
+            Main.StopRain();
+        else
+            Main.StartRain();
+        Say(Main.raining ? "RainOn" : "RainOff");
+    }
+
+    private static void ToggleGodMode()
+    {
+        var cheats = Main.LocalPlayer.GetModPlayer<AdminCheatPlayer>();
+        cheats.GodMode = !cheats.GodMode;
+        Say(cheats.GodMode ? "GodModeOn" : "GodModeOff");
+    }
+
+    private static void HealPlayer()
+    {
+        var player = Main.LocalPlayer;
+        player.statLife = player.statLifeMax2;
+        player.statMana = player.statManaMax2;
+        for (var i = 0; i < Player.MaxBuffs; i++)
+        {
+            if (player.buffType[i] > 0 && Main.debuff[player.buffType[i]])
+                player.DelBuff(i--);
+        }
+
+        player.HealEffect(player.statLifeMax2);
+        Say("PlayerHealed");
+    }
+
+    private static void TeleportTo(Vector2 worldPosition)
+    {
+        var player = Main.LocalPlayer;
+        var position = worldPosition - new Vector2(player.width / 2f, player.height);
+        player.Teleport(position, TeleportationStyleID.RodOfDiscord);
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, player.whoAmI, position.X, position.Y,
+                TeleportationStyleID.RodOfDiscord);
+    }
+
+    private static void TeleportToSpawn()
+    {
+        var player = Main.LocalPlayer;
+        var spawn = player.SpawnX >= 0 && player.SpawnY >= 0
+            ? new Point(player.SpawnX, player.SpawnY)
+            : new Point(Main.spawnTileX, Main.spawnTileY);
+        TeleportTo(spawn.ToWorldCoordinates(8f, 0f));
+    }
+
+    /// <summary>
+    ///     The next click in the world teleports there (see <see cref="AdminCheatPlayer" />).
+    /// </summary>
+    private static void TeleportToCursor()
+    {
+        Main.LocalPlayer.GetModPlayer<AdminCheatPlayer>().TeleportOnClick = true;
+        Say("ClickToTeleport");
+    }
+
+    public static void TeleportPlayerTo(Vector2 worldPosition) => TeleportTo(worldPosition);
+
+    private static void KillHostiles()
+    {
+        var killed = 0;
+        foreach (var npc in Main.ActiveNPCs)
+        {
+            if (npc.friendly || npc.townNPC || npc.dontTakeDamage || npc.ModNPC is PokemonNPC or TrainerNPC ||
+                npc.Distance(Main.LocalPlayer.Center) > 16f * 120f)
+                continue;
+            npc.SimpleStrikeNPC(npc.lifeMax * 10, 0, noPlayerInteraction: true);
+            killed++;
+        }
+
+        Say("HostilesKilled", killed);
+    }
+
+    private static void GiveMoney()
+    {
+        var player = Main.LocalPlayer;
+        player.QuickSpawnItem(player.GetSource_GiftOrReward(), ItemID.PlatinumCoin, 10);
+        Say("MoneyGiven");
+    }
+
+    private static void GiveGear()
+    {
+        var player = Main.LocalPlayer;
+        var source = player.GetSource_GiftOrReward();
+        foreach (var type in new[]
+                 {
+                     ItemID.Shellphone, ItemID.LunarHook, ItemID.TerrasparkBoots, ItemID.FishronWings,
+                     ItemID.LaserDrill, ItemID.Torch
+                 })
+            player.QuickSpawnItem(source, type, type == ItemID.Torch ? 99 : 1);
+        Say("GearGiven");
+    }
+
+    private static void GiveBossItems()
+    {
+        var player = Main.LocalPlayer;
+        var source = player.GetSource_GiftOrReward();
+        foreach (var type in new[]
+                 {
+                     ItemID.SlimeCrown, ItemID.SuspiciousLookingEye, ItemID.WormFood, ItemID.BloodySpine,
+                     ItemID.Abeemination, ItemID.DeerThing, ItemID.GuideVoodooDoll, ItemID.QueenSlimeCrystal,
+                     ItemID.MechanicalEye, ItemID.MechanicalWorm, ItemID.MechanicalSkull, ItemID.LihzahrdPowerCell,
+                     ItemID.TruffleWorm, ItemID.CelestialSigil
+                 })
+            player.QuickSpawnItem(source, type);
+        Say("BossItemsGiven");
+    }
+
+    private static void RevealMap()
+    {
+        for (var x = 0; x < Main.maxTilesX; x++)
+        {
+            for (var y = 0; y < Main.maxTilesY; y++)
+            {
+                if (WorldGen.InWorld(x, y))
+                    Main.Map.Update(x, y, 255);
+            }
+        }
+
+        Main.refreshMap = true;
+        Say("MapRevealed");
+    }
+
+    #endregion
 
     private static void FaintActive()
     {
