@@ -36,6 +36,7 @@ Battle: {
 		SwitchedIn: "{0} entered the battle!"
 		Damage: "{0} lost {1} HP! ({2})"
 		Healed: "{0} recovered {1} HP! ({2})"
+		MoveEffect: "  » {0}"
 		UsedMove: "{0} used {1}!"
 		SuperEffective: It's super effective!
 		Resisted: It's not very effective...

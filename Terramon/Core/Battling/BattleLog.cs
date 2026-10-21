@@ -141,6 +141,8 @@ public static class BattleLog
             }
             case MoveElement move:
                 Send(source, "UsedMove", LogColor, Mon(source, move.Pokemon), Highlight(Move(move.Move), MoveHex));
+                if (StatusMoveEffect(move.Move) is { } effect)
+                    Send(source, "MoveEffect", Muted, effect);
                 break;
             case SuperEffectiveElement:
                 Send(source, "SuperEffective", Notable);
@@ -252,6 +254,18 @@ public static class BattleLog
             ? $"Mods.Terramon.Moves.{move}.DisplayName"
             : null;
         return key != null && Language.Exists(key) ? Language.GetTextValue(key) : showdownMove;
+    }
+
+    /// <summary>
+    ///     What a status move does, so players know why nothing got hit. Null for moves that deal damage.
+    /// </summary>
+    private static string StatusMoveEffect(string showdownMove)
+    {
+        if (!Enum.TryParse(showdownMove.Replace(" ", string.Empty).Replace("-", string.Empty), out MoveID move) ||
+            Terramon.DatabaseV2.GetMove(move) is not { Category: MoveCategory.Status })
+            return null;
+        var key = $"Mods.Terramon.Moves.{move}.FlavorText";
+        return Language.Exists(key) ? Language.GetTextValue(key) : null;
     }
 
     private static string Stat(string stat)
