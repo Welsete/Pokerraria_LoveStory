@@ -1225,6 +1225,8 @@ Misc: {
 	RequireStarter: Escolha um Pokémon inicial primeiro!
 	NoActivePokemon: Você precisa ter um Pokémon ativo para fazer isso!
 	ItemNoEffect: Não vai ter nenhum efeito em {0}.
+	NoFaintedPokemon: Nenhum dos seus Pokémon está desmaiado.
+	UseBagInBattle: Na batalha, use o Revive pela Mochila.
 	PokemonEvolved: "{0} evoluiu para {1}!"
 	PokemonEvolutionReady: "{0} parece pronto para evoluir!"
 	RareCandyUse: "{0} subiu para o Nv. {1}!"
@@ -1552,6 +1554,7 @@ Bag: {
 	HP: PS {0}/{1}
 	Fainted: Desmaiado
 	Failed: Não foi possível usar esse item agora.
+	MorePages: Mais itens
 }
 
 Healing: {

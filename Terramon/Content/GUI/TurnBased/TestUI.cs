@@ -5,6 +5,8 @@ using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Content.Items;
+using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.NPCs;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Helpers;
 using Terramon.ID;
@@ -128,11 +130,8 @@ public sealed class TestBattleUI : SmartUIState
             button.Top.Percent = yFactor;
             button.Width.Percent = 1f / 3f;
             button.Height.Percent = 0.5f;
-            UIText label = new(string.Empty, 0.75f, true)
-            {
-                HAlign = 0.6f,
-                VAlign = 0.5f
-            };
+            UIText label = new(string.Empty, 0.75f, true) { VAlign = 0.5f };
+            BesideIcon(label);
             UIImage image = new(TextureAssets.Npc[0])
             {
                 VAlign = 0.5f
@@ -175,16 +174,10 @@ public sealed class TestBattleUI : SmartUIState
         button.Top.Percent = i / 3 * 0.5f;
         button.Width.Percent = 1f / 3f;
         button.Height.Percent = 0.5f;
-        UIText label = new(string.Empty, 0.6f, true)
-        {
-            HAlign = 0.6f,
-            VAlign = 0.35f
-        };
-        UIText subLabel = new(string.Empty, 0.85f)
-        {
-            HAlign = 0.6f,
-            VAlign = 0.75f
-        };
+        UIText label = new(string.Empty, 0.6f, true) { VAlign = 0.35f };
+        UIText subLabel = new(string.Empty, 0.85f) { VAlign = 0.75f };
+        BesideIcon(label);
+        BesideIcon(subLabel);
         UIImage image = new(TextureAssets.Npc[0])
         {
             VAlign = 0.5f
@@ -195,6 +188,17 @@ public sealed class TestBattleUI : SmartUIState
         button.Append(image);
         panel.Append(button);
         return button;
+    }
+
+    /// <summary>
+    ///     Centers a label in the part of a button to the right of its icon, shrinking long names to fit.
+    /// </summary>
+    private static void BesideIcon(UIText label)
+    {
+        label.Left.Percent = 0.3f;
+        label.Width.Percent = 0.68f;
+        label.TextOriginX = 0.5f;
+        label.DynamicallyScaleDownToWidth = true;
     }
 
     public TestBattleUI()
@@ -460,13 +464,14 @@ public sealed class TestBattleUI : SmartUIState
             BattleClient.LocalClient.CurrentRequest != ShowdownRequest.Any)
             return;
 
-        if (!BagItems.Any(t => Main.LocalPlayer.CountItem(t, 1) > 0))
+        if (!AvailableBagItems.Any())
         {
             _promptText.SetText(Language.GetTextValue("Mods.Terramon.Bag.Empty"));
             _promptText.Recalculate();
             return;
         }
 
+        _bagPage = 0;
         ChangePanel(_bagPanel);
     }
 
@@ -485,6 +490,29 @@ public sealed class TestBattleUI : SmartUIState
         ModContent.ItemType<MaxRevive>()
     ];
 
+    /// <summary>
+    ///     Poké Balls listed first in the Bag, only in battles against wild Pokémon.
+    /// </summary>
+    private static int[] BagBalls =>
+    [
+        ModContent.ItemType<PokeBallItem>(),
+        ModContent.ItemType<GreatBallItem>(),
+        ModContent.ItemType<UltraBallItem>(),
+        ModContent.ItemType<MasterBallItem>(),
+        ModContent.ItemType<PremierBallItem>(),
+        ModContent.ItemType<AetherBallItem>(),
+        ModContent.ItemType<CherishBallItem>()
+    ];
+
+    private static bool AgainstWildPokemon => BattleClient.LocalClient.Foe is PokemonNPC;
+
+    private static IEnumerable<int> AvailableBagItems =>
+        (AgainstWildPokemon ? BagBalls.Concat(BagItems) : BagItems).Where(t => Main.LocalPlayer.CountItem(t, 1) > 0);
+
+    // With more than 6 kinds of items, the last button turns pages
+    private const int BagSlots = 6;
+    private static int _bagPage;
+
     private static int _bagSelectedItem;
 
     // Waiting for the server to accept a Bag item (multiplayer only)
@@ -497,14 +525,30 @@ public sealed class TestBattleUI : SmartUIState
 
     public static void UpdateBag()
     {
-        var owned = BagItems.Select(t => (Type: t, Count: Main.LocalPlayer.CountItem(t, 9999)))
-            .Where(t => t.Count > 0).ToArray();
+        var all = AvailableBagItems.Select(t => (Type: t, Count: Main.LocalPlayer.CountItem(t, 9999))).ToArray();
+        var paged = all.Length > BagSlots;
+        var perPage = paged ? BagSlots - 1 : BagSlots;
+        var pages = Math.Max(1, (all.Length + perPage - 1) / perPage);
+        _bagPage %= pages;
+        var owned = all.Skip(_bagPage * perPage).Take(perPage).ToArray();
 
         for (int i = 0; i < _bagPanel.Children.Count(); i++)
         {
             var button = (DynamicPixelRatioElement)_bagPanel.Children.ElementAt(i);
             var (label, subLabel, image) = GridParts(button);
             var itemRef = (BagItemReference)button.Children.First(e => e is BagItemReference);
+
+            if (paged && i == BagSlots - 1)
+            {
+                button.UpdateTextures("Terramon/Assets/GUI/TurnBased/Simple");
+                button.BlockInteractions = false;
+                button.Color = Color.White;
+                label.SetText(Language.GetTextValue("Mods.Terramon.Bag.MorePages"));
+                subLabel.SetText($"{_bagPage + 1}/{pages}");
+                image.Color = Color.Transparent;
+                itemRef.ItemType = -1;
+                continue;
+            }
 
             if (i >= owned.Length)
             {
@@ -536,9 +580,55 @@ public sealed class TestBattleUI : SmartUIState
         if (itemRef.ItemType == 0)
             return;
 
+        if (itemRef.ItemType == -1)
+        {
+            SoundEngine.PlaySound(in SoundID.MenuTick);
+            _bagPage++;
+            UpdateBag();
+            return;
+        }
+
+        if (ModContent.GetModItem(itemRef.ItemType) is BasePkballItem)
+        {
+            ThrowBallFromBag(itemRef.ItemType);
+            return;
+        }
+
         SoundEngine.PlaySound(in TerramonSoundID.BattleDecide);
         _bagSelectedItem = itemRef.ItemType;
         ChangePanel(_bagTargetPanel);
+    }
+
+    /// <summary>
+    ///     Throws a Poké Ball from the Bag at the wild Pokémon. The ball flies there like a thrown one, and hitting the
+    ///     Pokémon takes the turn (see <see cref="BasePkballProjectile" />).
+    /// </summary>
+    private static void ThrowBallFromBag(int ballType)
+    {
+        var client = BattleClient.LocalClient;
+        var player = Main.LocalPlayer;
+        if (client.Foe is not PokemonNPC { PlasmaState: false } wild || !client.CanMakeChoice(BattleChoice.Move) ||
+            client.CurrentRequest != ShowdownRequest.Any || player.CountItem(ballType, 1) <= 0)
+        {
+            SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
+            return;
+        }
+
+        var from = player.MountedCenter;
+        var to = wild.NPC.Center;
+        player.ChangeDir(to.X > from.X ? 1 : -1);
+
+        // The ball flies straight for 10 ticks, then falls by 0.25 per tick. Aim so it lands on the Pokémon after
+        // `time` ticks; the ball also gets 75% of the player's velocity when it spawns.
+        var time = Math.Clamp(Vector2.Distance(from, to) / 7f, 20f, 50f);
+        var fall = time > 10 ? 0.125f * (time - 10) * (time - 9) : 0f;
+        var velocity = new Vector2((to.X - from.X) / time, (to.Y - from.Y - fall) / time) - player.velocity * 0.75f;
+
+        SoundEngine.PlaySound(TerramonSoundID.PkballThrow, from);
+        Projectile.NewProjectile(player.GetSource_ItemUse(ContentSamples.ItemsByType[ballType]), from, velocity,
+            ContentSamples.ItemsByType[ballType].shoot, 0, 0f, player.whoAmI);
+        player.ConsumeItem(ballType);
+        ChangePanel(_optionsPanel);
     }
 
     private static bool CanUseOn(int itemType, PokemonData data)

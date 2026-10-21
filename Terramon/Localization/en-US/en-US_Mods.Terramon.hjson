@@ -1225,6 +1225,8 @@ Misc: {
 	RequireStarter: Choose a starter Pokémon first!
 	NoActivePokemon: You need to have an active Pokémon to do that!
 	ItemNoEffect: It won't have any effect on {0}.
+	NoFaintedPokemon: None of your Pokémon has fainted.
+	UseBagInBattle: In battle, use Revives from the Bag.
 	PokemonEvolved: "{0} evolved into {1}!"
 	PokemonEvolutionReady: "{0} seems ready to evolve!"
 	RareCandyUse: "{0} grew to Lv. {1}!"
@@ -1552,6 +1554,7 @@ Bag: {
 	HP: HP {0}/{1}
 	Fainted: Fainted
 	Failed: That item couldn't be used right now.
+	MorePages: More items
 }
 
 Healing: {
