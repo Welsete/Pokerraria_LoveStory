@@ -37,7 +37,11 @@ public sealed class BattleField
                 GetMon(r).Species = r.ReadUInt16();
                 break;
             case BattleActionID.SetPokemonHP:
-                GetMon(r).HPData = r.ReadPokemonHP();
+                ref var hurt = ref GetMon(r);
+                var hpBefore = hurt.HP;
+                hurt.HPData = r.ReadPokemonHP();
+                if (hurt.HP < hpBefore && hurt.HP > 0)
+                    PokemonAnimations.Play(hurt.Side?.Provider, PokemonAnimState.Hurt);
                 break;
             case BattleActionID.MoveAnimation:
                 ref var user = ref GetMon(r);

@@ -129,7 +129,7 @@ public class HubUI : SmartUIState
 
     public static void OpenToPokemon(ushort pokemon, bool isShiny = false)
     {
-        if (Active) return;
+        if (Active || !TerramonPlayer.LocalPlayer.GetPokedex(isShiny).Entries.ContainsKey(pokemon)) return;
 
         var hubState = UILoader.GetUIState<HubUI>();
         var filterButtonImage = isShiny ? PlayerShinyDexFilterTexture : PlayerDexFilterTexture;

@@ -176,6 +176,13 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         _cachedID = ID;
     }
 
+    /// <summary>
+    ///     Who battle animations (attacks, getting hurt) are played on for this pet: its owner, since that's who battles.
+    /// </summary>
+    private object AnimOwner => Projectile.isAPreviewDummy
+        ? this
+        : Main.player[Projectile.owner].GetModPlayer<TerramonPlayer>();
+
     public override bool PreDraw(ref Color lightColor)
     {
         lightColor = StatusVisuals.Tint(Data?.Status ?? NonVolatileStatus.None, lightColor);
@@ -227,6 +234,18 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         var sourceRect = _mainTexture.Frame(1, projFrameCount, frameY: Projectile.frame);
         var frameSize = sourceRect.Size();
         var origin = frameSize / new Vector2(2, 1);
+        var texture = _mainTexture.Value;
+
+        // Pokémon with a full animation set pick their frame from what they're doing instead
+        var animSet = PokemonAnimations.Get(Schema.Identifier);
+        if (animSet != null)
+        {
+            PokemonAnimations.GetFrame(animSet, AnimOwner, Data?.IsShiny ?? false,
+                Math.Abs(Projectile.velocity.X) > 0.2f, Data is { Status: NonVolatileStatus.Slp }, Data is { HP: 0 },
+                out texture, out sourceRect, out origin);
+            frameSize = sourceRect.Size();
+            drawPos.Y -= 3f;
+        }
         var effects = CustomSpriteDirection.HasValue
             ? CustomSpriteDirection.Value == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
             : Projectile.spriteDirection == -1
@@ -256,7 +275,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             ? GrayscaleColor(lightColor)
             : lightColor;
 
-        Main.EntitySpriteDraw(_mainTexture.Value,
+        Main.EntitySpriteDraw(texture,
             drawPos,
             sourceRect, adjustedColor,
             Projectile.rotation,
@@ -265,7 +284,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         var glowCache = Data?.IsShiny ?? false
             ? PokemonEntityLoader.ShinyGlowTextureCache
             : PokemonEntityLoader.GlowTextureCache;
-        if (!glowCache.TryGetValue(ID, out var glowTexture)) return false;
+        if (animSet != null || !glowCache.TryGetValue(ID, out var glowTexture)) return false;
 
         // Draw the glowmask texture for the pet
         lightColor = Color.White;
@@ -473,6 +492,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             if (_attackCooldown == 0)
             {
                 _activeAttackTimer = 16;
+                PokemonAnimations.Play(AnimOwner, PokemonAnimState.Attack);
                 _attackCooldown = 120;
                 SoundEngine.PlaySound(in SoundID.Item7);
             }

@@ -255,12 +255,29 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                       new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4);
         var rotation = NPC.rotation;
 
+        // Pokémon with a full animation set pick their frame from what they're doing instead
+        var animSet = PokemonAnimations.Get(Schema.Identifier);
+        Texture2D animTexture = null;
+        var animSource = Rectangle.Empty;
+        var animOrigin = Vector2.Zero;
+        if (animSet != null)
+        {
+            PokemonAnimations.GetFrame(animSet, this, Data?.IsShiny ?? false, Math.Abs(NPC.velocity.X) > 0.2f,
+                Data is { Status: NonVolatileStatus.Slp }, Data is { HP: 0 }, out animTexture, out animSource,
+                out animOrigin);
+            drawPos = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY + 1f);
+        }
+
         if (Data is { HP: 0 } && !PlasmaState)
         {
             // Knocked out: tips over backwards onto its side, darkens, and blinks just before leaving
             var fall = Math.Min(_faintTime / 15f, 1f);
-            rotation = fall * MathHelper.PiOver2 * (NPC.spriteDirection == 1 ? -1 : 1);
-            drawPos = Vector2.Lerp(drawPos, NPC.Bottom - screenPos - new Vector2(0f, frameSize.X / 2f - 2f), fall);
+            if (animSet == null)
+            {
+                rotation = fall * MathHelper.PiOver2 * (NPC.spriteDirection == 1 ? -1 : 1);
+                drawPos = Vector2.Lerp(drawPos, NPC.Bottom - screenPos - new Vector2(0f, frameSize.X / 2f - 2f), fall);
+            }
+
             drawColor = Color.Lerp(drawColor, drawColor.MultiplyRGB(new Color(150, 150, 170)), fall);
             if (KnockedOutTicks - _knockedOutTime < 90 && _knockedOutTime % 10 < 5)
                 drawColor *= 0.3f;
@@ -282,7 +299,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                     : ClientConfig.Instance.HighlightColor;
                 var outlineShader = ShaderAssets.Outline;
                 outlineShader.Shader.Parameters["uThickOutline"].SetValue(ClientConfig.Instance.ThickHighlights);
-                outlineShader.Shader.Parameters["uImageSize0"].SetValue(_mainTexture.Size());
+                outlineShader.Shader.Parameters["uImageSize0"].SetValue(animTexture?.Size() ?? _mainTexture.Size());
                 outlineShader
                     .UseColor(highlightColor.MultiplyRGB(drawColor))
                     .UseSecondaryColor(highlightColor.HueShift(0.035f, -0.08f).MultiplyRGB(drawColor))
@@ -297,8 +314,12 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 ? PokemonPet.GrayscaleColor(drawColor)
                 : drawColor;
 
-            spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, adjustedColor, rotation,
-                frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
+            if (animTexture != null)
+                spriteBatch.Draw(animTexture, drawPos, animSource, adjustedColor, rotation, animOrigin, NPC.scale,
+                    effects, 0f);
+            else
+                spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, adjustedColor, rotation,
+                    frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
 
             if (isHighlighted)
             {
@@ -332,8 +353,12 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             .UseOpacity(_plasmaStateTime <= 20 ? _plasmaStateTime / 7.5f : NPC.Opacity)
             .Apply();
 
-        spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, drawColor, NPC.rotation, frameSize / new Vector2(2, 2),
-            NPC.scale, effects, 0f);
+        if (animTexture != null)
+            spriteBatch.Draw(animTexture, drawPos, animSource, drawColor, NPC.rotation, animOrigin, NPC.scale, effects,
+                0f);
+        else
+            spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, drawColor, NPC.rotation,
+                frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
 
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,

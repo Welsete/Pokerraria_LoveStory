@@ -1,3 +1,4 @@
+using Terramon.ID;
 using EasyPacketsLib;
 using EasyPacketsLib.Internals;
 using Terramon.Content.GUI;
@@ -17,6 +18,12 @@ public class Terramon : Mod
      * It exists because there are Pokémon in the DB that shouldn't be loaded as mod content (yet).
      */
     public const ushort MaxPokemonIDToLoad = 151;
+
+    /// <summary>
+    ///     Pokémon past <see cref="MaxPokemonIDToLoad" /> that are loaded anyway, to try out new sprites
+    ///     (Lucario tests the Mystery Dungeon style). They stay out of the Pokédex.
+    /// </summary>
+    public static readonly HashSet<ushort> ExtraPokemonToLoad = [NationalDexID.Lucario];
 
     /// <summary>
     ///     The maximum level a Pokémon can reach.

@@ -18318,6 +18318,146 @@
         ]
       },
       "forms": {}
+    },
+    "448": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "baseForm": {
+        "name": "Lucario",
+        "types": [
+          2,
+          9
+        ],
+        "baseExp": 184,
+        "baseStats": [
+          70,
+          110,
+          70,
+          115,
+          70,
+          90,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        "height": 12,
+        "weight": 540,
+        "abilities": {
+          "1": 80,
+          "2": 39,
+          "hidden": 154
+        },
+        "moves": [
+          {
+            "id": 14,
+            "atLevel": 40
+          },
+          {
+            "id": 68,
+            "atLevel": 12
+          },
+          {
+            "id": 98,
+            "atLevel": 1
+          },
+          {
+            "id": 103,
+            "atLevel": 1
+          },
+          {
+            "id": 179,
+            "atLevel": 1
+          },
+          {
+            "id": 197,
+            "atLevel": 1
+          },
+          {
+            "id": 198,
+            "atLevel": 36
+          },
+          {
+            "id": 232,
+            "atLevel": 1
+          },
+          {
+            "id": 245,
+            "atLevel": 56
+          },
+          {
+            "id": 249,
+            "atLevel": 1
+          },
+          {
+            "id": 270,
+            "atLevel": 1
+          },
+          {
+            "id": 309,
+            "atLevel": 48
+          },
+          {
+            "id": 319,
+            "atLevel": 28
+          },
+          {
+            "id": 347,
+            "atLevel": 24
+          },
+          {
+            "id": 364,
+            "atLevel": 1
+          },
+          {
+            "id": 370,
+            "atLevel": 60
+          },
+          {
+            "id": 383,
+            "atLevel": 1
+          },
+          {
+            "id": 395,
+            "atLevel": 20
+          },
+          {
+            "id": 396,
+            "atLevel": 1
+          },
+          {
+            "id": 406,
+            "atLevel": 52
+          },
+          {
+            "id": 410,
+            "atLevel": 1
+          },
+          {
+            "id": 501,
+            "atLevel": 32
+          },
+          {
+            "id": 505,
+            "atLevel": 44
+          },
+          {
+            "id": 515,
+            "atLevel": 1
+          },
+          {
+            "id": 526,
+            "atLevel": 16
+          },
+          {
+            "id": 773,
+            "atLevel": 1
+          }
+        ]
+      },
+      "forms": {}
     }
   },
   "moves": {

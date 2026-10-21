@@ -903,3 +903,9 @@ Mew: {
 	Species: Pokémon Nova Espécie
 	DexEntry: Como consegue usar todo tipo de golpe, muitos cientistas acreditam que Mew seja o ancestral dos Pokémon.
 }
+
+Lucario: {
+	DisplayName: Lucario
+	Species: Pokémon Aura
+	DexEntry: Consegue sentir a aura de todas as coisas. Entende a fala humana.
+}

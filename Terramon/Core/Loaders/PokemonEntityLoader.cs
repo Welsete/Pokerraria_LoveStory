@@ -34,7 +34,7 @@ public class PokemonEntityLoader : ModSystem
     public override void Load()
     {
         // The initialization of these arrays is done here rather than in Load to avoid a null ref exception reading HighestPokemonID
-        var highestPokemonID = Terramon.HighestPokemonID;
+        var highestPokemonID = Math.Max(Terramon.HighestPokemonID, Terramon.ExtraPokemonToLoad.Max());
         HasGenderDifference = new BitArray(highestPokemonID);
         HasPetExclusiveTexture = new BitArray(highestPokemonID);
 
@@ -47,7 +47,7 @@ public class PokemonEntityLoader : ModSystem
 
         foreach (var (id, pokemon) in Terramon.DatabaseV2.Pokemon)
         {
-            if (id > Terramon.MaxPokemonIDToLoad) continue;
+            if (id > Terramon.MaxPokemonIDToLoad && !Terramon.ExtraPokemonToLoad.Contains(id)) continue;
             if (!HjsonSchemaExists(pokemon.Identifier)) continue;
             LoadEntities(id, pokemon);
         }

@@ -413,6 +413,10 @@ GUI: {
 		SingleplayerOnly: This only works in singleplayer.
 		BrockGymBuilt: Brock's Gym was built around you.
 		SpawnOnix: Spawn wild Onix
+		SpawnLucario: Spawn wild Lucario
+		GiveLucario: Get Lucario (Lv. 30)
+		LucarioGiven: A Lucario joined your party.
+		PartyFull: Your party is full.
 		TabPokemon: Pokémon
 		TabLeague: League
 		TabTerraria: Terraria

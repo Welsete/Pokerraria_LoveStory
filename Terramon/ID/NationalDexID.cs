@@ -169,6 +169,7 @@ public class NationalDexID
     public const ushort Turtwig = 387;
     public const ushort Chimchar = 390;
     public const ushort Piplup = 393;
+    public const ushort Lucario = 448;
     public const ushort Snivy = 495;
     public const ushort Tepig = 498;
     public const ushort Oshawott = 501;

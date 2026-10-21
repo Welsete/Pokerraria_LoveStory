@@ -89,6 +89,8 @@ public sealed class AdminPanelUI : SmartUIState
             ("GiveStones", GiveEvolutionStones),
             ("SpawnWild", SpawnWild),
             ("SpawnOnix", SpawnOnix),
+            ("SpawnLucario", SpawnLucario),
+            ("GiveLucario", GiveLucario),
             ("ClearWild", ClearWild),
             ("ClearBattles", ClearBattles)
         ]),
@@ -630,6 +632,21 @@ public sealed class AdminPanelUI : SmartUIState
             return;
         var pos = InFrontOfPlayer();
         NPC.NewNPC(Main.LocalPlayer.GetSource_FromThis(), (int)pos.X, (int)pos.Y, type);
+    }
+
+    private static void SpawnLucario()
+    {
+        if (!PokemonEntityLoader.IDToNPCType.TryGetValue(NationalDexID.Lucario, out var type))
+            return;
+        var pos = InFrontOfPlayer();
+        NPC.NewNPC(Main.LocalPlayer.GetSource_FromThis(), (int)pos.X, (int)pos.Y, type);
+    }
+
+    private static void GiveLucario()
+    {
+        var player = TerramonPlayer.LocalPlayer;
+        var data = PokemonData.Create(NationalDexID.Lucario, 30).CaughtBy(player.Player).Build();
+        Say(player.AddPartyPokemon(data, out _) ? "LucarioGiven" : "PartyFull");
     }
 
     private static void ClearWild()

@@ -40,6 +40,8 @@ public sealed class MoveVisuals : ModSystem
         if (move == null)
             return;
 
+        PokemonAnimations.Play(userSide.Provider, move.Category);
+
         var effect = new Effect
         {
             User = userSide.Provider,
