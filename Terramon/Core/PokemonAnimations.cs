@@ -313,11 +313,21 @@ public sealed class PokemonAnimations : ModSystem
             IdleSince[owner] = now;
         else if (now - IdleSince[owner] >= SitAfter)
         {
-            // Plays through once and stays on the last frame
+            // Plays through once and stays on the last frame. Pokémon without a sitting pose (the Mystery Dungeon
+            // one is seen from behind, so most sets leave it out) keep idling until they lie down.
             var lying = now - IdleSince[owner] >= LayAfter;
-            state = lying ? PokemonAnimState.Laying : PokemonAnimState.Sit;
-            elapsed = now - IdleSince[owner] - (lying ? LayAfter : SitAfter);
-            once = true;
+            if (lying && (set.Anims.ContainsKey(PokemonAnimState.Laying) || set.Anims.ContainsKey(PokemonAnimState.Sit)))
+            {
+                state = PokemonAnimState.Laying;
+                elapsed = now - IdleSince[owner] - LayAfter;
+                once = true;
+            }
+            else if (!lying && set.Anims.ContainsKey(PokemonAnimState.Sit))
+            {
+                state = PokemonAnimState.Sit;
+                elapsed = now - IdleSince[owner] - SitAfter;
+                once = true;
+            }
         }
 
         OneShots.TryGetValue(owner, out var shot);

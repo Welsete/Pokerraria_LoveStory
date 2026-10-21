@@ -18,6 +18,12 @@ sprite/0001/0000/0001/... for shiny, portrait/0001/Normal.png, tracker.json, cre
 What it does:
 - Takes the left-facing row (row 6 of 8-row sheets) of every animation the mod uses, following CopyOf (a few
   Pokémon that are just a line from the side use the down-left row, see ROW_OVERRIDE).
+- Facing fixes (everything has to face left like Walk):
+  - Single-direction Sit sheets are always drawn from behind (the Pokémon sitting with its back to the camera), so
+    they are left out; the game then stays on Idle and lies down later (see BACK_VIEW).
+  - Some Laying sheets are one drawing copied to 7 rows, with only the left row (6) drawn the other way round: lying
+    with its head to the right. When the copied drawing looks more like the Pokémon lying on its left side (its last
+    Faint/Trip frames and Sleep), that one is used instead (see lying_row).
 - Ground comes from the shadow PMD draws under the Pokémon (Idle-Shadow.png). Floating Pokémon (Zubat, Gastly,
   Horsea...) only reach down to their shadow with a wing tip or a trail, so they stand on the shadow and their body
   floats above the ground; "Float" is how far their lowest pixel stays above it. Standing Pokémon stand on their feet.
@@ -61,6 +67,12 @@ LEFT_ROW = 6
 DOWN_LEFT_ROW = 7
 # Seen exactly from the side, these are a thin unreadable line: they use the down-left row instead
 ROW_OVERRIDE = {'Magnemite': DOWN_LEFT_ROW, 'Staryu': DOWN_LEFT_ROW, 'Starmie': DOWN_LEFT_ROW}
+# Single-direction (1-row) sheets of these states show the Pokémon from behind: they are left out
+BACK_VIEW = {'Sit'}
+# States whose left row can be the odd one out of a copied drawing (see lying_row)
+LYING = {'Laying'}
+# How much better the copied drawing has to match the lying references before it replaces row 6
+LYING_MARGIN = 0.025
 
 
 class PmdFolder:
@@ -85,6 +97,11 @@ class PmdFolder:
         a = self.anims[name]
         return (int(a.find('FrameWidth').text), int(a.find('FrameHeight').text),
                 [int(d.text) for d in a.iter('Duration')])
+
+    def rows(self, name):
+        """How many directions a sheet has (8, or 1 for single-direction animations)."""
+        fh = self.info(name)[1]
+        return Image.open(os.path.join(self.path, name + '-Anim.png')).height // fh
 
     def strip(self, name, row=LEFT_ROW, kind='Anim'):
         """The frames of one direction, side by side."""
@@ -114,6 +131,43 @@ def shadow_y(folder, name, row=LEFT_ROW):
     a = np.array(s.crop((0, 0, fw, fh)))[:, :, 3]
     ys = np.nonzero(a)[0]
     return None if len(ys) == 0 else float(ys.min() + ys.max()) / 2
+
+
+def _shape(im, size=24):
+    """A small color+alpha thumbnail of a frame's visible part, for comparing poses."""
+    a = np.asarray(im.crop(im.getbbox()).resize((size, size), Image.BILINEAR)).astype(float) / 255
+    m = a[:, :, 3:4]
+    return np.concatenate([a[:, :, :3] * m, m], axis=2)
+
+
+def lying_row(folder, name, row=LEFT_ROW):
+    """
+    The row to take for a lying animation. Some sheets are one drawing copied to every row except the left one, which
+    is the same drawing the other way round. If the copied drawing is clearly more like the Pokémon's own lying frames
+    facing left (last frames of Faint and Trip, Sleep), it is used instead of the left row.
+    """
+    fw, fh, d = folder.info(name)
+    im = np.asarray(Image.open(os.path.join(folder.path, name + '-Anim.png')).convert('RGBA'))
+    if im.shape[0] // fh != 8:
+        return row
+    rows = [im[r * fh:(r + 1) * fh, :len(d) * fw] for r in range(8)]
+    others = [r for r in range(8) if r != row]
+    if not all(np.array_equal(rows[others[0]], rows[r]) for r in others) or np.array_equal(rows[row], rows[others[0]]):
+        return row
+    refs = []
+    for ref in ('Faint', 'Trip', 'Sleep'):
+        if ref not in folder.anims:
+            continue
+        ref = folder.resolve(ref)
+        strip, rfw, _, rd = folder.strip(ref, row)
+        for fr in frames(strip, rfw)[-2:] if ref != 'Sleep' else frames(strip, rfw):
+            if fr.getbbox():
+                refs.append(_shape(fr))
+    first = lambda r: Image.fromarray(rows[r][:, :fw])
+    if not refs or not first(row).getbbox():
+        return row
+    score = lambda r: max(-np.abs(_shape(first(r)) - x).mean() for x in refs)
+    return others[0] if score(others[0]) > score(row) + LYING_MARGIN else row
 
 
 # ---------------------------------------------------------------------------------------------------------------- color
@@ -246,11 +300,12 @@ def convert(src, out, shiny_src=None, old=None, states=None, row=LEFT_ROW):
         if states and st not in states:
             continue
         name = f.pick(cands)
-        if name is None:
+        if name is None or (st in BACK_VIEW and f.rows(name) == 1):
             missing.append(st)
             continue
-        strip, fw, fh, d = f.strip(name, row)
-        raw[st] = (name, strip)
+        st_row = lying_row(f, name, row) if st in LYING else row
+        strip, fw, fh, d = f.strip(name, st_row)
+        raw[st] = (name, strip, st_row)
         if st in FEET_ALIGNED:
             strip = feet_align(strip, fw, fh)
         if st == 'Idle':
@@ -263,10 +318,10 @@ def convert(src, out, shiny_src=None, old=None, states=None, row=LEFT_ROW):
     cmap, shiny_from, consistency, shiny_strips = {}, None, None, {}
     if shiny_src and os.path.exists(os.path.join(shiny_src, 'AnimData.xml')):
         sf = PmdFolder(shiny_src)
-        for st, (name, strip) in raw.items():
+        for st, (name, strip, st_row) in raw.items():
             if name not in sf.anims or not os.path.exists(os.path.join(sf.path, sf.resolve(name) + '-Anim.png')):
                 continue
-            sstrip = sf.strip(sf.resolve(name), row)[0]
+            sstrip = sf.strip(sf.resolve(name), st_row)[0]
             if sstrip.size != strip.size:
                 continue
             na, sa = np.array(strip)[:, :, 3] > 0, np.array(sstrip)[:, :, 3] > 0
