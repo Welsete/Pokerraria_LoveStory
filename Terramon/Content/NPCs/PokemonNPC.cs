@@ -260,13 +260,24 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         var shiny = Data?.IsShiny ?? false;
         var shownID = ID;
 
-        // Transformed in battle (Transform or Imposter): looks like the Pokémon it copied
-        if (BattleSide.TryGetTransformed(this, out var transformedInto, out var transformedShiny) &&
-            PokemonAnimations.Get(Terramon.DatabaseV2.GetPokemon(transformedInto)?.Identifier) is { } transformedSet)
+        // Transformed in battle (Transform or Imposter): looks like the Pokémon it copied, from its animation set or,
+        // for Pokémon without one, from the first frame of its sprite sheet
+        Texture2D transformedSheet = null;
+        var transformedFrame = Rectangle.Empty;
+        if (BattleSide.TryGetTransformed(this, out var transformedInto, out var transformedShiny))
         {
-            animSet = transformedSet;
-            shiny = transformedShiny;
-            shownID = transformedInto;
+            if (PokemonAnimations.Get(Terramon.DatabaseV2.GetPokemon(transformedInto)?.Identifier) is { } transformedSet)
+            {
+                animSet = transformedSet;
+                shiny = transformedShiny;
+                shownID = transformedInto;
+            }
+            else if (PokemonAnimations.TryGetSheetFrame(transformedInto, transformedShiny, out transformedSheet,
+                         out transformedFrame))
+            {
+                animSet = null;
+                shownID = transformedInto;
+            }
         }
 
         Texture2D animTexture = null;
@@ -280,6 +291,15 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 Data is { HP: 0 }, out animTexture, out animSource, out animOrigin, NPC.noGravity);
             drawPos = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY + 1f);
         }
+        else if (transformedSheet != null)
+        {
+            animTexture = transformedSheet;
+            animSource = transformedFrame;
+            animOrigin = new Vector2(transformedFrame.Width / 2f, transformedFrame.Height);
+            drawPos = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY + 1f);
+        }
+
+        var animScale = animSet?.Scale ?? 1f;
 
         if (Data is { HP: 0 } && !PlasmaState)
         {
@@ -329,7 +349,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
             if (animTexture != null)
                 spriteBatch.Draw(animTexture, drawPos, animSource, adjustedColor, rotation, animOrigin,
-                    NPC.scale * animSet.Scale, effects, 0f);
+                    NPC.scale * animScale, effects, 0f);
             else
                 spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, adjustedColor, rotation,
                     frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
@@ -345,7 +365,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 ? PokemonEntityLoader.ShinyGlowTextureCache
                 : PokemonEntityLoader.GlowTextureCache;
             // Glowmasks are drawn over the old sprite sheet's frames, so not over animation sets
-            if (animSet == null && glowCache.TryGetValue(ID, out var glowTexture) && !PlasmaState)
+            if (animSet == null && transformedSheet == null && glowCache.TryGetValue(ID, out var glowTexture) &&
+                !PlasmaState)
             {
                 drawColor = Color.White;
                 if (ID == NationalDexID.Gastly) drawColor.A = 128;
@@ -369,7 +390,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         if (animTexture != null)
             spriteBatch.Draw(animTexture, drawPos, animSource, drawColor, NPC.rotation, animOrigin,
-                NPC.scale * animSet.Scale, effects, 0f);
+                NPC.scale * animScale, effects, 0f);
         else
             spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, drawColor, NPC.rotation,
                 frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);

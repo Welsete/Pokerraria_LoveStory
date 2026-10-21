@@ -244,15 +244,31 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         var shiny = Data?.IsShiny ?? false;
         var shownID = ID;
 
-        // Transformed in battle (Transform or Imposter): looks like the Pokémon it copied
+        // Transformed in battle (Transform or Imposter): looks like the Pokémon it copied, from its animation set or,
+        // for Pokémon without one, from the first frame of its sprite sheet
+        var transformedSheet = false;
         if (!Projectile.isAPreviewDummy && Projectile.owner is >= 0 and < Main.maxPlayers &&
             BattleSide.TryGetTransformed(Main.player[Projectile.owner].Terramon(), out var transformedInto,
-                out var transformedShiny) &&
-            PokemonAnimations.Get(Terramon.DatabaseV2.GetPokemon(transformedInto)?.Identifier) is { } transformedSet)
+                out var transformedShiny))
         {
-            animSet = transformedSet;
-            shiny = transformedShiny;
-            shownID = transformedInto;
+            if (PokemonAnimations.Get(Terramon.DatabaseV2.GetPokemon(transformedInto)?.Identifier) is
+                { } transformedSet)
+            {
+                animSet = transformedSet;
+                shiny = transformedShiny;
+                shownID = transformedInto;
+            }
+            else if (PokemonAnimations.TryGetSheetFrame(transformedInto, transformedShiny, out var sheet,
+                         out var sheetFrame))
+            {
+                animSet = null;
+                shownID = transformedInto;
+                transformedSheet = true;
+                texture = sheet;
+                sourceRect = sheetFrame;
+                frameSize = sheetFrame.Size();
+                origin = frameSize / new Vector2(2, 1);
+            }
         }
 
         if (animSet != null)
@@ -303,7 +319,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         var glowCache = Data?.IsShiny ?? false
             ? PokemonEntityLoader.ShinyGlowTextureCache
             : PokemonEntityLoader.GlowTextureCache;
-        if (animSet != null || !glowCache.TryGetValue(ID, out var glowTexture)) return false;
+        if (animSet != null || transformedSheet || !glowCache.TryGetValue(ID, out var glowTexture)) return false;
 
         // Draw the glowmask texture for the pet
         lightColor = Color.White;
