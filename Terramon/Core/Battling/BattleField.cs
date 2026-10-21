@@ -40,7 +40,8 @@ public sealed class BattleField
                 GetMon(r).HPData = r.ReadPokemonHP();
                 break;
             case BattleActionID.MoveAnimation:
-                GetMon(r).PlayMoveAnimation(r.ReadUInt16());
+                ref var user = ref GetMon(r);
+                MoveVisuals.Play(user.Side, r.ReadUInt16(), a.Flags[0], a.Flags[1]);
                 break;
             case BattleActionID.SwitchPokemon:
                 ref var switchedIn = ref GetMon(r);

@@ -17,6 +17,15 @@ Battle: {
 	Fainted: "{0} desmaiou!"
 	FledAfterCatch: "{0} acordou e fugiu!"
 	StillKnockedOut: "{0} continua desmaiado. Tente de novo antes que ele acorde!"
+	MoveInfo: {
+		Physical: Físico
+		Special: Especial
+		Status: Status
+		Dynamic: Variável
+		Stats: "Poder {0}  ·  Prec. {1}  ·  PP {2}/{3}"
+	}
+
+	MissPopup: Errou!
 	KnockedOutHint: "{0} está desmaiado! Jogue uma Poké Bola rápido para tentar capturar."
 	CantBattleFainted: "{0} está desmaiado e não pode batalhar!"
 	GainedExp: "{0} ganhou {1} pontos de Exp.!"

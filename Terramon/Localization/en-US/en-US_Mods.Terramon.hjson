@@ -17,6 +17,15 @@ Battle: {
 	Fainted: "{0} fainted!"
 	FledAfterCatch: "{0} came to and fled!"
 	StillKnockedOut: "{0} is still knocked out. Try again before it wakes up!"
+	MoveInfo: {
+		Physical: Physical
+		Special: Special
+		Status: Status
+		Dynamic: Dynamic
+		Stats: "Power {0}  ·  Acc. {1}  ·  PP {2}/{3}"
+	}
+
+	MissPopup: Miss!
 	KnockedOutHint: "{0} is knocked out! Throw a Poké Ball quickly to try to catch it."
 	CantBattleFainted: "{0} has fainted and can't battle!"
 	GainedExp: "{0} gained {1} Exp. Points!"

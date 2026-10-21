@@ -103,8 +103,14 @@ public sealed class TestBattleUI : SmartUIState
             button.Top.Percent = yFactor;
             button.Width.Percent = button.Height.Percent = 0.5f;
             UIText label = new(string.Empty, 0.75f, true);
-            label.HAlign = label.VAlign = 0.5f;
+            label.HAlign = 0.5f;
+            label.VAlign = 0.3f;
             button.Append(label);
+            // Always-visible details under the name, like the move info screen in the games
+            MoveInfoText typeLine = new(string.Empty, 0.38f, true) { HAlign = 0.5f, VAlign = 0.68f };
+            MoveInfoText statsLine = new(string.Empty, 0.38f, true) { HAlign = 0.5f, VAlign = 0.88f, Stats = true };
+            button.Append(typeLine);
+            button.Append(statsLine);
             button.Append(new MoveReference());
             button.OnLeftClick += ClickMoveButton;
             _movesPanel.Append(button);
@@ -335,7 +341,9 @@ public sealed class TestBattleUI : SmartUIState
         foreach (var moveButton in _movesPanel.Children)
         {
             var actual = (DynamicPixelRatioElement)moveButton;
-            var label = (UIText)actual.Children.First(e => e is UIText);
+            var label = (UIText)actual.Children.First(e => e is UIText and not MoveInfoText);
+            var typeLine = actual.Children.OfType<MoveInfoText>().First(e => !e.Stats);
+            var statsLine = actual.Children.OfType<MoveInfoText>().First(e => e.Stats);
             var moveRef = (MoveReference)actual.Children.First(e => e is MoveReference);
 
             var move = data.Moves[cur];
@@ -343,6 +351,8 @@ public sealed class TestBattleUI : SmartUIState
             {
                 actual.UpdateTextures(null);
                 label.SetText(string.Empty);
+                typeLine.SetText(string.Empty);
+                statsLine.SetText(string.Empty);
                 actual.BlockInteractions = true;
                 cur++;
                 continue;
@@ -352,6 +362,14 @@ public sealed class TestBattleUI : SmartUIState
             actual.Color = move.Schema.Type.GetColor();
             actual.UpdateTextures("Terramon/Assets/GUI/TurnBased/MoveButton_Normal");
             label.SetText(Language.GetText($"Mods.Terramon.Moves.{move.ID}.DisplayName"));
+            var schema = move.Schema;
+            typeLine.SetText(Language.GetTextValue($"Mods.Terramon.Types.{schema.Type}") + "  ·  " +
+                             Language.GetTextValue($"Mods.Terramon.Battle.MoveInfo.{schema.Category}"));
+            var maxPP = schema.PP + schema.PP * move.PPUp / 5;
+            statsLine.SetText(Language.GetTextValue("Mods.Terramon.Battle.MoveInfo.Stats",
+                schema.Power is > 1 ? schema.Power.ToString() : "—",
+                schema.Accuracy is { } acc and <= 100 ? acc.ToString() : "—",
+                move.PP, maxPP));
             moveRef.DataRef = data;
             moveRef.Move = cur;
 
@@ -687,6 +705,11 @@ public sealed class TestBattleUI : SmartUIState
         Recalculate();
         */
     }
+}
+
+public sealed class MoveInfoText(string text, float scale, bool large) : UIText(text, scale, large)
+{
+    public bool Stats;
 }
 
 public sealed class MoveReference : UIElement
