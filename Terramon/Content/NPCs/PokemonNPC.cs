@@ -257,13 +257,25 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         // Pokémon with a full animation set pick their frame from what they're doing instead
         var animSet = PokemonAnimations.Get(Schema.Identifier, Data);
+        var shiny = Data?.IsShiny ?? false;
+        var shownID = ID;
+
+        // Transformed in battle (Transform or Imposter): looks like the Pokémon it copied
+        if (BattleSide.TryGetTransformed(this, out var transformedInto, out var transformedShiny) &&
+            PokemonAnimations.Get(Terramon.DatabaseV2.GetPokemon(transformedInto)?.Identifier) is { } transformedSet)
+        {
+            animSet = transformedSet;
+            shiny = transformedShiny;
+            shownID = transformedInto;
+        }
+
         Texture2D animTexture = null;
         var animSource = Rectangle.Empty;
         var animOrigin = Vector2.Zero;
         if (animSet != null)
         {
             var battling = BattleClient?.Foe != null;
-            PokemonAnimations.GetFrame(animSet, this, Data?.IsShiny ?? false, Math.Abs(NPC.velocity.X) > 0.2f,
+            PokemonAnimations.GetFrame(animSet, this, shiny, Math.Abs(NPC.velocity.X) > 0.2f,
                 !battling && Math.Abs(NPC.velocity.Y) > 1f, battling, Data is { Status: NonVolatileStatus.Slp },
                 Data is { HP: 0 }, out animTexture, out animSource, out animOrigin, NPC.noGravity);
             drawPos = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY + 1f);
@@ -311,7 +323,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         if (_plasmaStateTime <= 20)
         {
             // Desaturate the lightColor for Gastly
-            var adjustedColor = ID == NationalDexID.Gastly
+            var adjustedColor = shownID == NationalDexID.Gastly
                 ? PokemonPet.GrayscaleColor(drawColor)
                 : drawColor;
 

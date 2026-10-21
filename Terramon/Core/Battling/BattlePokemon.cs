@@ -45,6 +45,17 @@ public struct BattlePokemon()
         };
 
     public HashSet<VolatileEffect> Volatiles = [];
+
+    /// <summary>
+    ///     The species this Pokémon looks like after Transform or Imposter, or 0 if it isn't transformed.
+    ///     Only changes how it's drawn; its <see cref="Data" /> stays the same.
+    /// </summary>
+    public ushort TransformedInto;
+
+    /// <summary>
+    ///     Whether the Pokémon it transformed into is shiny, so the copy has the same colors.
+    /// </summary>
+    public bool TransformedShiny;
     private ushort _hp;
     private ushort _species;
     private Gender _gender;
@@ -210,6 +221,7 @@ public struct BattlePokemon()
     }
     public void Faint()
     {
+        TransformedInto = 0;
         var justFainted = Data?.Faint() ?? false;
         _status = NonVolatileStatus.Fnt;
 

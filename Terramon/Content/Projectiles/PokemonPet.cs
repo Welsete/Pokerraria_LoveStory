@@ -241,10 +241,24 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 
         // Pokémon with a full animation set pick their frame from what they're doing instead
         var animSet = PokemonAnimations.Get(Schema.Identifier, Data);
+        var shiny = Data?.IsShiny ?? false;
+        var shownID = ID;
+
+        // Transformed in battle (Transform or Imposter): looks like the Pokémon it copied
+        if (!Projectile.isAPreviewDummy && Projectile.owner is >= 0 and < Main.maxPlayers &&
+            BattleSide.TryGetTransformed(Main.player[Projectile.owner].Terramon(), out var transformedInto,
+                out var transformedShiny) &&
+            PokemonAnimations.Get(Terramon.DatabaseV2.GetPokemon(transformedInto)?.Identifier) is { } transformedSet)
+        {
+            animSet = transformedSet;
+            shiny = transformedShiny;
+            shownID = transformedInto;
+        }
+
         if (animSet != null)
         {
             var battling = AnimOwner is TerramonPlayer { BattleClient.Foe: not null };
-            PokemonAnimations.GetFrame(animSet, AnimOwner, Data?.IsShiny ?? false,
+            PokemonAnimations.GetFrame(animSet, AnimOwner, shiny,
                 Math.Abs(Projectile.velocity.X) > 0.2f, !battling && Math.Abs(Projectile.velocity.Y) > 1f, battling,
                 Data is { Status: NonVolatileStatus.Slp }, Data is { HP: 0 }, out texture, out sourceRect,
                 out origin, Flying);
@@ -276,7 +290,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         }
 
         // Desaturate the lightColor for Gastly
-        var adjustedColor = ID == NationalDexID.Gastly
+        var adjustedColor = shownID == NationalDexID.Gastly
             ? GrayscaleColor(lightColor)
             : lightColor;
 

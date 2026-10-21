@@ -49,6 +49,7 @@ Battle: {
 		StatFell: "{0}'s {1} fell!"
 		StatFellHarshly: "{0}'s {1} harshly fell!"
 		Cured: "{0} was cured of its status condition!"
+		Transformed: "{0} transformed into {1}!"
 		Stats: {
 			Atk: Attack
 			Def: Defense

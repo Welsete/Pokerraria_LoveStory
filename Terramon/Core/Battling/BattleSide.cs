@@ -16,6 +16,37 @@ public sealed class BattleSide : IEnumerable<PokemonData>
         _activeSlot = slot;
         Provider.SetActiveSlot(slot);
     }
+    /// <summary>
+    ///     Gives every Pokémon of this side back its own looks (e.g. a transformed Ditto that switches out).
+    /// </summary>
+    public void ClearTransforms()
+    {
+        for (var i = 0; i < Team.Length; i++)
+            Team[i].TransformedInto = 0;
+    }
+
+    /// <summary>
+    ///     The species (and shininess) the active battle Pokémon of <paramref name="provider" /> currently looks like
+    ///     because of Transform or Imposter. False when it isn't battling or isn't transformed.
+    /// </summary>
+    public static bool TryGetTransformed(IBattleProvider provider, out ushort species, out bool shiny)
+    {
+        species = 0;
+        shiny = false;
+        var client = provider?.BattleClient;
+        if (client?.Battle?.A == null || client.Battle.B == null)
+            return false;
+        var side = client.Side;
+        if (side == null)
+            return false;
+        ref var active = ref side.ActivePokemon;
+        if (active.TransformedInto == 0 || active.HP == 0)
+            return false;
+        species = active.TransformedInto;
+        shiny = active.TransformedShiny;
+        return true;
+    }
+
     public void AdvanceTurn()
     {
         if (Trapped != 0)

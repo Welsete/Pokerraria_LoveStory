@@ -49,6 +49,7 @@ Battle: {
 		StatFell: "{1} de {0} diminuiu!"
 		StatFellHarshly: "{1} de {0} diminuiu muito!"
 		Cured: "{0} se curou do seu problema de status!"
+		Transformed: "{0} se transformou em {1}!"
 		Stats: {
 			Atk: O Ataque
 			Def: A Defesa
