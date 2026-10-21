@@ -212,6 +212,12 @@ public sealed class EvolutionScene : ModSystem
         return MathF.Cos(cycles * MathHelper.TwoPi) < 0f;
     }
 
+    /// <summary>
+    ///     Scales the scene by the UI scale. Built here instead of using Main.UIScaleMatrix, which is not always
+    ///     scaled while this layer draws, so the dimmed screen covered only part of the window.
+    /// </summary>
+    private static Matrix SceneMatrix => Matrix.CreateScale(Main.UIScale, Main.UIScale, 1f);
+
     private static Vector2 ScreenSize => new(Main.screenWidth / Main.UIScale, Main.screenHeight / Main.UIScale);
 
     private static Vector2 PokemonCenter => new(ScreenSize.X / 2f, ScreenSize.Y * 0.45f);
@@ -269,6 +275,10 @@ public sealed class EvolutionScene : ModSystem
         var dim = Math.Clamp(_time / (float)WhitenStart, 0f, 1f) * fadeOut;
         var p = SwapProgress;
 
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp,
+            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, SceneMatrix);
+
         // Dim the screen
         spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, (int)size.X + 1, (int)size.Y + 1),
             Color.Black * (0.8f * dim));
@@ -305,7 +315,7 @@ public sealed class EvolutionScene : ModSystem
         // The Pokémon: in color, then fading to a white silhouette that switches forms, then the new form in color
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp,
-            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, SceneMatrix);
 
         var showsNew = ShowsNewForm();
         var id = showsNew ? _current.To : _current.From;
@@ -333,7 +343,7 @@ public sealed class EvolutionScene : ModSystem
 
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp,
-            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, SceneMatrix);
 
         // The flash
         var flash = _time switch
@@ -369,13 +379,18 @@ public sealed class EvolutionScene : ModSystem
         if (!string.IsNullOrEmpty(key) && _time < FadeOutStart)
             Utils.DrawBorderString(spriteBatch, Language.GetTextValue("Mods.Terramon.EvolutionScene.Skip", key),
                 new Vector2(size.X / 2f, size.Y - 60f), Color.LightGray * (0.8f * dim), 0.9f, 0.5f, 0.5f);
+
+        // Hand the batch back the way the interface layers expect it
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp,
+            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
     }
 
     private static void BeginAdditive(SpriteBatch spriteBatch)
     {
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.LinearClamp,
-            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, SceneMatrix);
     }
 
     private sealed record Evolution(ushort From, ushort To, bool Shiny, string OldName, string NewName);
