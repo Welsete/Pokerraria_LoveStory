@@ -131,7 +131,7 @@ public sealed class TestBattleUI : SmartUIState
             button.Width.Percent = 1f / 3f;
             button.Height.Percent = 0.5f;
             UIText label = new(string.Empty, 0.75f, true) { VAlign = 0.5f };
-            BesideIcon(label);
+            BesideIcon(label, 0.75f, true);
             UIImage image = new(TextureAssets.Npc[0])
             {
                 VAlign = 0.5f
@@ -176,8 +176,8 @@ public sealed class TestBattleUI : SmartUIState
         button.Height.Percent = 0.5f;
         UIText label = new(string.Empty, 0.6f, true) { VAlign = 0.35f };
         UIText subLabel = new(string.Empty, 0.85f) { VAlign = 0.75f };
-        BesideIcon(label);
-        BesideIcon(subLabel);
+        BesideIcon(label, 0.6f, true);
+        BesideIcon(subLabel, 0.85f, false);
         UIImage image = new(TextureAssets.Npc[0])
         {
             VAlign = 0.5f
@@ -190,15 +190,41 @@ public sealed class TestBattleUI : SmartUIState
         return button;
     }
 
+    private const float LabelLeft = 0.3f;
+    private const float LabelWidth = 0.68f;
+
+    // Labels next to an icon, with their normal size, shrunk every frame when their text doesn't fit
+    private static readonly List<(UIText Label, float Scale, bool Large)> FittedLabels = [];
+
     /// <summary>
-    ///     Centers a label in the part of a button to the right of its icon, shrinking long names to fit.
+    ///     Centers a label in the part of a button to the right of its icon; <see cref="FitLabels" /> shrinks long
+    ///     names so they stay inside the button.
     /// </summary>
-    private static void BesideIcon(UIText label)
+    private static void BesideIcon(UIText label, float scale, bool large)
     {
-        label.Left.Percent = 0.3f;
-        label.Width.Percent = 0.68f;
+        label.Left.Percent = LabelLeft;
+        label.Width.Percent = LabelWidth;
         label.TextOriginX = 0.5f;
-        label.DynamicallyScaleDownToWidth = true;
+        FittedLabels.Add((label, scale, large));
+    }
+
+    private static void FitLabels()
+    {
+        foreach (var (label, scale, large) in FittedLabels)
+        {
+            if (label.Parent?.Parent == null || string.IsNullOrEmpty(label.Text))
+                continue;
+            var room = label.Parent.GetInnerDimensions().Width * LabelWidth;
+            if (room <= 0f)
+                continue;
+            var font = large ? FontAssets.DeathText.Value : FontAssets.MouseText.Value;
+            var width = font.MeasureString(label.Text).X * scale;
+            var wanted = width > room ? scale * room / width : scale;
+            if (Math.Abs(label.TextScale - wanted) < 0.005f)
+                continue;
+            label.SetText(label.Text, wanted, large);
+            label.Recalculate();
+        }
     }
 
     public TestBattleUI()
@@ -772,6 +798,8 @@ public sealed class TestBattleUI : SmartUIState
 
     public override void SafeUpdate(GameTime gameTime)
     {
+        FitLabels();
+
         // When the active Pokémon faints, go straight to picking another one
         if (_opened && _pokemonPanel.Parent == null &&
             BattleClient.LocalClient.CurrentRequest == ShowdownRequest.ForcedSwitch)

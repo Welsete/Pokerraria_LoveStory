@@ -1,4 +1,4 @@
-global using NonVolatileStatus = Showdown.NET.Definitions.StatusID;
+﻿global using NonVolatileStatus = Showdown.NET.Definitions.StatusID;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using ReLogic.Content;
@@ -160,6 +160,29 @@ public class PokemonData
             //Main.NewText("Level up!");
             levelsGained++;
         }
+    }
+
+    /// <summary>
+    ///     Damage a move from this Pokémon does to Terraria's monsters outside battle. It's the main games' damage
+    ///     formula against a fixed defense, with STAB; Terraria then applies the monster's own defense.
+    /// </summary>
+    public int CompanionMoveDamage(DatabaseV2.MoveSchema move)
+    {
+        const float defense = 20f;
+        const float terrariaScale = 1.5f;
+
+        var special = move.Category == MoveCategory.Special;
+        var baseStat = special ? Schema.BaseStats.SpAtk : Schema.BaseStats.Attack;
+        var iv = special ? IVs.SpAtk : IVs.Attack;
+        var ev = special ? EVs.SpAttack : EVs.Attack;
+        var attack = (2f * baseStat + iv + ev / 4) * Level / 100f + 5f;
+        var power = move.Power is > 1 ? move.Power.Value : 40;
+
+        var damage = ((2f * Level / 5f + 2f) * power * attack / defense) / 50f + 2f;
+        if (Schema.Types.Contains(move.Type))
+            damage *= 1.5f;
+        damage *= terrariaScale * Main.rand.NextFloat(0.85f, 1f);
+        return Math.Max(1, (int)damage);
     }
 
     public int ExperienceFromDefeat(PokemonData defeated, float shareMultiplier, TerramonPlayer myOwner)

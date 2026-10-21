@@ -452,6 +452,8 @@ GUI: {
 		GearGiven: Você recebeu Concha-celular, Gancho Lunar, Botas Terrafaísca, Asas de Peixe-dragão, Broca Laser e tochas.
 		BossItemsGiven: Você recebeu o item de invocar de cada chefe.
 		MapRevealed: O mapa inteiro foi revelado.
+		TabItems: Itens
+		ItemsHint: Clique esquerdo: 1 · Clique direito: pilha cheia
 		Close: Fechar
 		ItemsGiven: Você recebeu Poké Bolas, Poções, Reviveres e Doces Raros
 		BossDowned: "{0}: agora conta como derrotado"
@@ -1689,6 +1691,7 @@ Items.LeagueInvitation: {
 MoveLearn: {
 	Wants: "{0} quer aprender {1}!"
 	Prompt: "{0} quer aprender {1}. Esquecer um golpe?"
+	ForgetWhich: Escolha um golpe para esquecer (passe o mouse para ler):
 	DontLearn: Não aprender
 	Learned: "{0} aprendeu {1}!"
 	Forgot: "1, 2 e... Puf! {0} esqueceu {1} e aprendeu {2}!"

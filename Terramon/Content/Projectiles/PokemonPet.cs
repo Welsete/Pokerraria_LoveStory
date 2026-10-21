@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.Buffs;
@@ -495,7 +495,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
                     var moveName = Language.GetTextValue($"Mods.Terramon.Moves.{selectedMove.ID}.DisplayName");
                     CombatText.NewText(Projectile.Hitbox, Color.White, moveName, dot: true);
 
-                    const int damage = 1;
+                    var damage = Data.CompanionMoveDamage(selectedMove.Schema);
                     var kb = CalculateKnockback();
 
                     switch (selectedMove.Schema.Category)

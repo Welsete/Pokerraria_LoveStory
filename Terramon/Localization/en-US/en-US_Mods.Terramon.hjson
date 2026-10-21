@@ -452,6 +452,8 @@ GUI: {
 		GearGiven: You got a Shellphone, Lunar Hook, Terraspark Boots, Fishron Wings, Laser Drill and torches.
 		BossItemsGiven: You got the summoning item of every boss.
 		MapRevealed: The whole map was revealed.
+		TabItems: Items
+		ItemsHint: Left click: 1 · Right click: full stack
 		Close: Close
 		ItemsGiven: Received Poké Balls, Potions, Revives and Rare Candies
 		BossDowned: "{0} now counts as defeated"
@@ -1689,6 +1691,7 @@ Items.LeagueInvitation: {
 MoveLearn: {
 	Wants: "{0} wants to learn {1}!"
 	Prompt: "{0} wants to learn {1}. Forget a move?"
+	ForgetWhich: Pick a move to forget (hover to read it):
 	DontLearn: Don't learn
 	Learned: "{0} learned {1}!"
 	Forgot: "1, 2 and... Poof! {0} forgot {1} and learned {2}!"

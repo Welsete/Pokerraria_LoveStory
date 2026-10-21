@@ -112,7 +112,8 @@ public sealed class AdminPanelUI : SmartUIState
             ("GiveGear", GiveGear),
             ("GiveBossItems", GiveBossItems),
             ("RevealMap", RevealMap)
-        ])
+        ]),
+        ("TabItems", []) // A grid of every item of the mod, see BuildItemGrid
     ];
 
     public override void OnInitialize()
@@ -130,13 +131,14 @@ public sealed class AdminPanelUI : SmartUIState
             IgnoresMouseInteraction = true // Dragging works from the title too
         });
 
+        var tabWidth = (Columns * (ButtonWidth + Gap) - Gap - (tabs.Length - 1) * Gap) / tabs.Length;
         for (var i = 0; i < tabs.Length; i++)
         {
             var tabIndex = i;
             var tab = new UITextPanel<LocalizedText>(Label(tabs[i].Tab), 0.85f);
-            tab.Width.Pixels = ButtonWidth;
+            tab.Width.Pixels = tabWidth;
             tab.Height.Pixels = ButtonHeight - 4f;
-            tab.Left.Pixels = Gap + i * (ButtonWidth + Gap);
+            tab.Left.Pixels = Gap + i * (tabWidth + Gap);
             tab.Top.Pixels = 30f;
             tab.OnLeftClick += (_, _) =>
             {
@@ -162,6 +164,13 @@ public sealed class AdminPanelUI : SmartUIState
         {
             _tabButtons[i].BackgroundColor = i == _tab ? new Color(90, 115, 200) : new Color(44, 57, 105) * 0.9f;
             _tabButtons[i].BorderColor = i == _tab ? Color.Gold : Color.Black;
+        }
+
+        if (Tabs[_tab].Tab == "TabItems")
+        {
+            BuildItemGrid();
+            _panel.Recalculate();
+            return;
         }
 
         (string Key, Action Action)[] actions = [..Tabs[_tab].Actions, ("Close", (Action)Toggle)];
@@ -198,6 +207,76 @@ public sealed class AdminPanelUI : SmartUIState
         }
 
         _panel.Recalculate();
+    }
+
+    /// <summary>
+    ///     Every item of the mod in a scrollable grid: left click gives one, right click a full stack.
+    /// </summary>
+    private void BuildItemGrid()
+    {
+        var hint = new UIText(Label("ItemsHint"), 0.75f) { HAlign = 0.5f };
+        hint.Top.Pixels = GridTop - 4f;
+        _buttons.Add(hint);
+        _panel.Append(hint);
+
+        var grid = new UIGrid { ListPadding = 4f };
+        grid.Left.Pixels = Gap;
+        grid.Top.Pixels = GridTop + 20f;
+        grid.Width.Pixels = Columns * (ButtonWidth + Gap) - Gap - 24f;
+        grid.Height.Set(-(GridTop + 20f), 1f);
+
+        var scrollbar = new UIScrollbar();
+        scrollbar.Left.Pixels = Gap + grid.Width.Pixels + 6f;
+        scrollbar.Top.Pixels = GridTop + 26f;
+        scrollbar.Height.Set(-(GridTop + 32f), 1f);
+        grid.SetScrollbar(scrollbar);
+
+        foreach (var item in ModContent.GetContent<ModItem>()
+                     .Where(i => i.Mod == Terramon.Instance)
+                     .OrderBy(i => i.Type))
+            grid.Add(new ItemCell(item.Type));
+
+        _buttons.Add(grid);
+        _buttons.Add(scrollbar);
+        _panel.Append(grid);
+        _panel.Append(scrollbar);
+    }
+
+    /// <summary>
+    ///     One item of the item grid, drawn like an inventory slot, with the item's tooltip on hover.
+    /// </summary>
+    private sealed class ItemCell : UIElement
+    {
+        private const float Scale = 0.8f;
+        private Item _item;
+
+        public ItemCell(int type)
+        {
+            _item = new Item(type);
+            Width.Pixels = Height.Pixels = 52f * Scale;
+            OnLeftClick += (_, _) => Give(1);
+            OnRightClick += (_, _) => Give(_item.maxStack);
+        }
+
+        private void Give(int amount)
+        {
+            SoundEngine.PlaySound(SoundID.Grab);
+            var player = Main.LocalPlayer;
+            player.QuickSpawnItem(player.GetSource_GiftOrReward(), _item.type, Math.Max(1, amount));
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            var oldScale = Main.inventoryScale;
+            Main.inventoryScale = Scale;
+            ItemSlot.Draw(spriteBatch, ref _item, ItemSlot.Context.ChestItem, GetDimensions().Position());
+            Main.inventoryScale = oldScale;
+
+            if (!IsMouseHovering)
+                return;
+            Main.HoverItem = _item.Clone();
+            Main.hoverItemName = _item.Name;
+        }
     }
 
     public override void SafeUpdate(GameTime gameTime)
