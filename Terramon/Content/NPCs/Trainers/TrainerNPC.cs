@@ -73,9 +73,50 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
     protected virtual int LeaveDelayAfterBattle => 30 * 60;
 
     /// <summary>
-    ///     A texture of this trainer's own (a single standing frame), used instead of <see cref="LookAlike" />.
+    ///     A texture of this trainer's own, used instead of <see cref="LookAlike" />. Either a single standing frame
+    ///     or a vertical sheet of <see cref="CustomFrameCount" /> frames (see <see cref="CustomFrameCount" />).
     /// </summary>
     protected virtual string CustomTexture => null;
+
+    /// <summary>
+    ///     How many frames <see cref="CustomTexture" /> has, stacked vertically. Frame 0 is the standing (idle)
+    ///     frame; when there is more than one, all of them together are the walk cycle.
+    /// </summary>
+    protected virtual int CustomFrameCount => 1;
+
+    /// <summary>
+    ///     Whether <see cref="CustomTexture" /> is drawn facing right (vanilla sprites face left).
+    /// </summary>
+    protected virtual bool CustomTextureFacesRight => false;
+
+    /// <summary>
+    ///     The whole-number scale <see cref="CustomTexture" /> is drawn at, so pixel art stays crisp.
+    /// </summary>
+    protected virtual int CustomTextureScale => 1;
+
+    /// <summary>
+    ///     How far (in tiles) the trainer strolls left and right of where it appeared while nobody is talking to or
+    ///     battling it. 0 keeps it standing still.
+    /// </summary>
+    protected virtual int WanderRange => 0;
+
+    /// <summary>
+    ///     Walking speed (in pixels per tick) while strolling around.
+    /// </summary>
+    protected virtual float WanderSpeed => 0.75f;
+
+    /// <summary>
+    ///     A player closer than this (in pixels) makes a strolling trainer stop and look at them, so it's easy to talk
+    ///     to. 6 tiles.
+    /// </summary>
+    private const float GreetDistance = 6 * 16f;
+
+    // Wandering state, kept in NPC.ai so it is synced to every client:
+    // ai[0] = ticks left standing before the next stroll (server only), ai[1] = X it is walking to (0 = standing),
+    // ai[2] = X of its home spot (where it appeared)
+    private ref float WanderWait => ref NPC.ai[0];
+    private ref float WanderTargetX => ref NPC.ai[1];
+    private ref float HomeX => ref NPC.ai[2];
 
     public override string Texture => CustomTexture ?? $"Terraria/Images/NPC_{LookAlike}";
 
@@ -93,7 +134,7 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
 
     public override void SetStaticDefaults()
     {
-        Main.npcFrameCount[Type] = CustomTexture == null ? Main.npcFrameCount[LookAlike] : 1;
+        Main.npcFrameCount[Type] = CustomTexture == null ? Main.npcFrameCount[LookAlike] : CustomFrameCount;
         NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers { Hide = true });
     }
 
@@ -117,23 +158,44 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
 
     public override void AI()
     {
-        NPC.velocity.X = 0f;
-
         var inBattle = BattleClient?.Foe != null;
+        var talkedTo = IsBeingTalkedTo();
+        var server = Main.netMode != NetmodeID.MultiplayerClient;
 
-        // Face the closest player while waiting for a challenger
-        if (!inBattle)
+        if (server && HomeX == 0f)
         {
-            var closest = Player.FindClosest(NPC.position, NPC.width, NPC.height);
-            if (Main.player[closest].active)
-                NPC.spriteDirection = NPC.direction = Main.player[closest].Center.X > NPC.Center.X ? 1 : -1;
+            HomeX = NPC.Center.X;
+            NPC.netUpdate = true;
         }
 
+        var closest = Player.FindClosest(NPC.position, NPC.width, NPC.height);
+        var closestPlayer = Main.player[closest];
+        var greeting = closestPlayer.active && !closestPlayer.dead &&
+                       closestPlayer.DistanceSQ(NPC.Center) < GreetDistance * GreetDistance;
+
+        // Stroll around only while nobody needs the trainer
+        if (WanderRange > 0 && !inBattle && !talkedTo && !greeting)
+            Wander(server);
+        else
+        {
+            NPC.velocity.X = 0f;
+            if (server && WanderTargetX != 0f)
+            {
+                WanderTargetX = 0f;
+                WanderWait = Main.rand.Next(60, 180);
+                NPC.netUpdate = true;
+            }
+        }
+
+        // Face the closest player while standing and waiting for a challenger
+        if (!inBattle && WanderTargetX == 0f && closestPlayer.active)
+            NPC.spriteDirection = NPC.direction = closestPlayer.Center.X > NPC.Center.X ? 1 : -1;
+
         // Only the server (or singleplayer) decides when the trainer leaves
-        if (Main.netMode == NetmodeID.MultiplayerClient)
+        if (!server)
             return;
 
-        if (inBattle || IsBeingTalkedTo())
+        if (inBattle || talkedTo)
         {
             _lonelyTimer = 0;
             _leaveTimer = -1;
@@ -149,6 +211,106 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
 
         if (_lonelyTimer >= LonelyTime || _leaveTimer == 0)
             Leave();
+    }
+
+    /// <summary>
+    ///     Walks towards <see cref="WanderTargetX" />, or stands for a while and then picks a new spot near home.
+    ///     Only the server (or singleplayer) picks spots; clients just follow the synced target.
+    /// </summary>
+    private void Wander(bool server)
+    {
+        if (WanderTargetX == 0f)
+        {
+            NPC.velocity.X = 0f;
+            if (!server || --WanderWait > 0)
+                return;
+
+            // Pick a spot at least 2 tiles away, inside the home range
+            var range = WanderRange * 16f;
+            var target = HomeX + Main.rand.NextFloat(-range, range);
+            if (Math.Abs(target - NPC.Center.X) < 32f)
+                target = HomeX + (NPC.Center.X > HomeX ? -1 : 1) * Main.rand.NextFloat(range * 0.5f, range);
+            WanderTargetX = target;
+            NPC.netUpdate = true;
+            return;
+        }
+
+        var dx = WanderTargetX - NPC.Center.X;
+        var dir = dx > 0 ? 1 : -1;
+        NPC.spriteDirection = NPC.direction = dir;
+
+        // Stop when there, when bumping into a wall, or right before a ledge
+        if (Math.Abs(dx) < 4f || NPC.collideX || (NPC.velocity.Y == 0f && !GroundAhead(dir)))
+        {
+            NPC.velocity.X = 0f;
+            if (server)
+            {
+                WanderTargetX = 0f;
+                WanderWait = Main.rand.Next(120, 360);
+                NPC.netUpdate = true;
+            }
+
+            return;
+        }
+
+        NPC.velocity.X = dir * WanderSpeed;
+        Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed,
+            ref NPC.gfxOffY);
+    }
+
+    /// <summary>
+    ///     Whether there is something to stand on just in front of the trainer's feet.
+    /// </summary>
+    private bool GroundAhead(int dir)
+    {
+        var x = (int)((NPC.Center.X + dir * (NPC.width / 2f + 6f)) / 16f);
+        var feetY = (int)((NPC.Bottom.Y + 2f) / 16f);
+        for (var y = feetY; y <= feetY + 1; y++)
+        {
+            if (!WorldGen.InWorld(x, y))
+                return false;
+            var tile = Main.tile[x, y];
+            if (tile.HasTile && !tile.IsActuated && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType]))
+                return true;
+        }
+
+        return false;
+    }
+
+    public override void FindFrame(int frameHeight)
+    {
+        if (CustomTexture == null || CustomFrameCount <= 1)
+            return;
+
+        // Frame 0 while standing, the whole sheet as a walk cycle while moving
+        if (NPC.velocity.X == 0f || NPC.velocity.Y != 0f)
+        {
+            NPC.frameCounter = 0;
+            NPC.frame.Y = 0;
+            return;
+        }
+
+        NPC.frameCounter += Math.Abs(NPC.velocity.X);
+        const double pixelsPerFrame = 5.0;
+        var frame = (int)(NPC.frameCounter / pixelsPerFrame) % CustomFrameCount;
+        NPC.frame.Y = frame * frameHeight;
+    }
+
+    public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+    {
+        if (CustomTexture == null || (!CustomTextureFacesRight && CustomTextureScale == 1))
+            return true;
+
+        // Drawn by hand to flip right-facing art and keep the feet on the ground at any scale
+        var texture = Terraria.GameContent.TextureAssets.Npc[Type].Value;
+        var frameHeight = texture.Height / Math.Max(1, Main.npcFrameCount[Type]);
+        var source = new Rectangle(0, NPC.frame.Y, texture.Width, frameHeight);
+        var facingRight = NPC.spriteDirection == 1;
+        var effects = facingRight == CustomTextureFacesRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+        var feet = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY);
+        spriteBatch.Draw(texture, feet.Floor(), source, NPC.GetAlpha(drawColor), 0f,
+            new Vector2(texture.Width / 2f, frameHeight), CustomTextureScale, effects, 0f);
+        return false;
     }
 
     private bool IsBeingTalkedTo()
