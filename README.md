@@ -34,6 +34,13 @@ Immerse yourself in the captivating crossover of Terraria and Pokémon with the 
 - **Forced switch:** when your active Pokémon faints, the party panel opens so you can choose the next one.
 - **Improved catching:** catch rate rises up to 3x at low HP and with status conditions (sleep, freeze, paralysis, poison, burn).
 - **Capture during battle:** throw a Poké Ball on your turn; a successful catch ends the battle, while a Pokémon that breaks free costs you your turn. Defeated wild Pokémon stay knocked out for a few seconds so you can still catch them.
+- **Mystery Dungeon style animations:** Pokémon sprites from the PMD SpriteCollab with idle, walk, attack, hurt, sleep, faint and more, chosen by what the Pokémon is doing in and out of battle. Portraits in the party sidebar, shiny included.
+- **Summary screen (middle click or I):** stats, IVs and EVs as radar charts, moves with descriptions, where it was met, friendship and field abilities.
+- **Richer Pokédex:** level-up moves, base stats, abilities, habitat, evolutions and an animated preview.
+- **Move descriptions on hover** in battle, with power, accuracy and PP.
+- **Evolution scene:** the classic white silhouette sequence with light, sound and a final reveal (B to skip).
+- **Pokémon passives:** your companion gives a small bonus by type, and Lucario's aura makes nearby ores glow underground. Can be turned off in the server config.
+- **Brock walks** around his gym and turns to face nearby players.
 - **Brazilian Portuguese translation** of the interface and Pokédex.
 - **Testing tools:** `/heal` and `/level` commands, plus an admin panel (F8) to heal, level up, spawn Pokémon and Brock, toggle bosses and reset badges. Requires cheat commands to be enabled.
 
@@ -50,6 +57,8 @@ Terramon is growing fast, and we have ambitious plans to bring even more of the 
 ## Credits
 
 Terramon is made by the [Terramon team](https://github.com/JamzOJamz/Terramon) and licensed under GPL-3.0. This fork keeps the same license.
+
+Pokémon sprites and portraits from the [PMD SpriteCollab](https://github.com/PMDCollab/SpriteCollab) project are licensed under CC BY-NC 4.0; see the CREDITS file for the artists.
 
 ## Contributing
 
