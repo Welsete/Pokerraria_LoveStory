@@ -29,7 +29,7 @@ public class PokemonPassiveBuff : ModBuff
             Language.GetTextValue("Mods.Terramon.Passives.From", passives.Source.DisplayName)
         };
         foreach (var passive in passives.Active)
-            lines.Add($"{PokemonPassivePlayer.Name(passive)}: {PokemonPassivePlayer.Description(passive)}");
+            lines.Add($"{PokemonPassivePlayer.PassiveName(passive)}: {PokemonPassivePlayer.PassiveDescription(passive)}");
 
         var field = FieldAbilities.Describe(passives.Source);
         if (!string.IsNullOrEmpty(field))

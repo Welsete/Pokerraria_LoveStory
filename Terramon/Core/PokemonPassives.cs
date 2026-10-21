@@ -113,13 +113,13 @@ public sealed class PokemonPassivePlayer : ModPlayer
     /// <summary>
     ///     The localized name of a passive.
     /// </summary>
-    public static string Name(PokemonPassive passive) =>
+    public static string PassiveName(PokemonPassive passive) =>
         Language.GetTextValue($"Mods.Terramon.Passives.{passive}.Name");
 
     /// <summary>
     ///     The localized description of what a passive does.
     /// </summary>
-    public static string Description(PokemonPassive passive) =>
+    public static string PassiveDescription(PokemonPassive passive) =>
         Language.GetTextValue($"Mods.Terramon.Passives.{passive}.Description");
 
     public override void ResetEffects()
@@ -294,7 +294,7 @@ public sealed class PokemonPassivePlayer : ModPlayer
     ///     Ores, gems and crystals: what Spelunker shows, minus chests and pots.
     /// </summary>
     private static bool Resonates(ushort type) =>
-        type == TileID.LifeCrystal ||
+        type == TileID.Heart ||
         (Main.tileSpelunker[type] && !TileID.Sets.BasicChest[type] && type != TileID.Pots);
 
     public override void OnEnterWorld()
