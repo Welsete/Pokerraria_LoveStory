@@ -42,10 +42,19 @@ public static class TerramonSoundID
         Terramon.DatabaseV2.GetPokemon(id).GetCry(volume);
 
     public static SoundStyle GetCry(this DatabaseV2.PokemonSchema schema, float volume = 0.15f) =>
-        new(CryPath + schema.Identifier) { Volume = volume };
+        Cry(schema.Identifier, volume);
 
     public static SoundStyle GetCry(this PokemonData data, float volume = 0.15f) =>
-        new(CryPath + data.InternalName) { Volume = volume };
+        Cry(data.InternalName, volume);
+
+    /// <summary>
+    ///     A Pokémon's cry. Pokémon that don't have one yet (like the ones past Gen 1 being tried out) borrow
+    ///     Machoke's, pitched up, instead of crashing the game.
+    /// </summary>
+    private static SoundStyle Cry(string name, float volume) =>
+        ModContent.HasAsset(CryPath + name)
+            ? new SoundStyle(CryPath + name) { Volume = volume }
+            : new SoundStyle(CryPath + "Machoke") { Volume = volume, Pitch = 0.35f };
 }
 
 public readonly record struct SnVariants(SoundStyle Child)

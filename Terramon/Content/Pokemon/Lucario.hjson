@@ -4,8 +4,8 @@
   {
     Transform:
     {
-      Width: 18
-      Height: 32
+      Width: 26
+      Height: 46
     }
   }
   NPC:

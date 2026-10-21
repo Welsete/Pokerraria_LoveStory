@@ -315,8 +315,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 : drawColor;
 
             if (animTexture != null)
-                spriteBatch.Draw(animTexture, drawPos, animSource, adjustedColor, rotation, animOrigin, NPC.scale,
-                    effects, 0f);
+                spriteBatch.Draw(animTexture, drawPos, animSource, adjustedColor, rotation, animOrigin,
+                    NPC.scale * animSet.Scale, effects, 0f);
             else
                 spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, adjustedColor, rotation,
                     frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
@@ -354,8 +354,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             .Apply();
 
         if (animTexture != null)
-            spriteBatch.Draw(animTexture, drawPos, animSource, drawColor, NPC.rotation, animOrigin, NPC.scale, effects,
-                0f);
+            spriteBatch.Draw(animTexture, drawPos, animSource, drawColor, NPC.rotation, animOrigin,
+                NPC.scale * animSet.Scale, effects, 0f);
         else
             spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, drawColor, NPC.rotation,
                 frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);

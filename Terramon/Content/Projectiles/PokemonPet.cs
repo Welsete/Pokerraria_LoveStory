@@ -243,7 +243,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             PokemonAnimations.GetFrame(animSet, AnimOwner, Data?.IsShiny ?? false,
                 Math.Abs(Projectile.velocity.X) > 0.2f, Data is { Status: NonVolatileStatus.Slp }, Data is { HP: 0 },
                 out texture, out sourceRect, out origin);
-            frameSize = sourceRect.Size();
+            frameSize = sourceRect.Size() * animSet.Scale;
             drawPos.Y -= 3f;
         }
         var effects = CustomSpriteDirection.HasValue
@@ -255,7 +255,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         // Draw name on mouse hover
         if (!Projectile.isAPreviewDummy && ClientConfig.Instance.ShowPetNameOnHover)
         {
-            var originOffsetDrawPos = drawPos - origin;
+            var originOffsetDrawPos = drawPos - origin * (animSet?.Scale ?? 1f);
             var drawRect = new Rectangle((int)originOffsetDrawPos.X, (int)originOffsetDrawPos.Y, (int)frameSize.X,
                 (int)frameSize.Y);
             if (drawRect.Contains(Main.mouseX, Main.mouseY))
@@ -279,7 +279,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             drawPos,
             sourceRect, adjustedColor,
             Projectile.rotation,
-            origin, Projectile.scale, effects);
+            origin, Projectile.scale * (animSet?.Scale ?? 1f), effects);
 
         var glowCache = Data?.IsShiny ?? false
             ? PokemonEntityLoader.ShinyGlowTextureCache

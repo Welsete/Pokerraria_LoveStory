@@ -45,6 +45,9 @@ public sealed class PokemonAnimations : ModSystem
 
         /// <summary>How far below the middle of a frame the feet are.</summary>
         public int Ground;
+
+        /// <summary>How much bigger to draw it (Mystery Dungeon sprites are small next to Terraria's).</summary>
+        public float Scale = 1f;
     }
 
     /// <summary>
@@ -67,6 +70,8 @@ public sealed class PokemonAnimations : ModSystem
                 var parts = line.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
                 if (parts.Length == 2 && parts[0] == "Ground")
                     set.Ground = int.Parse(parts[1]);
+                if (parts.Length == 2 && parts[0] == "Scale")
+                    set.Scale = float.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture);
                 if (parts.Length != 4 || !Enum.TryParse(parts[0], out PokemonAnimState state))
                     continue;
                 var durations = parts[3].Split(',').Select(int.Parse).ToArray();
