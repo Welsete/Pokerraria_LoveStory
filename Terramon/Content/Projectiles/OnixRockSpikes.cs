@@ -10,8 +10,8 @@ namespace Terramon.Content.Projectiles;
 /// </summary>
 public sealed class OnixRockSpikes : ModProjectile
 {
-    private const int FrameCount = 8;
-    private const int TicksPerFrame = 5;
+    private const int FrameCount = 10;
+    private const int TicksPerFrame = 4;
 
     public override string Texture => "Terramon/Assets/Projectiles/OnixRockSpikes";
 
@@ -47,7 +47,7 @@ public sealed class OnixRockSpikes : ModProjectile
                 // Warning: the ground cracks and glows first
                 SoundEngine.PlaySound(SoundID.Item69 with { Pitch = -0.3f }, ground);
                 break;
-            case 2 when Projectile.timeLeft % TicksPerFrame == 0:
+            case 3 when Projectile.timeLeft % TicksPerFrame == 0:
                 SoundEngine.PlaySound(SoundID.Item70, ground);
                 for (var i = 0; i < 20; i++)
                     Dust.NewDust(ground - new Vector2(80, 16), 160, 16, DustID.Stone,
@@ -55,12 +55,12 @@ public sealed class OnixRockSpikes : ModProjectile
                 break;
         }
 
-        if (Projectile.frame < 4)
+        if (Projectile.frame < 5)
             Lighting.AddLight(ground, 0.9f, 0.6f, 0.15f);
     }
 
     // Only the frames where the spikes are out hurt
-    public override bool? CanDamage() => Projectile.frame is >= 2 and <= 5;
+    public override bool? CanDamage() => Projectile.frame is >= 3 and <= 6;
 
     public override bool? CanHitNPC(NPC target) =>
         target.friendly || target.townNPC || target.ModNPC is PokemonNPC ? false : null;
