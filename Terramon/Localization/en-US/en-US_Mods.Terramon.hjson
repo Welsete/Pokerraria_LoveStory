@@ -1244,6 +1244,7 @@ Misc: {
 Projectiles: {
 	PokeBallBobber.DisplayName: Poké Ball Bobber
 	PokemonPetGenericAttackProjectile.DisplayName: Pokémon Companion Generic Attack Projectile
+	OnixRockSpikes.DisplayName: Onix Rock Spikes
 }
 
 // Pokémon League: Gym Leaders, Elite Four, Champion, badges and challenge items (league)

@@ -1244,6 +1244,7 @@ Misc: {
 Projectiles: {
 	PokeBallBobber.DisplayName: Boia de Poké Bola
 	PokemonPetGenericAttackProjectile.DisplayName: Projétil de Ataque Genérico do Pokémon Companheiro
+	OnixRockSpikes.DisplayName: Espinhos de Pedra do Onix
 }
 
 // Liga Pokémon: Líderes de Ginásio, Elite dos Quatro, Campeão, insígnias e itens de desafio (league)
