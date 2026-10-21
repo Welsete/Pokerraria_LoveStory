@@ -17,7 +17,18 @@ public class Brock : GymLeader
 
     protected override int LookAlike => NPCID.Guide;
 
+    // Isa's walk cycle: 8 frames of 20x32 pixel art facing right, frame 0 doubles as the standing pose.
+    // Drawn at 1x so he stays about as tall as his old sprite; set the scale to 2 for a much taller Brock.
     protected override string CustomTexture => "Terramon/Assets/NPCs/Trainers/Brock";
+
+    protected override int CustomFrameCount => 8;
+
+    protected override bool CustomTextureFacesRight => true;
+
+    protected override int CustomTextureScale => 1;
+
+    // Strolls along his stage in the Gym
+    protected override int WanderRange => 4;
 
     protected override bool GateBossDefeated => Terraria.NPC.downedBoss1;
 

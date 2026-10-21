@@ -1092,11 +1092,11 @@ internal sealed class SummaryWindow : UIElement
     ///     (the section then shows grey "coming soon" badges). Point this at <c>Terramon.Core.FieldAbilities</c> once
     ///     it exists.
     /// </summary>
-    private static bool[] GetFieldAbilities(PokemonData data)
-    {
-        _ = data;
-        return null;
-    }
+    private static bool[] GetFieldAbilities(PokemonData data) =>
+    [
+        FieldAbilities.CanRide(data), FieldAbilities.CanFly(data), FieldAbilities.CanSurf(data),
+        FieldAbilities.CanDig(data)
+    ];
 
     private static void LabelValue(SpriteBatch sb, string label, string value, float x, float y, float width)
     {

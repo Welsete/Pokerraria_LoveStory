@@ -10,6 +10,7 @@ public class KeybindSystem : ModSystem
     public static ModKeybind PrevPokemonKeybind { get; private set; }
     public static ModKeybind AdminPanelKeybind { get; private set; }
     public static ModKeybind BattleLogKeybind { get; private set; }
+    public static ModKeybind SkipEvolutionKeybind { get; private set; }
 
     /// <summary>
     ///     Opens the summary screen of the party or PC Pokémon under the mouse.
@@ -27,6 +28,7 @@ public class KeybindSystem : ModSystem
         AdminPanelKeybind = KeybindLoader.RegisterKeybind(Mod, "AdminPanel", "F8");
         BattleLogKeybind = KeybindLoader.RegisterKeybind(Mod, "BattleLog", "L");
         OpenSummaryKeybind = KeybindLoader.RegisterKeybind(Mod, "OpenSummary", "I");
+        SkipEvolutionKeybind = KeybindLoader.RegisterKeybind(Mod, "SkipEvolution", "B");
     }
 
     public override void Unload()
@@ -40,5 +42,6 @@ public class KeybindSystem : ModSystem
         AdminPanelKeybind = null;
         BattleLogKeybind = null;
         OpenSummaryKeybind = null;
+        SkipEvolutionKeybind = null;
     }
 }

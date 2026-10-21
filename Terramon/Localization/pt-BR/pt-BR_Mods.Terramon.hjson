@@ -86,6 +86,11 @@ Buffs: {
 		DisplayName: Estandarte Pokémon
 		Description: Bônus ativos para companheiros próximos:
 	}
+
+	PokemonPassiveBuff: {
+		DisplayName: Passiva do Pokémon
+		Description: Bônus do seu Pokémon ativo
+	}
 }
 
 Commands: {
@@ -326,6 +331,11 @@ Configs: {
 		ShinyLockedStarters: {
 			Label: Pokémon Iniciais Nunca Shiny
 			Tooltip: Impede que o primeiro parceiro (Pokémon inicial) seja shiny
+		}
+
+		PokemonPassives: {
+			Label: Passivas dos Pokémon
+			Tooltip: "Seu Pokémon ativo (que te segue) dá pequenos bônus conforme a espécie e os tipos, como luz dos tipos Fogo ou Lucario sentindo minérios"
 		}
 
 		DebugMode: {
@@ -1511,6 +1521,7 @@ Keybinds: {
 	NextPokemon.DisplayName: Chamar Próximo Pokémon
 	AdminPanel.DisplayName: Painel de Testes (depuração)
 	PrevPokemon.DisplayName: Chamar Pokémon Anterior
+	SkipEvolution.DisplayName: Pular Animação de Evolução
 }
 
 Tiles: {
@@ -1648,6 +1659,7 @@ Projectiles: {
 	PokeBallBobber.DisplayName: Boia de Poké Bola
 	PokemonPetGenericAttackProjectile.DisplayName: Projétil de Ataque Genérico do Pokémon Companheiro
 	OnixRockSpikes.DisplayName: Espinhos de Pedra do Onix
+	EvolutionGlow.DisplayName: Brilho da Evolução
 }
 
 // Liga Pokémon: Líderes de Ginásio, Elite dos Quatro, Campeão, insígnias e itens de desafio (league)
@@ -2057,4 +2069,118 @@ Natures: {
 	Sassy: Atrevida
 	Careful: Cuidadosa
 	Quirky: Excêntrica
+}
+
+EvolutionScene: {
+	Evolving: O quê? {0} está evoluindo!
+	Skip: Aperte {0} para pular
+}
+
+Passives: {
+	From: "{0} está te ajudando:"
+	FieldAbilities: "Habilidades de campo: {0}"
+
+	AuraResonance: {
+		Name: Ressonância de Aura
+		Description: "sua aura ressoa com minérios e cristais: minérios, gemas e Cristais de Vida próximos brilham em azul"
+	}
+
+	Pickup: {
+		Name: Coleta
+		Description: "pega coisas para você, aumentando o alcance para pegar itens"
+	}
+
+	FightingSpirit: {
+		Name: Espírito de Luta
+		Description: +5% de dano corpo a corpo
+	}
+
+	Featherfall: {
+		Name: Vento a Favor
+		Description: queda lenta (segure para baixo para cair mais rápido)
+	}
+
+	Antidote: {
+		Name: Antídoto
+		Description: imunidade a Envenenado
+	}
+
+	Burrower: {
+		Name: Escavador
+		Description: +10% de velocidade de mineração
+	}
+
+	Sturdy: {
+		Name: Robustez
+		Description: +3 de defesa
+	}
+
+	Swarm: {
+		Name: Enxame
+		Description: +5% de velocidade de movimento
+	}
+
+	SpiritSight: {
+		Name: Visão Espiritual
+		Description: mostra onde estão os inimigos
+	}
+
+	SteelSkin: {
+		Name: Pele de Aço
+		Description: "-3% de dano recebido"
+	}
+
+	Flame: {
+		Name: Chama
+		Description: "brilha com calor, iluminando a área"
+	}
+
+	DeepBreath: {
+		Name: Fôlego Profundo
+		Description: +50% de fôlego debaixo d'água
+	}
+
+	Photosynthesis: {
+		Name: Fotossíntese
+		Description: regenera vida mais rápido sob a luz do sol
+	}
+
+	Static: {
+		Name: Estática
+		Description: brilha com eletricidade e dá +5% de velocidade de movimento
+	}
+
+	Foresight: {
+		Name: Premonição
+		Description: sente armadilhas e perigos próximos
+	}
+
+	IceSkater: {
+		Name: Patinador
+		Description: anda no gelo com facilidade e dá imunidade a Resfriado
+	}
+
+	DragonForce: {
+		Name: Força Dracônica
+		Description: +4% de dano
+	}
+
+	DarkVision: {
+		Name: Visão no Escuro
+		Description: melhora a visão no escuro
+	}
+
+	FairyLuck: {
+		Name: Sorte de Fada
+		Description: aumenta um pouco a sorte
+	}
+}
+
+FieldAbilities: {
+	Surf: Surfar
+	Fly: Voar
+	Dig: Cavar
+	Ride: Montar
+	Flash: Iluminar
+	Strength: Força
 }
