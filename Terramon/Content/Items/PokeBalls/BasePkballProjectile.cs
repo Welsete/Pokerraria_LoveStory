@@ -569,7 +569,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             newPoke.NPC.spriteDirection = _capture.NPC.spriteDirection;
             newPoke.NPC.FindFrame();
             if (newPoke.Data.HP == 0)
-                newPoke.LeaveSoon();
+                newPoke.AfterFailedCatchWhileKnockedOut();
             //newPoke.isShimmer = capture.isShimmer;
             //newPoke.level = capture.level;
             //newPoke.catchAttempts = capture.catchAttempts + 1;

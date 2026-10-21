@@ -15,6 +15,8 @@ Battle: {
 	TieAgreed: "{0} e {1} combinaram um empate!"
 	TieForced: "A batalha entre {0} e {1} foi encerrada à força!"
 	Fainted: "{0} desmaiou!"
+	FledAfterCatch: "{0} acordou e fugiu!"
+	StillKnockedOut: "{0} continua desmaiado. Tente de novo antes que ele acorde!"
 	KnockedOutHint: "{0} está desmaiado! Jogue uma Poké Bola rápido para tentar capturar."
 	CantBattleFainted: "{0} está desmaiado e não pode batalhar!"
 	GainedExp: "{0} ganhou {1} pontos de Exp.!"

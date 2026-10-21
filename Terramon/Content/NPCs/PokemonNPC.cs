@@ -494,6 +494,34 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     /// </summary>
     public void LeaveSoon() => _knockedOutTime = Math.Max(_knockedOutTime, KnockedOutTicks - 30);
 
+    /// <summary>
+    ///     Chance that a knocked out Pokémon breaking out of a Poké Ball comes to and flees for good.
+    /// </summary>
+    private const float FleeAfterFailedCatchChance = 0.35f;
+
+    /// <summary>
+    ///     A knocked out Pokémon just broke out of a Poké Ball: it either comes to and flees, or stays knocked out
+    ///     (lying down already, with the full time left) so the player can try again. Runs on the server or in
+    ///     singleplayer.
+    /// </summary>
+    public void AfterFailedCatchWhileKnockedOut()
+    {
+        _faintTime = 15; // Already lying down
+        var flees = Main.rand.NextFloat() < FleeAfterFailedCatchChance;
+        if (flees)
+            LeaveSoon();
+        else
+            _knockedOutTime = 1; // Full time left, and no repeated hint
+
+        var text = Language.GetTextValue(
+            "Mods.Terramon.Battle." + (flees ? "FledAfterCatch" : "StillKnockedOut"), Data.DisplayName);
+        var color = flees ? new Color(255, 140, 110) : new Color(255, 215, 94);
+        if (Main.netMode == NetmodeID.Server)
+            Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), color);
+        else
+            Main.NewText(text, color);
+    }
+
     private void ShinyEffect()
     {
         // Disable shiny effect lighting for Haunter and Gengar
