@@ -1,0 +1,4479 @@
+Pound: {
+	DisplayName: Pound
+	FlavorText: O alvo é golpeado fisicamente com uma cauda longa, uma pata dianteira ou algo do tipo.
+}
+
+KarateChop: {
+	DisplayName: Karate Chop
+	FlavorText: O alvo é atacado com um golpe cortante. Acertos críticos são mais fáceis de acontecer.
+}
+
+DoubleSlap: {
+	DisplayName: Double Slap
+	FlavorText: O alvo leva tapas repetidamente, para lá e para cá, de duas a cinco vezes seguidas.
+}
+
+CometPunch: {
+	DisplayName: Comet Punch
+	FlavorText: O alvo é atingido por uma saraivada de socos que acertam de duas a cinco vezes seguidas.
+}
+
+MegaPunch: {
+	DisplayName: Mega Punch
+	FlavorText: O alvo é socado por um golpe lançado com força muscular total.
+}
+
+PayDay: {
+	DisplayName: Pay Day
+	FlavorText: Moedas são arremessadas no alvo para causar dano. Dinheiro é ganho após a batalha.
+}
+
+FirePunch: {
+	DisplayName: Fire Punch
+	FlavorText: O alvo é atacado com um soco flamejante. Também pode deixar o alvo com uma queimadura.
+}
+
+IcePunch: {
+	DisplayName: Ice Punch
+	FlavorText: O alvo é atacado com um soco gélido. Também pode deixar o alvo congelado.
+}
+
+ThunderPunch: {
+	DisplayName: Thunder Punch
+	FlavorText: O alvo é atacado com um soco eletrizado. Também pode deixar o alvo paralisado.
+}
+
+Scratch: {
+	DisplayName: Scratch
+	FlavorText: Garras duras, pontudas e afiadas arranham o alvo para causar dano.
+}
+
+ViceGrip: {
+	DisplayName: Vise Grip
+	FlavorText: O alvo é agarrado e apertado dos dois lados para causar dano.
+}
+
+Guillotine: {
+	DisplayName: Guillotine
+	FlavorText: Um ataque dilacerante e cruel com pinças enormes. O alvo desmaia instantaneamente se o ataque acertar.
+}
+
+RazorWind: {
+	DisplayName: Razor Wind
+	FlavorText: Neste ataque de dois turnos, lâminas de vento atingem os Pokémon adversários no segundo turno. Acertos críticos são mais fáceis de acontecer.
+}
+
+SwordsDance: {
+	DisplayName: Swords Dance
+	FlavorText: Uma dança frenética para elevar o espírito de luta. Aumenta bastante o Ataque do usuário.
+}
+
+Cut: {
+	DisplayName: Cut
+	FlavorText: O alvo é cortado com uma foice ou garra.
+}
+
+Gust: {
+	DisplayName: Gust
+	FlavorText: Uma rajada de vento é criada pelas asas e lançada contra o alvo para causar dano.
+}
+
+WingAttack: {
+	DisplayName: Wing Attack
+	FlavorText: O alvo é atingido por asas grandes e imponentes, abertas ao máximo, para causar dano.
+}
+
+Whirlwind: {
+	DisplayName: Whirlwind
+	FlavorText: O alvo é arremessado para longe e outro Pokémon é puxado para a batalha. Contra um único Pokémon selvagem, encerra a batalha.
+}
+
+Fly: {
+	DisplayName: Fly
+	FlavorText: O usuário voa para o céu no primeiro turno e ataca no turno seguinte.
+}
+
+Bind: {
+	DisplayName: Bind
+	FlavorText: Um corpo comprido, tentáculos ou algo do tipo são usados para prender e apertar o alvo por quatro a cinco turnos.
+}
+
+Slam: {
+	DisplayName: Slam
+	FlavorText: O alvo é golpeado com uma cauda longa, vinhas ou algo do tipo para causar dano.
+}
+
+VineWhip: {
+	DisplayName: Vine Whip
+	FlavorText: O alvo é atingido por vinhas finas como chicotes para causar dano.
+}
+
+Stomp: {
+	DisplayName: Stomp
+	FlavorText: O usuário ataca pisoteando o alvo com um pé enorme. Também pode fazer o alvo recuar.
+}
+
+DoubleKick: {
+	DisplayName: Double Kick
+	FlavorText: O usuário ataca chutando o alvo duas vezes seguidas com os dois pés.
+}
+
+MegaKick: {
+	DisplayName: Mega Kick
+	FlavorText: O alvo é atacado por um chute lançado com força muscular total.
+}
+
+JumpKick: {
+	DisplayName: Jump Kick
+	FlavorText: O usuário salta bem alto e então ataca com um chute. Se errar, o usuário se machuca.
+}
+
+RollingKick: {
+	DisplayName: Rolling Kick
+	FlavorText: O usuário ataca com um chute giratório rápido. Também pode fazer o alvo recuar.
+}
+
+SandAttack: {
+	DisplayName: Sand Attack
+	FlavorText: Areia é jogada no rosto do alvo, diminuindo a Precisão dele.
+}
+
+Headbutt: {
+	DisplayName: Headbutt
+	FlavorText: O usuário estica a cabeça e ataca investindo diretamente contra o alvo. Também pode fazer o alvo recuar.
+}
+
+HornAttack: {
+	DisplayName: Horn Attack
+	FlavorText: O alvo é espetado com um chifre bem pontiagudo para causar dano.
+}
+
+FuryAttack: {
+	DisplayName: Fury Attack
+	FlavorText: O usuário ataca espetando o alvo com um chifre, um bico ou algo do tipo. Este golpe acerta de duas a cinco vezes seguidas.
+}
+
+HornDrill: {
+	DisplayName: Horn Drill
+	FlavorText: O usuário perfura o alvo com um chifre que gira como uma broca. O alvo desmaia instantaneamente se o ataque acertar.
+}
+
+Tackle: {
+	DisplayName: Tackle
+	FlavorText: Um ataque físico em que o usuário avança e se choca contra o alvo com o corpo inteiro.
+}
+
+BodySlam: {
+	DisplayName: Body Slam
+	FlavorText: O usuário ataca se jogando sobre o alvo com todo o seu peso. Também pode deixar o alvo paralisado.
+}
+
+Wrap: {
+	DisplayName: Wrap
+	FlavorText: Um corpo comprido, vinhas ou algo do tipo são usados para envolver e apertar o alvo por quatro a cinco turnos.
+}
+
+TakeDown: {
+	DisplayName: Take Down
+	FlavorText: Uma investida imprudente com o corpo inteiro para se chocar contra o alvo. Também causa um pouco de dano ao usuário.
+}
+
+Thrash: {
+	DisplayName: Thrash
+	FlavorText: O usuário se descontrola e ataca por dois a três turnos. Depois, o usuário fica confuso.
+}
+
+DoubleEdge: {
+	DisplayName: Double-Edge
+	FlavorText: Uma investida imprudente, arriscando a própria vida, em que o usuário avança contra o alvo. Também causa muito dano ao usuário.
+}
+
+TailWhip: {
+	DisplayName: Tail Whip
+	FlavorText: O usuário balança a cauda de forma fofa, deixando os Pokémon adversários menos cautelosos. Diminui a Defesa deles.
+}
+
+PoisonSting: {
+	DisplayName: Poison Sting
+	FlavorText: O usuário espeta o alvo com um ferrão venenoso para causar dano. Também pode envenenar o alvo.
+}
+
+Twineedle: {
+	DisplayName: Twineedle
+	FlavorText: O usuário causa dano ao alvo duas vezes seguidas, espetando-o com dois ferrões. Também pode envenenar o alvo.
+}
+
+PinMissile: {
+	DisplayName: Pin Missile
+	FlavorText: O usuário ataca disparando espinhos afiados contra o alvo. Este golpe acerta de duas a cinco vezes seguidas.
+}
+
+Leer: {
+	DisplayName: Leer
+	FlavorText: O usuário lança um olhar intimidador aos Pokémon adversários, diminuindo a Defesa deles.
+}
+
+Bite: {
+	DisplayName: Bite
+	FlavorText: O alvo é mordido com presas cruelmente afiadas. Também pode fazer o alvo recuar.
+}
+
+Growl: {
+	DisplayName: Growl
+	FlavorText: O usuário rosna de um jeito cativante, deixando os Pokémon adversários menos cautelosos. Diminui o Ataque deles.
+}
+
+Roar: {
+	DisplayName: Roar
+	FlavorText: O alvo é assustado e outro Pokémon é puxado para a batalha. Contra um único Pokémon selvagem, encerra a batalha.
+}
+
+Sing: {
+	DisplayName: Sing
+	FlavorText: Uma canção de ninar suave é entoada com uma voz linda, fazendo o alvo adormecer.
+}
+
+Supersonic: {
+	DisplayName: Supersonic
+	FlavorText: O usuário gera ondas sonoras estranhas com o corpo, que confundem o alvo.
+}
+
+SonicBoom: {
+	DisplayName: Sonic Boom
+	FlavorText: O alvo é atingido por uma onda de choque destrutiva que sempre causa 20 PS de dano.
+}
+
+Disable: {
+	DisplayName: Disable
+	FlavorText: Por quatro turnos, o alvo não poderá usar o último golpe que usou.
+}
+
+Acid: {
+	DisplayName: Acid
+	FlavorText: Os Pokémon adversários são atacados com um jato de ácido corrosivo. Também pode diminuir a Defesa Especial deles.
+}
+
+Ember: {
+	DisplayName: Ember
+	FlavorText: O alvo é atacado com pequenas chamas. Também pode deixar o alvo com uma queimadura.
+}
+
+Flamethrower: {
+	DisplayName: Flamethrower
+	FlavorText: O alvo é queimado por uma rajada intensa de fogo. Também pode deixar o alvo com uma queimadura.
+}
+
+Mist: {
+	DisplayName: Mist
+	FlavorText: O usuário envolve a si mesmo e seus aliados em uma névoa branca que impede que qualquer atributo deles seja diminuído por cinco turnos.
+}
+
+WaterGun: {
+	DisplayName: Water Gun
+	FlavorText: O alvo é atingido por um jato forte de água.
+}
+
+HydroPump: {
+	DisplayName: Hydro Pump
+	FlavorText: O alvo é atingido por um enorme volume de água lançado sob grande pressão.
+}
+
+Surf: {
+	DisplayName: Surf
+	FlavorText: O usuário ataca tudo ao seu redor inundando o local com uma onda gigante.
+}
+
+IceBeam: {
+	DisplayName: Ice Beam
+	FlavorText: O alvo é atingido por um raio de energia gélido. Também pode deixar o alvo congelado.
+}
+
+Blizzard: {
+	DisplayName: Blizzard
+	FlavorText: Uma nevasca uivante é invocada para atingir os Pokémon adversários. Também pode deixá-los congelados.
+}
+
+Psybeam: {
+	DisplayName: Psybeam
+	FlavorText: O alvo é atacado com um raio peculiar. Também pode confundir o alvo.
+}
+
+BubbleBeam: {
+	DisplayName: Bubble Beam
+	FlavorText: Um jato de bolhas é expelido com força contra o alvo. Também pode diminuir a Velocidade do alvo.
+}
+
+AuroraBeam: {
+	DisplayName: Aurora Beam
+	FlavorText: O alvo é atingido por um raio colorido como um arco-íris. Também pode diminuir o Ataque do alvo.
+}
+
+HyperBeam: {
+	DisplayName: Hyper Beam
+	FlavorText: O alvo é atacado com um raio poderoso. O usuário não pode se mover no turno seguinte.
+}
+
+Peck: {
+	DisplayName: Peck
+	FlavorText: O alvo é espetado com um bico ou chifre bem pontiagudo para causar dano.
+}
+
+DrillPeck: {
+	DisplayName: Drill Peck
+	FlavorText: Um ataque em espiral que acerta o alvo com um bico afiado que funciona como uma broca.
+}
+
+Submission: {
+	DisplayName: Submission
+	FlavorText: O usuário agarra o alvo e mergulha imprudentemente em direção ao chão. Também causa um pouco de dano ao usuário.
+}
+
+LowKick: {
+	DisplayName: Low Kick
+	FlavorText: Um chute baixo poderoso que derruba o alvo. Quanto mais pesado o alvo, maior o poder do golpe.
+}
+
+Counter: {
+	DisplayName: Counter
+	FlavorText: Um ataque de retaliação que rebate qualquer golpe físico, causando o dobro do dano recebido.
+}
+
+SeismicToss: {
+	DisplayName: Seismic Toss
+	FlavorText: O alvo é arremessado usando o poder da gravidade. Causa dano igual ao nível do usuário.
+}
+
+Strength: {
+	DisplayName: Strength
+	FlavorText: O alvo é socado com um soco lançado com força máxima.
+}
+
+Absorb: {
+	DisplayName: Absorb
+	FlavorText: Um ataque que drena nutrientes. Os PS do usuário são restaurados em até metade do dano sofrido pelo alvo.
+}
+
+MegaDrain: {
+	DisplayName: Mega Drain
+	FlavorText: Um ataque que drena nutrientes. Os PS do usuário são restaurados em até metade do dano sofrido pelo alvo.
+}
+
+LeechSeed: {
+	DisplayName: Leech Seed
+	FlavorText: Uma semente é plantada no alvo. Ela rouba alguns PS do alvo a cada turno.
+}
+
+Growth: {
+	DisplayName: Growth
+	FlavorText: O corpo do usuário cresce de uma só vez, aumentando o Ataque e o Ataque Especial.
+}
+
+RazorLeaf: {
+	DisplayName: Razor Leaf
+	FlavorText: Folhas de borda afiada são lançadas para cortar os Pokémon adversários. Este golpe tem uma chance maior de acerto crítico.
+}
+
+SolarBeam: {
+	DisplayName: Solar Beam
+	FlavorText: O usuário reúne luz no primeiro turno e dispara um raio concentrado no turno seguinte.
+}
+
+PoisonPowder: {
+	DisplayName: Poison Powder
+	FlavorText: O usuário espalha uma nuvem de pó venenoso que envenena o alvo.
+}
+
+StunSpore: {
+	DisplayName: Stun Spore
+	FlavorText: O usuário espalha uma nuvem de pó entorpecente que paralisa o alvo.
+}
+
+SleepPowder: {
+	DisplayName: Sleep Powder
+	FlavorText: O usuário espalha uma nuvem de pó soporífero que faz o alvo adormecer.
+}
+
+PetalDance: {
+	DisplayName: Petal Dance
+	FlavorText: O usuário ataca o alvo espalhando pétalas por dois a três turnos. Depois, o usuário fica confuso.
+}
+
+StringShot: {
+	DisplayName: String Shot
+	FlavorText: O usuário sopra seda pela boca, que prende os Pokémon adversários e diminui drasticamente a Velocidade deles.
+}
+
+DragonRage: {
+	DisplayName: Dragon Rage
+	FlavorText: Este ataque atinge o alvo com uma onda de choque de pura fúria. Sempre causa 40 PS de dano.
+}
+
+FireSpin: {
+	DisplayName: Fire Spin
+	FlavorText: O usuário prende o alvo em um violento redemoinho de fogo que causa dano por quatro a cinco turnos.
+}
+
+ThunderShock: {
+	DisplayName: Thunder Shock
+	FlavorText: O usuário ataca o alvo com uma descarga de eletricidade. Também pode deixar o alvo paralisado.
+}
+
+Thunderbolt: {
+	DisplayName: Thunderbolt
+	FlavorText: O usuário ataca o alvo com uma forte descarga elétrica. Também pode deixar o alvo paralisado.
+}
+
+ThunderWave: {
+	DisplayName: Thunder Wave
+	FlavorText: O usuário lança uma descarga fraca de eletricidade que paralisa o alvo.
+}
+
+Thunder: {
+	DisplayName: Thunder
+	FlavorText: Um raio terrível é lançado sobre o alvo para causar dano. Também pode deixar o alvo paralisado.
+}
+
+RockThrow: {
+	DisplayName: Rock Throw
+	FlavorText: O usuário pega e arremessa uma pedra pequena contra o alvo para causar dano.
+}
+
+Earthquake: {
+	DisplayName: Earthquake
+	FlavorText: O usuário provoca um terremoto que atinge todos os Pokémon ao seu redor.
+}
+
+Fissure: {
+	DisplayName: Fissure
+	FlavorText: O usuário abre uma fenda no chão e derruba o alvo nela. O alvo desmaia instantaneamente se o ataque acertar.
+}
+
+Dig: {
+	DisplayName: Dig
+	FlavorText: O usuário se enterra no chão no primeiro turno e ataca no turno seguinte.
+}
+
+Toxic: {
+	DisplayName: Toxic
+	FlavorText: Um golpe que deixa o alvo gravemente envenenado. O dano do veneno piora a cada turno.
+}
+
+Confusion: {
+	DisplayName: Confusion
+	FlavorText: O alvo é atingido por uma fraca força telecinética para causar dano. Também pode confundir o alvo.
+}
+
+Psychic: {
+	DisplayName: Psychic
+	FlavorText: O alvo é atingido por uma forte força telecinética para causar dano. Também pode diminuir a Defesa Especial do alvo.
+}
+
+Hypnosis: {
+	DisplayName: Hypnosis
+	FlavorText: O usuário emprega sugestão hipnótica para fazer o alvo adormecer.
+}
+
+Meditate: {
+	DisplayName: Meditate
+	FlavorText: O usuário medita para despertar o poder no fundo de seu corpo e aumentar seu Ataque.
+}
+
+Agility: {
+	DisplayName: Agility
+	FlavorText: O usuário relaxa e alivia o corpo para se mover mais rápido. Aumenta bastante a sua Velocidade.
+}
+
+QuickAttack: {
+	DisplayName: Quick Attack
+	FlavorText: O usuário avança contra o alvo em velocidade cegante para causar dano. Este golpe sempre age primeiro.
+}
+
+Rage: {
+	DisplayName: Rage
+	FlavorText: Enquanto este golpe estiver em uso, o poder da raiva aumenta o Ataque toda vez que o usuário é atingido em batalha.
+}
+
+Teleport: {
+	DisplayName: Teleport
+	FlavorText: O usuário troca de lugar com um Pokémon da equipe que esteja esperando, se houver. Se um Pokémon selvagem usar este golpe, ele foge.
+}
+
+NightShade: {
+	DisplayName: Night Shade
+	FlavorText: O usuário faz o alvo ver uma miragem assustadora. Causa dano igual ao nível do usuário.
+}
+
+Mimic: {
+	DisplayName: Mimic
+	FlavorText: O usuário copia o último golpe usado pelo alvo. O golpe copiado pode ser usado até o usuário de Mimic sair da batalha.
+}
+
+Screech: {
+	DisplayName: Screech
+	FlavorText: Um grito ensurdecedor diminui drasticamente a Defesa do alvo.
+}
+
+DoubleTeam: {
+	DisplayName: Double Team
+	FlavorText: Movendo-se rapidamente, o usuário cria cópias ilusórias de si mesmo para aumentar sua evasão.
+}
+
+Recover: {
+	DisplayName: Recover
+	FlavorText: O usuário regenera suas células, restaurando seus próprios PS em até metade de seus PS máximos.
+}
+
+Harden: {
+	DisplayName: Harden
+	FlavorText: O usuário enrijece todos os músculos do corpo para aumentar sua Defesa.
+}
+
+Minimize: {
+	DisplayName: Minimize
+	FlavorText: O usuário comprime o corpo para parecer menor, o que aumenta bastante sua evasão.
+}
+
+Smokescreen: {
+	DisplayName: Smokescreen
+	FlavorText: O usuário solta uma nuvem de fumaça ou tinta que atrapalha a visão. Diminui a Precisão do alvo.
+}
+
+ConfuseRay: {
+	DisplayName: Confuse Ray
+	FlavorText: O alvo é exposto a um raio sinistro que causa confusão.
+}
+
+Withdraw: {
+	DisplayName: Withdraw
+	FlavorText: O usuário recolhe o corpo para dentro de sua carapaça dura, aumentando sua Defesa.
+}
+
+DefenseCurl: {
+	DisplayName: Defense Curl
+	FlavorText: O usuário se enrola e aumenta sua Defesa.
+}
+
+Barrier: {
+	DisplayName: Barrier
+	FlavorText: O usuário ergue uma parede resistente que aumenta bastante sua Defesa.
+}
+
+LightScreen: {
+	DisplayName: Light Screen
+	FlavorText: Uma maravilhosa parede de luz é erguida para reduzir o dano de golpes especiais por cinco turnos.
+}
+
+Haze: {
+	DisplayName: Haze
+	FlavorText: O usuário cria uma neblina que elimina todas as mudanças de atributos entre todos os Pokémon em batalha.
+}
+
+Reflect: {
+	DisplayName: Reflect
+	FlavorText: Uma maravilhosa parede de luz é erguida para reduzir o dano de golpes físicos por cinco turnos.
+}
+
+FocusEnergy: {
+	DisplayName: Focus Energy
+	FlavorText: O usuário respira fundo e se concentra para que seus próximos ataques tenham uma chance maior de acerto crítico.
+}
+
+Bide: {
+	DisplayName: Bide
+	FlavorText: O usuário aguenta ataques por dois turnos e depois revida, causando o dobro do dano recebido.
+}
+
+Metronome: {
+	DisplayName: Metronome
+	FlavorText: O usuário balança um dedo e estimula o cérebro para usar aleatoriamente quase qualquer golpe.
+}
+
+MirrorMove: {
+	DisplayName: Mirror Move
+	FlavorText: O usuário contra-ataca o alvo imitando o último golpe dele.
+}
+
+SelfDestruct: {
+	DisplayName: Self-Destruct
+	FlavorText: O usuário ataca tudo ao seu redor causando uma explosão. O usuário desmaia ao usar este golpe.
+}
+
+EggBomb: {
+	DisplayName: Egg Bomb
+	FlavorText: Um ovo grande é arremessado contra o alvo com força máxima para causar dano.
+}
+
+Lick: {
+	DisplayName: Lick
+	FlavorText: O usuário lambe o alvo com uma língua comprida para causar dano. Também pode deixar o alvo paralisado.
+}
+
+Smog: {
+	DisplayName: Smog
+	FlavorText: O alvo é atacado com uma descarga de gases imundos. Também pode envenenar o alvo.
+}
+
+Sludge: {
+	DisplayName: Sludge
+	FlavorText: O usuário arremessa lodo imundo contra o alvo para causar dano. Também pode envenenar o alvo.
+}
+
+BoneClub: {
+	DisplayName: Bone Club
+	FlavorText: O usuário golpeia o alvo com um osso. Também pode fazer o alvo recuar.
+}
+
+FireBlast: {
+	DisplayName: Fire Blast
+	FlavorText: O alvo é atacado com uma rajada intensa de fogo devorador. Também pode deixar o alvo com uma queimadura.
+}
+
+Waterfall: {
+	DisplayName: Waterfall
+	FlavorText: O usuário investe contra o alvo e pode fazê-lo recuar.
+}
+
+Clamp: {
+	DisplayName: Clamp
+	FlavorText: O alvo é preso e apertado pela concha muito grossa e resistente do usuário por quatro a cinco turnos.
+}
+
+Swift: {
+	DisplayName: Swift
+	FlavorText: Raios em forma de estrela são disparados contra os Pokémon adversários. Este ataque nunca erra.
+}
+
+SkullBash: {
+	DisplayName: Skull Bash
+	FlavorText: O usuário abaixa a cabeça para aumentar sua Defesa no primeiro turno e investe contra o alvo no turno seguinte.
+}
+
+SpikeCannon: {
+	DisplayName: Spike Cannon
+	FlavorText: Espinhos afiados são disparados contra o alvo em rápida sucessão. Acertam de duas a cinco vezes seguidas.
+}
+
+Constrict: {
+	DisplayName: Constrict
+	FlavorText: O alvo é atacado com tentáculos longos e rastejantes, vinhas ou algo do tipo. Também pode diminuir a Velocidade do alvo.
+}
+
+Amnesia: {
+	DisplayName: Amnesia
+	FlavorText: O usuário esvazia a mente temporariamente para esquecer suas preocupações. Aumenta bastante a Defesa Especial do usuário.
+}
+
+Kinesis: {
+	DisplayName: Kinesis
+	FlavorText: O usuário distrai o alvo entortando uma colher. Diminui a Precisão do alvo.
+}
+
+SoftBoiled: {
+	DisplayName: Soft-Boiled
+	FlavorText: O usuário restaura seus próprios PS em até metade de seus PS máximos.
+}
+
+HighJumpKick: {
+	DisplayName: High Jump Kick
+	FlavorText: O alvo é atacado com uma joelhada após um salto. Se este golpe errar, o usuário sofre o dano.
+}
+
+Glare: {
+	DisplayName: Glare
+	FlavorText: O usuário intimida o alvo com o padrão da sua barriga para causar paralisia.
+}
+
+DreamEater: {
+	DisplayName: Dream Eater
+	FlavorText: O usuário devora os sonhos de um alvo adormecido. Os PS do usuário são restaurados em até metade do dano sofrido pelo alvo.
+}
+
+PoisonGas: {
+	DisplayName: Poison Gas
+	FlavorText: Uma nuvem de gás venenoso é espirrada no rosto dos Pokémon adversários, envenenando os que forem atingidos.
+}
+
+Barrage: {
+	DisplayName: Barrage
+	FlavorText: Objetos redondos são arremessados contra o alvo e o atingem de duas a cinco vezes seguidas.
+}
+
+LeechLife: {
+	DisplayName: Leech Life
+	FlavorText: O usuário drena o sangue do alvo. Os PS do usuário são restaurados em até metade do dano sofrido pelo alvo.
+}
+
+LovelyKiss: {
+	DisplayName: Lovely Kiss
+	FlavorText: Com uma cara assustadora, o usuário tenta dar um beijo à força no alvo. Se conseguir, o alvo adormece.
+}
+
+SkyAttack: {
+	DisplayName: Sky Attack
+	FlavorText: O usuário ataca no turno seguinte ao uso deste golpe. Este golpe tem uma chance maior de acerto crítico e também pode fazer o alvo recuar.
+}
+
+Transform: {
+	DisplayName: Transform
+	FlavorText: O usuário se transforma em uma cópia do alvo, chegando a ter o mesmo conjunto de golpes.
+}
+
+Bubble: {
+	DisplayName: Bubble
+	FlavorText: Um jato de incontáveis bolhas é disparado contra os Pokémon adversários. Também pode diminuir a Velocidade deles.
+}
+
+DizzyPunch: {
+	DisplayName: Dizzy Punch
+	FlavorText: O alvo é atingido por socos lançados ritmicamente. Também pode deixar o alvo confuso.
+}
+
+Spore: {
+	DisplayName: Spore
+	FlavorText: O usuário espalha rajadas de esporos que induzem o sono.
+}
+
+Flash: {
+	DisplayName: Flash
+	FlavorText: O usuário emite uma luz brilhante que reduz a Precisão do alvo.
+}
+
+Psywave: {
+	DisplayName: Psywave
+	FlavorText: O alvo é atacado com uma estranha onda psíquica. A intensidade do ataque varia.
+}
+
+Splash: {
+	DisplayName: Splash
+	FlavorText: O usuário apenas se debate e espirra água, sem nenhum efeito...
+}
+
+AcidArmor: {
+	DisplayName: Acid Armor
+	FlavorText: O usuário altera sua estrutura celular para se liquefazer, aumentando bastante sua Defesa.
+}
+
+Crabhammer: {
+	DisplayName: Crabhammer
+	FlavorText: O alvo é martelado com uma pinça grande. Este golpe tem uma chance maior de acerto crítico.
+}
+
+Explosion: {
+	DisplayName: Explosion
+	FlavorText: O usuário ataca tudo ao seu redor causando uma explosão tremenda. O usuário desmaia ao usar este golpe.
+}
+
+FurySwipes: {
+	DisplayName: Fury Swipes
+	FlavorText: O usuário ataca arranhando o alvo com garras, foices ou algo do tipo. Este golpe acerta de duas a cinco vezes seguidas.
+}
+
+Bonemerang: {
+	DisplayName: Bonemerang
+	FlavorText: O usuário arremessa o osso que segura. O osso faz uma volta e atinge o alvo duas vezes, na ida e na volta.
+}
+
+Rest: {
+	DisplayName: Rest
+	FlavorText: O usuário dorme por dois turnos. Isso restaura totalmente os PS do usuário e cura qualquer condição de status.
+}
+
+RockSlide: {
+	DisplayName: Rock Slide
+	FlavorText: Grandes rochas são arremessadas contra os Pokémon adversários para causar dano. Também pode fazê-los recuar.
+}
+
+HyperFang: {
+	DisplayName: Hyper Fang
+	FlavorText: O usuário morde o alvo com força usando suas presas afiadas da frente. Também pode fazer o alvo recuar.
+}
+
+Sharpen: {
+	DisplayName: Sharpen
+	FlavorText: O usuário deixa suas bordas mais pontiagudas, o que aumenta seu Ataque.
+}
+
+Conversion: {
+	DisplayName: Conversion
+	FlavorText: O usuário muda seu tipo para o mesmo tipo do golpe que está no topo da lista de golpes que conhece.
+}
+
+TriAttack: {
+	DisplayName: Tri Attack
+	FlavorText: O usuário ataca com três raios simultâneos. Também pode queimar, congelar ou paralisar o alvo.
+}
+
+SuperFang: {
+	DisplayName: Super Fang
+	FlavorText: O usuário morde o alvo com força usando suas presas afiadas da frente. Reduz os PS do alvo pela metade.
+}
+
+Slash: {
+	DisplayName: Slash
+	FlavorText: O alvo é atacado com um corte de garras, foices ou algo do tipo. Este golpe tem uma chance maior de acerto crítico.
+}
+
+Substitute: {
+	DisplayName: Substitute
+	FlavorText: O usuário cria um substituto de si mesmo usando parte de seus próprios PS. O substituto serve como isca do usuário.
+}
+
+Struggle: {
+	DisplayName: Struggle
+	FlavorText: Este ataque é usado em desespero apenas se o usuário não tiver PP. Também causa um pouco de dano ao usuário.
+}
+
+Sketch: {
+	DisplayName: Sketch
+	FlavorText: Este golpe permite ao usuário aprender permanentemente o último golpe usado pelo alvo. Depois de usado, Sketch desaparece.
+}
+
+TripleKick: {
+	DisplayName: Triple Kick
+	FlavorText: Um ataque de três chutes consecutivos que fica mais poderoso a cada acerto.
+}
+
+Thief: {
+	DisplayName: Thief
+	FlavorText: O usuário ataca e rouba o item seguro pelo alvo ao mesmo tempo. O usuário não pode roubar nada se já estiver segurando um item.
+}
+
+SpiderWeb: {
+	DisplayName: Spider Web
+	FlavorText: O usuário prende o alvo com seda fina e pegajosa para que ele não possa fugir da batalha.
+}
+
+MindReader: {
+	DisplayName: Mind Reader
+	FlavorText: O usuário sente os movimentos do alvo com a mente para garantir que seu próximo ataque não erre o alvo.
+}
+
+Nightmare: {
+	DisplayName: Nightmare
+	FlavorText: Um alvo adormecido tem um pesadelo que causa algum dano a cada turno.
+}
+
+FlameWheel: {
+	DisplayName: Flame Wheel
+	FlavorText: O usuário ataca envolvendo-se em fogo e investindo contra o alvo. Também pode deixar o alvo com uma queimadura.
+}
+
+Snore: {
+	DisplayName: Snore
+	FlavorText: Este ataque só pode ser usado se o usuário estiver dormindo. O barulho estridente também pode fazer o alvo recuar.
+}
+
+Curse: {
+	DisplayName: Curse
+	FlavorText: Um golpe que tem efeitos diferentes dependendo de o usuário ser do tipo Fantasma ou não.
+}
+
+Flail: {
+	DisplayName: Flail
+	FlavorText: O usuário se debate sem rumo para atacar. Quanto menos PS o usuário tiver, maior o poder do golpe.
+}
+
+Conversion2: {
+	DisplayName: Conversion 2
+	FlavorText: O usuário muda seu tipo para se tornar resistente ao tipo do último golpe usado pelo alvo.
+}
+
+Aeroblast: {
+	DisplayName: Aeroblast
+	FlavorText: Um vórtice de ar é disparado contra o alvo para causar dano. Este golpe tem uma chance maior de acerto crítico.
+}
+
+CottonSpore: {
+	DisplayName: Cotton Spore
+	FlavorText: O usuário libera esporos parecidos com algodão que grudam nos Pokémon adversários. Diminui drasticamente a Velocidade deles.
+}
+
+Reversal: {
+	DisplayName: Reversal
+	FlavorText: Um ataque com tudo que fica mais poderoso quanto menos PS o usuário tiver.
+}
+
+Spite: {
+	DisplayName: Spite
+	FlavorText: O usuário libera seu rancor sobre o último golpe usado pelo alvo, reduzindo 4 PP dele.
+}
+
+PowderSnow: {
+	DisplayName: Powder Snow
+	FlavorText: O usuário ataca com uma rajada gélida de neve em pó. Também pode deixar os Pokémon adversários congelados.
+}
+
+Protect: {
+	DisplayName: Protect
+	FlavorText: Este golpe permite ao usuário se proteger de todos os ataques. A chance de falhar aumenta se for usado em sequência.
+}
+
+MachPunch: {
+	DisplayName: Mach Punch
+	FlavorText: O usuário lança um soco em velocidade cegante. Este golpe sempre age primeiro.
+}
+
+ScaryFace: {
+	DisplayName: Scary Face
+	FlavorText: O usuário assusta o alvo com uma cara assustadora para diminuir drasticamente sua Velocidade.
+}
+
+FeintAttack: {
+	DisplayName: Feint Attack
+	FlavorText: O usuário se aproxima do alvo de forma desarmante e então desfere um golpe traiçoeiro. Este ataque nunca erra.
+}
+
+SweetKiss: {
+	DisplayName: Sweet Kiss
+	FlavorText: O usuário beija o alvo com uma fofura doce e angelical que causa confusão.
+}
+
+BellyDrum: {
+	DisplayName: Belly Drum
+	FlavorText: O usuário maximiza seu Ataque, mas perde PS equivalentes à metade de seus PS máximos.
+}
+
+SludgeBomb: {
+	DisplayName: Sludge Bomb
+	FlavorText: O usuário arremessa lodo imundo contra o alvo para causar dano. Também pode envenenar o alvo.
+}
+
+MudSlap: {
+	DisplayName: Mud-Slap
+	FlavorText: O usuário joga lama no rosto do alvo para causar dano e diminuir sua Precisão.
+}
+
+Octazooka: {
+	DisplayName: Octazooka
+	FlavorText: O usuário ataca espirrando tinta no rosto ou nos olhos do alvo. Também pode diminuir a Precisão do alvo.
+}
+
+Spikes: {
+	DisplayName: Spikes
+	FlavorText: O usuário coloca uma armadilha de espinhos aos pés da equipe adversária. Os espinhos causam dano aos Pokémon adversários que entrarem em batalha.
+}
+
+ZapCannon: {
+	DisplayName: Zap Cannon
+	FlavorText: O usuário ataca disparando uma descarga elétrica como um canhão. Também deixa o alvo paralisado.
+}
+
+Foresight: {
+	DisplayName: Foresight
+	FlavorText: Permite que um alvo do tipo Fantasma seja atingido por ataques dos tipos Normal e Lutador. Também permite que um alvo com alta evasão seja atingido.
+}
+
+DestinyBond: {
+	DisplayName: Destiny Bond
+	FlavorText: Se o usuário for nocauteado após usar este golpe, o Pokémon que o nocautear também desmaiará. A chance de falhar aumenta se for usado em sequência.
+}
+
+PerishSong: {
+	DisplayName: Perish Song
+	FlavorText: Qualquer Pokémon que ouvir esta canção desmaiará em três turnos, a menos que saia da batalha.
+}
+
+IcyWind: {
+	DisplayName: Icy Wind
+	FlavorText: O usuário ataca com uma rajada de ar gelado. Também diminui a Velocidade dos Pokémon adversários.
+}
+
+Detect: {
+	DisplayName: Detect
+	FlavorText: Este golpe permite ao usuário se proteger de todos os ataques. A chance de falhar aumenta se for usado em sequência.
+}
+
+BoneRush: {
+	DisplayName: Bone Rush
+	FlavorText: O usuário ataca golpeando o alvo com um osso duro. Este golpe acerta de duas a cinco vezes seguidas.
+}
+
+LockOn: {
+	DisplayName: Lock-On
+	FlavorText: O usuário mira com precisão no alvo. Isso garante que o próximo golpe do usuário não erre esse alvo.
+}
+
+Outrage: {
+	DisplayName: Outrage
+	FlavorText: O usuário se descontrola e ataca por dois a três turnos. Depois, o usuário fica confuso.
+}
+
+Sandstorm: {
+	DisplayName: Sandstorm
+	FlavorText: Uma tempestade de areia de cinco turnos é invocada, causando dano a todos os Pokémon, exceto os dos tipos Pedra, Terra e Aço. A tempestade também aumenta a Defesa Especial dos Pokémon do tipo Pedra.
+}
+
+GigaDrain: {
+	DisplayName: Giga Drain
+	FlavorText: Um ataque que drena nutrientes. Os PS do usuário são restaurados em até metade do dano sofrido pelo alvo.
+}
+
+Endure: {
+	DisplayName: Endure
+	FlavorText: O usuário resiste a qualquer ataque com pelo menos 1 PS. A chance de falhar aumenta se for usado em sequência.
+}
+
+Charm: {
+	DisplayName: Charm
+	FlavorText: O usuário encara o alvo de forma encantadora, deixando-o menos cauteloso. Diminui drasticamente o Ataque do alvo.
+}
+
+Rollout: {
+	DisplayName: Rollout
+	FlavorText: O usuário rola continuamente contra o alvo durante cinco turnos. Este ataque fica mais poderoso a cada vez que acerta.
+}
+
+FalseSwipe: {
+	DisplayName: False Swipe
+	FlavorText: Um ataque contido que impede o alvo de desmaiar. O alvo fica com pelo menos 1 PS.
+}
+
+Swagger: {
+	DisplayName: Swagger
+	FlavorText: O usuário enfurece e confunde o alvo. No entanto, isso também aumenta bastante o Ataque do alvo.
+}
+
+MilkDrink: {
+	DisplayName: Milk Drink
+	FlavorText: O usuário restaura seus próprios PS em até metade de seus PS máximos.
+}
+
+Spark: {
+	DisplayName: Spark
+	FlavorText: O usuário ataca o alvo com uma investida carregada de eletricidade. Também pode deixar o alvo paralisado.
+}
+
+FuryCutter: {
+	DisplayName: Fury Cutter
+	FlavorText: O usuário ataca cortando o alvo com foices, garras ou algo do tipo. Este ataque fica mais poderoso se acertar em sequência.
+}
+
+SteelWing: {
+	DisplayName: Steel Wing
+	FlavorText: O alvo é atingido por asas de aço. Também pode aumentar a Defesa do usuário.
+}
+
+MeanLook: {
+	DisplayName: Mean Look
+	FlavorText: O usuário prende o alvo com um olhar sombrio e cativante. O alvo fica impossibilitado de fugir.
+}
+
+Attract: {
+	DisplayName: Attract
+	FlavorText: Se o alvo for do sexo oposto ao do usuário, ele fica apaixonado pelo usuário e às vezes não consegue usar seus golpes.
+}
+
+SleepTalk: {
+	DisplayName: Sleep Talk
+	FlavorText: O usuário usa aleatoriamente um dos golpes que conhece. Este golpe só pode ser usado enquanto o usuário estiver dormindo.
+}
+
+HealBell: {
+	DisplayName: Heal Bell
+	FlavorText: O usuário toca um sino reconfortante para curar as condições de status de todos os Pokémon da sua equipe e aliados.
+}
+
+Return: {
+	DisplayName: Return
+	FlavorText: Este ataque com força total fica mais poderoso quanto mais o usuário gosta de seu Treinador.
+}
+
+Present: {
+	DisplayName: Present
+	FlavorText: O usuário ataca dando ao alvo um presente com uma armadilha escondida. No entanto, às vezes o presente restaura PS.
+}
+
+Frustration: {
+	DisplayName: Frustration
+	FlavorText: Este ataque com força total fica mais poderoso quanto menos o usuário gosta de seu Treinador.
+}
+
+Safeguard: {
+	DisplayName: Safeguard
+	FlavorText: O usuário cria um campo de proteção que impede condições de status por cinco turnos.
+}
+
+PainSplit: {
+	DisplayName: Pain Split
+	FlavorText: O usuário soma seus PS aos PS do alvo e depois divide igualmente o total entre o alvo e si mesmo.
+}
+
+SacredFire: {
+	DisplayName: Sacred Fire
+	FlavorText: O alvo é devastado por um fogo místico de grande intensidade. Também pode deixar o alvo com uma queimadura.
+}
+
+Magnitude: {
+	DisplayName: Magnitude
+	FlavorText: O usuário ataca tudo ao seu redor com um tremor que sacode o chão. O poder varia.
+}
+
+DynamicPunch: {
+	DisplayName: Dynamic Punch
+	FlavorText: O usuário ataca socando o alvo com todo o poder concentrado. Também confunde o alvo.
+}
+
+Megahorn: {
+	DisplayName: Megahorn
+	FlavorText: Usando seu chifre resistente e imponente, o usuário investe contra o alvo sem trégua.
+}
+
+DragonBreath: {
+	DisplayName: Dragon Breath
+	FlavorText: O usuário exala uma poderosa rajada que causa dano. Também pode deixar o alvo paralisado.
+}
+
+BatonPass: {
+	DisplayName: Baton Pass
+	FlavorText: O usuário troca de lugar com um Pokémon da equipe que esteja esperando e repassa quaisquer mudanças de atributos.
+}
+
+Encore: {
+	DisplayName: Encore
+	FlavorText: O usuário força o alvo a continuar usando o golpe que ele acabou de usar por três turnos.
+}
+
+Pursuit: {
+	DisplayName: Pursuit
+	FlavorText: O poder deste ataque é dobrado se for usado contra um alvo que esteja saindo da batalha.
+}
+
+RapidSpin: {
+	DisplayName: Rapid Spin
+	FlavorText: O usuário realiza um ataque giratório que também pode eliminar os efeitos de golpes como Bind, Wrap e Leech Seed. Também aumenta a Velocidade do usuário.
+}
+
+SweetScent: {
+	DisplayName: Sweet Scent
+	FlavorText: O usuário libera um aroma que diminui drasticamente a evasão dos Pokémon adversários.
+}
+
+IronTail: {
+	DisplayName: Iron Tail
+	FlavorText: O alvo é golpeado com uma cauda dura como aço. Também pode diminuir a Defesa do alvo.
+}
+
+MetalClaw: {
+	DisplayName: Metal Claw
+	FlavorText: O alvo é arranhado com garras de aço. Também pode aumentar o Ataque do usuário.
+}
+
+VitalThrow: {
+	DisplayName: Vital Throw
+	FlavorText: O usuário ataca por último. Em troca, este arremesso nunca erra.
+}
+
+MorningSun: {
+	DisplayName: Morning Sun
+	FlavorText: O usuário restaura seus próprios PS. A quantidade de PS recuperada varia de acordo com o clima.
+}
+
+Synthesis: {
+	DisplayName: Synthesis
+	FlavorText: O usuário restaura seus próprios PS. A quantidade de PS recuperada varia de acordo com o clima.
+}
+
+Moonlight: {
+	DisplayName: Moonlight
+	FlavorText: O usuário restaura seus próprios PS. A quantidade de PS recuperada varia de acordo com o clima.
+}
+
+HiddenPower: {
+	DisplayName: Hidden Power
+	FlavorText: Um ataque único cujo tipo varia dependendo do Pokémon que o usa.
+}
+
+CrossChop: {
+	DisplayName: Cross Chop
+	FlavorText: O usuário desfere um golpe duplo com os antebraços cruzados. Este golpe tem uma chance maior de acerto crítico.
+}
+
+Twister: {
+	DisplayName: Twister
+	FlavorText: O usuário cria um tornado cruel para despedaçar os Pokémon adversários. Também pode fazê-los recuar.
+}
+
+RainDance: {
+	DisplayName: Rain Dance
+	FlavorText: O usuário invoca uma chuva forte que cai por cinco turnos, fortalecendo os ataques do tipo Água. A chuva também diminui o poder dos ataques do tipo Fogo.
+}
+
+SunnyDay: {
+	DisplayName: Sunny Day
+	FlavorText: O usuário intensifica o sol por cinco turnos, fortalecendo os ataques do tipo Fogo. A luz solar também diminui o poder dos ataques do tipo Água.
+}
+
+Crunch: {
+	DisplayName: Crunch
+	FlavorText: O usuário tritura o alvo com presas afiadas. Também pode diminuir a Defesa do alvo.
+}
+
+MirrorCoat: {
+	DisplayName: Mirror Coat
+	FlavorText: Um ataque de retaliação que rebate qualquer golpe especial, causando o dobro do dano recebido.
+}
+
+PsychUp: {
+	DisplayName: Psych Up
+	FlavorText: O usuário se hipnotiza para copiar qualquer mudança de atributos feita pelo alvo.
+}
+
+ExtremeSpeed: {
+	DisplayName: Extreme Speed
+	FlavorText: O usuário investe contra o alvo em velocidade cegante. Este golpe sempre age primeiro.
+}
+
+AncientPower: {
+	DisplayName: Ancient Power
+	FlavorText: O usuário ataca com um poder pré-histórico. Também pode aumentar todos os atributos do usuário de uma só vez.
+}
+
+ShadowBall: {
+	DisplayName: Shadow Ball
+	FlavorText: O usuário ataca arremessando uma massa sombria contra o alvo. Também pode diminuir a Defesa Especial do alvo.
+}
+
+FutureSight: {
+	DisplayName: Future Sight
+	FlavorText: Dois turnos após o uso deste golpe, uma massa de energia psíquica ataca o alvo.
+}
+
+RockSmash: {
+	DisplayName: Rock Smash
+	FlavorText: O usuário ataca com um soco. Também pode diminuir a Defesa do alvo.
+}
+
+Whirlpool: {
+	DisplayName: Whirlpool
+	FlavorText: O usuário prende o alvo em um violento redemoinho de água que causa dano por quatro a cinco turnos.
+}
+
+BeatUp: {
+	DisplayName: Beat Up
+	FlavorText: O usuário faz todos os Pokémon da equipe atacarem o alvo. Quanto mais Pokémon na equipe, maior o número de ataques.
+}
+
+FakeOut: {
+	DisplayName: Fake Out
+	FlavorText: Este ataque acerta primeiro e faz o alvo recuar. Só funciona no primeiro turno de cada vez que o usuário entra em batalha.
+}
+
+Uproar: {
+	DisplayName: Uproar
+	FlavorText: O usuário ataca em um alvoroço durante três turnos. Durante esse tempo, nenhum Pokémon pode adormecer.
+}
+
+Stockpile: {
+	DisplayName: Stockpile
+	FlavorText: O usuário acumula poder e aumenta sua Defesa e Defesa Especial. Este golpe pode ser usado até três vezes.
+}
+
+SpitUp: {
+	DisplayName: Spit Up
+	FlavorText: O poder acumulado com o golpe Stockpile é liberado de uma só vez em um ataque. Quanto mais poder acumulado, maior o poder do golpe.
+}
+
+Swallow: {
+	DisplayName: Swallow
+	FlavorText: O poder acumulado com o golpe Stockpile é absorvido pelo usuário para restaurar seus próprios PS. Quanto mais poder acumulado, mais PS são restaurados.
+}
+
+HeatWave: {
+	DisplayName: Heat Wave
+	FlavorText: O usuário ataca exalando um hálito quente sobre os Pokémon adversários. Também pode deixá-los com uma queimadura.
+}
+
+Hail: {
+	DisplayName: Hail
+	FlavorText: O usuário invoca uma tempestade de granizo que dura cinco turnos. Causa dano a todos os Pokémon, exceto os do tipo Gelo.
+}
+
+Torment: {
+	DisplayName: Torment
+	FlavorText: O usuário atormenta e enfurece o alvo, deixando-o incapaz de usar o mesmo golpe duas vezes seguidas.
+}
+
+Flatter: {
+	DisplayName: Flatter
+	FlavorText: Uma lisonja é usada para confundir o alvo. No entanto, isso também aumenta o Ataque Especial do alvo.
+}
+
+WillOWisp: {
+	DisplayName: Will-O-Wisp
+	FlavorText: O usuário dispara uma chama sinistra contra o alvo para causar uma queimadura.
+}
+
+Memento: {
+	DisplayName: Memento
+	FlavorText: O usuário desmaia. Em troca, o Ataque e o Ataque Especial do alvo diminuem drasticamente.
+}
+
+Facade: {
+	DisplayName: Facade
+	FlavorText: O poder deste golpe é dobrado se o usuário estiver envenenado, queimado ou paralisado.
+}
+
+FocusPunch: {
+	DisplayName: Focus Punch
+	FlavorText: O usuário concentra a mente antes de lançar um soco. Este golpe falha se o usuário for atingido antes de usá-lo.
+}
+
+SmellingSalts: {
+	DisplayName: Smelling Salts
+	FlavorText: O poder deste ataque é dobrado quando usado contra um alvo paralisado. No entanto, também cura a paralisia do alvo.
+}
+
+FollowMe: {
+	DisplayName: Follow Me
+	FlavorText: O usuário chama a atenção para si, fazendo todos os Pokémon adversários mirarem apenas nele.
+}
+
+NaturePower: {
+	DisplayName: Nature Power
+	FlavorText: Este ataque faz uso do poder da natureza. Seus efeitos variam dependendo do ambiente do usuário.
+}
+
+Charge: {
+	DisplayName: Charge
+	FlavorText: O usuário se carrega, aumentando o poder do próximo golpe do tipo Elétrico que usar. Também aumenta a Defesa Especial do usuário.
+}
+
+Taunt: {
+	DisplayName: Taunt
+	FlavorText: O alvo é provocado até a fúria, o que o permite usar apenas golpes de ataque por três turnos.
+}
+
+HelpingHand: {
+	DisplayName: Helping Hand
+	FlavorText: O usuário auxilia um aliado, aumentando o poder do ataque desse aliado.
+}
+
+Trick: {
+	DisplayName: Trick
+	FlavorText: O usuário pega o alvo desprevenido e troca o item seguro do alvo pelo seu.
+}
+
+RolePlay: {
+	DisplayName: Role Play
+	FlavorText: O usuário imita o alvo por completo, copiando a Habilidade do alvo.
+}
+
+Wish: {
+	DisplayName: Wish
+	FlavorText: Um turno após o uso deste golpe, os PS do usuário ou de seu substituto são restaurados em até metade dos PS máximos do usuário.
+}
+
+Assist: {
+	DisplayName: Assist
+	FlavorText: O usuário usa apressada e aleatoriamente um golpe dentre os conhecidos pelos Pokémon aliados.
+}
+
+Ingrain: {
+	DisplayName: Ingrain
+	FlavorText: O usuário finca raízes que restauram seus próprios PS a cada turno. Como o usuário fica enraizado, não pode sair da batalha.
+}
+
+Superpower: {
+	DisplayName: Superpower
+	FlavorText: O usuário ataca o alvo com grande poder. Também diminui o Ataque e a Defesa do usuário.
+}
+
+MagicCoat: {
+	DisplayName: Magic Coat
+	FlavorText: Golpes como Leech Seed e golpes que causam condições de status são bloqueados por uma barreira e refletidos de volta para o usuário desses golpes.
+}
+
+Recycle: {
+	DisplayName: Recycle
+	FlavorText: O usuário recicla um item seguro que foi usado em batalha para que possa ser usado novamente.
+}
+
+Revenge: {
+	DisplayName: Revenge
+	FlavorText: O poder deste ataque é dobrado se o usuário tiver sido ferido pelo oponente no mesmo turno.
+}
+
+BrickBreak: {
+	DisplayName: Brick Break
+	FlavorText: O usuário ataca com um golpe de caratê veloz. Este golpe também pode quebrar barreiras, como Light Screen e Reflect.
+}
+
+Yawn: {
+	DisplayName: Yawn
+	FlavorText: O usuário solta um enorme bocejo que faz o alvo adormecer no turno seguinte.
+}
+
+KnockOff: {
+	DisplayName: Knock Off
+	FlavorText: O usuário derruba o item seguro do alvo, tornando-o inutilizável durante aquela batalha. Este golpe causa mais dano se o alvo estiver segurando um item.
+}
+
+Endeavor: {
+	DisplayName: Endeavor
+	FlavorText: O usuário causa dano reduzindo os PS do alvo até ficarem aproximadamente iguais aos PS do usuário.
+}
+
+Eruption: {
+	DisplayName: Eruption
+	FlavorText: O usuário ataca os Pokémon adversários com uma fúria explosiva. Quanto menos PS o usuário tiver, menor o poder do golpe.
+}
+
+SkillSwap: {
+	DisplayName: Skill Swap
+	FlavorText: O usuário emprega seu poder psíquico para trocar de Habilidade com o alvo.
+}
+
+Imprison: {
+	DisplayName: Imprison
+	FlavorText: Se os Pokémon adversários conhecerem qualquer golpe também conhecido pelo usuário, ficam impedidos de usá-lo.
+}
+
+Refresh: {
+	DisplayName: Refresh
+	FlavorText: O usuário descansa para se curar de envenenamento, queimadura ou paralisia.
+}
+
+Grudge: {
+	DisplayName: Grudge
+	FlavorText: Se o usuário desmaiar, seu rancor esgota totalmente o PP do golpe do oponente que o nocauteou.
+}
+
+Snatch: {
+	DisplayName: Snatch
+	FlavorText: O usuário rouba os efeitos de qualquer tentativa de usar um golpe de cura ou de mudança de atributos.
+}
+
+SecretPower: {
+	DisplayName: Secret Power
+	FlavorText: Os efeitos adicionais deste ataque dependem do local onde foi usado.
+}
+
+Dive: {
+	DisplayName: Dive
+	FlavorText: O usuário mergulha no primeiro turno e então emerge e ataca no turno seguinte.
+}
+
+ArmThrust: {
+	DisplayName: Arm Thrust
+	FlavorText: O usuário ataca o alvo com golpes de palma aberta. Este golpe acerta de duas a cinco vezes seguidas.
+}
+
+Camouflage: {
+	DisplayName: Camouflage
+	FlavorText: O tipo do usuário muda dependendo do ambiente, como à beira da água, na grama ou em uma caverna.
+}
+
+TailGlow: {
+	DisplayName: Tail Glow
+	FlavorText: O usuário encara luzes cintilantes para focar a mente, aumentando drasticamente seu Ataque Especial.
+}
+
+LusterPurge: {
+	DisplayName: Luster Purge
+	FlavorText: O usuário libera uma explosão de luz que causa dano. Também pode diminuir a Defesa Especial do alvo.
+}
+
+MistBall: {
+	DisplayName: Mist Ball
+	FlavorText: Uma rajada de penugem semelhante a névoa envolve e causa dano ao alvo. Também pode diminuir o Ataque Especial do alvo.
+}
+
+FeatherDance: {
+	DisplayName: Feather Dance
+	FlavorText: O usuário cobre o corpo do alvo com uma massa de penugem que diminui drasticamente seu Ataque.
+}
+
+TeeterDance: {
+	DisplayName: Teeter Dance
+	FlavorText: O usuário executa uma dança cambaleante que confunde todos os Pokémon ao seu redor.
+}
+
+BlazeKick: {
+	DisplayName: Blaze Kick
+	FlavorText: O usuário lança um chute com chance maior de acerto crítico. Também pode deixar o alvo com uma queimadura.
+}
+
+MudSport: {
+	DisplayName: Mud Sport
+	FlavorText: O usuário levanta lama no campo de batalha. Isso enfraquece os golpes do tipo Elétrico por cinco turnos.
+}
+
+IceBall: {
+	DisplayName: Ice Ball
+	FlavorText: O usuário ataca o alvo por cinco turnos. O poder do golpe aumenta a cada vez que acerta.
+}
+
+NeedleArm: {
+	DisplayName: Needle Arm
+	FlavorText: O usuário ataca balançando loucamente seus braços espinhosos. Também pode fazer o alvo recuar.
+}
+
+SlackOff: {
+	DisplayName: Slack Off
+	FlavorText: O usuário relaxa, restaurando seus próprios PS em até metade de seus PS máximos.
+}
+
+HyperVoice: {
+	DisplayName: Hyper Voice
+	FlavorText: O usuário ataca soltando um grito ressonante e horrivelmente alto.
+}
+
+PoisonFang: {
+	DisplayName: Poison Fang
+	FlavorText: O usuário morde o alvo com presas tóxicas. Também pode deixar o alvo gravemente envenenado.
+}
+
+CrushClaw: {
+	DisplayName: Crush Claw
+	FlavorText: O usuário corta o alvo com garras duras e afiadas. Também pode diminuir a Defesa do alvo.
+}
+
+BlastBurn: {
+	DisplayName: Blast Burn
+	FlavorText: O alvo é devastado por uma explosão flamejante. O usuário não pode se mover no turno seguinte.
+}
+
+HydroCannon: {
+	DisplayName: Hydro Cannon
+	FlavorText: O alvo é atingido por uma rajada de água. O usuário não pode se mover no turno seguinte.
+}
+
+MeteorMash: {
+	DisplayName: Meteor Mash
+	FlavorText: O alvo é atingido por um soco duro disparado como um meteoro. Também pode aumentar o Ataque do usuário.
+}
+
+Astonish: {
+	DisplayName: Astonish
+	FlavorText: O usuário ataca o alvo gritando de forma assustadora. Também pode fazer o alvo recuar.
+}
+
+WeatherBall: {
+	DisplayName: Weather Ball
+	FlavorText: O tipo e o poder deste golpe mudam dependendo do clima no momento em que é usado.
+}
+
+Aromatherapy: {
+	DisplayName: Aromatherapy
+	FlavorText: O usuário libera um aroma reconfortante que cura todas as condições de status que afetam a equipe do usuário.
+}
+
+FakeTears: {
+	DisplayName: Fake Tears
+	FlavorText: O usuário finge chorar para atrapalhar o alvo. Diminui drasticamente a Defesa Especial do alvo.
+}
+
+AirCutter: {
+	DisplayName: Air Cutter
+	FlavorText: O usuário lança um vento afiado como lâmina para cortar os Pokémon adversários. Este golpe tem uma chance maior de acerto crítico.
+}
+
+Overheat: {
+	DisplayName: Overheat
+	FlavorText: O usuário ataca o alvo com toda a sua força. O recuo deste golpe diminui drasticamente o Ataque Especial do usuário.
+}
+
+OdorSleuth: {
+	DisplayName: Odor Sleuth
+	FlavorText: Permite que um alvo do tipo Fantasma seja atingido por ataques dos tipos Normal e Lutador. Também permite que um alvo com alta evasão seja atingido.
+}
+
+RockTomb: {
+	DisplayName: Rock Tomb
+	FlavorText: O usuário arremessa pedregulhos contra o alvo para causar dano. Também diminui a Velocidade do alvo ao restringir seus movimentos.
+}
+
+SilverWind: {
+	DisplayName: Silver Wind
+	FlavorText: O alvo é atacado com escamas em pó levadas pelo vento. Também pode aumentar todos os atributos do usuário.
+}
+
+MetalSound: {
+	DisplayName: Metal Sound
+	FlavorText: Um som horrível, como metal sendo raspado, diminui drasticamente a Defesa Especial do alvo.
+}
+
+GrassWhistle: {
+	DisplayName: Grass Whistle
+	FlavorText: O usuário toca uma melodia agradável que faz o alvo cair em um sono profundo.
+}
+
+Tickle: {
+	DisplayName: Tickle
+	FlavorText: O usuário faz cócegas no alvo até ele rir, diminuindo seu Ataque e sua Defesa.
+}
+
+CosmicPower: {
+	DisplayName: Cosmic Power
+	FlavorText: O usuário absorve um poder místico do espaço para aumentar sua Defesa e Defesa Especial.
+}
+
+WaterSpout: {
+	DisplayName: Water Spout
+	FlavorText: O usuário esguicha água para causar dano aos Pokémon adversários. Quanto menos PS o usuário tiver, menor o poder do golpe.
+}
+
+SignalBeam: {
+	DisplayName: Signal Beam
+	FlavorText: O usuário ataca com um raio de luz sinistro. Também pode confundir o alvo.
+}
+
+ShadowPunch: {
+	DisplayName: Shadow Punch
+	FlavorText: O usuário lança um soco das sombras. Este ataque nunca erra.
+}
+
+Extrasensory: {
+	DisplayName: Extrasensory
+	FlavorText: O usuário ataca com um poder estranho e invisível. Também pode fazer o alvo recuar.
+}
+
+SkyUppercut: {
+	DisplayName: Sky Uppercut
+	FlavorText: O usuário ataca o alvo com um gancho lançado com força em direção ao céu.
+}
+
+SandTomb: {
+	DisplayName: Sand Tomb
+	FlavorText: O usuário prende o alvo em uma violenta tempestade de areia que causa dano por quatro a cinco turnos.
+}
+
+SheerCold: {
+	DisplayName: Sheer Cold
+	FlavorText: O alvo desmaia instantaneamente. Este golpe tem menos chance de acertar se for usado por Pokémon que não sejam do tipo Gelo.
+}
+
+MuddyWater: {
+	DisplayName: Muddy Water
+	FlavorText: O usuário ataca disparando água lamacenta contra os Pokémon adversários. Também pode diminuir a Precisão deles.
+}
+
+BulletSeed: {
+	DisplayName: Bullet Seed
+	FlavorText: O usuário ataca disparando sementes com força contra o alvo. Este golpe acerta de duas a cinco vezes seguidas.
+}
+
+AerialAce: {
+	DisplayName: Aerial Ace
+	FlavorText: O usuário confunde o alvo com sua velocidade e então corta. Este ataque nunca erra.
+}
+
+IcicleSpear: {
+	DisplayName: Icicle Spear
+	FlavorText: O usuário ataca lançando pontas de gelo afiadas contra o alvo. Este golpe acerta de duas a cinco vezes seguidas.
+}
+
+IronDefense: {
+	DisplayName: Iron Defense
+	FlavorText: O usuário endurece a superfície do corpo como ferro, aumentando bastante sua Defesa.
+}
+
+Block: {
+	DisplayName: Block
+	FlavorText: O usuário bloqueia o caminho do alvo com os braços bem abertos para impedi-lo de fugir.
+}
+
+Howl: {
+	DisplayName: Howl
+	FlavorText: O usuário uiva alto para animar a si mesmo e seus aliados. Aumenta o Ataque deles.
+}
+
+DragonClaw: {
+	DisplayName: Dragon Claw
+	FlavorText: O usuário corta o alvo com garras enormes e afiadas para causar dano.
+}
+
+FrenzyPlant: {
+	DisplayName: Frenzy Plant
+	FlavorText: O usuário golpeia o alvo com as raízes de uma árvore enorme. O usuário não pode se mover no turno seguinte.
+}
+
+BulkUp: {
+	DisplayName: Bulk Up
+	FlavorText: O usuário tensiona os músculos para fortalecer o corpo, aumentando seu Ataque e sua Defesa.
+}
+
+Bounce: {
+	DisplayName: Bounce
+	FlavorText: O usuário salta bem alto no primeiro turno e cai sobre o alvo no turno seguinte. Também pode deixar o alvo paralisado.
+}
+
+MudShot: {
+	DisplayName: Mud Shot
+	FlavorText: O usuário ataca arremessando uma massa de lama contra o alvo. Também diminui a Velocidade do alvo.
+}
+
+PoisonTail: {
+	DisplayName: Poison Tail
+	FlavorText: O usuário acerta o alvo com a cauda. Este golpe tem uma chance maior de acerto crítico e também pode envenenar o alvo.
+}
+
+Covet: {
+	DisplayName: Covet
+	FlavorText: O usuário se aproxima do alvo de forma cativante e então rouba o item seguro pelo alvo.
+}
+
+VoltTackle: {
+	DisplayName: Volt Tackle
+	FlavorText: O usuário se eletriza e investe contra o alvo. Também causa muito dano ao usuário. Este ataque pode deixar o alvo paralisado.
+}
+
+MagicalLeaf: {
+	DisplayName: Magical Leaf
+	FlavorText: O usuário espalha folhas curiosas que perseguem o alvo. Este ataque nunca erra.
+}
+
+WaterSport: {
+	DisplayName: Water Sport
+	FlavorText: O usuário encharca o campo de batalha com água. Isso enfraquece os golpes do tipo Fogo por cinco turnos.
+}
+
+CalmMind: {
+	DisplayName: Calm Mind
+	FlavorText: O usuário concentra a mente em silêncio e acalma o espírito para aumentar seu Ataque Especial e Defesa Especial.
+}
+
+LeafBlade: {
+	DisplayName: Leaf Blade
+	FlavorText: O usuário maneja uma folha afiada como uma espada e corta o alvo para causar dano. Este golpe tem uma chance maior de acerto crítico.
+}
+
+DragonDance: {
+	DisplayName: Dragon Dance
+	FlavorText: O usuário executa vigorosamente uma dança mística e poderosa que aumenta seu Ataque e sua Velocidade.
+}
+
+RockBlast: {
+	DisplayName: Rock Blast
+	FlavorText: O usuário ataca arremessando rochas duras contra o alvo. Este golpe acerta de duas a cinco vezes seguidas.
+}
+
+ShockWave: {
+	DisplayName: Shock Wave
+	FlavorText: O usuário atinge o alvo com uma rápida descarga de eletricidade. Este ataque nunca erra.
+}
+
+WaterPulse: {
+	DisplayName: Water Pulse
+	FlavorText: O usuário ataca o alvo com uma rajada pulsante de água. Também pode confundir o alvo.
+}
+
+DoomDesire: {
+	DisplayName: Doom Desire
+	FlavorText: Dois turnos após o uso deste golpe, um feixe concentrado de luz atinge o alvo.
+}
+
+PsychoBoost: {
+	DisplayName: Psycho Boost
+	FlavorText: O usuário ataca o alvo com toda a sua força. O recuo deste golpe diminui drasticamente o Ataque Especial do usuário.
+}
+
+Roost: {
+	DisplayName: Roost
+	FlavorText: O usuário pousa e descansa o corpo. Este golpe restaura os PS do usuário em até metade de seus PS máximos.
+}
+
+Gravity: {
+	DisplayName: Gravity
+	FlavorText: Permite que Pokémon do tipo Voador ou com a Habilidade Levitate sejam atingidos por golpes do tipo Terra por cinco turnos. Golpes que envolvem voar não podem ser usados.
+}
+
+MiracleEye: {
+	DisplayName: Miracle Eye
+	FlavorText: Permite que um alvo do tipo Sombrio seja atingido por ataques do tipo Psíquico. Também permite que um alvo com alta evasão seja atingido.
+}
+
+WakeUpSlap: {
+	DisplayName: Wake-Up Slap
+	FlavorText: Este ataque causa grande dano a um alvo adormecido. No entanto, também acorda o alvo.
+}
+
+HammerArm: {
+	DisplayName: Hammer Arm
+	FlavorText: O usuário balança seu punho forte e pesado contra o alvo para causar dano. Também diminui a Velocidade do usuário.
+}
+
+GyroBall: {
+	DisplayName: Gyro Ball
+	FlavorText: O usuário investe contra o alvo com um giro em alta velocidade. Quanto mais lento o usuário for em relação ao alvo, maior o poder do golpe.
+}
+
+HealingWish: {
+	DisplayName: Healing Wish
+	FlavorText: O usuário desmaia. Em troca, o Pokémon que tomar seu lugar terá seus PS restaurados e suas condições de status curadas.
+}
+
+Brine: {
+	DisplayName: Brine
+	FlavorText: O poder deste golpe é dobrado se os PS do alvo estiverem na metade ou menos.
+}
+
+NaturalGift: {
+	DisplayName: Natural Gift
+	FlavorText: O usuário extrai poder para atacar usando a Berry que está segurando. A Berry determina o tipo e o poder do golpe.
+}
+
+Feint: {
+	DisplayName: Feint
+	FlavorText: Este ataque pode atingir um alvo que esteja usando um golpe como Protect ou Detect. Também anula os efeitos desses golpes.
+}
+
+Pluck: {
+	DisplayName: Pluck
+	FlavorText: O usuário ataca bicando o alvo. Se o alvo estiver segurando uma Berry, o usuário a come e ganha seu efeito.
+}
+
+Tailwind: {
+	DisplayName: Tailwind
+	FlavorText: O usuário cria um redemoinho turbulento que aumenta a Velocidade dele e de seus aliados por quatro turnos.
+}
+
+Acupressure: {
+	DisplayName: Acupressure
+	FlavorText: O usuário aplica pressão em pontos de tensão, aumentando bastante um dos atributos dele ou de seus aliados.
+}
+
+MetalBurst: {
+	DisplayName: Metal Burst
+	FlavorText: O usuário retalia com força muito maior o oponente que lhe causou dano por último.
+}
+
+UTurn: {
+	DisplayName: U-turn
+	FlavorText: Após realizar seu ataque, o usuário volta correndo para trocar de lugar com um Pokémon da equipe que esteja esperando.
+}
+
+CloseCombat: {
+	DisplayName: Close Combat
+	FlavorText: O usuário luta com o alvo de perto, causando dano sem se proteger. Também diminui a Defesa e a Defesa Especial do usuário.
+}
+
+Payback: {
+	DisplayName: Payback
+	FlavorText: O usuário acumula poder e então ataca. O poder deste golpe é dobrado se o usuário agir depois do alvo.
+}
+
+Assurance: {
+	DisplayName: Assurance
+	FlavorText: O poder deste golpe é dobrado se o alvo já tiver sofrido algum dano no mesmo turno.
+}
+
+Embargo: {
+	DisplayName: Embargo
+	FlavorText: Este golpe impede o alvo de usar seu item seguro por cinco turnos. Seu Treinador também fica impedido de usar itens nele.
+}
+
+Fling: {
+	DisplayName: Fling
+	FlavorText: O usuário arremessa o item que está segurando contra o alvo para atacar. O poder e os efeitos do golpe dependem do item.
+}
+
+PsychoShift: {
+	DisplayName: Psycho Shift
+	FlavorText: Usando seu poder psíquico de sugestão, o usuário transfere suas condições de status para o alvo.
+}
+
+TrumpCard: {
+	DisplayName: Trump Card
+	FlavorText: Quanto menos PP este golpe tiver, maior será seu poder.
+}
+
+HealBlock: {
+	DisplayName: Heal Block
+	FlavorText: Por cinco turnos, o usuário impede a equipe adversária de usar quaisquer golpes, Habilidades ou itens seguros que recuperem PS.
+}
+
+WringOut: {
+	DisplayName: Wring Out
+	FlavorText: O usuário torce o alvo com força. Quanto mais PS o alvo tiver, maior o poder do golpe.
+}
+
+PowerTrick: {
+	DisplayName: Power Trick
+	FlavorText: O usuário emprega seu poder psíquico para trocar seu Ataque pela sua Defesa.
+}
+
+GastroAcid: {
+	DisplayName: Gastro Acid
+	FlavorText: O usuário vomita seus ácidos estomacais sobre o alvo. O fluido elimina o efeito da Habilidade do alvo.
+}
+
+LuckyChant: {
+	DisplayName: Lucky Chant
+	FlavorText: O usuário entoa um encantamento ao céu, impedindo os Pokémon adversários de causarem acertos críticos por cinco turnos.
+}
+
+MeFirst: {
+	DisplayName: Me First
+	FlavorText: O usuário passa à frente do alvo para copiar e usar o golpe que o alvo pretendia usar, com mais poder. Este golpe falha se não for usado primeiro.
+}
+
+Copycat: {
+	DisplayName: Copycat
+	FlavorText: O usuário imita o golpe usado imediatamente antes dele. O golpe falha se nenhum outro golpe tiver sido usado ainda.
+}
+
+PowerSwap: {
+	DisplayName: Power Swap
+	FlavorText: O usuário emprega seu poder psíquico para trocar com o alvo as mudanças de Ataque e Ataque Especial.
+}
+
+GuardSwap: {
+	DisplayName: Guard Swap
+	FlavorText: O usuário emprega seu poder psíquico para trocar com o alvo as mudanças de Defesa e Defesa Especial.
+}
+
+Punishment: {
+	DisplayName: Punishment
+	FlavorText: Quanto mais o alvo tiver aumentado seus atributos, maior o poder do golpe.
+}
+
+LastResort: {
+	DisplayName: Last Resort
+	FlavorText: Este golpe só pode ser usado depois que o usuário tiver usado todos os outros golpes que conhece na batalha.
+}
+
+WorrySeed: {
+	DisplayName: Worry Seed
+	FlavorText: Uma semente que causa preocupação é plantada no alvo. Impede o sono ao tornar a Habilidade do alvo Insomnia.
+}
+
+SuckerPunch: {
+	DisplayName: Sucker Punch
+	FlavorText: Este golpe permite ao usuário atacar primeiro. Falha se o alvo não estiver se preparando para atacar.
+}
+
+ToxicSpikes: {
+	DisplayName: Toxic Spikes
+	FlavorText: O usuário coloca uma armadilha de espinhos venenosos aos pés da equipe adversária. Os espinhos envenenam os Pokémon adversários que entrarem em batalha.
+}
+
+HeartSwap: {
+	DisplayName: Heart Swap
+	FlavorText: O usuário emprega seu poder psíquico para trocar as mudanças de atributos com o alvo.
+}
+
+AquaRing: {
+	DisplayName: Aqua Ring
+	FlavorText: O usuário se envolve em um véu feito de água. Recupera alguns PS a cada turno.
+}
+
+MagnetRise: {
+	DisplayName: Magnet Rise
+	FlavorText: O usuário levita usando magnetismo gerado eletricamente por cinco turnos.
+}
+
+FlareBlitz: {
+	DisplayName: Flare Blitz
+	FlavorText: O usuário se envolve em fogo e investe contra o alvo para causar dano. Também causa muito dano ao usuário e pode deixar o alvo com uma queimadura.
+}
+
+ForcePalm: {
+	DisplayName: Force Palm
+	FlavorText: O alvo é atacado com uma onda de choque. Também pode deixar o alvo paralisado.
+}
+
+AuraSphere: {
+	DisplayName: Aura Sphere
+	FlavorText: O usuário libera contra o alvo um pulso de poder de aura vindo do fundo de seu corpo. Este ataque nunca erra.
+}
+
+RockPolish: {
+	DisplayName: Rock Polish
+	FlavorText: O usuário poli o corpo para reduzir o atrito. Aumenta bastante a Velocidade do usuário.
+}
+
+PoisonJab: {
+	DisplayName: Poison Jab
+	FlavorText: O alvo é perfurado por um tentáculo, um braço ou algo do tipo impregnado de veneno. Também pode envenenar o alvo.
+}
+
+DarkPulse: {
+	DisplayName: Dark Pulse
+	FlavorText: O usuário libera uma aura horrível impregnada de más intenções. Também pode fazer o alvo recuar.
+}
+
+NightSlash: {
+	DisplayName: Night Slash
+	FlavorText: O usuário corta o alvo no instante em que surge uma oportunidade. Este golpe tem uma chance maior de acerto crítico.
+}
+
+AquaTail: {
+	DisplayName: Aqua Tail
+	FlavorText: O usuário ataca balançando a cauda como se fosse uma onda cruel em uma tempestade furiosa.
+}
+
+SeedBomb: {
+	DisplayName: Seed Bomb
+	FlavorText: O usuário ataca despejando de cima sobre o alvo uma saraivada de sementes de casca dura.
+}
+
+AirSlash: {
+	DisplayName: Air Slash
+	FlavorText: O usuário ataca com uma lâmina de ar que corta até o céu. Também pode fazer o alvo recuar.
+}
+
+XScissor: {
+	DisplayName: X-Scissor
+	FlavorText: O usuário corta o alvo cruzando suas foices, garras ou algo do tipo como se fossem uma tesoura.
+}
+
+BugBuzz: {
+	DisplayName: Bug Buzz
+	FlavorText: O usuário vibra para gerar uma onda sonora que causa dano. Também pode diminuir a Defesa Especial do alvo.
+}
+
+DragonPulse: {
+	DisplayName: Dragon Pulse
+	FlavorText: O alvo é atacado com uma onda de choque gerada pela boca escancarada do usuário.
+}
+
+DragonRush: {
+	DisplayName: Dragon Rush
+	FlavorText: O usuário investe contra o alvo exibindo uma ameaça esmagadora. Também pode fazer o alvo recuar.
+}
+
+PowerGem: {
+	DisplayName: Power Gem
+	FlavorText: O usuário ataca com um raio de luz que cintila como se fosse feito de gemas.
+}
+
+DrainPunch: {
+	DisplayName: Drain Punch
+	FlavorText: O usuário ataca com um soco que drena energia. Os PS do usuário são restaurados em até metade do dano sofrido pelo alvo.
+}
+
+VacuumWave: {
+	DisplayName: Vacuum Wave
+	FlavorText: O usuário gira os punhos para enviar uma onda de puro vácuo contra o alvo. Este golpe sempre age primeiro.
+}
+
+FocusBlast: {
+	DisplayName: Focus Blast
+	FlavorText: O usuário aumenta sua concentração mental e libera seu poder. Também pode diminuir a Defesa Especial do alvo.
+}
+
+EnergyBall: {
+	DisplayName: Energy Ball
+	FlavorText: O usuário extrai poder da natureza e o dispara contra o alvo. Também pode diminuir a Defesa Especial do alvo.
+}
+
+BraveBird: {
+	DisplayName: Brave Bird
+	FlavorText: O usuário recolhe as asas e investe em baixa altitude. Também causa muito dano ao usuário.
+}
+
+EarthPower: {
+	DisplayName: Earth Power
+	FlavorText: O usuário faz o chão sob o alvo irromper com poder. Também pode diminuir a Defesa Especial do alvo.
+}
+
+Switcheroo: {
+	DisplayName: Switcheroo
+	FlavorText: O usuário troca os itens seguros com o alvo mais rápido do que o olho consegue acompanhar.
+}
+
+GigaImpact: {
+	DisplayName: Giga Impact
+	FlavorText: O usuário investe contra o alvo usando cada gota de seu poder. O usuário não pode se mover no turno seguinte.
+}
+
+NastyPlot: {
+	DisplayName: Nasty Plot
+	FlavorText: O usuário estimula o cérebro pensando em coisas ruins. Aumenta bastante o Ataque Especial do usuário.
+}
+
+BulletPunch: {
+	DisplayName: Bullet Punch
+	FlavorText: O usuário golpeia o alvo com socos duros tão rápidos quanto balas. Este golpe sempre age primeiro.
+}
+
+Avalanche: {
+	DisplayName: Avalanche
+	FlavorText: O poder deste golpe é dobrado se o alvo tiver causado dano ao usuário no mesmo turno.
+}
+
+IceShard: {
+	DisplayName: Ice Shard
+	FlavorText: O usuário congela instantaneamente pedaços de gelo e os arremessa contra o alvo. Este golpe sempre age primeiro.
+}
+
+ShadowClaw: {
+	DisplayName: Shadow Claw
+	FlavorText: O usuário ataca cortando o alvo com uma garra afiada feita de sombras. Este golpe tem uma chance maior de acerto crítico.
+}
+
+ThunderFang: {
+	DisplayName: Thunder Fang
+	FlavorText: O usuário morde com presas eletrizadas. Também pode fazer o alvo recuar ou deixá-lo paralisado.
+}
+
+IceFang: {
+	DisplayName: Ice Fang
+	FlavorText: O usuário morde com presas impregnadas de frio. Também pode fazer o alvo recuar ou deixá-lo congelado.
+}
+
+FireFang: {
+	DisplayName: Fire Fang
+	FlavorText: O usuário morde com presas envoltas em chamas. Também pode fazer o alvo recuar ou deixá-lo com uma queimadura.
+}
+
+ShadowSneak: {
+	DisplayName: Shadow Sneak
+	FlavorText: O usuário estende sua sombra e ataca o alvo por trás. Este golpe sempre age primeiro.
+}
+
+MudBomb: {
+	DisplayName: Mud Bomb
+	FlavorText: O usuário lança uma bola de lama compactada para atacar. Também pode diminuir a Precisão do alvo.
+}
+
+PsychoCut: {
+	DisplayName: Psycho Cut
+	FlavorText: O usuário rasga o alvo com lâminas formadas por poder psíquico. Este golpe tem uma chance maior de acerto crítico.
+}
+
+ZenHeadbutt: {
+	DisplayName: Zen Headbutt
+	FlavorText: O usuário concentra sua força de vontade na cabeça e ataca o alvo. Também pode fazer o alvo recuar.
+}
+
+MirrorShot: {
+	DisplayName: Mirror Shot
+	FlavorText: O usuário libera um clarão de energia contra o alvo a partir de seu corpo polido. Também pode diminuir a Precisão do alvo.
+}
+
+FlashCannon: {
+	DisplayName: Flash Cannon
+	FlavorText: O usuário reúne toda a sua energia luminosa e a libera de uma só vez. Também pode diminuir a Defesa Especial do alvo.
+}
+
+RockClimb: {
+	DisplayName: Rock Climb
+	FlavorText: O usuário ataca o alvo colidindo contra ele com uma força incrível. Também pode confundir o alvo.
+}
+
+Defog: {
+	DisplayName: Defog
+	FlavorText: Um vento forte dissipa as barreiras do alvo, como Reflect ou Light Screen. Também diminui a evasão do alvo.
+}
+
+TrickRoom: {
+	DisplayName: Trick Room
+	FlavorText: O usuário cria uma área bizarra em que os Pokémon mais lentos agem primeiro por cinco turnos.
+}
+
+DracoMeteor: {
+	DisplayName: Draco Meteor
+	FlavorText: Cometas são invocados do céu sobre o alvo. O recuo deste golpe diminui drasticamente o Ataque Especial do usuário.
+}
+
+Discharge: {
+	DisplayName: Discharge
+	FlavorText: O usuário atinge tudo ao seu redor liberando uma explosão de eletricidade. Também pode deixar paralisados os atingidos pelo ataque.
+}
+
+LavaPlume: {
+	DisplayName: Lava Plume
+	FlavorText: O usuário incinera tudo ao seu redor em um inferno de chamas escarlates. Também pode deixar com uma queimadura os atingidos.
+}
+
+LeafStorm: {
+	DisplayName: Leaf Storm
+	FlavorText: O usuário cria uma tempestade de folhas ao redor do alvo. O recuo deste golpe diminui drasticamente o Ataque Especial do usuário.
+}
+
+PowerWhip: {
+	DisplayName: Power Whip
+	FlavorText: O usuário balança violentamente suas vinhas, tentáculos ou algo do tipo para chicotear o alvo.
+}
+
+RockWrecker: {
+	DisplayName: Rock Wrecker
+	FlavorText: O usuário lança uma rocha enorme contra o alvo para atacar. O usuário não pode se mover no turno seguinte.
+}
+
+CrossPoison: {
+	DisplayName: Cross Poison
+	FlavorText: Um ataque cortante com uma lâmina venenosa que também pode envenenar o alvo. Este golpe tem uma chance maior de acerto crítico.
+}
+
+GunkShot: {
+	DisplayName: Gunk Shot
+	FlavorText: O usuário dispara lixo imundo contra o alvo para atacar. Também pode envenenar o alvo.
+}
+
+IronHead: {
+	DisplayName: Iron Head
+	FlavorText: O usuário golpeia o alvo com a cabeça dura como aço. Também pode fazer o alvo recuar.
+}
+
+MagnetBomb: {
+	DisplayName: Magnet Bomb
+	FlavorText: O usuário lança bombas de aço que grudam no alvo. Este ataque nunca erra.
+}
+
+StoneEdge: {
+	DisplayName: Stone Edge
+	FlavorText: O usuário perfura o alvo com pedras afiadas. Este golpe tem uma chance maior de acerto crítico.
+}
+
+Captivate: {
+	DisplayName: Captivate
+	FlavorText: Se algum Pokémon adversário for do sexo oposto ao do usuário, ele fica encantado, o que diminui drasticamente seu Ataque Especial.
+}
+
+StealthRock: {
+	DisplayName: Stealth Rock
+	FlavorText: O usuário coloca uma armadilha de pedras flutuantes ao redor da equipe adversária. A armadilha causa dano aos Pokémon adversários que entrarem em batalha.
+}
+
+GrassKnot: {
+	DisplayName: Grass Knot
+	FlavorText: O usuário laça o alvo com grama e o faz tropeçar. Quanto mais pesado o alvo, maior o poder do golpe.
+}
+
+Chatter: {
+	DisplayName: Chatter
+	FlavorText: O usuário ataca o alvo com ondas sonoras de uma tagarelice ensurdecedora. Isso confunde o alvo.
+}
+
+Judgment: {
+	DisplayName: Judgment
+	FlavorText: O usuário libera incontáveis disparos de luz contra o alvo. O tipo deste golpe muda dependendo do tipo de tábua que o usuário estiver segurando.
+}
+
+BugBite: {
+	DisplayName: Bug Bite
+	FlavorText: O usuário ataca mordendo o alvo. Se o alvo estiver segurando uma Berry, o usuário a come e ganha seu efeito.
+}
+
+ChargeBeam: {
+	DisplayName: Charge Beam
+	FlavorText: O usuário ataca o alvo com uma carga elétrica. A eletricidade residual também pode aumentar o Ataque Especial do usuário.
+}
+
+WoodHammer: {
+	DisplayName: Wood Hammer
+	FlavorText: O usuário golpeia o alvo com seu corpo robusto para atacar. Também causa muito dano ao usuário.
+}
+
+AquaJet: {
+	DisplayName: Aqua Jet
+	FlavorText: O usuário avança contra o alvo para causar dano, movendo-se em velocidade cegante. Este golpe sempre age primeiro.
+}
+
+AttackOrder: {
+	DisplayName: Attack Order
+	FlavorText: O usuário convoca seus subordinados para espancar o alvo. Este golpe tem uma chance maior de acerto crítico.
+}
+
+DefendOrder: {
+	DisplayName: Defend Order
+	FlavorText: O usuário convoca seus subordinados para proteger seu corpo, aumentando sua Defesa e Defesa Especial.
+}
+
+HealOrder: {
+	DisplayName: Heal Order
+	FlavorText: O usuário convoca seus subordinados para curá-lo. O usuário recupera até metade de seus PS máximos.
+}
+
+HeadSmash: {
+	DisplayName: Head Smash
+	FlavorText: O usuário ataca o alvo com uma cabeçada perigosa com força total. Também causa um dano terrível ao usuário.
+}
+
+DoubleHit: {
+	DisplayName: Double Hit
+	FlavorText: O usuário golpeia o alvo com uma cauda ou algo do tipo. O alvo é atingido duas vezes seguidas.
+}
+
+RoarOfTime: {
+	DisplayName: Roar of Time
+	FlavorText: O usuário atinge o alvo com um poder que distorce até o tempo. O usuário não pode se mover no turno seguinte.
+}
+
+SpacialRend: {
+	DisplayName: Spacial Rend
+	FlavorText: O usuário rasga o alvo junto com o espaço ao seu redor. Este golpe tem uma chance maior de acerto crítico.
+}
+
+LunarDance: {
+	DisplayName: Lunar Dance
+	FlavorText: O usuário desmaia. Em troca, o Pokémon que tomar seu lugar terá seus PS e PP restaurados e suas condições de status curadas.
+}
+
+CrushGrip: {
+	DisplayName: Crush Grip
+	FlavorText: O alvo é esmagado com grande força. Quanto mais PS o alvo ainda tiver, maior o poder do golpe.
+}
+
+MagmaStorm: {
+	DisplayName: Magma Storm
+	FlavorText: O usuário prende o alvo em um turbilhão de fogo que causa dano por quatro a cinco turnos.
+}
+
+DarkVoid: {
+	DisplayName: Dark Void
+	FlavorText: Os Pokémon adversários são arrastados para um mundo de escuridão total que os faz adormecer.
+}
+
+SeedFlare: {
+	DisplayName: Seed Flare
+	FlavorText: O usuário emite uma onda de choque de seu corpo para atacar o alvo. Também pode diminuir drasticamente a Defesa Especial do alvo.
+}
+
+OminousWind: {
+	DisplayName: Ominous Wind
+	FlavorText: O usuário atinge o alvo com uma rajada de vento repulsivo. Também pode aumentar todos os atributos do usuário de uma só vez.
+}
+
+ShadowForce: {
+	DisplayName: Shadow Force
+	FlavorText: O usuário desaparece no primeiro turno e ataca no turno seguinte. Este golpe acerta mesmo que o alvo se proteja.
+}
+
+HoneClaws: {
+	DisplayName: Hone Claws
+	FlavorText: O usuário afia suas garras para aumentar seu Ataque e sua Precisão.
+}
+
+WideGuard: {
+	DisplayName: Wide Guard
+	FlavorText: O usuário e seus aliados ficam protegidos de ataques de grande alcance por um turno.
+}
+
+GuardSplit: {
+	DisplayName: Guard Split
+	FlavorText: O usuário emprega seu poder psíquico para tirar a média de sua Defesa e Defesa Especial com as do alvo.
+}
+
+PowerSplit: {
+	DisplayName: Power Split
+	FlavorText: O usuário emprega seu poder psíquico para tirar a média de seu Ataque e Ataque Especial com os do alvo.
+}
+
+WonderRoom: {
+	DisplayName: Wonder Room
+	FlavorText: O usuário cria uma área bizarra em que a Defesa e a Defesa Especial dos Pokémon são trocadas por cinco turnos.
+}
+
+Psyshock: {
+	DisplayName: Psyshock
+	FlavorText: O usuário materializa uma estranha onda psíquica para atacar o alvo. Este golpe causa dano físico.
+}
+
+Venoshock: {
+	DisplayName: Venoshock
+	FlavorText: O usuário encharca o alvo com um líquido venenoso especial. O poder deste golpe é dobrado se o alvo estiver envenenado.
+}
+
+Autotomize: {
+	DisplayName: Autotomize
+	FlavorText: O usuário se desfaz de parte do corpo para ficar mais leve e aumentar bastante sua Velocidade.
+}
+
+RagePowder: {
+	DisplayName: Rage Powder
+	FlavorText: O usuário espalha uma nuvem de pó irritante para chamar a atenção para si. Os Pokémon adversários miram apenas no usuário.
+}
+
+Telekinesis: {
+	DisplayName: Telekinesis
+	FlavorText: O usuário faz o alvo flutuar com seu poder psíquico. O alvo fica mais fácil de acertar por três turnos.
+}
+
+MagicRoom: {
+	DisplayName: Magic Room
+	FlavorText: O usuário cria uma área bizarra em que os itens seguros dos Pokémon perdem seus efeitos por cinco turnos.
+}
+
+SmackDown: {
+	DisplayName: Smack Down
+	FlavorText: O usuário arremessa uma pedra ou projétil semelhante para atacar o alvo. Se o alvo estiver no ar, ele será derrubado no chão.
+}
+
+StormThrow: {
+	DisplayName: Storm Throw
+	FlavorText: O usuário atinge o alvo com um golpe feroz. Este ataque sempre resulta em um acerto crítico.
+}
+
+FlameBurst: {
+	DisplayName: Flame Burst
+	FlavorText: O usuário ataca o alvo com uma chama explosiva. A chama explosiva também causa dano aos Pokémon ao lado do alvo.
+}
+
+SludgeWave: {
+	DisplayName: Sludge Wave
+	FlavorText: O usuário atinge tudo ao seu redor inundando a área com uma onda gigante de lodo. Também pode envenenar os atingidos.
+}
+
+QuiverDance: {
+	DisplayName: Quiver Dance
+	FlavorText: O usuário executa suavemente uma bela dança mística. Aumenta o Ataque Especial, a Defesa Especial e a Velocidade do usuário.
+}
+
+HeavySlam: {
+	DisplayName: Heavy Slam
+	FlavorText: O usuário se choca contra o alvo com seu corpo pesado. Quanto mais o usuário pesar em relação ao alvo, maior o poder do golpe.
+}
+
+Synchronoise: {
+	DisplayName: Synchronoise
+	FlavorText: Usando uma estranha onda de choque, o usuário causa dano a qualquer Pokémon do mesmo tipo na área ao seu redor.
+}
+
+ElectroBall: {
+	DisplayName: Electro Ball
+	FlavorText: O usuário arremessa uma esfera elétrica contra o alvo. Quanto mais rápido o usuário for em relação ao alvo, maior o poder do golpe.
+}
+
+Soak: {
+	DisplayName: Soak
+	FlavorText: O usuário dispara uma torrente de água que muda o tipo do alvo para Água.
+}
+
+FlameCharge: {
+	DisplayName: Flame Charge
+	FlavorText: Envolvendo-se em chamas, o usuário ataca o alvo. Depois, ganhando impulso, o usuário aumenta sua Velocidade.
+}
+
+Coil: {
+	DisplayName: Coil
+	FlavorText: O usuário se enrola e se concentra. Aumenta seu Ataque, sua Defesa e sua Precisão.
+}
+
+LowSweep: {
+	DisplayName: Low Sweep
+	FlavorText: O usuário faz um ataque veloz às pernas do alvo, o que diminui a Velocidade do alvo.
+}
+
+AcidSpray: {
+	DisplayName: Acid Spray
+	FlavorText: O usuário ataca cuspindo um fluido que derrete o alvo. Também diminui drasticamente a Defesa Especial do alvo.
+}
+
+FoulPlay: {
+	DisplayName: Foul Play
+	FlavorText: O usuário usa a força do alvo contra ele. Quanto maior o Ataque do alvo, maior o dano causado por este golpe.
+}
+
+SimpleBeam: {
+	DisplayName: Simple Beam
+	FlavorText: O usuário emite uma misteriosa onda psíquica que muda a Habilidade do alvo para Simple.
+}
+
+Entrainment: {
+	DisplayName: Entrainment
+	FlavorText: O usuário dança em um ritmo estranho que obriga o alvo a imitá-lo, tornando a Habilidade do alvo igual à do usuário.
+}
+
+AfterYou: {
+	DisplayName: After You
+	FlavorText: O usuário ajuda o alvo e o faz usar seu golpe logo após o usuário.
+}
+
+Round: {
+	DisplayName: Round
+	FlavorText: O usuário ataca o alvo com uma canção. Se outros usarem este golpe, agirão imediatamente após o usuário inicial, e o poder de seus Rounds será aumentado.
+}
+
+EchoedVoice: {
+	DisplayName: Echoed Voice
+	FlavorText: O usuário ataca o alvo com uma voz ecoante. Se este golpe for usado consecutivamente por qualquer Pokémon, seu poder é aumentado.
+}
+
+ChipAway: {
+	DisplayName: Chip Away
+	FlavorText: Procurando uma brecha, o usuário ataca de forma constante. As mudanças de atributos do alvo não afetam o dano deste ataque.
+}
+
+ClearSmog: {
+	DisplayName: Clear Smog
+	FlavorText: O usuário ataca o alvo jogando um punhado de lama especial. Todas as mudanças de atributos são eliminadas.
+}
+
+StoredPower: {
+	DisplayName: Stored Power
+	FlavorText: O usuário ataca o alvo com poder acumulado. Quanto mais os atributos do usuário forem aumentados, maior o poder do golpe.
+}
+
+QuickGuard: {
+	DisplayName: Quick Guard
+	FlavorText: O usuário protege a si mesmo e seus aliados de golpes de prioridade.
+}
+
+AllySwitch: {
+	DisplayName: Ally Switch
+	FlavorText: O usuário se teletransporta usando um poder estranho e troca de lugar com um de seus aliados. A chance de falhar aumenta se for usado em sequência.
+}
+
+Scald: {
+	DisplayName: Scald
+	FlavorText: O usuário ataca disparando água fervente contra o alvo. Também pode deixar o alvo com uma queimadura.
+}
+
+ShellSmash: {
+	DisplayName: Shell Smash
+	FlavorText: O usuário quebra sua carapaça, o que diminui sua Defesa e Defesa Especial, mas aumenta bastante seu Ataque, Ataque Especial e Velocidade.
+}
+
+HealPulse: {
+	DisplayName: Heal Pulse
+	FlavorText: O usuário emite um pulso de cura que restaura os PS do alvo em até metade de seus PS máximos.
+}
+
+Hex: {
+	DisplayName: Hex
+	FlavorText: Este ataque implacável causa dano enorme a um alvo afetado por condições de status.
+}
+
+SkyDrop: {
+	DisplayName: Sky Drop
+	FlavorText: O usuário leva o alvo para o céu e o larga durante o turno seguinte. O alvo não pode atacar enquanto estiver no céu.
+}
+
+ShiftGear: {
+	DisplayName: Shift Gear
+	FlavorText: O usuário gira suas engrenagens, aumentando seu Ataque e aumentando bastante sua Velocidade.
+}
+
+CircleThrow: {
+	DisplayName: Circle Throw
+	FlavorText: O alvo é arremessado e outro Pokémon é puxado para a batalha. Contra um único Pokémon selvagem, encerra a batalha.
+}
+
+Incinerate: {
+	DisplayName: Incinerate
+	FlavorText: O usuário ataca os Pokémon adversários com fogo. Se um Pokémon estiver segurando certos itens, como uma Berry, o item é queimado e fica inutilizável.
+}
+
+Quash: {
+	DisplayName: Quash
+	FlavorText: O usuário suprime o alvo e faz com que seu golpe seja o último a agir.
+}
+
+Acrobatics: {
+	DisplayName: Acrobatics
+	FlavorText: O usuário golpeia o alvo com agilidade. Este ataque causa dano enorme se o usuário não estiver segurando um item.
+}
+
+ReflectType: {
+	DisplayName: Reflect Type
+	FlavorText: O usuário reflete o tipo do alvo para se tornar do mesmo tipo que ele.
+}
+
+Retaliate: {
+	DisplayName: Retaliate
+	FlavorText: O usuário se vinga de um aliado que desmaiou. O poder deste golpe é aumentado se um aliado tiver desmaiado no turno anterior.
+}
+
+FinalGambit: {
+	DisplayName: Final Gambit
+	FlavorText: O usuário arrisca tudo para atacar o alvo. O usuário desmaia, mas causa dano igual aos seus próprios PS.
+}
+
+Bestow: {
+	DisplayName: Bestow
+	FlavorText: O usuário passa seu item seguro ao alvo quando o alvo não está segurando um item.
+}
+
+Inferno: {
+	DisplayName: Inferno
+	FlavorText: O usuário ataca envolvendo o alvo em um fogo intenso. Isso deixa o alvo com uma queimadura.
+}
+
+WaterPledge: {
+	DisplayName: Water Pledge
+	FlavorText: Uma coluna de água atinge o alvo. Quando usado junto com seu equivalente de fogo, o poder deste golpe é aumentado e um arco-íris aparece.
+}
+
+FirePledge: {
+	DisplayName: Fire Pledge
+	FlavorText: Uma coluna de fogo atinge o alvo. Quando usado junto com seu equivalente de planta, o poder deste golpe é aumentado e um vasto mar de fogo aparece.
+}
+
+GrassPledge: {
+	DisplayName: Grass Pledge
+	FlavorText: Uma coluna de planta atinge o alvo. Quando usado junto com seu equivalente de água, o poder deste golpe é aumentado e um vasto pântano aparece.
+}
+
+VoltSwitch: {
+	DisplayName: Volt Switch
+	FlavorText: Após realizar seu ataque, o usuário volta correndo para trocar de lugar com um Pokémon da equipe que esteja esperando.
+}
+
+StruggleBug: {
+	DisplayName: Struggle Bug
+	FlavorText: O usuário ataca esperneando contra os Pokémon adversários. Também diminui o Ataque Especial deles.
+}
+
+Bulldoze: {
+	DisplayName: Bulldoze
+	FlavorText: O usuário atinge tudo ao seu redor pisoteando o chão. Diminui a Velocidade dos atingidos.
+}
+
+FrostBreath: {
+	DisplayName: Frost Breath
+	FlavorText: O usuário ataca soprando seu hálito frio sobre o alvo. Este golpe sempre causa um acerto crítico.
+}
+
+DragonTail: {
+	DisplayName: Dragon Tail
+	FlavorText: O alvo é lançado para longe e outro Pokémon é puxado para a batalha. Contra um único Pokémon selvagem, encerra a batalha.
+}
+
+WorkUp: {
+	DisplayName: Work Up
+	FlavorText: O usuário se anima e seu Ataque e Ataque Especial aumentam.
+}
+
+Electroweb: {
+	DisplayName: Electroweb
+	FlavorText: O usuário captura os Pokémon adversários em uma rede elétrica para causar dano. Também diminui a Velocidade deles.
+}
+
+WildCharge: {
+	DisplayName: Wild Charge
+	FlavorText: O usuário se envolve em eletricidade e se choca contra o alvo. Também causa um pouco de dano ao usuário.
+}
+
+DrillRun: {
+	DisplayName: Drill Run
+	FlavorText: O usuário se choca contra o alvo girando o corpo como uma broca. Este golpe tem uma chance maior de acerto crítico.
+}
+
+DualChop: {
+	DisplayName: Dual Chop
+	FlavorText: O usuário ataca o alvo com golpes brutais. O alvo é atingido duas vezes seguidas.
+}
+
+HeartStamp: {
+	DisplayName: Heart Stamp
+	FlavorText: O usuário desfere um golpe cruel depois que sua atuação fofa deixa o alvo menos cauteloso. Também pode fazer o alvo recuar.
+}
+
+HornLeech: {
+	DisplayName: Horn Leech
+	FlavorText: O usuário drena a energia do alvo com seus chifres. Os PS do usuário são restaurados em até metade do dano sofrido pelo alvo.
+}
+
+SacredSword: {
+	DisplayName: Sacred Sword
+	FlavorText: O usuário ataca cortando com uma espada. As mudanças de atributos do alvo não afetam o dano causado por este golpe.
+}
+
+RazorShell: {
+	DisplayName: Razor Shell
+	FlavorText: O usuário corta o alvo com conchas afiadas para causar dano. Também pode diminuir a Defesa do alvo.
+}
+
+HeatCrash: {
+	DisplayName: Heat Crash
+	FlavorText: O usuário se choca contra o alvo com seu corpo coberto de chamas. Quanto mais o usuário pesar em relação ao alvo, maior o poder do golpe.
+}
+
+LeafTornado: {
+	DisplayName: Leaf Tornado
+	FlavorText: O usuário ataca o alvo cercando-o com folhas afiadas. Este ataque também pode diminuir a Precisão do alvo.
+}
+
+Steamroller: {
+	DisplayName: Steamroller
+	FlavorText: O usuário esmaga o alvo passando por cima dele com o corpo enrolado. Também pode fazer o alvo recuar.
+}
+
+CottonGuard: {
+	DisplayName: Cotton Guard
+	FlavorText: O usuário se protege envolvendo o corpo em algodão macio, aumentando drasticamente sua Defesa.
+}
+
+NightDaze: {
+	DisplayName: Night Daze
+	FlavorText: O usuário solta uma onda de choque negra como breu contra o alvo para causar dano. Também pode diminuir a Precisão do alvo.
+}
+
+Psystrike: {
+	DisplayName: Psystrike
+	FlavorText: O usuário materializa uma estranha onda psíquica para atacar o alvo. Este golpe causa dano físico.
+}
+
+TailSlap: {
+	DisplayName: Tail Slap
+	FlavorText: O usuário ataca golpeando o alvo com sua cauda dura. Este golpe acerta de duas a cinco vezes seguidas.
+}
+
+Hurricane: {
+	DisplayName: Hurricane
+	FlavorText: O usuário ataca envolvendo o oponente em um vento feroz. Também pode confundir o alvo.
+}
+
+HeadCharge: {
+	DisplayName: Head Charge
+	FlavorText: O usuário investe com a cabeça contra o alvo, usando seus poderosos pelos protetores. Também causa um pouco de dano ao usuário.
+}
+
+GearGrind: {
+	DisplayName: Gear Grind
+	FlavorText: O usuário ataca arremessando engrenagens de aço contra o alvo duas vezes.
+}
+
+SearingShot: {
+	DisplayName: Searing Shot
+	FlavorText: O usuário incinera tudo ao seu redor em um inferno de chamas escarlates. Também pode deixar com uma queimadura os atingidos.
+}
+
+TechnoBlast: {
+	DisplayName: Techno Blast
+	FlavorText: O usuário dispara um raio de luz contra o alvo. O tipo do golpe muda dependendo do Módulo que o usuário estiver segurando.
+}
+
+RelicSong: {
+	DisplayName: Relic Song
+	FlavorText: O usuário canta uma canção ancestral e ataca apelando para o coração dos Pokémon adversários que a ouvem. Também pode induzir o sono.
+}
+
+SecretSword: {
+	DisplayName: Secret Sword
+	FlavorText: O usuário corta com seu longo chifre. O estranho poder contido no chifre causa dano físico ao alvo.
+}
+
+Glaciate: {
+	DisplayName: Glaciate
+	FlavorText: O usuário ataca soprando ar congelante sobre os Pokémon adversários. Também diminui a Velocidade deles.
+}
+
+BoltStrike: {
+	DisplayName: Bolt Strike
+	FlavorText: O usuário se cerca de uma grande quantidade de eletricidade e investe contra o alvo. Também pode deixar o alvo paralisado.
+}
+
+BlueFlare: {
+	DisplayName: Blue Flare
+	FlavorText: O usuário ataca envolvendo o alvo em uma chama azul intensa, porém bela. Também pode deixar o alvo com uma queimadura.
+}
+
+FieryDance: {
+	DisplayName: Fiery Dance
+	FlavorText: Envolto em chamas, o usuário ataca o alvo dançando e batendo as asas. Também pode aumentar o Ataque Especial do usuário.
+}
+
+FreezeShock: {
+	DisplayName: Freeze Shock
+	FlavorText: No turno seguinte ao uso deste golpe, o usuário atinge o alvo com gelo carregado de eletricidade para causar dano. Também pode deixar o alvo paralisado.
+}
+
+IceBurn: {
+	DisplayName: Ice Burn
+	FlavorText: No turno seguinte ao uso deste golpe, o usuário cerca o alvo com um vento ultrafrio e congelante para causar dano. Também pode deixar o alvo com uma queimadura.
+}
+
+Snarl: {
+	DisplayName: Snarl
+	FlavorText: O usuário grita como se estivesse esbravejando sobre algo, o que diminui o Ataque Especial dos Pokémon adversários.
+}
+
+IcicleCrash: {
+	DisplayName: Icicle Crash
+	FlavorText: O usuário ataca despencando grandes pontas de gelo sobre o alvo. Também pode fazer o alvo recuar.
+}
+
+VCreate: {
+	DisplayName: V-create
+	FlavorText: Com uma chama ardente na testa, o usuário se lança contra o alvo. Diminui a Defesa, a Defesa Especial e a Velocidade do usuário.
+}
+
+FusionFlare: {
+	DisplayName: Fusion Flare
+	FlavorText: O usuário faz cair uma chama gigante. O poder deste golpe é aumentado quando influenciado por um enorme raio.
+}
+
+FusionBolt: {
+	DisplayName: Fusion Bolt
+	FlavorText: O usuário lança um raio gigante. O poder deste golpe é aumentado quando influenciado por uma enorme chama.
+}
+
+FlyingPress: {
+	DisplayName: Flying Press
+	FlavorText: O usuário mergulha do céu sobre o alvo. Este golpe é dos tipos Lutador e Voador ao mesmo tempo.
+}
+
+MatBlock: {
+	DisplayName: Mat Block
+	FlavorText: Usando um tatame erguido como escudo, o usuário protege a si mesmo e seus aliados de golpes que causam dano. Não impede golpes de status.
+}
+
+Belch: {
+	DisplayName: Belch
+	FlavorText: O usuário solta um arroto que causa dano ao alvo. O usuário precisa comer uma Berry que esteja segurando para usar este golpe.
+}
+
+Rototiller: {
+	DisplayName: Rototiller
+	FlavorText: Arando o solo, o usuário facilita o crescimento das plantas. Aumenta o Ataque e o Ataque Especial dos Pokémon do tipo Planta.
+}
+
+StickyWeb: {
+	DisplayName: Sticky Web
+	FlavorText: O usuário tece uma rede pegajosa ao redor da equipe adversária, que diminui a Velocidade dos Pokémon ao entrarem em batalha.
+}
+
+FellStinger: {
+	DisplayName: Fell Stinger
+	FlavorText: Quando o usuário nocauteia um alvo com este golpe, o Ataque do usuário aumenta drasticamente.
+}
+
+PhantomForce: {
+	DisplayName: Phantom Force
+	FlavorText: O usuário desaparece em algum lugar e ataca o alvo no turno seguinte. Este golpe acerta mesmo que o alvo se proteja.
+}
+
+TrickOrTreat: {
+	DisplayName: Trick-or-Treat
+	FlavorText: O usuário leva o alvo para pedir doces ou travessuras. Isso adiciona o tipo Fantasma ao tipo do alvo.
+}
+
+NobleRoar: {
+	DisplayName: Noble Roar
+	FlavorText: Soltando um rugido nobre, o usuário intimida o alvo e diminui o Ataque e o Ataque Especial dele.
+}
+
+IonDeluge: {
+	DisplayName: Ion Deluge
+	FlavorText: O usuário dispersa partículas carregadas de eletricidade, o que transforma golpes do tipo Normal em golpes do tipo Elétrico.
+}
+
+ParabolicCharge: {
+	DisplayName: Parabolic Charge
+	FlavorText: O usuário ataca tudo ao seu redor. Os PS do usuário são restaurados em metade do dano sofrido pelos atingidos.
+}
+
+ForestsCurse: {
+	DisplayName: Forest's Curse
+	FlavorText: O usuário lança uma maldição da floresta sobre o alvo. Isso adiciona o tipo Planta ao tipo do alvo.
+}
+
+PetalBlizzard: {
+	DisplayName: Petal Blizzard
+	FlavorText: O usuário cria uma violenta nevasca de pétalas e causa dano a tudo ao seu redor.
+}
+
+FreezeDry: {
+	DisplayName: Freeze-Dry
+	FlavorText: O usuário resfria rapidamente o alvo. Também pode deixar o alvo congelado. Este golpe é supereficaz contra os tipos Água.
+}
+
+DisarmingVoice: {
+	DisplayName: Disarming Voice
+	FlavorText: Soltando um grito encantador, o usuário causa dano emocional aos Pokémon adversários. Este ataque nunca erra.
+}
+
+PartingShot: {
+	DisplayName: Parting Shot
+	FlavorText: Com uma ameaça de despedida, o usuário diminui o Ataque e o Ataque Especial do alvo. Depois, troca de lugar com um Pokémon da equipe que esteja esperando.
+}
+
+TopsyTurvy: {
+	DisplayName: Topsy-Turvy
+	FlavorText: Todas as mudanças de atributos que afetam o alvo se invertem e se tornam o oposto do que eram.
+}
+
+DrainingKiss: {
+	DisplayName: Draining Kiss
+	FlavorText: O usuário rouba os PS do alvo com um beijo. Os PS do usuário são restaurados em mais da metade do dano sofrido pelo alvo.
+}
+
+CraftyShield: {
+	DisplayName: Crafty Shield
+	FlavorText: O usuário protege a si mesmo e seus aliados de golpes de status com um poder misterioso. Não impede golpes que causam dano.
+}
+
+FlowerShield: {
+	DisplayName: Flower Shield
+	FlavorText: O usuário aumenta a Defesa de todos os Pokémon do tipo Planta em batalha com um poder misterioso.
+}
+
+GrassyTerrain: {
+	DisplayName: Grassy Terrain
+	FlavorText: O usuário transforma o chão em Campo de Grama por cinco turnos. Isso restaura um pouco dos PS dos Pokémon no chão a cada turno e fortalece os golpes do tipo Planta.
+}
+
+MistyTerrain: {
+	DisplayName: Misty Terrain
+	FlavorText: Isso protege os Pokémon no chão de condições de status e reduz pela metade o dano de golpes do tipo Dragão por cinco turnos.
+}
+
+Electrify: {
+	DisplayName: Electrify
+	FlavorText: Se o alvo for eletrificado antes de usar um golpe naquele turno, o golpe do alvo se torna do tipo Elétrico.
+}
+
+PlayRough: {
+	DisplayName: Play Rough
+	FlavorText: O usuário ataca brincando de forma bruta com o alvo. Também pode diminuir o Ataque do alvo.
+}
+
+FairyWind: {
+	DisplayName: Fairy Wind
+	FlavorText: O usuário ataca criando um vento de fada para atingir o alvo.
+}
+
+Moonblast: {
+	DisplayName: Moonblast
+	FlavorText: Tomando emprestado o poder da lua, o usuário ataca o alvo. Também pode diminuir o Ataque Especial do alvo.
+}
+
+Boomburst: {
+	DisplayName: Boomburst
+	FlavorText: O usuário ataca tudo ao seu redor com o poder destrutivo de um terrível som explosivo.
+}
+
+FairyLock: {
+	DisplayName: Fairy Lock
+	FlavorText: Trancando o campo de batalha, o usuário impede que todos os Pokémon fujam durante o turno seguinte.
+}
+
+KingsShield: {
+	DisplayName: King's Shield
+	FlavorText: O usuário assume uma postura defensiva enquanto se protege de dano. Também diminui o Ataque de qualquer atacante que faça contato direto.
+}
+
+PlayNice: {
+	DisplayName: Play Nice
+	FlavorText: O usuário e o alvo se tornam amigos e o alvo perde a vontade de lutar. Diminui o Ataque do alvo.
+}
+
+Confide: {
+	DisplayName: Confide
+	FlavorText: O usuário conta um segredo ao alvo e o alvo perde a capacidade de se concentrar. Diminui o Ataque Especial do alvo.
+}
+
+DiamondStorm: {
+	DisplayName: Diamond Storm
+	FlavorText: O usuário cria uma tempestade de diamantes para causar dano aos Pokémon adversários. Também pode aumentar bastante a Defesa do usuário.
+}
+
+SteamEruption: {
+	DisplayName: Steam Eruption
+	FlavorText: O usuário mergulha o alvo em vapor superaquecido. Também pode deixar o alvo com uma queimadura.
+}
+
+HyperspaceHole: {
+	DisplayName: Hyperspace Hole
+	FlavorText: Usando um buraco no hiperespaço, o usuário aparece bem ao lado do alvo e ataca. Este ataque pode atingir um alvo que esteja usando um golpe como Protect ou Detect.
+}
+
+WaterShuriken: {
+	DisplayName: Water Shuriken
+	FlavorText: O usuário atinge o alvo com estrelas ninja de duas a cinco vezes seguidas. Este golpe sempre age primeiro.
+}
+
+MysticalFire: {
+	DisplayName: Mystical Fire
+	FlavorText: O usuário ataca soprando um fogo quente especial. Também diminui o Ataque Especial do alvo.
+}
+
+SpikyShield: {
+	DisplayName: Spiky Shield
+	FlavorText: Além de proteger o usuário de ataques, este golpe também causa dano a qualquer atacante que faça contato direto.
+}
+
+AromaticMist: {
+	DisplayName: Aromatic Mist
+	FlavorText: O usuário aumenta a Defesa Especial de um Pokémon aliado usando um aroma misterioso.
+}
+
+EerieImpulse: {
+	DisplayName: Eerie Impulse
+	FlavorText: O corpo do usuário gera um impulso sinistro. Expor o alvo a ele diminui drasticamente o Ataque Especial do alvo.
+}
+
+VenomDrench: {
+	DisplayName: Venom Drench
+	FlavorText: Os Pokémon adversários são encharcados com um estranho líquido venenoso. Diminui o Ataque, o Ataque Especial e a Velocidade de um alvo envenenado.
+}
+
+Powder: {
+	DisplayName: Powder
+	FlavorText: O usuário cobre o alvo com um pó combustível. Se o alvo usar um golpe do tipo Fogo, o pó explode e causa dano ao alvo.
+}
+
+Geomancy: {
+	DisplayName: Geomancy
+	FlavorText: O usuário absorve energia e, no turno seguinte, aumenta bastante seu Ataque Especial, Defesa Especial e Velocidade.
+}
+
+MagneticFlux: {
+	DisplayName: Magnetic Flux
+	FlavorText: O usuário manipula campos magnéticos, o que aumenta a Defesa e a Defesa Especial de Pokémon aliados com a Habilidade Plus ou Minus.
+}
+
+HappyHour: {
+	DisplayName: Happy Hour
+	FlavorText: Usar Happy Hour dobra a quantidade de dinheiro recebida como prêmio após a batalha.
+}
+
+ElectricTerrain: {
+	DisplayName: Electric Terrain
+	FlavorText: O usuário transforma o chão em Campo Elétrico por cinco turnos, fortalecendo os golpes do tipo Elétrico. Os Pokémon no chão não conseguem mais adormecer.
+}
+
+DazzlingGleam: {
+	DisplayName: Dazzling Gleam
+	FlavorText: O usuário causa dano aos Pokémon adversários emitindo um poderoso clarão.
+}
+
+Celebrate: {
+	DisplayName: Celebrate
+	FlavorText: O Pokémon parabeniza você pelo seu dia especial!
+}
+
+HoldHands: {
+	DisplayName: Hold Hands
+	FlavorText: O usuário e um aliado dão as mãos. Isso os deixa muito felizes.
+}
+
+BabyDollEyes: {
+	DisplayName: Baby-Doll Eyes
+	FlavorText: O usuário encara o alvo com seus olhos de boneca, o que diminui o Ataque do alvo. Este golpe sempre age primeiro.
+}
+
+Nuzzle: {
+	DisplayName: Nuzzle
+	FlavorText: O usuário ataca esfregando suas bochechas eletrizadas no alvo. Também deixa o alvo paralisado.
+}
+
+HoldBack: {
+	DisplayName: Hold Back
+	FlavorText: O usuário se contém ao atacar e o alvo fica com pelo menos 1 PS.
+}
+
+Infestation: {
+	DisplayName: Infestation
+	FlavorText: O alvo é infestado e atacado por quatro a cinco turnos. O alvo não pode fugir durante esse tempo.
+}
+
+PowerUpPunch: {
+	DisplayName: Power-Up Punch
+	FlavorText: Golpear os oponentes repetidamente endurece os punhos do usuário. Acertar um alvo aumenta o Ataque.
+}
+
+OblivionWing: {
+	DisplayName: Oblivion Wing
+	FlavorText: O usuário absorve os PS do alvo. Os PS do usuário são restaurados em mais da metade do dano sofrido pelo alvo.
+}
+
+ThousandArrows: {
+	DisplayName: Thousand Arrows
+	FlavorText: Este golpe também atinge Pokémon adversários que estejam no ar. Esses Pokémon são derrubados no chão.
+}
+
+ThousandWaves: {
+	DisplayName: Thousand Waves
+	FlavorText: O usuário ataca com uma onda que rasteja pelo chão. Os atingidos não podem fugir da batalha.
+}
+
+LandsWrath: {
+	DisplayName: Land's Wrath
+	FlavorText: O usuário reúne a energia da terra e concentra esse poder nos Pokémon adversários para causar dano.
+}
+
+LightOfRuin: {
+	DisplayName: Light of Ruin
+	FlavorText: Extraindo poder da Eternal Flower, o usuário dispara um poderoso raio de luz. Também causa muito dano ao usuário.
+}
+
+OriginPulse: {
+	DisplayName: Origin Pulse
+	FlavorText: O usuário ataca os Pokémon adversários com incontáveis raios de luz que brilham em um azul profundo e brilhante.
+}
+
+PrecipiceBlades: {
+	DisplayName: Precipice Blades
+	FlavorText: O usuário ataca os Pokémon adversários manifestando o poder da terra em temíveis lâminas de pedra.
+}
+
+DragonAscent: {
+	DisplayName: Dragon Ascent
+	FlavorText: O usuário ataca o alvo despencando do céu em alta velocidade. Também diminui a Defesa e a Defesa Especial do usuário.
+}
+
+HyperspaceFury: {
+	DisplayName: Hyperspace Fury
+	FlavorText: Usando seus muitos braços, o usuário desencadeia uma saraivada de ataques que ignoram os efeitos de golpes como Protect e Detect. Também diminui a Defesa do usuário.
+}
+
+BreakneckBlitz: {
+	DisplayName: Breakneck Blitz
+	FlavorText: O usuário acumula impulso usando seu Poder Z e se choca contra o alvo em velocidade máxima. O poder varia dependendo do golpe original.
+}
+
+AllOutPummeling: {
+	DisplayName: All-Out Pummeling
+	FlavorText: O usuário arremessa contra o alvo, com toda a força, uma esfera de energia criada por seu Poder Z. O poder varia dependendo do golpe original.
+}
+
+SupersonicSkystrike: {
+	DisplayName: Supersonic Skystrike
+	FlavorText: O usuário se eleva com seu Poder Z e despenca em direção ao alvo em velocidade máxima. O poder varia dependendo do golpe original.
+}
+
+AcidDownpour: {
+	DisplayName: Acid Downpour
+	FlavorText: O usuário cria um pântano venenoso usando seu Poder Z e afunda o alvo nele com toda a força. O poder varia dependendo do golpe original.
+}
+
+TectonicRage: {
+	DisplayName: Tectonic Rage
+	FlavorText: O usuário se enterra fundo no chão e se choca contra o alvo com toda a força de seu Poder Z. O poder varia dependendo do golpe original.
+}
+
+ContinentalCrush: {
+	DisplayName: Continental Crush
+	FlavorText: O usuário invoca uma enorme montanha de rocha usando seu Poder Z e a derruba sobre o alvo com toda a força. O poder varia dependendo do golpe original.
+}
+
+SavageSpinOut: {
+	DisplayName: Savage Spin-Out
+	FlavorText: O usuário prende o alvo com toda a força em fios de seda que cospe usando seu Poder Z. O poder varia dependendo do golpe original.
+}
+
+NeverEndingNightmare: {
+	DisplayName: Never-Ending Nightmare
+	FlavorText: Rancores profundos invocados pelo Poder Z do usuário aprisionam o alvo. O poder varia dependendo do golpe original.
+}
+
+CorkscrewCrash: {
+	DisplayName: Corkscrew Crash
+	FlavorText: O usuário gira muito rápido e se choca contra o alvo com toda a força de seu Poder Z. O poder varia dependendo do golpe original.
+}
+
+InfernoOverdrive: {
+	DisplayName: Inferno Overdrive
+	FlavorText: O usuário sopra uma torrente de fogo intenso contra o alvo com toda a força de seu Poder Z. O poder varia dependendo do golpe original.
+}
+
+HydroVortex: {
+	DisplayName: Hydro Vortex
+	FlavorText: O usuário cria uma enorme corrente giratória usando seu Poder Z para engolir o alvo com toda a força. O poder varia dependendo do golpe original.
+}
+
+BloomDoom: {
+	DisplayName: Bloom Doom
+	FlavorText: O usuário coleta energia das plantas usando seu Poder Z e ataca o alvo com toda a força. O poder varia dependendo do golpe original.
+}
+
+GigavoltHavoc: {
+	DisplayName: Gigavolt Havoc
+	FlavorText: O usuário atinge o alvo com uma poderosa corrente elétrica coletada por seu Poder Z. O poder varia dependendo do golpe original.
+}
+
+ShatteredPsyche: {
+	DisplayName: Shattered Psyche
+	FlavorText: O usuário controla o alvo com seu Poder Z e o machuca com toda a força. O poder varia dependendo do golpe original.
+}
+
+SubzeroSlammer: {
+	DisplayName: Subzero Slammer
+	FlavorText: O usuário derruba drasticamente a temperatura usando seu Poder Z e congela o alvo com toda a força. O poder varia dependendo do golpe original.
+}
+
+DevastatingDrake: {
+	DisplayName: Devastating Drake
+	FlavorText: O usuário materializa sua aura usando seu Poder Z e ataca o alvo com toda a força. O poder varia dependendo do golpe original.
+}
+
+BlackHoleEclipse: {
+	DisplayName: Black Hole Eclipse
+	FlavorText: O usuário reúne energia sombria usando seu Poder Z e suga o alvo para dentro dela. O poder varia dependendo do golpe original.
+}
+
+TwinkleTackle: {
+	DisplayName: Twinkle Tackle
+	FlavorText: O usuário cria um espaço muito encantador usando seu Poder Z e brinca totalmente com o alvo. O poder varia dependendo do golpe original.
+}
+
+Catastropika: {
+	DisplayName: Catastropika
+	FlavorText: O usuário, Pikachu, se cerca com a quantidade máxima de eletricidade usando seu Poder Z e salta sobre o alvo com toda a força.
+}
+
+ShoreUp: {
+	DisplayName: Shore Up
+	FlavorText: O usuário restaura seus próprios PS em até metade de seus PS máximos. Recupera mais PS durante uma tempestade de areia.
+}
+
+FirstImpression: {
+	DisplayName: First Impression
+	FlavorText: Embora este golpe tenha grande poder, só funciona no primeiro turno de cada vez que o usuário entra em batalha.
+}
+
+BanefulBunker: {
+	DisplayName: Baneful Bunker
+	FlavorText: Além de proteger o usuário de ataques, este golpe também envenena qualquer atacante que faça contato direto.
+}
+
+SpiritShackle: {
+	DisplayName: Spirit Shackle
+	FlavorText: O usuário ataca enquanto costura simultaneamente a sombra do alvo ao chão para impedi-lo de fugir.
+}
+
+DarkestLariat: {
+	DisplayName: Darkest Lariat
+	FlavorText: O usuário balança os dois braços e atinge o alvo. As mudanças de atributos do alvo não afetam o dano causado por este golpe.
+}
+
+SparklingAria: {
+	DisplayName: Sparkling Aria
+	FlavorText: O usuário rompe em canção, emitindo muitas bolhas. Qualquer Pokémon com queimadura será curado pelo toque dessas bolhas.
+}
+
+IceHammer: {
+	DisplayName: Ice Hammer
+	FlavorText: O usuário balança seu punho forte e pesado contra o alvo para causar dano. Também diminui a Velocidade do usuário.
+}
+
+FloralHealing: {
+	DisplayName: Floral Healing
+	FlavorText: O usuário restaura os PS do alvo em até metade de seus PS máximos. Mais PS são restaurados quando o chão é um Campo de Grama.
+}
+
+HighHorsepower: {
+	DisplayName: High Horsepower
+	FlavorText: O usuário ataca ferozmente o alvo usando o corpo inteiro.
+}
+
+StrengthSap: {
+	DisplayName: Strength Sap
+	FlavorText: O usuário restaura seus próprios PS na mesma quantidade do Ataque do alvo. Depois, diminui o Ataque do alvo.
+}
+
+SolarBlade: {
+	DisplayName: Solar Blade
+	FlavorText: O usuário reúne luz no primeiro turno e então enche uma lâmina com a energia da luz e ataca no turno seguinte.
+}
+
+Leafage: {
+	DisplayName: Leafage
+	FlavorText: O usuário ataca bombardeando o alvo com folhas.
+}
+
+Spotlight: {
+	DisplayName: Spotlight
+	FlavorText: O usuário joga um holofote sobre o alvo para que apenas o alvo seja atacado durante o turno.
+}
+
+ToxicThread: {
+	DisplayName: Toxic Thread
+	FlavorText: O usuário dispara fios venenosos para envenenar o alvo e diminuir a Velocidade dele.
+}
+
+LaserFocus: {
+	DisplayName: Laser Focus
+	FlavorText: O usuário se concentra intensamente. O ataque do turno seguinte sempre resulta em um acerto crítico.
+}
+
+GearUp: {
+	DisplayName: Gear Up
+	FlavorText: O usuário aciona suas engrenagens para aumentar o Ataque e o Ataque Especial de Pokémon aliados com a Habilidade Plus ou Minus.
+}
+
+ThroatChop: {
+	DisplayName: Throat Chop
+	FlavorText: O usuário ataca a garganta do alvo, e o sofrimento resultante impede o alvo de usar golpes sonoros por dois turnos.
+}
+
+PollenPuff: {
+	DisplayName: Pollen Puff
+	FlavorText: O usuário ataca o inimigo com uma bola de pólen que explode. Se o alvo for um aliado, ele recebe uma bola de pólen que restaura seus PS.
+}
+
+AnchorShot: {
+	DisplayName: Anchor Shot
+	FlavorText: O usuário enrola o alvo com a corrente de sua âncora enquanto ataca. O alvo fica impossibilitado de fugir.
+}
+
+PsychicTerrain: {
+	DisplayName: Psychic Terrain
+	FlavorText: Isso protege os Pokémon no chão de golpes de prioridade e fortalece os golpes do tipo Psíquico por cinco turnos.
+}
+
+Lunge: {
+	DisplayName: Lunge
+	FlavorText: O usuário se lança contra o alvo, atacando com toda a força. Também diminui o Ataque do alvo.
+}
+
+FireLash: {
+	DisplayName: Fire Lash
+	FlavorText: O usuário atinge o alvo com um chicote em chamas. Também diminui a Defesa do alvo.
+}
+
+PowerTrip: {
+	DisplayName: Power Trip
+	FlavorText: O usuário se gaba de sua força e ataca o alvo. Quanto mais os atributos do usuário forem aumentados, maior o poder do golpe.
+}
+
+BurnUp: {
+	DisplayName: Burn Up
+	FlavorText: Para causar dano enorme, o usuário se consome por completo. Depois de usar este golpe, o usuário deixa de ser do tipo Fogo.
+}
+
+SpeedSwap: {
+	DisplayName: Speed Swap
+	FlavorText: O usuário troca de Velocidade com o alvo.
+}
+
+SmartStrike: {
+	DisplayName: Smart Strike
+	FlavorText: O usuário perfura o alvo com um chifre afiado. Este ataque nunca erra.
+}
+
+Purify: {
+	DisplayName: Purify
+	FlavorText: O usuário cura a condição de status do alvo. Se o golpe for bem-sucedido, também restaura os PS do próprio usuário.
+}
+
+RevelationDance: {
+	DisplayName: Revelation Dance
+	FlavorText: O usuário ataca o alvo dançando com todas as suas forças. Este golpe se torna do mesmo tipo do usuário.
+}
+
+CoreEnforcer: {
+	DisplayName: Core Enforcer
+	FlavorText: Se os Pokémon que o usuário atingiu já tiverem usado seus golpes, este golpe elimina o efeito da Habilidade do alvo.
+}
+
+TropKick: {
+	DisplayName: Trop Kick
+	FlavorText: O usuário acerta o alvo com um chute intenso de origem tropical. Também diminui o Ataque do alvo.
+}
+
+Instruct: {
+	DisplayName: Instruct
+	FlavorText: O usuário instrui o alvo a usar novamente o último golpe que o alvo usou.
+}
+
+BeakBlast: {
+	DisplayName: Beak Blast
+	FlavorText: O usuário primeiro aquece o bico e depois ataca o alvo. Fazer contato direto com o usuário enquanto ele aquece o bico causa queimadura.
+}
+
+ClangingScales: {
+	DisplayName: Clanging Scales
+	FlavorText: O usuário esfrega as escamas de todo o corpo e faz um barulho enorme para atacar os Pokémon adversários. A Defesa do usuário diminui após o ataque.
+}
+
+DragonHammer: {
+	DisplayName: Dragon Hammer
+	FlavorText: O usuário usa o próprio corpo como um martelo para atacar o alvo e causar dano.
+}
+
+BrutalSwing: {
+	DisplayName: Brutal Swing
+	FlavorText: O usuário balança o corpo violentamente para causar dano a tudo ao seu redor.
+}
+
+AuroraVeil: {
+	DisplayName: Aurora Veil
+	FlavorText: Este golpe reduz o dano de golpes físicos e especiais por cinco turnos. Só pode ser usado quando estiver nevando.
+}
+
+SinisterArrowRaid: {
+	DisplayName: Sinister Arrow Raid
+	FlavorText: O usuário, Decidueye, cria incontáveis flechas usando seu Poder Z e atira no alvo com toda a força.
+}
+
+MaliciousMoonsault: {
+	DisplayName: Malicious Moonsault
+	FlavorText: O usuário, Incineroar, fortalece o corpo usando seu Poder Z e se choca contra o alvo com toda a força.
+}
+
+OceanicOperetta: {
+	DisplayName: Oceanic Operetta
+	FlavorText: O usuário, Primarina, invoca uma quantidade enorme de água usando seu Poder Z e ataca o alvo com toda a força.
+}
+
+GuardianOfAlola: {
+	DisplayName: Guardian of Alola
+	FlavorText: O usuário, o Pokémon Espírito da Terra, obtém a energia de Alola usando seu Poder Z e ataca o alvo com toda a força. Reduz bastante os PS do alvo.
+}
+
+SoulStealing7StarStrike: {
+	DisplayName: Soul-Stealing 7-Star Strike
+	FlavorText: Após obter o Poder Z, o usuário, Marshadow, soca e chuta o alvo consecutivamente com toda a força.
+}
+
+StokedSparksurfer: {
+	DisplayName: Stoked Sparksurfer
+	FlavorText: Após obter o Poder Z, o usuário, Raichu de Alola, ataca o alvo com toda a força. Este golpe deixa o alvo paralisado.
+}
+
+PulverizingPancake: {
+	DisplayName: Pulverizing Pancake
+	FlavorText: O Poder Z revela as verdadeiras capacidades do usuário, Snorlax. O Pokémon move seu corpo enorme com energia e ataca o alvo com toda a força.
+}
+
+ExtremeEvoboost: {
+	DisplayName: Extreme Evoboost
+	FlavorText: Após obter o Poder Z, o usuário, Eevee, recebe energia de seus amigos evoluídos e aumenta bastante seus atributos.
+}
+
+GenesisSupernova: {
+	DisplayName: Genesis Supernova
+	FlavorText: Após obter o Poder Z, o usuário, Mew, ataca o alvo com toda a força. O terreno será carregado de energia psíquica.
+}
+
+ShellTrap: {
+	DisplayName: Shell Trap
+	FlavorText: O usuário arma uma armadilha de concha. Se o usuário for atingido por um golpe físico, a armadilha explode e causa dano aos Pokémon adversários.
+}
+
+FleurCannon: {
+	DisplayName: Fleur Cannon
+	FlavorText: O usuário libera um raio poderoso. O recuo deste golpe diminui drasticamente o Ataque Especial do usuário.
+}
+
+PsychicFangs: {
+	DisplayName: Psychic Fangs
+	FlavorText: O usuário ataca mordendo o alvo com suas capacidades psíquicas. Este golpe também pode quebrar barreiras, como Light Screen e Reflect.
+}
+
+StompingTantrum: {
+	DisplayName: Stomping Tantrum
+	FlavorText: Movido pela frustração, o usuário ataca o alvo. O poder deste golpe é dobrado se o golpe anterior do usuário tiver falhado.
+}
+
+ShadowBone: {
+	DisplayName: Shadow Bone
+	FlavorText: O usuário ataca golpeando o alvo com um osso que contém um espírito. Também pode diminuir a Defesa do alvo.
+}
+
+Accelerock: {
+	DisplayName: Accelerock
+	FlavorText: O usuário se choca contra o alvo em alta velocidade. Este golpe sempre age primeiro.
+}
+
+Liquidation: {
+	DisplayName: Liquidation
+	FlavorText: O usuário se choca contra o alvo usando uma rajada de água com toda a força. Também pode diminuir a Defesa do alvo.
+}
+
+PrismaticLaser: {
+	DisplayName: Prismatic Laser
+	FlavorText: O usuário dispara lasers poderosos usando o poder de um prisma. O usuário não pode se mover no turno seguinte.
+}
+
+SpectralThief: {
+	DisplayName: Spectral Thief
+	FlavorText: O usuário se esconde na sombra do alvo, rouba os aumentos de atributos do alvo e então ataca.
+}
+
+SunsteelStrike: {
+	DisplayName: Sunsteel Strike
+	FlavorText: O usuário se choca contra o alvo com a força de um meteoro. Este golpe pode ser usado no alvo independentemente de sua Habilidade.
+}
+
+MoongeistBeam: {
+	DisplayName: Moongeist Beam
+	FlavorText: O usuário emite um raio sinistro para atacar o alvo. Este golpe pode ser usado no alvo independentemente de sua Habilidade.
+}
+
+TearfulLook: {
+	DisplayName: Tearful Look
+	FlavorText: O usuário fica com os olhos marejados para fazer o alvo perder o espírito de luta. Diminui o Ataque e o Ataque Especial do alvo.
+}
+
+ZingZap: {
+	DisplayName: Zing Zap
+	FlavorText: O usuário se choca contra o alvo, dando um poderoso choque elétrico. Também pode fazer o alvo recuar.
+}
+
+NaturesMadness: {
+	DisplayName: Nature's Madness
+	FlavorText: O usuário atinge o alvo com a força da natureza. Reduz os PS do alvo pela metade.
+}
+
+MultiAttack: {
+	DisplayName: Multi-Attack
+	FlavorText: Envolvendo-se em alta energia, o usuário se choca contra o alvo. A Memória que segura determina o tipo do golpe.
+}
+
+ZThunderbolt: {
+	DisplayName: "10,000,000 Volt Thunderbolt"
+	FlavorText: O usuário, Pikachu com um boné, intensifica uma descarga de eletricidade usando seu Poder Z e a libera. Acertos críticos são mais fáceis de acontecer.
+}
+
+MindBlown: {
+	DisplayName: Mind Blown
+	FlavorText: O usuário ataca tudo ao seu redor fazendo a própria cabeça explodir. Também causa dano ao usuário.
+}
+
+PlasmaFists: {
+	DisplayName: Plasma Fists
+	FlavorText: O usuário ataca com punhos carregados de eletricidade. Este golpe transforma golpes do tipo Normal em golpes do tipo Elétrico.
+}
+
+PhotonGeyser: {
+	DisplayName: Photon Geyser
+	FlavorText: O usuário ataca o alvo com um pilar de luz. Este golpe causa dano usando o Ataque ou o Ataque Especial, o que for maior para o usuário.
+}
+
+LightThatBurnsTheSky: {
+	DisplayName: Light That Burns the Sky
+	FlavorText: Este ataque causa dano de Ataque ou Ataque Especial, o que for maior para o usuário, Necrozma. Este golpe ignora a Habilidade do alvo.
+}
+
+SearingSunrazeSmash: {
+	DisplayName: Searing Sunraze Smash
+	FlavorText: Após obter o Poder Z, o usuário, Solgaleo, ataca o alvo com toda a força. Este golpe pode ignorar o efeito da Habilidade do alvo.
+}
+
+MenacingMoonrazeMaelstrom: {
+	DisplayName: Menacing Moonraze Maelstrom
+	FlavorText: Após obter o Poder Z, o usuário, Lunala, ataca o alvo com toda a força. Este golpe pode ignorar o efeito da Habilidade do alvo.
+}
+
+LetsSnuggleForever: {
+	DisplayName: Let's Snuggle Forever
+	FlavorText: Após obter o Poder Z, o usuário, Mimikyu, soca o alvo com toda a força.
+}
+
+SplinteredStormshards: {
+	DisplayName: Splintered Stormshards
+	FlavorText: Após obter o Poder Z, o usuário, Lycanroc, ataca o alvo com toda a força. Este golpe anula o efeito presente no campo de batalha.
+}
+
+ClangorousSoulblaze: {
+	DisplayName: Clangorous Soulblaze
+	FlavorText: Após obter o Poder Z, o usuário, Kommo-o, ataca os Pokémon adversários com toda a força. Este golpe aumenta os atributos do usuário.
+}
+
+ZippyZap: {
+	DisplayName: Zippy Zap
+	FlavorText: O usuário ataca o alvo com rajadas de eletricidade em alta velocidade. Este golpe sempre age primeiro e resulta em um acerto crítico.
+}
+
+SplishySplash: {
+	DisplayName: Splishy Splash
+	FlavorText: O usuário carrega uma onda enorme com eletricidade e atinge os Pokémon adversários com ela. Também pode deixar os Pokémon adversários paralisados.
+}
+
+FloatyFall: {
+	DisplayName: Floaty Fall
+	FlavorText: O usuário flutua no ar e então mergulha em um ângulo íngreme para atacar o alvo. Também pode fazer o alvo recuar.
+}
+
+PikaPapow: {
+	DisplayName: Pika Papow
+	FlavorText: Quanto mais Pikachu ama seu Treinador, maior o poder do golpe. Nunca erra.
+}
+
+BouncyBubble: {
+	DisplayName: Bouncy Bubble
+	FlavorText: O usuário ataca disparando bolhas de água contra o alvo. Depois, absorve a água e restaura seus PS em metade do dano sofrido pelo alvo.
+}
+
+BuzzyBuzz: {
+	DisplayName: Buzzy Buzz
+	FlavorText: O usuário dispara uma descarga de eletricidade para atacar o alvo. Também deixa o alvo paralisado.
+}
+
+SizzlySlide: {
+	DisplayName: Sizzly Slide
+	FlavorText: O usuário se envolve em fogo e investe contra o alvo. Também deixa o alvo com uma queimadura.
+}
+
+GlitzyGlow: {
+	DisplayName: Glitzy Glow
+	FlavorText: O usuário bombardeia o alvo com força telecinética. Uma maravilhosa parede de luz é erguida para enfraquecer o poder dos golpes especiais dos Pokémon adversários.
+}
+
+BaddyBad: {
+	DisplayName: Baddy Bad
+	FlavorText: O usuário age com maldade e ataca o alvo. Uma maravilhosa parede de luz é erguida para enfraquecer o poder dos golpes físicos dos Pokémon adversários.
+}
+
+SappySeed: {
+	DisplayName: Sappy Seed
+	FlavorText: O usuário faz crescer um caule gigantesco que espalha sementes para atacar o alvo. As sementes drenam os PS do alvo a cada turno.
+}
+
+FreezyFrost: {
+	DisplayName: Freezy Frost
+	FlavorText: O usuário ataca com um cristal feito de névoa congelada e fria. Elimina todas as mudanças de atributos entre todos os Pokémon em batalha.
+}
+
+SparklySwirl: {
+	DisplayName: Sparkly Swirl
+	FlavorText: O usuário ataca o alvo envolvendo-o em um redemoinho de um aroma avassalador. Também cura todas as condições de status da equipe do usuário.
+}
+
+VeeveeVolley: {
+	DisplayName: Veevee Volley
+	FlavorText: Quanto mais Eevee ama seu Treinador, maior o poder do golpe. Nunca erra.
+}
+
+DoubleIronBash: {
+	DisplayName: Double Iron Bash
+	FlavorText: O usuário gira, centralizando a porca sextavada em seu peito, e então ataca com os braços duas vezes seguidas. Também pode fazer o alvo recuar.
+}
+
+MaxGuard: {
+	DisplayName: Max Guard
+	FlavorText: Este golpe permite ao usuário se proteger de todos os ataques. A chance de falhar aumenta se for usado em sequência.
+}
+
+DynamaxCannon: {
+	DisplayName: Dynamax Cannon
+	FlavorText: O usuário condensa energia dentro do corpo e libera essa energia de seu núcleo para causar dano.
+}
+
+SnipeShot: {
+	DisplayName: Snipe Shot
+	FlavorText: O usuário ignora os efeitos de golpes e Habilidades dos Pokémon adversários que atraem golpes, permitindo que este golpe acerte o alvo escolhido.
+}
+
+JawLock: {
+	DisplayName: Jaw Lock
+	FlavorText: Este golpe impede o usuário e o alvo de saírem da batalha até que um deles desmaie. O efeito desaparece se qualquer um dos Pokémon deixar o campo.
+}
+
+StuffCheeks: {
+	DisplayName: Stuff Cheeks
+	FlavorText: O usuário come a Berry que está segurando e então aumenta bastante sua Defesa.
+}
+
+NoRetreat: {
+	DisplayName: No Retreat
+	FlavorText: Este golpe aumenta todos os atributos do usuário, mas o impede de sair da batalha ou fugir.
+}
+
+TarShot: {
+	DisplayName: Tar Shot
+	FlavorText: O usuário despeja alcatrão pegajoso sobre o alvo, diminuindo a Velocidade dele. O alvo se torna mais fraco contra golpes do tipo Fogo.
+}
+
+MagicPowder: {
+	DisplayName: Magic Powder
+	FlavorText: O usuário espalha uma nuvem de pó mágico que muda o tipo do alvo para Psíquico.
+}
+
+DragonDarts: {
+	DisplayName: Dragon Darts
+	FlavorText: O usuário ataca duas vezes usando Dreepy. Se houver dois Pokémon adversários, este golpe acerta cada um deles uma vez.
+}
+
+Teatime: {
+	DisplayName: Teatime
+	FlavorText: O usuário toma chá com todos os Pokémon que estão em batalha. Cada Pokémon come a Berry que estiver segurando.
+}
+
+Octolock: {
+	DisplayName: Octolock
+	FlavorText: O usuário prende o alvo e o impede de fugir. Este golpe também diminui a Defesa e a Defesa Especial do alvo a cada turno.
+}
+
+BoltBeak: {
+	DisplayName: Bolt Beak
+	FlavorText: O usuário perfura o alvo com seu bico eletrizado. Se o usuário atacar antes do alvo, o poder deste golpe é dobrado.
+}
+
+FishiousRend: {
+	DisplayName: Fishious Rend
+	FlavorText: O usuário dilacera o alvo com suas guelras duras. Se o usuário atacar antes do alvo, o poder deste golpe é dobrado.
+}
+
+CourtChange: {
+	DisplayName: Court Change
+	FlavorText: Com seu poder misterioso, o usuário troca os efeitos de cada lado do campo.
+}
+
+MaxFlare: {
+	DisplayName: Max Flare
+	FlavorText: Este é um ataque do tipo Fogo usado por Pokémon Dinamax. O usuário intensifica o sol por cinco turnos.
+}
+
+MaxFlutterby: {
+	DisplayName: Max Flutterby
+	FlavorText: Este é um ataque do tipo Inseto usado por Pokémon Dinamax. Diminui o Ataque Especial do alvo.
+}
+
+MaxLightning: {
+	DisplayName: Max Lightning
+	FlavorText: Este é um ataque do tipo Elétrico usado por Pokémon Dinamax. O usuário transforma o chão em Campo Elétrico por cinco turnos.
+}
+
+MaxStrike: {
+	DisplayName: Max Strike
+	FlavorText: Este é um ataque do tipo Normal usado por Pokémon Dinamax. Diminui a Velocidade do alvo.
+}
+
+MaxKnuckle: {
+	DisplayName: Max Knuckle
+	FlavorText: Este é um ataque do tipo Lutador usado por Pokémon Dinamax. Aumenta o Ataque dos Pokémon aliados.
+}
+
+MaxPhantasm: {
+	DisplayName: Max Phantasm
+	FlavorText: Este é um ataque do tipo Fantasma usado por Pokémon Dinamax. Diminui a Defesa do alvo.
+}
+
+MaxHailstorm: {
+	DisplayName: Max Hailstorm
+	FlavorText: Este é um ataque do tipo Gelo usado por Pokémon Dinamax. O usuário invoca uma tempestade de granizo que dura cinco turnos.
+}
+
+MaxOoze: {
+	DisplayName: Max Ooze
+	FlavorText: Este é um ataque do tipo Veneno usado por Pokémon Dinamax. Aumenta o Ataque Especial dos Pokémon aliados.
+}
+
+MaxGeyser: {
+	DisplayName: Max Geyser
+	FlavorText: Este é um ataque do tipo Água usado por Pokémon Dinamax. O usuário invoca uma chuva forte que cai por cinco turnos.
+}
+
+MaxAirstream: {
+	DisplayName: Max Airstream
+	FlavorText: Este é um ataque do tipo Voador usado por Pokémon Dinamax. Aumenta a Velocidade dos Pokémon aliados.
+}
+
+MaxStarfall: {
+	DisplayName: Max Starfall
+	FlavorText: Este é um ataque do tipo Fada usado por Pokémon Dinamax. O usuário transforma o chão em Campo de Névoa por cinco turnos.
+}
+
+MaxWyrmwind: {
+	DisplayName: Max Wyrmwind
+	FlavorText: Este é um ataque do tipo Dragão usado por Pokémon Dinamax. Diminui o Ataque do alvo.
+}
+
+MaxMindstorm: {
+	DisplayName: Max Mindstorm
+	FlavorText: Este é um ataque do tipo Psíquico usado por Pokémon Dinamax. O usuário transforma o chão em Campo Psíquico por cinco turnos.
+}
+
+MaxRockfall: {
+	DisplayName: Max Rockfall
+	FlavorText: Este é um ataque do tipo Pedra usado por Pokémon Dinamax. O usuário invoca uma tempestade de areia que dura cinco turnos.
+}
+
+MaxQuake: {
+	DisplayName: Max Quake
+	FlavorText: Este é um ataque do tipo Terra usado por Pokémon Dinamax. Aumenta a Defesa Especial dos Pokémon aliados.
+}
+
+MaxDarkness: {
+	DisplayName: Max Darkness
+	FlavorText: Este é um ataque do tipo Sombrio usado por Pokémon Dinamax. Diminui a Defesa Especial do alvo.
+}
+
+MaxOvergrowth: {
+	DisplayName: Max Overgrowth
+	FlavorText: Este é um ataque do tipo Planta usado por Pokémon Dinamax. O usuário transforma o chão em Campo de Grama por cinco turnos.
+}
+
+MaxSteelspike: {
+	DisplayName: Max Steelspike
+	FlavorText: Este é um ataque do tipo Aço usado por Pokémon Dinamax. Aumenta a Defesa dos Pokémon aliados.
+}
+
+ClangorousSoul: {
+	DisplayName: Clangorous Soul
+	FlavorText: O usuário aumenta todos os seus atributos usando parte de seus próprios PS.
+}
+
+BodyPress: {
+	DisplayName: Body Press
+	FlavorText: O usuário ataca jogando o corpo contra o alvo. Quanto maior a Defesa do usuário, maior o dano causado por este golpe.
+}
+
+Decorate: {
+	DisplayName: Decorate
+	FlavorText: O usuário aumenta bastante o Ataque e o Ataque Especial do alvo decorando-o.
+}
+
+DrumBeating: {
+	DisplayName: Drum Beating
+	FlavorText: O usuário toca seu tambor, controlando as raízes do tambor para atacar o alvo. Também diminui a Velocidade do alvo.
+}
+
+SnapTrap: {
+	DisplayName: Snap Trap
+	FlavorText: O usuário prende o alvo em uma armadilha de mola por quatro a cinco turnos.
+}
+
+PyroBall: {
+	DisplayName: Pyro Ball
+	FlavorText: O usuário ataca acendendo uma pequena pedra e lançando-a como uma bola de fogo contra o alvo. Também pode deixar o alvo com uma queimadura.
+}
+
+BehemothBlade: {
+	DisplayName: Behemoth Blade
+	FlavorText: O usuário se torna uma espada gigantesca e corta o alvo. Este golpe causa o dobro de dano se o alvo estiver Dinamaxado.
+}
+
+BehemothBash: {
+	DisplayName: Behemoth Bash
+	FlavorText: O usuário se torna um escudo gigantesco e se choca contra o alvo. Este golpe causa o dobro de dano se o alvo estiver Dinamaxado.
+}
+
+AuraWheel: {
+	DisplayName: Aura Wheel
+	FlavorText: Morpeko ataca e aumenta sua Velocidade com a energia armazenada em suas bochechas. O tipo deste golpe muda dependendo da forma do usuário.
+}
+
+BreakingSwipe: {
+	DisplayName: Breaking Swipe
+	FlavorText: O usuário balança sua cauda resistente loucamente e ataca os Pokémon adversários. Também diminui o Ataque deles.
+}
+
+BranchPoke: {
+	DisplayName: Branch Poke
+	FlavorText: O usuário ataca o alvo cutucando-o com um galho bem pontiagudo.
+}
+
+Overdrive: {
+	DisplayName: Overdrive
+	FlavorText: O usuário ataca os Pokémon adversários dedilhando uma guitarra ou baixo, causando um enorme eco e uma forte vibração.
+}
+
+AppleAcid: {
+	DisplayName: Apple Acid
+	FlavorText: O usuário ataca o alvo com um líquido ácido criado a partir de maçãs azedas. Também diminui a Defesa Especial do alvo.
+}
+
+GravApple: {
+	DisplayName: Grav Apple
+	FlavorText: O usuário causa dano deixando cair uma maçã de muito alto. Também diminui a Defesa do alvo.
+}
+
+SpiritBreak: {
+	DisplayName: Spirit Break
+	FlavorText: O usuário ataca o alvo com tanta força que poderia quebrar o espírito dele. Também diminui o Ataque Especial do alvo.
+}
+
+StrangeSteam: {
+	DisplayName: Strange Steam
+	FlavorText: O usuário ataca o alvo emitindo vapor. Também pode confundir o alvo.
+}
+
+LifeDew: {
+	DisplayName: Life Dew
+	FlavorText: O usuário espalha água misteriosa ao redor e restaura os PS de si mesmo e de seus Pokémon aliados que estão em batalha.
+}
+
+Obstruct: {
+	DisplayName: Obstruct
+	FlavorText: Este golpe permite ao usuário se proteger de todos os ataques. A chance de falhar aumenta se for usado em sequência. O contato direto diminui drasticamente a Defesa do atacante.
+}
+
+FalseSurrender: {
+	DisplayName: False Surrender
+	FlavorText: O usuário finge abaixar a cabeça, mas então perfura o alvo com seu cabelo desgrenhado. Este ataque nunca erra.
+}
+
+MeteorAssault: {
+	DisplayName: Meteor Assault
+	FlavorText: O usuário ataca loucamente com seu grosso alho-poró. O usuário não pode se mover no turno seguinte, pois a força deste golpe o faz cambalear.
+}
+
+Eternabeam: {
+	DisplayName: Eternabeam
+	FlavorText: Este é o ataque mais poderoso de Eternatus em sua forma original. O usuário não pode se mover no turno seguinte.
+}
+
+SteelBeam: {
+	DisplayName: Steel Beam
+	FlavorText: O usuário dispara um raio de aço que coletou de todo o seu corpo. Também causa dano ao usuário.
+}
+
+ExpandingForce: {
+	DisplayName: Expanding Force
+	FlavorText: O usuário ataca o alvo com seu poder psíquico. Quando o chão é um Campo Psíquico, o poder deste golpe é aumentado e ele causa dano a todos os Pokémon adversários.
+}
+
+SteelRoller: {
+	DisplayName: Steel Roller
+	FlavorText: O usuário ataca destruindo o terreno. Este golpe falha se o chão não tiver se transformado em um campo.
+}
+
+ScaleShot: {
+	DisplayName: Scale Shot
+	FlavorText: O usuário ataca disparando escamas de duas a cinco vezes seguidas. Este golpe aumenta a Velocidade do usuário, mas diminui sua Defesa.
+}
+
+MeteorBeam: {
+	DisplayName: Meteor Beam
+	FlavorText: O usuário reúne energia do espaço e aumenta seu Ataque Especial no primeiro turno, e então ataca no turno seguinte.
+}
+
+ShellSideArm: {
+	DisplayName: Shell Side Arm
+	FlavorText: Este golpe é físico ou especial, o que causar mais dano. Também pode envenenar o alvo.
+}
+
+MistyExplosion: {
+	DisplayName: Misty Explosion
+	FlavorText: O usuário ataca tudo ao seu redor e desmaia ao usar este golpe. O poder deste golpe é aumentado no Campo de Névoa.
+}
+
+GrassyGlide: {
+	DisplayName: Grassy Glide
+	FlavorText: Deslizando pelo chão, o usuário ataca o alvo. Este golpe sempre age primeiro no Campo de Grama.
+}
+
+RisingVoltage: {
+	DisplayName: Rising Voltage
+	FlavorText: O usuário ataca com eletricidade que sobe do chão. O poder deste golpe é dobrado se o alvo estiver no Campo Elétrico.
+}
+
+TerrainPulse: {
+	DisplayName: Terrain Pulse
+	FlavorText: O usuário utiliza a energia do campo para atacar. O tipo e o poder deste golpe mudam dependendo do campo no momento em que o golpe é usado.
+}
+
+SkitterSmack: {
+	DisplayName: Skitter Smack
+	FlavorText: O usuário se esgueira por trás do alvo para atacar. Também diminui o Ataque Especial do alvo.
+}
+
+BurningJealousy: {
+	DisplayName: Burning Jealousy
+	FlavorText: O usuário ataca com a energia do ciúme. Deixa com uma queimadura todos os Pokémon adversários que tiveram seus atributos aumentados durante o turno.
+}
+
+LashOut: {
+	DisplayName: Lash Out
+	FlavorText: O usuário explode para descarregar sua frustração no alvo. O poder deste golpe é dobrado se os atributos do usuário tiverem diminuído durante este turno.
+}
+
+Poltergeist: {
+	DisplayName: Poltergeist
+	FlavorText: O usuário ataca controlando o item do alvo. Este golpe falha se o alvo não estiver segurando um item.
+}
+
+CorrosiveGas: {
+	DisplayName: Corrosive Gas
+	FlavorText: O usuário envolve tudo ao seu redor com um gás altamente ácido e derrete os itens que seguram.
+}
+
+Coaching: {
+	DisplayName: Coaching
+	FlavorText: O usuário treina adequadamente seus Pokémon aliados, aumentando o Ataque e a Defesa deles.
+}
+
+FlipTurn: {
+	DisplayName: Flip Turn
+	FlavorText: Após realizar seu ataque, o usuário volta correndo para trocar de lugar com um Pokémon da equipe que esteja esperando.
+}
+
+TripleAxel: {
+	DisplayName: Triple Axel
+	FlavorText: Um ataque de três chutes consecutivos que fica mais poderoso a cada acerto.
+}
+
+DualWingbeat: {
+	DisplayName: Dual Wingbeat
+	FlavorText: O usuário golpeia o alvo com as asas para causar dano. O alvo é atingido duas vezes seguidas.
+}
+
+ScorchingSands: {
+	DisplayName: Scorching Sands
+	FlavorText: O usuário joga areia escaldante no alvo para atacar. Também pode deixar o alvo com uma queimadura.
+}
+
+JungleHealing: {
+	DisplayName: Jungle Healing
+	FlavorText: O usuário se torna um com a selva, restaurando PS e curando condições de status de si mesmo e de seus Pokémon aliados que estão em batalha.
+}
+
+WickedBlow: {
+	DisplayName: Wicked Blow
+	FlavorText: O usuário, tendo dominado o estilo Sombrio, atinge o alvo com um golpe feroz. Este golpe sempre resulta em um acerto crítico.
+}
+
+SurgingStrikes: {
+	DisplayName: Surging Strikes
+	FlavorText: O usuário, tendo dominado o estilo Água, atinge o alvo com um movimento fluido três vezes seguidas. Este golpe sempre resulta em um acerto crítico.
+}
+
+ThunderCage: {
+	DisplayName: Thunder Cage
+	FlavorText: O usuário prende o alvo em uma jaula de eletricidade faiscante que causa dano por quatro a cinco turnos.
+}
+
+DragonEnergy: {
+	DisplayName: Dragon Energy
+	FlavorText: Convertendo sua força vital em poder, o usuário ataca os Pokémon adversários. Quanto menos PS o usuário tiver, menor o poder do golpe.
+}
+
+FreezingGlare: {
+	DisplayName: Freezing Glare
+	FlavorText: O usuário dispara seu poder psíquico pelos olhos para atacar. Também pode deixar o alvo congelado.
+}
+
+FieryWrath: {
+	DisplayName: Fiery Wrath
+	FlavorText: O usuário transforma sua ira em uma aura flamejante para atacar. Também pode fazer os Pokémon adversários recuarem.
+}
+
+ThunderousKick: {
+	DisplayName: Thunderous Kick
+	FlavorText: O usuário sobrepuja o alvo com movimentos tão rápidos quanto relâmpagos antes de desferir um chute. Também diminui a Defesa do alvo.
+}
+
+GlacialLance: {
+	DisplayName: Glacial Lance
+	FlavorText: O usuário ataca arremessando uma lança de gelo envolta em nevasca contra os Pokémon adversários.
+}
+
+AstralBarrage: {
+	DisplayName: Astral Barrage
+	FlavorText: O usuário ataca enviando uma quantidade assustadora de pequenos fantasmas contra os Pokémon adversários.
+}
+
+EerieSpell: {
+	DisplayName: Eerie Spell
+	FlavorText: O usuário ataca com seu tremendo poder psíquico. Também drena 3 PP do último golpe usado pelo alvo.
+}
+
+DireClaw: {
+	DisplayName: Dire Claw
+	FlavorText: O usuário investe contra o alvo com garras ruinosas. Também pode deixar o alvo envenenado, paralisado ou adormecido.
+}
+
+PsyshieldBash: {
+	DisplayName: Psyshield Bash
+	FlavorText: Envolvendo-se em energia psíquica, o usuário se choca contra o alvo. Também aumenta a Defesa do usuário.
+}
+
+PowerShift.DisplayName: Power Shift
+
+StoneAxe: {
+	DisplayName: Stone Axe
+	FlavorText: O usuário balança seus machados de pedra contra o alvo. Lascas de pedra deixadas por este ataque flutuam ao redor do alvo.
+}
+
+SpringtideStorm: {
+	DisplayName: Springtide Storm
+	FlavorText: O usuário ataca envolvendo os Pokémon adversários em ventos ferozes repletos de amor e ódio. Também pode diminuir o Ataque deles.
+}
+
+MysticalPower: {
+	DisplayName: Mystical Power
+	FlavorText: O usuário ataca emitindo um poder misterioso. Também aumenta o Ataque Especial do usuário.
+}
+
+RagingFury: {
+	DisplayName: Raging Fury
+	FlavorText: O usuário se descontrola cuspindo chamas por dois a três turnos. Depois, o usuário fica confuso.
+}
+
+WaveCrash: {
+	DisplayName: Wave Crash
+	FlavorText: O usuário se envolve em água e se choca contra o alvo com o corpo inteiro para causar dano. Também causa muito dano ao usuário.
+}
+
+Chloroblast: {
+	DisplayName: Chloroblast
+	FlavorText: O usuário lança a clorofila que acumulou para causar dano ao alvo. Também causa dano ao usuário.
+}
+
+MountainGale: {
+	DisplayName: Mountain Gale
+	FlavorText: O usuário arremessa blocos gigantes de gelo contra o alvo para causar dano. Também pode fazer o alvo recuar.
+}
+
+VictoryDance: {
+	DisplayName: Victory Dance
+	FlavorText: O usuário executa uma dança intensa para anunciar a vitória, aumentando seu Ataque, Defesa e Velocidade.
+}
+
+HeadlongRush: {
+	DisplayName: Headlong Rush
+	FlavorText: O usuário se choca contra o alvo em uma investida com o corpo inteiro. Também diminui a Defesa e a Defesa Especial do usuário.
+}
+
+BarbBarrage: {
+	DisplayName: Barb Barrage
+	FlavorText: O usuário lança incontáveis farpas tóxicas para causar dano. Também pode envenenar o alvo. O poder deste golpe é dobrado se o alvo já estiver envenenado.
+}
+
+EsperWing: {
+	DisplayName: Esper Wing
+	FlavorText: O usuário corta o alvo com asas enriquecidas de aura. Também aumenta a Velocidade do usuário. Este golpe tem uma chance maior de acerto crítico.
+}
+
+BitterMalice: {
+	DisplayName: Bitter Malice
+	FlavorText: O usuário ataca o alvo com um ressentimento de arrepiar a espinha. Também diminui o Ataque do alvo.
+}
+
+Shelter: {
+	DisplayName: Shelter
+	FlavorText: O usuário torna sua pele tão dura quanto um escudo de ferro, aumentando bastante sua Defesa.
+}
+
+TripleArrows: {
+	DisplayName: Triple Arrows
+	FlavorText: O usuário chuta e então dispara três flechas. Este golpe tem uma chance maior de acerto crítico e também pode diminuir a Defesa do alvo ou fazê-lo recuar.
+}
+
+InfernalParade: {
+	DisplayName: Infernal Parade
+	FlavorText: O usuário ataca com inúmeras bolas de fogo. Também pode deixar o alvo com uma queimadura. O poder deste golpe é dobrado se o alvo tiver uma condição de status.
+}
+
+CeaselessEdge: {
+	DisplayName: Ceaseless Edge
+	FlavorText: O usuário corta o alvo com sua lâmina de concha. Lascas de concha deixadas por este ataque permanecem espalhadas sob o alvo como espinhos.
+}
+
+BleakwindStorm: {
+	DisplayName: Bleakwind Storm
+	FlavorText: O usuário ataca com ventos ferozmente frios que fazem corpo e espírito tremerem. Também pode diminuir a Velocidade dos Pokémon adversários.
+}
+
+WildboltStorm: {
+	DisplayName: Wildbolt Storm
+	FlavorText: O usuário invoca uma tempestade trovejante e ataca ferozmente com raios e vento. Também pode deixar os Pokémon adversários paralisados.
+}
+
+SandsearStorm: {
+	DisplayName: Sandsear Storm
+	FlavorText: O usuário ataca envolvendo os Pokémon adversários em ventos ferozes e areia escaldante. Também pode deixá-los com uma queimadura.
+}
+
+LunarBlessing: {
+	DisplayName: Lunar Blessing
+	FlavorText: O usuário recebe uma bênção da lua crescente, restaurando PS e curando condições de status de si mesmo e de seus Pokémon aliados que estão em batalha.
+}
+
+TakeHeart: {
+	DisplayName: Take Heart
+	FlavorText: O usuário levanta o ânimo, curando suas próprias condições de status e aumentando seu Ataque Especial e Defesa Especial.
+}
+
+TeraBlast: {
+	DisplayName: Tera Blast
+	FlavorText: Se o usuário tiver Terastalizado, libera a energia de seu tipo Tera. Este golpe causa dano usando o Ataque ou o Ataque Especial, o que for maior para o usuário.
+}
+
+SilkTrap: {
+	DisplayName: Silk Trap
+	FlavorText: O usuário tece uma armadilha de seda, protegendo-se de dano e diminuindo a Velocidade de qualquer atacante que faça contato direto.
+}
+
+AxeKick: {
+	DisplayName: Axe Kick
+	FlavorText: O usuário ataca chutando para o alto e baixando o calcanhar sobre o alvo. Também pode confundir o alvo. Se errar, o usuário sofre o dano.
+}
+
+LastRespects: {
+	DisplayName: Last Respects
+	FlavorText: O usuário ataca para vingar seus aliados. Quanto mais aliados derrotados houver na equipe do usuário, maior o poder do golpe.
+}
+
+LuminaCrash: {
+	DisplayName: Lumina Crash
+	FlavorText: O usuário ataca liberando uma luz peculiar que afeta até a mente. Também diminui drasticamente a Defesa Especial do alvo.
+}
+
+OrderUp: {
+	DisplayName: Order Up
+	FlavorText: O usuário ataca com elegante compostura. Se o usuário tiver um Tatsugiri na boca, este golpe aumenta um dos atributos do usuário com base na forma do Tatsugiri.
+}
+
+JetPunch: {
+	DisplayName: Jet Punch
+	FlavorText: O usuário invoca uma torrente ao redor do punho e soca em velocidade cegante. Este golpe sempre age primeiro.
+}
+
+SpicyExtract: {
+	DisplayName: Spicy Extract
+	FlavorText: O usuário emite um extrato incrivelmente picante, aumentando bastante o Ataque do alvo e diminuindo drasticamente a Defesa do alvo.
+}
+
+SpinOut: {
+	DisplayName: Spin Out
+	FlavorText: O usuário gira furiosamente forçando as pernas, causando dano ao alvo. Também diminui drasticamente a Velocidade do usuário.
+}
+
+PopulationBomb: {
+	DisplayName: Population Bomb
+	FlavorText: Os companheiros do usuário se reúnem em bandos para realizar um ataque combinado que acerta o alvo de uma a dez vezes seguidas.
+}
+
+IceSpinner: {
+	DisplayName: Ice Spinner
+	FlavorText: O usuário cobre os pés com uma fina camada de gelo e rodopia, chocando-se contra o alvo. O movimento giratório deste golpe também destrói o terreno.
+}
+
+GlaiveRush: {
+	DisplayName: Glaive Rush
+	FlavorText: O usuário joga o corpo inteiro em uma investida imprudente. Depois do uso deste golpe, ataques contra o usuário não podem errar e causarão o dobro de dano até o próximo turno do usuário.
+}
+
+RevivalBlessing: {
+	DisplayName: Revival Blessing
+	FlavorText: O usuário concede uma bênção amorosa, revivendo um Pokémon da equipe que tenha desmaiado e restaurando metade dos PS máximos desse Pokémon.
+}
+
+SaltCure: {
+	DisplayName: Salt Cure
+	FlavorText: O usuário cura o alvo no sal, causando dano a cada turno. Pokémon dos tipos Aço e Água são afetados com mais intensidade por este golpe.
+}
+
+TripleDive: {
+	DisplayName: Triple Dive
+	FlavorText: O usuário realiza um mergulho triplo perfeitamente sincronizado, atingindo o alvo com respingos de água três vezes seguidas.
+}
+
+MortalSpin: {
+	DisplayName: Mortal Spin
+	FlavorText: O usuário realiza um ataque giratório que também pode eliminar os efeitos de golpes como Bind, Wrap e Leech Seed. Também envenena os Pokémon adversários.
+}
+
+Doodle: {
+	DisplayName: Doodle
+	FlavorText: O usuário captura a própria essência do alvo em um esboço. Isso muda as Habilidades do usuário e de seus Pokémon aliados para a do alvo.
+}
+
+FilletAway: {
+	DisplayName: Fillet Away
+	FlavorText: O usuário aumenta bastante seu Ataque, Ataque Especial e Velocidade usando seus próprios PS.
+}
+
+KowtowCleave: {
+	DisplayName: Kowtow Cleave
+	FlavorText: O usuário corta o alvo depois de fazer uma reverência para que o alvo baixe a guarda. Este ataque nunca erra.
+}
+
+FlowerTrick: {
+	DisplayName: Flower Trick
+	FlavorText: O usuário arremessa contra o alvo um buquê de flores armado. Este ataque nunca erra e sempre resulta em um acerto crítico.
+}
+
+TorchSong: {
+	DisplayName: Torch Song
+	FlavorText: O usuário sopra chamas furiosas como se cantasse uma canção, queimando o alvo. Também aumenta o Ataque Especial do usuário.
+}
+
+AquaStep: {
+	DisplayName: Aqua Step
+	FlavorText: O usuário brinca com o alvo e o ataca usando passos de dança leves e fluidos. Também aumenta a Velocidade do usuário.
+}
+
+RagingBull: {
+	DisplayName: Raging Bull
+	FlavorText: O usuário realiza uma investida como um touro furioso. O tipo deste golpe depende da forma do usuário. Também pode quebrar barreiras, como Light Screen e Reflect.
+}
+
+MakeItRain: {
+	DisplayName: Make It Rain
+	FlavorText: O usuário ataca arremessando uma massa de moedas. Também diminui o Ataque Especial do usuário. Dinheiro é ganho após a batalha.
+}
+
+Psyblade: {
+	DisplayName: Psyblade
+	FlavorText: O usuário dilacera o alvo com uma lâmina etérea. O poder deste golpe é aumentado em 50% se o usuário estiver no Campo Elétrico.
+}
+
+HydroSteam: {
+	DisplayName: Hydro Steam
+	FlavorText: O usuário atinge o alvo com água fervente. O poder deste golpe não diminui sob sol forte, mas sim aumenta em 50%.
+}
+
+Ruination: {
+	DisplayName: Ruination
+	FlavorText: O usuário invoca um desastre ruinoso. Reduz os PS do alvo pela metade.
+}
+
+CollisionCourse: {
+	DisplayName: Collision Course
+	FlavorText: O usuário se transforma e se choca contra o chão, causando uma enorme explosão pré-histórica. O poder deste golpe é aumentado mais que o normal se o acerto for supereficaz.
+}
+
+ElectroDrift: {
+	DisplayName: Electro Drift
+	FlavorText: O usuário avança em velocidade ultrarrápida, perfurando o alvo com eletricidade futurista. O poder deste golpe é aumentado mais que o normal se o acerto for supereficaz.
+}
+
+ShedTail: {
+	DisplayName: Shed Tail
+	FlavorText: O usuário cria um substituto de si mesmo usando seus próprios PS antes de trocar de lugar com um Pokémon da equipe que esteja esperando.
+}
+
+ChillyReception.DisplayName: Chilly Reception
+
+TidyUp: {
+	DisplayName: Tidy Up
+	FlavorText: O usuário arruma tudo e remove os efeitos de Spikes, Stealth Rock, Sticky Web, Toxic Spikes e Substitute. Também aumenta o Ataque e a Velocidade do usuário.
+}
+
+Snowscape: {
+	DisplayName: Snowscape
+	FlavorText: O usuário invoca uma tempestade de neve que dura cinco turnos. Aumenta a Defesa dos Pokémon do tipo Gelo.
+}
+
+Pounce: {
+	DisplayName: Pounce
+	FlavorText: O usuário ataca saltando sobre o alvo. Também diminui a Velocidade do alvo.
+}
+
+Trailblaze: {
+	DisplayName: Trailblaze
+	FlavorText: O usuário ataca de repente, como se saltasse de dentro do mato alto. O jogo de pernas ágil do usuário aumenta sua Velocidade.
+}
+
+ChillingWater: {
+	DisplayName: Chilling Water
+	FlavorText: O usuário ataca o alvo banhando-o com uma água tão fria que drena sua força. Também diminui o Ataque do alvo.
+}
+
+HyperDrill: {
+	DisplayName: Hyper Drill
+	FlavorText: O usuário gira a parte pontiaguda do corpo em alta velocidade para perfurar o alvo. Este ataque pode atingir um alvo que esteja usando um golpe como Protect ou Detect.
+}
+
+TwinBeam: {
+	DisplayName: Twin Beam
+	FlavorText: O usuário dispara raios místicos pelos olhos para causar dano. O alvo é atingido duas vezes seguidas.
+}
+
+RageFist: {
+	DisplayName: Rage Fist
+	FlavorText: O usuário converte sua raiva em energia para atacar. Quanto mais vezes o usuário tiver sido atingido por ataques, maior o poder do golpe.
+}
+
+ArmorCannon: {
+	DisplayName: Armor Cannon
+	FlavorText: O usuário dispara a própria armadura como projéteis flamejantes. Também diminui a Defesa e a Defesa Especial do usuário.
+}
+
+BitterBlade: {
+	DisplayName: Bitter Blade
+	FlavorText: O usuário concentra seus sentimentos amargos em relação ao mundo dos vivos em um ataque cortante. Os PS do usuário são restaurados em até metade do dano sofrido pelo alvo.
+}
+
+DoubleShock: {
+	DisplayName: Double Shock
+	FlavorText: O usuário descarrega toda a eletricidade do corpo para realizar um ataque de dano elevado. Depois de usar este golpe, o usuário deixa de ser do tipo Elétrico.
+}
+
+GigatonHammer: {
+	DisplayName: Gigaton Hammer
+	FlavorText: O usuário balança o corpo inteiro para atacar com seu martelo enorme. Este golpe não pode ser usado duas vezes seguidas.
+}
+
+Comeuppance: {
+	DisplayName: Comeuppance
+	FlavorText: O usuário retalia com força muito maior o oponente que lhe causou dano por último.
+}
+
+AquaCutter: {
+	DisplayName: Aqua Cutter
+	FlavorText: O usuário expele água pressurizada para cortar o alvo como uma lâmina. Este golpe tem uma chance maior de acerto crítico.
+}
+
+BlazingTorque.DisplayName: Blazing Torque
+WickedTorque.DisplayName: Wicked Torque
+NoxiousTorque.DisplayName: Noxious Torque
+CombatTorque.DisplayName: Combat Torque
+MagicalTorque.DisplayName: Magical Torque
+
+BloodMoon: {
+	DisplayName: Blood Moon
+	FlavorText: O usuário libera toda a força de seu espírito sob uma lua cheia que brilha vermelha como sangue. Este golpe não pode ser usado duas vezes seguidas.
+}
+
+MatchaGotcha: {
+	DisplayName: Matcha Gotcha
+	FlavorText: O usuário dispara uma rajada de chá que misturou. Os PS do usuário são restaurados em até metade do dano sofrido pelo alvo. Também pode deixar o alvo com uma queimadura.
+}
+
+SyrupBomb: {
+	DisplayName: Syrup Bomb
+	FlavorText: O usuário provoca uma explosão de calda de doce pegajosa, que reveste o alvo e faz a Velocidade do alvo cair a cada turno durante três turnos.
+}
+
+IvyCudgel: {
+	DisplayName: Ivy Cudgel
+	FlavorText: O usuário ataca com um porrete envolto em hera. O tipo deste golpe muda dependendo da máscara usada pelo usuário, e ele tem uma chance maior de acerto crítico.
+}
+
+ElectroShot: {
+	DisplayName: Electro Shot
+	FlavorText: O usuário reúne eletricidade no primeiro turno, aumentando seu Ataque Especial, e dispara um tiro de alta voltagem no turno seguinte. O tiro é disparado imediatamente na chuva.
+}
+
+TeraStarstorm: {
+	DisplayName: Tera Starstorm
+	FlavorText: Com o poder de seus cristais, o usuário bombardeia e elimina o alvo. Quando usado por Terapagos em sua Forma Estelar, este golpe causa dano a todos os Pokémon adversários.
+}
+
+FickleBeam: {
+	DisplayName: Fickle Beam
+	FlavorText: O usuário dispara um raio de luz para causar dano. Às vezes todas as cabeças do usuário disparam raios em uníssono, dobrando o poder do golpe.
+}
+
+BurningBulwark: {
+	DisplayName: Burning Bulwark
+	FlavorText: O pelo intensamente quente do usuário o protege de ataques e também queima qualquer atacante que faça contato direto com ele.
+}
+
+Thunderclap: {
+	DisplayName: Thunderclap
+	FlavorText: Este golpe permite ao usuário atacar primeiro com uma descarga de eletricidade. Falha se o alvo não estiver se preparando para atacar.
+}
+
+MightyCleave: {
+	DisplayName: Mighty Cleave
+	FlavorText: O usuário empunha a luz acumulada no topo da cabeça para fender o alvo. Este golpe acerta mesmo que o alvo se proteja.
+}
+
+TachyonCutter: {
+	DisplayName: Tachyon Cutter
+	FlavorText: O usuário ataca lançando lâminas de partículas contra o alvo duas vezes seguidas. Este ataque nunca erra.
+}
+
+HardPress: {
+	DisplayName: Hard Press
+	FlavorText: O alvo é esmagado com um braço, uma garra ou algo do tipo para causar dano. Quanto mais PS o alvo ainda tiver, maior o poder do golpe.
+}
+
+DragonCheer: {
+	DisplayName: Dragon Cheer
+	FlavorText: O usuário eleva o moral de seus aliados com um grito dracônico para que seus próximos ataques tenham uma chance maior de acerto crítico. Anima mais os Pokémon do tipo Dragão.
+}
+
+AlluringVoice: {
+	DisplayName: Alluring Voice
+	FlavorText: O usuário ataca o alvo usando sua voz angelical. Também confunde o alvo se seus atributos tiverem sido aumentados durante o turno.
+}
+
+TemperFlare: {
+	DisplayName: Temper Flare
+	FlavorText: Impulsionado pelo desespero, o usuário ataca o alvo. O poder deste golpe é dobrado se o golpe anterior do usuário tiver falhado.
+}
+
+SupercellSlam: {
+	DisplayName: Supercell Slam
+	FlavorText: O usuário eletriza o corpo e cai sobre o alvo para causar dano. Se este golpe errar, o usuário sofre o dano.
+}
+
+PsychicNoise: {
+	DisplayName: Psychic Noise
+	FlavorText: O usuário ataca o alvo com ondas sonoras desagradáveis. Por dois turnos, o alvo fica impedido de recuperar PS por meio de golpes, Habilidades ou itens seguros.
+}
+
+UpperHand: {
+	DisplayName: Upper Hand
+	FlavorText: O usuário reage ao movimento do alvo e golpeia com a base da palma, fazendo o alvo recuar. Este golpe falha se o alvo não estiver se preparando para usar um golpe de prioridade.
+}
+
+MalignantChain: {
+	DisplayName: Malignant Chain
+	FlavorText: O usuário injeta toxinas no alvo envolvendo-o em uma corrente tóxica e corrosiva. Também pode deixar o alvo gravemente envenenado.
+}
