@@ -1,0 +1,527 @@
+Stench: {
+	Description: "This Pokémon's attacks without a chance to flinch gain a 10% chance to flinch."
+}
+
+SpeedBoost: {
+	Description: "This Pokémon's Speed is raised 1 stage at the end of each full turn on the field."
+}
+
+BattleArmor: {
+	Description: "This Pokémon cannot be struck by a critical hit."
+}
+
+Sturdy: {
+	Description: "If this Pokémon is at full HP, it survives one hit with at least 1 HP. Immune to one-hit KO moves."
+}
+
+Damp: {
+	Description: "Prevents Explosion/Mind Blown/Misty Explosion/Self-Destruct/Aftermath while active."
+}
+
+Limber: {
+	Description: "This Pokémon cannot be paralyzed. Gaining this Ability while paralyzed cures it."
+}
+
+SandVeil: {
+	Description: "If Sandstorm is active, this Pokémon's evasiveness is 1.25x; immunity to Sandstorm."
+}
+
+Static: {
+	Description: "30% chance a Pokémon making contact with this Pokémon will be paralyzed."
+}
+
+VoltAbsorb: {
+	Description: "This Pokémon heals 1/4 of its max HP when hit by Electric moves; Electric immunity."
+}
+
+WaterAbsorb: {
+	Description: "This Pokémon heals 1/4 of its max HP when hit by Water moves; Water immunity."
+}
+
+Oblivious: {
+	Description: "This Pokémon cannot be infatuated or taunted. Immune to Intimidate."
+}
+
+CloudNine: {
+	Description: "While this Pokémon is active, the effects of weather conditions are disabled."
+}
+
+CompoundEyes: {
+	Description: "This Pokémon's moves have their accuracy multiplied by 1.3."
+}
+
+Insomnia: {
+	Description: "This Pokémon cannot fall asleep. Gaining this Ability while asleep cures it."
+}
+
+Immunity: {
+	Description: "This Pokémon cannot be poisoned. Gaining this Ability while poisoned cures it."
+}
+
+FlashFire: {
+	Description: "This Pokémon's Fire attacks do 1.5x damage if hit by one Fire move; Fire immunity."
+}
+
+ShieldDust: {
+	Description: "This Pokémon is not affected by the secondary effect of another Pokémon's attack."
+}
+
+OwnTempo: {
+	Description: "This Pokémon cannot be confused. Immune to Intimidate."
+}
+
+Intimidate: {
+	Description: "On switch-in, this Pokémon lowers the Attack of opponents by 1 stage."
+}
+
+ShadowTag: {
+	Description: "Prevents foes from choosing to switch unless they also have this Ability."
+}
+
+Levitate: {
+	Description: "This Pokémon is immune to Ground-type moves."
+}
+
+EffectSpore: {
+	Description: "30% chance of poison/paralysis/sleep on others making contact with this Pokémon."
+}
+
+Synchronize: {
+	Description: "If another Pokémon burns/poisons/paralyzes this Pokémon, it also gets that status."
+}
+
+ClearBody: {
+	Description: "Prevents other Pokémon from lowering this Pokémon's stat stages."
+}
+
+NaturalCure: {
+	Description: "This Pokémon has its non-volatile status condition cured when it switches out."
+}
+
+LightningRod: {
+	Description: "This Pokémon draws Electric moves to itself to raise Sp. Atk by 1; Electric immunity."
+}
+
+SereneGrace: {
+	Description: "This Pokémon's moves have their secondary effect chance doubled."
+}
+
+SwiftSwim: {
+	Description: "If Rain Dance is active, this Pokémon's Speed is doubled."
+}
+
+Chlorophyll: {
+	Description: "If Sunny Day is active, this Pokémon's Speed is doubled."
+}
+
+Illuminate: {
+	Description: "This Pokémon's accuracy can't be lowered by others; ignores their evasiveness stat."
+}
+
+Trace: {
+	Description: "On switch-in, or when it can, this Pokémon copies a random adjacent foe's Ability."
+}
+
+HugePower: {
+	Description: "This Pokémon's Attack is doubled."
+}
+
+PoisonPoint: {
+	Description: "30% chance a Pokémon making contact with this Pokémon will be poisoned."
+}
+
+InnerFocus: {
+	Description: "This Pokémon cannot be made to flinch. Immune to Intimidate."
+}
+
+WaterVeil: {
+	Description: "This Pokémon cannot be burned. Gaining this Ability while burned cures it."
+}
+
+MagnetPull: {
+	Description: "Prevents opposing Steel-type Pokémon from choosing to switch out."
+}
+
+Soundproof: {
+	Description: "This Pokémon is immune to sound-based moves, unless it used the move."
+}
+
+RainDish: {
+	Description: "If Rain Dance is active, this Pokémon heals 1/16 of its max HP each turn."
+}
+
+Pressure: {
+	Description: "If this Pokémon is the target of a foe's move, that move loses one additional PP."
+}
+
+ThickFat: {
+	Description: "Fire-/Ice-type moves against this Pokémon deal damage with a halved offensive stat."
+}
+
+EarlyBird: {
+	Description: "This Pokémon wakes up twice as fast."
+}
+
+FlameBody: {
+	Description: "30% chance a Pokémon making contact with this Pokémon will be burned."
+}
+
+RunAway: {
+	Description: "This Pokémon can always run away from wild Pokémon."
+}
+
+KeenEye: {
+	Description: "This Pokémon's accuracy can't be lowered by others; ignores their evasiveness stat."
+}
+
+HyperCutter: {
+	Description: "Prevents other Pokémon from lowering this Pokémon's Attack stat stage."
+}
+
+Pickup: {
+	Description: "If this Pokémon has no item, it finds one used by an adjacent Pokémon this turn."
+}
+
+Hustle: {
+	Description: "This Pokémon's Attack is 1.5x and accuracy of its physical attacks is 0.8x."
+}
+
+CuteCharm: {
+	Description: "30% chance of infatuating Pokémon of the opposite gender if they make contact."
+}
+
+StickyHold: {
+	Description: "This Pokémon cannot lose its held item due to another Pokémon's Ability or attack."
+}
+
+ShedSkin: {
+	Description: "This Pokémon has a 33% chance to have its status cured at the end of each turn."
+}
+
+Guts: {
+	Description: "If this Pokémon is statused, its Attack is 1.5x; ignores burn halving physical damage."
+}
+
+MarvelScale: {
+	Description: "If this Pokémon has a non-volatile status condition, its Defense is multiplied by 1.5."
+}
+
+LiquidOoze: {
+	Description: "This Pokémon damages those draining HP from it for as much as they would heal."
+}
+
+Overgrow: {
+	Description: "At 1/3 or less of its max HP, this Pokémon's offensive stat is 1.5x with Grass attacks."
+}
+
+Blaze: {
+	Description: "At 1/3 or less of its max HP, this Pokémon's offensive stat is 1.5x with Fire attacks."
+}
+
+Torrent: {
+	Description: "At 1/3 or less of its max HP, this Pokémon's offensive stat is 1.5x with Water attacks."
+}
+
+Swarm: {
+	Description: "At 1/3 or less of its max HP, this Pokémon's offensive stat is 1.5x with Bug attacks."
+}
+
+RockHead: {
+	Description: "This Pokémon does not take recoil damage besides Struggle/Life Orb/crash damage."
+}
+
+Drought: {
+	Description: "On switch-in, this Pokémon summons Sunny Day."
+}
+
+ArenaTrap: {
+	Description: "Prevents opposing Pokémon from choosing to switch out unless they are airborne."
+}
+
+VitalSpirit: {
+	Description: "This Pokémon cannot fall asleep. Gaining this Ability while asleep cures it."
+}
+
+ShellArmor: {
+	Description: "This Pokémon cannot be struck by a critical hit."
+}
+
+TangledFeet: {
+	Description: "This Pokémon's evasiveness is doubled as long as it is confused."
+}
+
+Rivalry: {
+	Description: "This Pokémon's attacks do 1.25x on same gender targets; 0.75x on opposite gender."
+}
+
+Steadfast: {
+	Description: "If this Pokémon flinches, its Speed is raised by 1 stage."
+}
+
+SnowCloak: {
+	Description: "If Snow is active, this Pokémon's evasiveness is 1.25x."
+}
+
+Gluttony: {
+	Description: "This Pokémon eats Berries at 1/2 max HP or less instead of their usual 1/4 max HP."
+}
+
+AngerPoint: {
+	Description: "If this Pokémon (not its substitute) takes a critical hit, its Attack is raised 12 stages."
+}
+
+Unburden: {
+	Description: "Speed is doubled on held item loss; boost is lost if it switches, gets new item/Ability."
+}
+
+DrySkin: {
+	Description: "This Pokémon is healed 1/4 by Water, 1/8 by Rain; is hurt 1.25x by Fire, 1/8 by Sun."
+}
+
+Download: {
+	Description: "On switch-in, Attack or Sp. Atk is raised 1 stage based on the foes' weaker Defense."
+}
+
+IronFist: {
+	Description: "This Pokémon's punch-based attacks have 1.2x power. Sucker Punch is not boosted."
+}
+
+Adaptability: {
+	Description: "This Pokémon's same-type attack bonus (STAB) is 2 instead of 1.5."
+}
+
+SkillLink: {
+	Description: "This Pokémon's multi-hit attacks always hit the maximum number of times."
+}
+
+Hydration: {
+	Description: "This Pokémon has its status cured at the end of each turn if Rain Dance is active."
+}
+
+SolarPower: {
+	Description: "If Sunny Day is active, this Pokémon's Sp. Atk is 1.5x; loses 1/8 max HP per turn."
+}
+
+QuickFeet: {
+	Description: "If this Pokémon is statused, its Speed is 1.5x; ignores Speed drop from paralysis."
+}
+
+Sniper: {
+	Description: "If this Pokémon strikes with a critical hit, the damage is multiplied by 1.5."
+}
+
+MagicGuard: {
+	Description: "This Pokémon can only be damaged by direct attacks."
+}
+
+NoGuard: {
+	Description: "Every move used by or against this Pokémon will always hit."
+}
+
+Technician: {
+	Description: "This Pokémon's moves of 60 power or less have 1.5x power, including Struggle."
+}
+
+LeafGuard: {
+	Description: "If Sunny Day is active, this Pokémon cannot be statused and Rest will fail for it."
+}
+
+MoldBreaker: {
+	Description: "This Pokémon's moves and their effects ignore the Abilities of other Pokémon."
+}
+
+Aftermath: {
+	Description: "If this Pokémon is KOed with a contact move, that move's user loses 1/4 its max HP."
+}
+
+Anticipation: {
+	Description: "On switch-in, this Pokémon shudders if any foe has a supereffective or OHKO move."
+}
+
+Forewarn: {
+	Description: "On switch-in, this Pokémon is alerted to the foes' move with the highest power."
+}
+
+Unaware: {
+	Description: "This Pokémon ignores other Pokémon's stat stages when taking or doing damage."
+}
+
+TintedLens: {
+	Description: "This Pokémon's attacks that are not very effective on a target deal double damage."
+}
+
+Filter: {
+	Description: "This Pokémon receives 3/4 damage from supereffective attacks."
+}
+
+Scrappy: {
+	Description: "Fighting, Normal moves hit Ghost. Immune to Intimidate."
+}
+
+IceBody: {
+	Description: "If Snow is active, this Pokémon heals 1/16 of its max HP each turn."
+}
+
+Frisk: {
+	Description: "On switch-in, this Pokémon identifies the held items of all opposing Pokémon."
+}
+
+Reckless: {
+	Description: "This Pokémon's attacks with recoil or crash damage have 1.2x power; not Struggle."
+}
+
+SheerForce: {
+	Description: "This Pokémon's attacks with secondary effects have 1.3x power; nullifies the effects."
+}
+
+Contrary: {
+	Description: "If this Pokémon has a stat stage raised it is lowered instead, and vice versa."
+}
+
+Unnerve: {
+	Description: "While this Pokémon is active, it prevents opposing Pokémon from using their Berries."
+}
+
+Defiant: {
+	Description: "This Pokémon's Attack is raised by 2 for each of its stats that is lowered by a foe."
+}
+
+CursedBody: {
+	Description: "If this Pokémon is hit by an attack, there is a 30% chance that move gets disabled."
+}
+
+Healer: {
+	Description: "30% chance this Pokémon's ally has its status cured at the end of each turn."
+}
+
+FriendGuard: {
+	Description: "This Pokémon's allies receive 3/4 damage from other Pokémon's attacks."
+}
+
+WeakArmor: {
+	Description: "If a physical attack hits this Pokémon, Defense is lowered by 1, Speed is raised by 2."
+}
+
+Multiscale: {
+	Description: "If this Pokémon is at full HP, damage taken from attacks is halved."
+}
+
+Harvest: {
+	Description: "If last item used is a Berry, 50% chance to restore it each end of turn. 100% in Sun."
+}
+
+Overcoat: {
+	Description: "This Pokémon is immune to powder moves, Sandstorm damage, and Effect Spore."
+}
+
+PoisonTouch: {
+	Description: "This Pokémon's contact moves have a 30% chance of poisoning."
+}
+
+Regenerator: {
+	Description: "This Pokémon restores 1/3 of its maximum HP, rounded down, when it switches out."
+}
+
+BigPecks: {
+	Description: "Prevents other Pokémon from lowering this Pokémon's Defense stat stage."
+}
+
+SandRush: {
+	Description: "If Sandstorm is active, this Pokémon's Speed is doubled; immunity to Sandstorm."
+}
+
+WonderSkin: {
+	Description: "Status moves with accuracy checks are 50% accurate when used on this Pokémon."
+}
+
+Analytic: {
+	Description: "This Pokémon's attacks have 1.3x power if it is the last to move in a turn."
+}
+
+Imposter: {
+	Description: "On switch-in, this Pokémon Transforms into the opposing Pokémon that is facing it."
+}
+
+Infiltrator: {
+	Description: "Moves ignore substitutes and foe's Reflect/Light Screen/Safeguard/Mist/Aurora Veil."
+}
+
+Moxie: {
+	Description: "This Pokémon's Attack is raised by 1 stage if it attacks and KOes another Pokémon."
+}
+
+Justified: {
+	Description: "This Pokémon's Attack is raised by 1 stage after it is damaged by a Dark-type move."
+}
+
+Rattled: {
+	Description: "Speed is raised 1 stage if hit by a Bug-, Dark-, or Ghost-type attack, or Intimidated."
+}
+
+MagicBounce: {
+	Description: "This Pokémon blocks certain Status moves and bounces them back to the user."
+}
+
+SandForce: {
+	Description: "This Pokémon's Ground/Rock/Steel attacks do 1.3x in Sandstorm; immunity to it."
+}
+
+Protean: {
+	Description: "This Pokémon's type changes to the type of the move it is using. Once per switch-in."
+}
+
+Magician: {
+	Description: "If this Pokémon has no item, it steals the item off a Pokémon it hits with an attack."
+}
+
+Bulletproof: {
+	Description: "This Pokémon is immune to bullet moves."
+}
+
+Competitive: {
+	Description: "This Pokémon's Sp. Atk is raised by 2 for each of its stats that is lowered by a foe."
+}
+
+MegaLauncher: {
+	Description: "This Pokémon's pulse moves have 1.5x power. Heal Pulse heals 3/4 target's max HP."
+}
+
+ToughClaws: {
+	Description: "This Pokémon's contact moves have their power multiplied by 1.3."
+}
+
+Aerilate: {
+	Description: "This Pokémon's Normal-type moves become Flying type and have 1.2x power."
+}
+
+ParentalBond: {
+	Description: "This Pokémon's damaging moves hit twice. The second hit has its damage quartered."
+}
+
+LongReach: {
+	Description: "This Pokémon's attacks do not make contact with the target."
+}
+
+LiquidVoice: {
+	Description: "This Pokémon's sound-based moves become Water type."
+}
+
+InnardsOut: {
+	Description: "If this Pokémon is KOed with a move, that move's user loses an equal amount of HP."
+}
+
+ElectricSurge: {
+	Description: "On switch-in, this Pokémon summons Electric Terrain."
+}
+
+GrassySurge: {
+	Description: "On switch-in, this Pokémon summons Grassy Terrain."
+}
+
+Libero: {
+	Description: "This Pokémon's type changes to the type of the move it is using. Once per switch-in."
+}
+
+NeutralizingGas: {
+	Description: "While this Pokémon is active, Abilities have no effect."
+}

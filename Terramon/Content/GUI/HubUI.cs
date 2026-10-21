@@ -357,6 +357,14 @@ public class HubUI : SmartUIState
         ((UIPanel)evt.Target).BorderColor = Color.Black;
     }
 
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        base.Draw(spriteBatch);
+
+        // Tooltips of the Pokédex boxes (moves, abilities) go on top of everything else in the Pokédex
+        MoveTooltip.DrawPending(spriteBatch);
+    }
+
     public override void SafeUpdate(GameTime gameTime)
     {
         // Recalculate inventory slots even if it is not visible

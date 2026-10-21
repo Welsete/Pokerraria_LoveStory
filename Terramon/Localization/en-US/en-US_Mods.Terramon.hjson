@@ -639,7 +639,28 @@ GUI: {
 		}
 		PerfectLegend: Perfect (31)
 		MaxedLegend: Maxed (252)
-		IVsInfo: IVs are born with the Pokémon: 0 to 31 in each stat. They never change, and higher is better.
+		IVsInfo: Your Pokémon's natural talent, from 0 to 31 in each stat, decided when it was found. 31 is perfect, and a Pokémon can have perfect IVs. Higher IVs mean higher stats at the same level. Training doesn't change them.
+		IVsWhat: What are IVs?
+		IVRating: {
+			Perfect: Perfect
+			Great: Great
+			Good: Good
+			Fair: Fair
+			None: No good
+		}
+		HiddenAbility: (hidden ability)
+		Relearn: {
+			Change: Change move
+			Learn: Learn a move
+			ButtonHint: Swap in a move it could have learned by leveling up (moves you skipped, too).
+			TitleEmpty: Learn a move
+			TitleReplace: "Replace {0} with..."
+			Hint: Moves it can already know at its level. Hover to read one, click to learn it.
+			NoMoves: There are no other moves it can learn by level right now.
+			Level: Lv. {0}
+			Evolution: Evo.
+			Cancel: Cancel
+		}
 		EVsInfo: EVs grow when this Pokémon defeats others. Up to 252 per stat and 510 in total; every 4 EVs add 1 point to a stat at level 100.
 		EVsLeft: "{0} EVs left to earn"
 		EVsFull: All 510 EVs earned!

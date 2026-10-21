@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using ReLogic.Graphics;
+using Terramon.Content.GUI.Common;
 using Terramon.Core.Battling;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
@@ -192,6 +193,7 @@ public sealed class SummaryUI : SmartUIState
             return;
         CurrentTab = tab;
         Appear = 0f;
+        RelearnSlot = -1;
         SoundEngine.PlaySound(in SoundID.MenuTick);
     }
 
@@ -200,7 +202,120 @@ public sealed class SummaryUI : SmartUIState
         AnimState = PokemonAnimState.Idle;
         SelectedMove = 0;
         Appear = 0f;
+        RelearnSlot = -1;
     }
+
+    #region Move relearner
+
+    /// <summary>
+    ///     The move slot (0-3) the move relearner list is open for in the Moves tab, or -1 when it's closed.
+    /// </summary>
+    internal static int RelearnSlot { get; private set; } = -1;
+
+    /// <summary>
+    ///     How many rows the move relearner list is scrolled down.
+    /// </summary>
+    internal static int RelearnScroll { get; set; }
+
+    /// <summary>
+    ///     Whether the moves of <paramref name="data" /> can be changed from the summary right now: only Pokémon in
+    ///     the local player's party, and never during a battle.
+    /// </summary>
+    public static bool CanRelearn(PokemonData data)
+        => data != null && !data.Moves.IsDefault && !BattleClient.LocalBattleOngoing &&
+           Array.IndexOf(TerramonPlayer.LocalPlayer.Party, data) >= 0;
+
+    /// <summary>
+    ///     The level-up moves of the Pokémon's species up to its current level (including the ones learned on
+    ///     evolving) that it doesn't know right now, lowest level first. These are the moves it could have learned
+    ///     already, e.g. ones the player declined when it leveled up.
+    /// </summary>
+    public static List<(byte Level, MoveID Move)> RelearnableMoves(PokemonData data)
+    {
+        var moves = new List<(byte, MoveID)>();
+        var learnset = data?.Schema?.LevelUpLearnset;
+        if (learnset == null || data.Moves.IsDefault)
+            return moves;
+
+        foreach (var entry in learnset.OrderBy(e => e.AtLevel))
+        {
+            var move = (MoveID)entry.ID;
+            if (entry.AtLevel > data.Level || move == MoveID.None || !Enum.IsDefined(move) ||
+                Terramon.DatabaseV2.GetMove(move) == null || data.KnowsMove(move) ||
+                moves.Exists(m => m.Item2 == move))
+                continue;
+            moves.Add((entry.AtLevel, move));
+        }
+
+        return moves;
+    }
+
+    /// <summary>
+    ///     Opens the move relearner list for <paramref name="slot" /> (a move to replace, or an empty slot to fill).
+    /// </summary>
+    internal static void OpenRelearn(int slot)
+    {
+        if (!CanRelearn(Current) || slot is < 0 or > 3)
+            return;
+        RelearnSlot = slot;
+        RelearnScroll = 0;
+        SoundEngine.PlaySound(in SoundID.MenuOpen);
+    }
+
+    /// <summary>
+    ///     Closes the move relearner list without changing anything.
+    /// </summary>
+    internal static void CloseRelearn()
+    {
+        if (RelearnSlot < 0)
+            return;
+        RelearnSlot = -1;
+        SoundEngine.PlaySound(in SoundID.MenuClose);
+    }
+
+    /// <summary>
+    ///     Teaches <paramref name="move" /> to the shown Pokémon in the slot the relearner list is open for, like
+    ///     learning it on level up: it replaces the move there (or fills the first empty slot) with full PP.
+    ///     The party is saved with the player and the change reaches other players through the usual party sync.
+    /// </summary>
+    internal static void Relearn(MoveID move)
+    {
+        var data = Current;
+        var slot = RelearnSlot;
+        RelearnSlot = -1;
+        if (!CanRelearn(data) || slot is < 0 or > 3 || !RelearnableMoves(data).Exists(m => m.Move == move))
+        {
+            SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
+            return;
+        }
+
+        var old = data.Moves[slot].ID;
+        if (old == MoveID.None)
+        {
+            if (!data.TryLearnMove(move))
+                return;
+        }
+        else
+        {
+            data.SetMove(slot, move);
+        }
+
+        // It knows it now, so the level-up prompt shouldn't ask about it again
+        data.PendingMoves?.Remove(move);
+
+        for (var i = 0; i < 4; i++)
+            if (data.Moves[i].ID == move)
+                SelectedMove = i;
+
+        Main.NewText(old == MoveID.None
+                ? Language.GetTextValue("Mods.Terramon.MoveLearn.Learned", data.DisplayName, MoveLearnUI.MoveName(move))
+                : Language.GetTextValue("Mods.Terramon.MoveLearn.Forgot", data.DisplayName,
+                    MoveLearnUI.MoveName(old), MoveLearnUI.MoveName(move)),
+            new Color(50, 255, 130));
+        SoundEngine.PlaySound(SoundID.Item4);
+    }
+
+    #endregion
 
     public override void OnInitialize()
     {
@@ -227,6 +342,8 @@ public sealed class SummaryUI : SmartUIState
         }
 
         Appear = Math.Min(1f, Appear + 1f / 14f);
+        if (RelearnSlot >= 0 && (CurrentTab != Tab.Moves || !CanRelearn(Current)))
+            RelearnSlot = -1;
 
         if (JustPressed(Keys.Left))
             Step(-1);
@@ -290,6 +407,9 @@ internal sealed class SummaryWindow : UIElement
         [new(214, 140, 70), new(120, 190, 240), new(70, 130, 220), new(160, 110, 70)];
 
     private readonly Rectangle[] _moveRects = new Rectangle[4];
+    private readonly Rectangle[] _relearnButtons = new Rectangle[4];
+    private readonly List<(Rectangle Rect, MoveID Move)> _relearnRows = [];
+    private Rectangle _relearnCancel;
     private readonly Rectangle[] _tabRects = new Rectangle[5];
     private Rectangle _animButton;
     private Rectangle _closeButton;
@@ -359,6 +479,33 @@ internal sealed class SummaryWindow : UIElement
         }
 
         if (SummaryUI.CurrentTab != SummaryUI.Tab.Moves) return;
+
+        // Move relearner list: pick a move, or cancel
+        if (SummaryUI.RelearnSlot >= 0)
+        {
+            if (_relearnCancel.Contains(p))
+            {
+                SummaryUI.CloseRelearn();
+                return;
+            }
+
+            foreach (var (rect, move) in _relearnRows)
+            {
+                if (!rect.Contains(p)) continue;
+                SummaryUI.Relearn(move);
+                return;
+            }
+
+            return;
+        }
+
+        for (var i = 0; i < _relearnButtons.Length; i++)
+        {
+            if (_relearnButtons[i] == Rectangle.Empty || !_relearnButtons[i].Contains(p)) continue;
+            SummaryUI.OpenRelearn(i);
+            return;
+        }
+
         for (var i = 0; i < _moveRects.Length; i++)
         {
             if (!_moveRects[i].Contains(p) || data.Moves.IsDefault || data.Moves[i].ID == MoveID.None) continue;
@@ -366,6 +513,14 @@ internal sealed class SummaryWindow : UIElement
             SoundEngine.PlaySound(in SoundID.MenuTick);
             return;
         }
+    }
+
+    public override void ScrollWheel(UIScrollWheelEvent evt)
+    {
+        base.ScrollWheel(evt);
+        // Scrolls the move relearner list (clamped when it's drawn)
+        if (SummaryUI.RelearnSlot >= 0 && SummaryUI.CurrentTab == SummaryUI.Tab.Moves)
+            SummaryUI.RelearnScroll -= Math.Sign(evt.ScrollWheelValue);
     }
 
     /// <summary>
@@ -416,6 +571,9 @@ internal sealed class SummaryWindow : UIElement
         DrawHeader(spriteBatch, o);
         DrawLeftColumn(spriteBatch, o, data);
         DrawRightSide(spriteBatch, o, data);
+
+        // Hover panels (abilities, moves) last, on top of the whole window
+        MoveTooltip.DrawPending(spriteBatch);
     }
 
     #region Header
@@ -528,7 +686,7 @@ internal sealed class SummaryWindow : UIElement
         var valueX = info.X + 104;
         var valueWidth = info.Right - 12 - valueX;
         InfoRow(sb, T("Nature"), NatureText(data), info.X + 12, valueX, rowY, valueWidth);
-        InfoRow(sb, T("Ability"), AbilityName(data.Ability), info.X + 12, valueX, rowY + 24, valueWidth);
+        DrawAbilityRow(sb, data, info, valueX, rowY + 24, valueWidth);
 
         var item = data.HeldItem;
         if (item == null || item.IsAir)
@@ -574,6 +732,40 @@ internal sealed class SummaryWindow : UIElement
         Bar(sb, new Rectangle(bars.X + 52, bars.Y + 34, 120, 10), expPercent, new Color(80, 170, 255));
         Text(sb, $"{(int)(expPercent * 100)}%", bars.Right - 12, bars.Y + 39, ValueText, 0.75f, 1f, 0.5f);
         TextFit(sb, expNote, bars.X + 12, bars.Y + 60, bars.Width - 24, DimText, 0.7f, 0.5f);
+    }
+
+    /// <summary>
+    ///     The ability row of the info panel, with a little "?" badge: hovering it shows what the ability does.
+    /// </summary>
+    private void DrawAbilityRow(SpriteBatch sb, PokemonData data, Rectangle info, int valueX, int y, int valueWidth)
+    {
+        var ability = data.Ability;
+        var row = new Rectangle(info.X + 6, y - 11, info.Width - 12, 22);
+        var hover = ability != AbilityID.None && Hovering(row);
+        if (hover)
+            Fill(sb, row, new Color(42, 57, 110));
+
+        var name = AbilityName(ability);
+        const int badgeSpace = 20;
+        InfoRow(sb, T("Ability"), name, info.X + 12, valueX, y, valueWidth - badgeSpace);
+        if (ability == AbilityID.None)
+            return;
+
+        var nameWidth = Math.Min(Measure(name, 0.78f).X, valueWidth - badgeSpace);
+        HelpBadge(sb, (int)(valueX + nameWidth + 6), y, hover);
+        if (hover)
+            MoveTooltip.Show(AbilityTooltip.Build(ability, data.Schema.Abilities?.Hidden == ability));
+    }
+
+    /// <summary>
+    ///     A small "?" square that tells the player they can hover something to read more about it.
+    /// </summary>
+    private static void HelpBadge(SpriteBatch sb, int x, int centerY, bool active)
+    {
+        var r = new Rectangle(x, centerY - 7, 13, 13);
+        Fill(sb, r, OutlineDark);
+        Fill(sb, Inset(r, 1), active ? GoldDark : PanelBorder);
+        TextCentered(sb, "?", r, active ? GoldLight : Color.White, 0.6f);
     }
 
     private static void InfoRow(SpriteBatch sb, string label, string value, float labelX, float valueX, float y,
@@ -892,18 +1084,33 @@ internal sealed class SummaryWindow : UIElement
         var total = v.Sum();
         TabTitle(sb, c, T("Tabs.IVs"));
 
+        // A smaller radar on the left, so there's room for a plain-words rating of every stat
         var values = v.Select(x => x / 31f).ToArray();
         var labels = v.Select(x => x.ToString()).ToArray();
         var maxed = v.Select(x => x == 31).ToArray();
         var colors = maxed.Select(m => m ? GoldText : Color.White).ToArray();
-        Radar(sb, new Vector2(c.X + 152, c.Y + 186), 92f, values, labels, colors, maxed,
+        Radar(sb, new Vector2(c.X + 118, c.Y + 142), 70f, values, labels, colors, maxed,
             new Color(80, 200, 140), new Color(160, 240, 190));
 
-        var colX = c.X + 314;
+        // Each stat: name, value and what that value means ("31 Perfect", "18 Good"...)
+        var colX = c.X + 250;
         var colW = c.Right - colX;
-        Text(sb, Upper(T("Total")), colX, c.Y + 42, LabelText, 0.72f, 0f, 0.5f);
-        Text(sb, $"{total}/186", colX, c.Y + 64, GoldText, 0.95f, 0f, 0.5f);
-        Bar(sb, new Rectangle(colX, c.Y + 80, colW, 8), total / 186f, new Color(80, 200, 140));
+        for (var i = 0; i < 6; i++)
+        {
+            var y = c.Y + 44 + i * 21;
+            var rating = IVRating(v[i]);
+            if (i % 2 == 0)
+                Fill(sb, new Rectangle(colX - 4, y - 10, colW + 4, 20), PanelDarkBg);
+            TextFit(sb, T("StatLong." + StatKeys[i]), colX, y, 96, DimText, 0.68f, 0.5f);
+            Text(sb, v[i].ToString(), colX + 120, y, v[i] == 31 ? GoldText : ValueText, 0.78f, 1f, 0.5f);
+            TextFit(sb, T("IVRating." + rating), colX + 130, y, colW - 132, IVRatingColor(rating), 0.68f, 0.5f);
+        }
+
+        // Total and the overall judgement
+        var totalY = c.Y + 186;
+        Text(sb, Upper(T("Total")), colX, totalY, LabelText, 0.72f, 0f, 0.5f);
+        Text(sb, $"{total}/186", c.Right, totalY, GoldText, 0.85f, 1f, 0.5f);
+        Bar(sb, new Rectangle(colX, totalY + 12, colW, 8), total / 186f, new Color(80, 200, 140));
         var judge = total switch
         {
             >= 186 => "Perfect",
@@ -912,14 +1119,40 @@ internal sealed class SummaryWindow : UIElement
             > 90 => "AboveAverage",
             _ => "Decent"
         };
-        TextFit(sb, T("Judge." + judge), colX, c.Y + 104, colW, ValueText, 0.78f, 0.5f);
+        TextFit(sb, T("Judge." + judge), colX, totalY + 36, colW, ValueText, 0.74f, 0.5f);
 
         // Legend: gold dots are perfect IVs
-        Fill(sb, new Rectangle(colX, c.Y + 126, 6, 6), GoldText);
-        TextFit(sb, T("PerfectLegend"), colX + 12, c.Y + 129, colW - 12, DimText, 0.65f, 0.5f);
+        Fill(sb, new Rectangle(colX, totalY + 53, 6, 6), GoldText);
+        TextFit(sb, T("PerfectLegend"), colX + 12, totalY + 56, colW - 12, DimText, 0.62f, 0.5f);
 
-        Paragraph(sb, T("IVsInfo"), colX, c.Y + 146, colW, 0.65f, 8, DimText);
+        // What IVs are, in a few plain words
+        var box = new Rectangle(c.X, c.Y + 256, c.Width, c.Bottom - (c.Y + 256));
+        Fill(sb, box, OutlineDark);
+        Fill(sb, Inset(box, 1), new Color(16, 22, 48));
+        Text(sb, Upper(T("IVsWhat")), box.X + 10, box.Y + 11, GoldText, 0.68f, 0f, 0.5f);
+        Paragraph(sb, T("IVsInfo"), box.X + 10, box.Y + 21, box.Width - 20, 0.62f, 4, Color.White);
     }
+
+    /// <summary>
+    ///     A word for how good one IV is, so beginners can read the numbers at a glance.
+    /// </summary>
+    private static string IVRating(int iv) => iv switch
+    {
+        >= 31 => "Perfect",
+        >= 26 => "Great",
+        >= 16 => "Good",
+        >= 1 => "Fair",
+        _ => "None"
+    };
+
+    private static Color IVRatingColor(string rating) => rating switch
+    {
+        "Perfect" => GoldText,
+        "Great" => new Color(90, 210, 110),
+        "Good" => new Color(170, 215, 80),
+        "Fair" => new Color(240, 170, 70),
+        _ => new Color(230, 90, 80)
+    };
 
     private void DrawEVsTab(SpriteBatch sb, Rectangle c, PokemonData data)
     {
@@ -951,7 +1184,17 @@ internal sealed class SummaryWindow : UIElement
 
     private void DrawMovesTab(SpriteBatch sb, Rectangle c, PokemonData data)
     {
+        _relearnRows.Clear();
+        _relearnCancel = Rectangle.Empty;
+        Array.Fill(_relearnButtons, Rectangle.Empty);
+        if (SummaryUI.RelearnSlot >= 0)
+        {
+            DrawRelearnList(sb, c, data);
+            return;
+        }
+
         TabTitle(sb, c, T("Tabs.Moves"));
+        var canRelearn = SummaryUI.CanRelearn(data) && SummaryUI.RelearnableMoves(data).Count > 0;
         var hovered = -1;
         for (var i = 0; i < 4; i++)
         {
@@ -972,6 +1215,8 @@ internal sealed class SummaryWindow : UIElement
             if (schema == null)
             {
                 Text(sb, "—", r.X + 16, r.Center.Y, DimText, 0.85f, 0f, 0.5f);
+                if (canRelearn)
+                    RelearnButton(sb, i, new Rectangle(r.Right - 110, r.Center.Y - 10, 100, 20), T("Relearn.Learn"));
                 continue;
             }
 
@@ -995,6 +1240,9 @@ internal sealed class SummaryWindow : UIElement
             var maxPP = schema.PP + schema.PP * move.PPUp / 5;
             var ppColor = move.PP == 0 ? PlusColor : move.PP * 4 <= maxPP ? GoldText : ValueText;
             Text(sb, T("PP", move.PP, maxPP), r.Right - 10, r.Y + 38, ppColor, 0.72f, 1f, 0.5f);
+
+            if (canRelearn)
+                RelearnButton(sb, i, new Rectangle(r.Right - 186, r.Y + 7, 82, 18), T("Relearn.Change"));
         }
 
         // Description of the hovered (or selected) move
@@ -1012,6 +1260,88 @@ internal sealed class SummaryWindow : UIElement
         Text(sb, MoveLearnUI.MoveName(shownMove.ID), box.X + 10, box.Y + 12, GoldText, 0.72f, 0f, 0.5f);
         Paragraph(sb, Language.GetTextValue($"Mods.Terramon.Moves.{shownMove.ID}.FlavorText"), box.X + 10,
             box.Y + 22, box.Width - 20, 0.68f, 3, Color.White);
+    }
+
+    /// <summary>
+    ///     The "Change move" / "Learn a move" button of a move card, which opens the move relearner list.
+    /// </summary>
+    private void RelearnButton(SpriteBatch sb, int slot, Rectangle r, string label)
+    {
+        _relearnButtons[slot] = r;
+        var hover = Hovering(r);
+        Fill(sb, r, OutlineDark);
+        Fill(sb, Inset(r, 1), hover ? HeaderLight : HeaderRed);
+        Fill(sb, new Rectangle(r.X + 1, r.Y + 1, r.Width - 2, 1), HeaderLight);
+        TextCentered(sb, label, r, Color.White, 0.62f);
+        if (hover)
+            MoveTooltip.Show(T("Relearn.ButtonHint"));
+    }
+
+    /// <summary>
+    ///     The move relearner: every level-up move the Pokémon could already know, to put in the chosen slot.
+    /// </summary>
+    private void DrawRelearnList(SpriteBatch sb, Rectangle c, PokemonData data)
+    {
+        var slot = SummaryUI.RelearnSlot;
+        var old = data.Moves.IsDefault ? MoveID.None : data.Moves[slot].ID;
+        TabTitle(sb, c, old == MoveID.None ? T("Relearn.TitleEmpty") : T("Relearn.TitleReplace", MoveLearnUI.MoveName(old)));
+        TextFit(sb, T("Relearn.Hint"), c.X, c.Y + 34, c.Width, DimText, 0.64f, 0.5f);
+
+        const int rowHeight = 24;
+        var listTop = c.Y + 48;
+        var listBottom = c.Bottom - 32;
+        var visible = Math.Max(1, (listBottom - listTop) / rowHeight);
+        var moves = SummaryUI.RelearnableMoves(data);
+        SummaryUI.RelearnScroll = Math.Clamp(SummaryUI.RelearnScroll, 0, Math.Max(0, moves.Count - visible));
+        var scroll = SummaryUI.RelearnScroll;
+        var listWidth = c.Width - (moves.Count > visible ? 10 : 0);
+
+        if (moves.Count == 0)
+            Text(sb, T("Relearn.NoMoves"), c.X + 4, listTop + 12, DimText, 0.72f, 0f, 0.5f);
+
+        for (var i = scroll; i < moves.Count && i < scroll + visible; i++)
+        {
+            var (level, move) = moves[i];
+            var schema = Terramon.DatabaseV2.GetMove(move);
+            var r = new Rectangle(c.X, listTop + (i - scroll) * rowHeight, listWidth, rowHeight - 2);
+            _relearnRows.Add((r, move));
+            var hover = Hovering(r);
+            Fill(sb, r, hover ? new Color(50, 68, 128) : i % 2 == 0 ? PanelDarkBg : new Color(27, 38, 76));
+            if (hover)
+            {
+                Outline(sb, r, Gold);
+                MoveTooltip.Show(MoveTooltip.Build(move));
+            }
+
+            Fill(sb, new Rectangle(r.X + 1, r.Y + 1, 4, r.Height - 2), schema.Type.GetColor());
+            var levelText = level == 0 ? T("Relearn.Evolution") : T("Relearn.Level", level);
+            TextFit(sb, levelText, r.X + 10, r.Center.Y, 50, DimText, 0.62f, 0.5f);
+            TextFit(sb, MoveLearnUI.MoveName(move), r.X + 66, r.Center.Y, 150, Color.White, 0.76f, 0.5f);
+            TypeBadge(sb, new Rectangle(r.X + 222, r.Y + 3, 76, r.Height - 6), schema.Type, 0.58f);
+            var category = Language.GetTextValue($"Mods.Terramon.Battle.MoveInfo.{schema.Category}");
+            var catRect = new Rectangle(r.X + 304, r.Y + 4, 64, r.Height - 8);
+            Fill(sb, catRect, CategoryColor(schema.Category));
+            TextCentered(sb, category, catRect, Color.White, 0.56f);
+            var power = schema.Power is > 1 ? schema.Power.ToString() : "—";
+            Text(sb, power, r.Right - 8, r.Center.Y, ValueText, 0.72f, 1f, 0.5f);
+        }
+
+        // Scroll bar when the list is longer than the box
+        if (moves.Count > visible)
+        {
+            var track = new Rectangle(c.Right - 6, listTop, 6, visible * rowHeight - 2);
+            Fill(sb, track, OutlineDark);
+            var thumbHeight = Math.Max(12, track.Height * visible / moves.Count);
+            var thumbY = track.Y + (track.Height - thumbHeight) * scroll / Math.Max(1, moves.Count - visible);
+            Fill(sb, new Rectangle(track.X + 1, thumbY, 4, thumbHeight), Gold);
+        }
+
+        // Cancel
+        _relearnCancel = new Rectangle(c.Right - 120, c.Bottom - 24, 120, 22);
+        var cancelHover = Hovering(_relearnCancel);
+        Fill(sb, _relearnCancel, OutlineDark);
+        Fill(sb, Inset(_relearnCancel, 1), cancelHover ? new Color(73, 94, 171) : new Color(52, 70, 130));
+        TextCentered(sb, T("Relearn.Cancel"), _relearnCancel, Color.White, 0.7f);
     }
 
     private void DrawOtherTab(SpriteBatch sb, Rectangle c, PokemonData data)
