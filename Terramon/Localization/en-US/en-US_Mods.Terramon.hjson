@@ -424,6 +424,8 @@ GUI: {
 		SingleplayerOnly: This only works in singleplayer.
 		BrockGymBuilt: Brock's Gym was built around you.
 		SpawnOnix: Spawn wild Onix
+		CallOak: Call Professor Oak
+		OakCalled: Professor Oak is on his way (you can hear his story again).
 		SpawnLucario: Spawn wild Lucario
 		GiveLucario: Get Lucario (Lv. 30)
 		LucarioGiven: A Lucario joined your party.
@@ -2183,4 +2185,33 @@ FieldAbilities: {
 	Ride: Ride
 	Flash: Flash
 	Strength: Strength
+}
+
+// Professor Oak: greets new trainers and hands them over to the starter selection (art-fixes)
+NPCs.ProfessorOak: {
+	DisplayName: Professor Oak
+
+	Dialogue: {
+		Intro1: Hello there, {0}! Welcome to the world of Pokémon! My name is Oak. People call me the Pokémon Professor.
+		Intro2: This world is inhabited far and wide by creatures called Pokémon! They live in every biome: forests, deserts, snow, caves, the ocean... Explore, and you'll keep finding new ones.
+		Intro3: To catch a wild Pokémon, throw a Poké Ball at it. Some will put up a fight, so don't give up after one miss!
+		Intro4: The Gym Leaders are waiting for you too. Defeat the great bosses of this world and they'll accept your challenge, with a Gym Badge for whoever wins.
+		Intro5: Press {1} to see the Summary of your Pokémon, and {2} to open your Pokédex. Completing it is my dream... will you help me fill its pages?
+		Intro6: But first, every trainer needs a partner. I have some Pokémon here with me. Go on, choose one!
+		StillChoosing: Ah, {0}! Still deciding? Take your time. A first partner is a friend for life!
+		Tip1: Different Pokémon live in different biomes. If one is hard to find, try exploring somewhere new!
+		Tip2: Great Balls and Ultra Balls catch Pokémon more easily than a regular Poké Ball. Worth every coin!
+		Tip3: Your Pokémon can hold an item. Leftovers or an Oran Berry can keep them going in a tough battle.
+		Tip4: Brock, the Pewter City Gym Leader, accepts challengers once the Eye of Cthulhu has been defeated.
+		Tip5: Press {0} to check a Pokémon's Summary: its stats, moves, nature and more.
+		Tip6: Every Pokémon you see or catch is recorded in your Pokédex. Press {1} to open it.
+		Tip7: Pokémon grow stronger by battling, and many of them evolve. I can't wait to see yours!
+		NextButton: Next
+		SkipButton: Skip
+		ChooseButton: Choose my partner!
+		ThanksButton: Thanks, Professor!
+		TipButton: Any tips?
+		AgainButton: Tell me again
+		Unbound: (no key set)
+	}
 }
