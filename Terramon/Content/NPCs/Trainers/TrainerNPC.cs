@@ -298,10 +298,10 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        if (CustomTexture == null || (!CustomTextureFacesRight && CustomTextureScale == 1))
+        if (CustomTexture == null)
             return true;
 
-        // Drawn by hand to flip right-facing art and keep the feet on the ground at any scale
+        // Drawn by hand to flip right-facing art and keep the feet exactly on the ground at any scale
         var texture = Terraria.GameContent.TextureAssets.Npc[Type].Value;
         var frameHeight = texture.Height / Math.Max(1, Main.npcFrameCount[Type]);
         var source = new Rectangle(0, NPC.frame.Y, texture.Width, frameHeight);
