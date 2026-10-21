@@ -7,7 +7,8 @@
   {
     WalkingBehaviour:
     {
-      FrameCount: 8
+      FrameCount: 9
+      AnimationType: IdleForward
       FrameTime: 6
     }
     SpawnController:
@@ -27,7 +28,8 @@
   {
     GenericPet:
     {
-      FrameCount: 8
+      FrameCount: 9
+      AnimationType: IdleForward
       FrameTime: 6
     }
   }
