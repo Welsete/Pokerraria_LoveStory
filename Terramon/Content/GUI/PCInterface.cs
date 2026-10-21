@@ -720,8 +720,16 @@ internal sealed class CustomPCItemSlot : UIImage
                     return;
                 }
 
+                // Summary screen; the arrows there go through this box
+                if (SummaryUI.OpenRequested())
+                {
+                    var box = _box;
+                    SummaryUI.Open(Enumerable.Range(0, PCBox.Capacity).Select(i => box[i]).ToArray(), data);
+                    return;
+                }
+
                 TooltipOverlay.SetName(_tooltipName);
-                TooltipOverlay.SetTooltip(_tooltipText);
+                TooltipOverlay.SetTooltip(_tooltipText + '\n' + SummaryUI.HintText());
                 TooltipOverlay.SetIcon(BallAssets.GetBallIcon(data.Ball));
                 if (data.IsShiny) TooltipOverlay.SetColor(ModContent.GetInstance<KeyItemRarity>().RarityColor);
 

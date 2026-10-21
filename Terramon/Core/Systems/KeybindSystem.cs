@@ -11,6 +11,11 @@ public class KeybindSystem : ModSystem
     public static ModKeybind AdminPanelKeybind { get; private set; }
     public static ModKeybind BattleLogKeybind { get; private set; }
 
+    /// <summary>
+    ///     Opens the summary screen of the party or PC Pokémon under the mouse.
+    /// </summary>
+    public static ModKeybind OpenSummaryKeybind { get; private set; }
+
     public override void Load()
     {
         TogglePartyKeybind = KeybindLoader.RegisterKeybind(Mod, "ToggleParty", "F");
@@ -21,6 +26,7 @@ public class KeybindSystem : ModSystem
         PrevPokemonKeybind = KeybindLoader.RegisterKeybind(Mod, "PrevPokemon", "OemOpenBrackets");
         AdminPanelKeybind = KeybindLoader.RegisterKeybind(Mod, "AdminPanel", "F8");
         BattleLogKeybind = KeybindLoader.RegisterKeybind(Mod, "BattleLog", "L");
+        OpenSummaryKeybind = KeybindLoader.RegisterKeybind(Mod, "OpenSummary", "I");
     }
 
     public override void Unload()
@@ -33,5 +39,6 @@ public class KeybindSystem : ModSystem
         PrevPokemonKeybind = null;
         AdminPanelKeybind = null;
         BattleLogKeybind = null;
+        OpenSummaryKeybind = null;
     }
 }

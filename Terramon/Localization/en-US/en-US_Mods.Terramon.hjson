@@ -491,16 +491,6 @@ GUI: {
 			HP: {0}/{1}
 			EXP: {2}/{3}
 			'''
-		SummaryHint: "[c/9FA2AD:Hold Shift for the summary]"
-		Summary: {
-			Nature: "Nature: {0}"
-			Ability: "Ability: {0}"
-			Item: "Item: {0}"
-			NoItem: None
-			IVs: "IVs: HP {0} · Atk {1} · Def {2} · SpA {3} · SpD {4} · Spe {5} ({6}/186)"
-			EVs: "EVs: HP {0} · Atk {1} · Def {2} · SpA {3} · SpD {4} · Spe {5} ({6}/510)"
-			Legend: "[c/9FA2AD:IVs (0-31) are born with the Pokémon; EVs grow by defeating Pokémon.]"
-		}
 		SlotTooltipMaxLevel:
 			'''
 			HP: {0}/{1}
@@ -581,6 +571,149 @@ GUI: {
 
 			Click and drag to reorder
 			'''
+	}
+
+	Summary: {
+		Title: Pokémon Summary
+		Hint: "[c/9FA2AD:Middle click or {0}: open summary]"
+		Close: Close (Esc)
+		Previous: Previous Pokémon (←)
+		Next: Next Pokémon (→)
+		CryHint: Click to hear its cry
+		AnimHint: Click to see another animation
+		Tabs: {
+			Stats: Stats
+			IVs: IVs
+			EVs: EVs
+			Moves: Moves
+			Other: Other
+		}
+		Stat: {
+			HP: HP
+			Atk: Atk
+			Def: Def
+			SpA: Sp. Atk
+			SpD: Sp. Def
+			Spe: Speed
+		}
+		StatLong: {
+			HP: HP
+			Atk: Attack
+			Def: Defense
+			SpA: Sp. Attack
+			SpD: Sp. Defense
+			Spe: Speed
+		}
+		Nature: Nature
+		NatureNeutral: Neutral: no stat changes
+		Ability: Ability
+		Item: Item
+		NoItem: None
+		Trainer: Trainer
+		Unknown: Unknown
+		HP: HP
+		EXP: EXP
+		ToNextLevel: "{0} EXP to Lv. {1}"
+		MaxLevel: Maximum level reached!
+		BaseStats: Base stats
+		BaseTotal: "Base total: {0}"
+		StatsHint: Red stat: raised by the nature. Blue: lowered.
+		Total: Total
+		Judge: {
+			Decent: Decent potential
+			AboveAverage: Above average potential
+			RelativelySuperior: Relatively superior potential
+			Outstanding: Outstanding potential
+			Perfect: Perfect potential!
+		}
+		PerfectLegend: Perfect (31)
+		MaxedLegend: Maxed (252)
+		IVsInfo: IVs are born with the Pokémon: 0 to 31 in each stat. They never change, and higher is better.
+		EVsInfo: EVs grow when this Pokémon defeats others. Up to 252 per stat and 510 in total; every 4 EVs add 1 point to a stat at level 100.
+		EVsLeft: "{0} EVs left to earn"
+		EVsFull: All 510 EVs earned!
+		PowerAccuracy: "Power {0}  ·  Acc. {1}"
+		PP: PP {0}/{1}
+		NoMoveSelected: Hover over a move to read about it.
+		MetSection: Met
+		CaughtIn: Caught in
+		OT: Original trainer
+		Met: Met
+		MetValue: Lv. {0}  ·  {1}
+		World: World
+		Friendship: Friendship
+		FriendshipLevel: {
+			0: It doesn't trust you yet.
+			1: It's getting used to you.
+			2: It's friendly toward you.
+			3: It's quite fond of you.
+			4: It trusts you a lot!
+			5: It loves you!
+		}
+		Characteristic: Characteristic
+		Characteristics: {
+			HP0: Loves to eat.
+			HP1: Takes plenty of siestas.
+			HP2: Nods off a lot.
+			HP3: Scatters things often.
+			HP4: Likes to relax.
+			Atk0: Proud of its power.
+			Atk1: Likes to thrash about.
+			Atk2: A little quick tempered.
+			Atk3: Likes to fight.
+			Atk4: Quick tempered.
+			Def0: Sturdy body.
+			Def1: Capable of taking hits.
+			Def2: Highly persistent.
+			Def3: Good endurance.
+			Def4: Good perseverance.
+			Spe0: Likes to run.
+			Spe1: Alert to sounds.
+			Spe2: Impetuous and silly.
+			Spe3: Somewhat of a clown.
+			Spe4: Quick to flee.
+			SpA0: Highly curious.
+			SpA1: Mischievous.
+			SpA2: Thoroughly cunning.
+			SpA3: Often lost in thought.
+			SpA4: Very finicky.
+			SpD0: Strong willed.
+			SpD1: Somewhat vain.
+			SpD2: Strongly defiant.
+			SpD3: Hates to lose.
+			SpD4: Somewhat stubborn.
+		}
+		FieldAbilities: Field abilities
+		Field: {
+			Ride: Ride
+			Fly: Fly
+			Surf: Surf
+			Dig: Dig
+		}
+		FieldSoon: Coming soon: ride, fly, surf and dig with your Pokémon out in the world.
+		FieldHint: Lit badges are things this Pokémon can do out in the world.
+		FieldNone: This Pokémon has no field abilities.
+		Anim: {
+			Idle: Idle
+			Walk: Walk
+			Attack: Attack
+			SpAttack: Sp. Attack
+			Status: Status move
+			Hurt: Hurt
+			Sleep: Sleep
+			Faint: Faint
+			Strike: Strike
+			QuickStrike: Quick strike
+			Swing: Swing
+			Double: Double hit
+			Hop: Hop
+			Sit: Sit
+			Laying: Lie down
+			Wake: Wake up
+			Trip: Trip
+			Eat: Eat
+			Pose: Pose
+		}
 	}
 
 	Pokedex: {
@@ -1268,6 +1401,7 @@ MegaStoneNames: {
 }
 
 Keybinds: {
+	OpenSummary.DisplayName: Open Pokémon Summary
 	BattleLog.DisplayName: Battle History
 	ToggleParty.DisplayName: Party
 	OpenPokedex.DisplayName: Pokédex

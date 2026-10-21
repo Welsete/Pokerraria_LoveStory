@@ -731,6 +731,13 @@ internal sealed class CustomPartyItemSlot : UIImage
                         return;
                     }
 
+                    // Handle opening the summary screen (middle click or keybind)
+                    if (!_pretendToBeEmptyState && SummaryUI.OpenRequested())
+                    {
+                        SummaryUI.Open(TerramonPlayer.LocalPlayer.Party, Data);
+                        return;
+                    }
+
                     // Draw tooltip overlay
                     ShowTooltipOverlay();
 
@@ -779,27 +786,6 @@ internal sealed class CustomPartyItemSlot : UIImage
         base.Draw(spriteBatch);
     }
 
-    private static string Summary(PokemonData data)
-    {
-        string T(string key, params object[] args) =>
-            Language.GetTextValue("Mods.Terramon.GUI.Inventory.Summary." + key, args);
-
-        var ivs = data.IVs;
-        var evs = data.EVs;
-        var ivTotal = ivs.HP + ivs.Attack + ivs.Defense + ivs.SpAtk + ivs.SpDef + ivs.Speed;
-        var item = data.HeldItem.IsAir ? T("NoItem") : Lang.GetItemNameValue(data.HeldItem.type);
-        // Ability names stay in English, like move names ("SolarPower" -> "Solar Power")
-        var ability = System.Text.RegularExpressions.Regex.Replace(data.Ability.ToString(), "(?<=[a-z])(?=[A-Z])", " ");
-
-        return string.Join('\n',
-            T("Nature", Language.GetTextValue("Mods.Terramon.Natures." + data.Nature)),
-            T("Ability", ability),
-            T("Item", item),
-            T("IVs", ivs.HP, ivs.Attack, ivs.Defense, ivs.SpAtk, ivs.SpDef, ivs.Speed, ivTotal),
-            T("EVs", evs.HP, evs.Attack, evs.Defense, evs.SpAttack, evs.SpDefense, evs.Speed, evs.Sum),
-            T("Legend"));
-    }
-
     private void ShowTooltipOverlay()
     {
         TooltipOverlay.SetName(_tooltipName);
@@ -813,10 +799,8 @@ internal sealed class CustomPartyItemSlot : UIImage
             tooltip += '\n' + Language.GetTextValue(key);
         }
 
-        // Holding Shift shows the summary (nature, ability, item, IVs and EVs)
-        tooltip = Main.keyState.PressingShift()
-            ? Summary(Data)
-            : tooltip + '\n' + Language.GetTextValue("Mods.Terramon.GUI.Inventory.SummaryHint");
+        // The full summary has its own screen now; just say how to open it
+        tooltip += '\n' + SummaryUI.HintText();
 
         TooltipOverlay.SetTooltip(tooltip);
         TooltipOverlay.SetIcon(BallAssets.GetBallIcon(Data.Ball));
