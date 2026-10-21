@@ -4,22 +4,22 @@ namespace Terramon.Content.Items;
 
 /// <summary>
 ///     A held item with an effect in battle. The class name is the item's name in Pokémon Showdown, which applies the
-///     effect; the sprite borrows a Terraria item's look until it gets its own, and it's crafted from that item.
+///     effect. Its sprite is Assets/Items/HeldItems/&lt;class name&gt;.png (Isa's 32x32 art), and it's crafted from the
+///     Terraria item in <see cref="LooksLike" />.
 /// </summary>
 public abstract class BattleHeldItem : HeldItem
 {
     /// <summary>
-    ///     The Terraria item it looks like and is crafted from.
+    ///     The Terraria item it's crafted from (and looked like before it had a sprite of its own).
     /// </summary>
     protected abstract int LooksLike { get; }
 
     protected virtual int CraftAmount => 1;
 
-    public override string Texture => $"Terraria/Images/Item_{LooksLike}";
-
     public override void SetDefaults()
     {
         base.SetDefaults();
+        Item.width = Item.height = 32;
         Item.rare = ItemRarityID.Green;
         Item.value = Item.buyPrice(silver: 50);
     }
