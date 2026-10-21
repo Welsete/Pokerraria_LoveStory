@@ -194,7 +194,15 @@ public sealed class TestBattleUI : SmartUIState
     private const float LabelWidth = 0.68f;
 
     // Labels next to an icon, with their normal size, shrunk every frame when their text doesn't fit
-    private static readonly List<(UIText Label, float Scale, bool Large)> FittedLabels = [];
+    private sealed class FittedLabel(UIText label, float scale, bool large)
+    {
+        public readonly UIText Label = label;
+        public readonly float Scale = scale;
+        public readonly bool Large = large;
+        public float Current = scale;
+    }
+
+    private static readonly List<FittedLabel> FittedLabels = [];
 
     /// <summary>
     ///     Centers a label in the part of a button to the right of its icon; <see cref="FitLabels" /> shrinks long
@@ -205,13 +213,14 @@ public sealed class TestBattleUI : SmartUIState
         label.Left.Percent = LabelLeft;
         label.Width.Percent = LabelWidth;
         label.TextOriginX = 0.5f;
-        FittedLabels.Add((label, scale, large));
+        FittedLabels.Add(new FittedLabel(label, scale, large));
     }
 
     private static void FitLabels()
     {
-        foreach (var (label, scale, large) in FittedLabels)
+        foreach (var fitted in FittedLabels)
         {
+            var (label, scale, large) = (fitted.Label, fitted.Scale, fitted.Large);
             if (label.Parent?.Parent == null || string.IsNullOrEmpty(label.Text))
                 continue;
             var room = label.Parent.GetInnerDimensions().Width * LabelWidth;
@@ -220,8 +229,9 @@ public sealed class TestBattleUI : SmartUIState
             var font = large ? FontAssets.DeathText.Value : FontAssets.MouseText.Value;
             var width = font.MeasureString(label.Text).X * scale;
             var wanted = width > room ? scale * room / width : scale;
-            if (Math.Abs(label.TextScale - wanted) < 0.005f)
+            if (Math.Abs(fitted.Current - wanted) < 0.005f)
                 continue;
+            fitted.Current = wanted;
             label.SetText(label.Text, wanted, large);
             label.Recalculate();
         }
