@@ -76,17 +76,18 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         if (ticks == animationStart - 25)
             SoundEngine.PlaySound(in TerramonSoundID.BattleStart);
 
-        var party = ShownParty;
-        if (party == null || ticks > animationEnd || ticks < animationStart)
+        // The slots slide out even if the foe's team isn't known yet; they're only drawn once it is
+        if (!DrawBallSlots || ticks > animationEnd || ticks < animationStart)
             return;
+        var party = BallParty == null ? TerramonPlayer.LocalPlayer.Party : null;
 
         for (int i = 0; i < _ballSlotXPositions.Length; i++)
         {
             int startTick = animationStart + (i * ticksPerSlot);
 
             // Only the player's own slots ping, so the sounds don't play twice
-            if (ticks == startTick + ticksPerSlot - 1 && BallParty == null)
-                SoundEngine.PlaySound(i < party.Count && party[i] != null ? TerramonSoundID.BattlePing : TerramonSoundID.BattlePingEmpty);
+            if (ticks == startTick + ticksPerSlot - 1 && party != null)
+                SoundEngine.PlaySound(i < party.Length && party[i] != null ? TerramonSoundID.BattlePing : TerramonSoundID.BattlePingEmpty);
 
             int endTick = startTick + ticksPerSlot;
             float targetXPosition = -8f + (i * 26f);
