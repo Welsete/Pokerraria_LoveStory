@@ -92,7 +92,20 @@ public sealed class BattleField
                 if (show && switchedIn.Side != null)
                     BattlePlayback.QueueSwitch(this, switchedID.Side, switchedIn.Side.ActivePokemon.Data,
                         switchedIn.Data);
-                // A transformed Pokémon goes back to its own looks when it leaves the field
+                // A transformed Pokémon goes back to its own looks when it leaves the field (when the switch is shown)
+                if (show && switchedIn.Side != null)
+                {
+                    for (var i = 0; i < switchedIn.Side.Team.Length; i++)
+                    {
+                        ref var leaving = ref switchedIn.Side.Team[i];
+                        if (leaving.TransformedInto == 0)
+                            continue;
+                        BattlePlayback.HoldLook(this, switchedID.Side, i, leaving.TransformedInto,
+                            leaving.TransformedShiny);
+                        BattlePlayback.QueueLook(this, switchedID.Side, i, 0, false);
+                    }
+                }
+
                 switchedIn.Side.ClearTransforms();
                 switchedIn.SetAsActive();
                 // Whatever was charging or recharging has left the field
@@ -188,9 +201,17 @@ public sealed class BattleField
                     mon.AbilitySuppressed = true;
                 break;
             case BattleActionID.PokemonTransformDetails:
-                ref var transformed = ref GetMon(r);
+                var transformedID = r.ReadPokemonID();
+                ref var transformed = ref GetMon(transformedID);
+                // It keeps its own looks until its Transform is shown
+                if (show)
+                    BattlePlayback.HoldLook(this, transformedID.Side, transformedID.Slot, transformed.TransformedInto,
+                        transformed.TransformedShiny);
                 transformed.TransformedInto = r.ReadUInt16();
                 transformed.TransformedShiny = a.Flags[0];
+                if (show)
+                    BattlePlayback.QueueLook(this, transformedID.Side, transformedID.Slot, transformed.TransformedInto,
+                        transformed.TransformedShiny);
                 break;
             case BattleActionID.LogLine:
                 // Always read, so the actions after it stay in place

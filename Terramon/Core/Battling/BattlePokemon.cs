@@ -221,8 +221,11 @@ public struct BattlePokemon()
     }
     public void Faint()
     {
-        TransformedInto = 0;
         var field = Side?.Field;
+        // A transformed Pokémon keeps its copied looks until it's shown fainting
+        if (!Main.dedServ && TransformedInto != 0 && field != null)
+            BattlePlayback.HoldLook(field, field.A == Side ? 1 : 2, Slot, TransformedInto, TransformedShiny);
+        TransformedInto = 0;
         // It keeps looking healthy until its faint is shown (see BattlePlayback)
         if (!Main.dedServ)
             BattlePlayback.HoldStatus(field, Data);

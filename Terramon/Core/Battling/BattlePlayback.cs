@@ -35,6 +35,7 @@ public sealed class BattlePlayback : ModSystem
         Move,
         HP,
         Status,
+        Look,
         Active,
         Line,
         Faint,
@@ -69,6 +70,11 @@ public sealed class BattlePlayback : ModSystem
 
         // Status
         public NonVolatileStatus Status;
+
+        // Look (Transform)
+        public int Slot;
+        public ushort Into;
+        public bool IntoShiny;
 
         // Line and Faint
         public string Text;
@@ -120,6 +126,7 @@ public sealed class BattlePlayback : ModSystem
         public readonly Dictionary<PokemonData, NonVolatileStatus> Status = new(ReferenceEqualityComparer.Instance);
         public readonly Dictionary<PokemonData, (byte Level, int Exp)> Exp = new(ReferenceEqualityComparer.Instance);
         public readonly Dictionary<int, PokemonData> Active = [];
+        public readonly Dictionary<(int Side, int Slot), (ushort Into, bool Shiny)> Looks = [];
 
         public bool Busy => Steps.Count > 0 || Wait > 0 || PendingHit > 0;
     }
@@ -245,6 +252,24 @@ public sealed class BattlePlayback : ModSystem
             return;
         Add(field, new Step { Kind = Kind.Status, Mon = mon, Status = status });
     }
+
+    /// <summary>
+    ///     Called just before a Pokémon's Transform looks change in the battle (Transform, switching out, fainting):
+    ///     it keeps its current looks until the change is shown.
+    /// </summary>
+    public static void HoldLook(BattleField field, int sideIndex, int slot, ushort into, bool shiny)
+    {
+        if (!Enabled || field == null)
+            return;
+        lock (Sync)
+            Touch(field).Looks.TryAdd((sideIndex, slot), (into, shiny));
+    }
+
+    /// <summary>
+    ///     Shows a Pokémon's new Transform looks (see <see cref="HoldLook" />) when their moment comes.
+    /// </summary>
+    public static void QueueLook(BattleField field, int sideIndex, int slot, ushort into, bool shiny)
+        => Add(field, new Step { Kind = Kind.Look, SideIndex = sideIndex, Slot = slot, Into = into, IntoShiny = shiny });
 
     /// <summary>
     ///     A move being used: its animation and the user's attack animation. Its hit comes a moment later.
@@ -381,9 +406,9 @@ public sealed class BattlePlayback : ModSystem
     {
         get
         {
-            var field = BattleClient.LocalClient?.Battle;
+            var battle = BattleClient.LocalClient?.Battle;
             lock (Sync)
-                return Get(field, false)?.LastText;
+                return Get(battle, false)?.LastText;
         }
     }
 
@@ -464,6 +489,26 @@ public sealed class BattlePlayback : ModSystem
             return false;
         lock (Sync)
             return Get(field, false)?.Active.TryGetValue(sideIndex, out shown) == true && shown != null;
+    }
+
+    /// <summary>
+    ///     The Transform looks a Pokémon of a playing battle still shows (see <see cref="HoldLook" />). False when
+    ///     nothing different is shown, so its own values apply.
+    /// </summary>
+    public static bool TryGetShownLook(BattleField field, int sideIndex, int slot, out ushort into, out bool shiny)
+    {
+        into = 0;
+        shiny = false;
+        if (!Enabled || field == null)
+            return false;
+        lock (Sync)
+        {
+            var timeline = Get(field, false);
+            if (timeline == null || !timeline.Looks.TryGetValue((sideIndex, slot), out var look))
+                return false;
+            (into, shiny) = look;
+            return true;
+        }
     }
 
     #endregion
@@ -678,6 +723,11 @@ public sealed class BattlePlayback : ModSystem
             case Kind.Active:
                 lock (Sync)
                     timeline.Active[step.SideIndex] = step.Mon;
+                break;
+
+            case Kind.Look:
+                lock (Sync)
+                    timeline.Looks[(step.SideIndex, step.Slot)] = (step.Into, step.IntoShiny);
                 break;
 
             case Kind.Line:

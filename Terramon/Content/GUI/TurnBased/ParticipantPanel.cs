@@ -47,13 +47,13 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         get
         {
             var client = BattleClient.LocalClient;
-            var field = client?.Battle;
-            if (field?.A == null || field.B == null)
+            var battle = client?.Battle;
+            if (battle?.A == null || battle.B == null)
                 return CurrentMon;
-            var local = field.LocalSideIndex;
+            var local = battle.LocalSideIndex;
             if (local == 0)
                 return CurrentMon;
-            return BattlePlayback.TryGetShownActive(field, IsFoe ? 3 - local : local, out var shown)
+            return BattlePlayback.TryGetShownActive(battle, IsFoe ? 3 - local : local, out var shown)
                 ? shown
                 : CurrentMon;
         }

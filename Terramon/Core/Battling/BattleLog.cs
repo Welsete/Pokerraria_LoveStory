@@ -214,15 +214,16 @@ public static class BattleLog
     /// <summary>
     ///     Logs an accuracy or evasion change, which Showdown.NET can't parse as a normal boost.
     /// </summary>
-    public static void AccuracyStage(BattleInstance source, string kind, string showdownMon, string stat, int amount)
+    public static void AccuracyStage(BattleInstance source, BinaryWriter w, string kind, string showdownMon,
+        string stat, int amount)
     {
         if (kind == "-setboost")
             return;
         stat = stat == "accuracy" ? "Accuracy" : "Evasion";
         if (kind == "-boost")
-            Send(amount > 1 ? "StatRoseSharply" : "StatRose", Good, Mon(source, showdownMon), Stat(stat));
+            Send(w, amount > 1 ? "StatRoseSharply" : "StatRose", Good, Mon(source, showdownMon), Stat(stat));
         else
-            Send(amount > 1 ? "StatFellHarshly" : "StatFell", Bad, Mon(source, showdownMon), Stat(stat));
+            Send(w, amount > 1 ? "StatFellHarshly" : "StatFell", Bad, Mon(source, showdownMon), Stat(stat));
     }
 
     private static bool ConsumeSkippedTurn(BattleInstance source, int side)
