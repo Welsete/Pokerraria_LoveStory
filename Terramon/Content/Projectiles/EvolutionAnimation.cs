@@ -526,7 +526,7 @@ public sealed class EvolutionQueue : ModSystem
     {
         get
         {
-            if (_current is < 0 or >= Main.maxProjectiles)
+            if (_current < 0 || _current >= Main.maxProjectiles)
                 return null;
             var projectile = Main.projectile[_current];
             return projectile.active && projectile.owner == Main.myPlayer
@@ -650,7 +650,7 @@ public sealed class EvolutionQueue : ModSystem
             var index = Projectile.NewProjectile(player.GetSource_Misc("Evolution"), feet, Vector2.Zero,
                 ModContent.ProjectileType<EvolutionAnimation>(), 0, 0f, player.whoAmI, request.From, request.To,
                 flags);
-            if (index is < 0 or >= Main.maxProjectiles ||
+            if (index < 0 || index >= Main.maxProjectiles ||
                 Main.projectile[index].ModProjectile is not EvolutionAnimation animation)
             {
                 // No room for it: just say so
