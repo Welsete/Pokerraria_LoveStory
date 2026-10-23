@@ -120,6 +120,7 @@ public sealed class BattleManager
         switch (m)
         {
             case ResetEverythingStatement:
+                BattlePlayback.Clear();
                 foreach (var inst0 in _activeBattles.Values)
                     inst0.Stop();
                 _activeBattles.Clear();
@@ -1009,20 +1010,21 @@ public sealed class BattleManager
         b.SubmitChoice(LatestInteractor, choice, operand + 1);
     }
     
-    public void Observe(BattleParticipant battleOwner, MemoryStream buffer, bool onlyToSelf)
+    /// <param name="refine">Whether these are the exact copies of actions already applied (see <see cref="BattleField.Receive(BinaryReader, bool)" />).</param>
+    public void Observe(BattleParticipant battleOwner, MemoryStream buffer, bool onlyToSelf, bool refine = false)
     {
         buffer.Position = 0;
         using var reader = new BinaryReader(buffer, Encoding.UTF8, true);
         var b = _activeBattles[battleOwner];
 
-        b.Omniscient.Receive(reader);
+        b.Omniscient.Receive(reader, refine);
         buffer.Position = 0;
 
         // In singleplayer and on the server the participants share the omniscient field,
         // so reading the same actions twice would double boosts, turns and the like
         if (!onlyToSelf && b.ClientA.Battle != null && b.ClientA.Battle != b.Omniscient)
         {
-            b.ClientA.Battle.Receive(reader);
+            b.ClientA.Battle.Receive(reader, refine);
         }
 
         reader.Dispose();

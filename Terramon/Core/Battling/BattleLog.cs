@@ -2,13 +2,14 @@ using Showdown.NET.Protocol;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.Helpers;
 using Terramon.ID;
-using Terraria.Chat;
 using Terraria.Localization;
 
 namespace Terramon.Core.Battling;
 
 /// <summary>
 ///     Writes what happens in a battle (moves used, effectiveness, stat changes...) to the chat.
+///     The lines are written into the battle's actions (<see cref="BattleActionID.LogLine" />), so every client shows them
+///     at their moment in the turn's playback (see <see cref="BattlePlayback" />), in order with the hits.
 /// </summary>
 public static class BattleLog
 {
@@ -38,16 +39,34 @@ public static class BattleLog
         battle ??= BattleClient.LocalClient?.Battle;
         lock (History)
         {
-            if (battle != null && battle != _historyBattle)
-            {
-                History.Clear();
-                _historyBattle = battle;
-                _turn = 0;
-            }
-
+            StartHistory(battle);
             History.Add((text, color));
             HistoryVersion++;
         }
+    }
+
+    /// <summary>
+    ///     Adds the "Turn N" header of a new turn to the battle history.
+    /// </summary>
+    public static void RecordTurn(BattleField battle)
+    {
+        lock (History)
+        {
+            StartHistory(battle);
+            _turn++;
+            History.Add((Language.GetTextValue("Mods.Terramon.GUI.BattleLog.Turn", _turn), TurnColor));
+            HistoryVersion++;
+        }
+    }
+
+    // A line from a new battle clears the previous one's history. Call while holding the History lock
+    private static void StartHistory(BattleField battle)
+    {
+        if (battle == null || battle == _historyBattle)
+            return;
+        History.Clear();
+        _historyBattle = battle;
+        _turn = 0;
     }
 
     /// <summary>
@@ -98,36 +117,35 @@ public static class BattleLog
     private static readonly Dictionary<(BattleInstance, int Side, int Slot), (int HP, int MaxHP)> LastHP = [];
 
     /// <summary>
-    ///     Called for every protocol element of a battle (the secret, exact-HP version of split ones).
+    ///     Called for every protocol element of a battle (the secret, exact-HP version of split ones), on the machine
+    ///     running it. The lines are written to <paramref name="w" />, the battle's public actions.
     /// </summary>
-    public static void Handle(BattleInstance source, ProtocolElement element)
+    public static void Handle(BattleInstance source, ProtocolElement element, BinaryWriter w)
     {
+        void Send(string key, Color color, params object[] args) => BattleLog.Send(w, key, color, args);
+
         switch (element)
         {
             case CantElement { Reason: "recharge" } skipped when ConsumeSkippedTurn(source, new SimpleMon(skipped.Pokemon).Side):
                 break;
             case TurnElement:
+                // The "Turn N" header is added by each client when the turn starts (see BattlePlayback)
                 lock (SkippedTurns)
                     SkippedTurns.RemoveWhere(t => t.Item1 == source);
-                if (Main.dedServ)
-                    break;
-                Record(Language.GetTextValue("Mods.Terramon.GUI.BattleLog.Turn", _turn + 1), TurnColor,
-                    source.Omniscient);
-                _turn++;
                 break;
             case SwitchElement sw:
                 TrackHP(source, sw.Pokemon, sw.HP);
-                Send(source, "SwitchedIn", LogColor, Mon(source, sw.Pokemon));
+                Send("SwitchedIn", LogColor, Mon(source, sw.Pokemon));
                 break;
             case DragElement drag:
                 TrackHP(source, drag.Pokemon, drag.HP);
-                Send(source, "SwitchedIn", LogColor, Mon(source, drag.Pokemon));
+                Send("SwitchedIn", LogColor, Mon(source, drag.Pokemon));
                 break;
             case DamageElement damage:
             {
                 var lost = TrackHP(source, damage.Pokemon, damage.HP);
                 if (lost > 0)
-                    Send(source, "Damage", LogColor, Mon(source, damage.Pokemon), Highlight(lost, DamageHex),
+                    Send("Damage", LogColor, Mon(source, damage.Pokemon), Highlight(lost, DamageHex),
                         HPLeft(source, damage.Pokemon));
                 break;
             }
@@ -135,43 +153,43 @@ public static class BattleLog
             {
                 var gained = -TrackHP(source, heal.Pokemon, heal.HP);
                 if (gained > 0)
-                    Send(source, "Healed", LogColor, Mon(source, heal.Pokemon), Highlight(gained, HealHex),
+                    Send("Healed", LogColor, Mon(source, heal.Pokemon), Highlight(gained, HealHex),
                         HPLeft(source, heal.Pokemon));
                 break;
             }
             case MoveElement move:
-                Send(source, "UsedMove", LogColor, Mon(source, move.Pokemon), Highlight(Move(move.Move), MoveHex));
+                Send("UsedMove", LogColor, Mon(source, move.Pokemon), Move(move.Move));
                 if (StatusMoveEffect(move.Move) is { } effect)
-                    Send(source, "MoveEffect", Muted, effect);
+                    Send("MoveEffect", Muted, effect);
                 break;
             case SuperEffectiveElement:
-                Send(source, "SuperEffective", Notable);
+                Send("SuperEffective", Notable);
                 break;
             case ResistedElement:
-                Send(source, "Resisted", Muted);
+                Send("Resisted", Muted);
                 break;
             case ImmuneElement immune:
-                Send(source, "Immune", Muted, Mon(source, immune.Pokemon));
+                Send("Immune", Muted, Mon(source, immune.Pokemon));
                 break;
             case CritElement:
-                Send(source, "Crit", Notable);
+                Send("Crit", Notable);
                 break;
             case MissElement miss:
-                Send(source, "Missed", Muted, Mon(source, miss.Source));
+                Send("Missed", Muted, Mon(source, miss.Source));
                 break;
             case FailElement:
-                Send(source, "Failed", Muted);
+                Send("Failed", Muted);
                 break;
             case BoostElement boost:
-                Send(source, boost.Amount > 1 ? "StatRoseSharply" : "StatRose", Good, Mon(source, boost.Pokemon),
+                Send(boost.Amount > 1 ? "StatRoseSharply" : "StatRose", Good, Mon(source, boost.Pokemon),
                     Stat(boost.Stat.ToString()));
                 break;
             case UnboostElement unboost:
-                Send(source, unboost.Amount > 1 ? "StatFellHarshly" : "StatFell", Bad, Mon(source, unboost.Pokemon),
+                Send(unboost.Amount > 1 ? "StatFellHarshly" : "StatFell", Bad, Mon(source, unboost.Pokemon),
                     Stat(unboost.Stat.ToString()));
                 break;
             case StatusElement status:
-                Send(source, "Status." + status.Status, StatusVisuals.ColorOf(status.Status.ToString()) ?? StatusColor,
+                Send("Status." + status.Status, StatusVisuals.ColorOf(status.Status.ToString()) ?? StatusColor,
                     Mon(source, status.Pokemon));
                 break;
             case TransformElement transform:
@@ -179,15 +197,15 @@ public static class BattleLog
                 var target = new SimpleMon(transform.Species);
                 var species = (ushort)(source.Omniscient[target.Side]?[target.Slot].Species ?? 0);
                 if (species != 0)
-                    Send(source, "Transformed", Notable, Mon(source, transform.Pokemon),
+                    Send("Transformed", Notable, Mon(source, transform.Pokemon),
                         Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(species));
                 break;
             }
             case CureStatusElement cure:
-                Send(source, "Cured", Good, Mon(source, cure.Pokemon));
+                Send("Cured", Good, Mon(source, cure.Pokemon));
                 break;
             case CantElement cant:
-                Send(source, "Cant." + cant.Reason, StatusVisuals.ColorOf(cant.Reason.ToString()) ?? StatusColor,
+                Send("Cant." + cant.Reason, StatusVisuals.ColorOf(cant.Reason.ToString()) ?? StatusColor,
                     Mon(source, cant.Pokemon));
                 break;
         }
@@ -196,15 +214,16 @@ public static class BattleLog
     /// <summary>
     ///     Logs an accuracy or evasion change, which Showdown.NET can't parse as a normal boost.
     /// </summary>
-    public static void AccuracyStage(BattleInstance source, string kind, string showdownMon, string stat, int amount)
+    public static void AccuracyStage(BattleInstance source, BinaryWriter w, string kind, string showdownMon,
+        string stat, int amount)
     {
         if (kind == "-setboost")
             return;
         stat = stat == "accuracy" ? "Accuracy" : "Evasion";
         if (kind == "-boost")
-            Send(source, amount > 1 ? "StatRoseSharply" : "StatRose", Good, Mon(source, showdownMon), Stat(stat));
+            Send(w, amount > 1 ? "StatRoseSharply" : "StatRose", Good, Mon(source, showdownMon), Stat(stat));
         else
-            Send(source, amount > 1 ? "StatFellHarshly" : "StatFell", Bad, Mon(source, showdownMon), Stat(stat));
+            Send(w, amount > 1 ? "StatFellHarshly" : "StatFell", Bad, Mon(source, showdownMon), Stat(stat));
     }
 
     private static bool ConsumeSkippedTurn(BattleInstance source, int side)
@@ -257,58 +276,137 @@ public static class BattleLog
         return new MonName(id.Side, source.Omniscient[id.Side]?[id.Slot].PokeMessage ?? showdownMon);
     }
 
-    private static string Move(string showdownMove)
+    // A move's name, translated by each client in its own language
+    private static LogArg Move(string showdownMove)
     {
         var key = Enum.TryParse(showdownMove.Replace(" ", string.Empty), out MoveID move)
             ? $"Mods.Terramon.Moves.{move}.DisplayName"
             : null;
-        return key != null && Language.Exists(key) ? Language.GetTextValue(key) : showdownMove;
+        return key != null && Language.Exists(key)
+            ? LogArg.Key(key, MoveHex)
+            : LogArg.Literal(showdownMove, MoveHex);
     }
 
     /// <summary>
     ///     What a status move does, so players know why nothing got hit. Null for moves that deal damage.
     /// </summary>
-    private static string StatusMoveEffect(string showdownMove)
+    private static object StatusMoveEffect(string showdownMove)
     {
         if (!Enum.TryParse(showdownMove.Replace(" ", string.Empty).Replace("-", string.Empty), out MoveID move) ||
             Terramon.DatabaseV2.GetMove(move) is not { Category: MoveCategory.Status })
             return null;
         var key = $"Mods.Terramon.Moves.{move}.FlavorText";
-        return Language.Exists(key) ? Language.GetTextValue(key) : null;
+        return Language.Exists(key) ? LogArg.Key(key) : null;
     }
 
-    private static string Stat(string stat)
+    private static LogArg Stat(string stat)
     {
         var key = Prefix + "Stats." + stat;
-        return Language.Exists(key) ? Language.GetTextValue(key) : stat;
+        return Language.Exists(key) ? LogArg.Key(key) : LogArg.Literal(stat);
     }
 
-    private static object[] Format(object[] args, int viewerSide)
-        => args.Select(a => a is MonName mon ? HighlightMon(mon.Name, mon.Side == viewerSide) : a).ToArray();
-
-    private static void Send(BattleInstance source, string key, Color color, params object[] args)
+    /// <summary>
+    ///     Writes a battle line to the battle's actions. Lines without a translation aren't worth logging (e.g. an
+    ///     unknown reason a move failed).
+    /// </summary>
+    private static void Send(BinaryWriter w, string key, Color color, params object[] args)
     {
         key = Prefix + key;
-        if (!Language.Exists(key))
-            return; // Not something worth logging (e.g. an unknown reason a move failed)
-
-        if (!Main.dedServ)
-        {
-            var line = Language.GetTextValue(key, Format(args, BattleClient.LocalClient.SideIndex));
-            Main.NewText(line, color);
-            Record(line, color, source.Omniscient);
+        if (w == null || !Language.Exists(key))
             return;
+
+        var line = new BattleLogLine(key, color, args.Select(a => a switch
+        {
+            LogArg arg => arg,
+            MonName mon => LogArg.Mon(mon.Side, mon.Name),
+            _ => LogArg.Literal(a?.ToString() ?? string.Empty)
+        }).ToArray());
+
+        // Written whole, so a line that fails halfway never leaves half an action behind
+        using var buffer = new MemoryStream();
+        using (var lineWriter = new BinaryWriter(buffer, System.Text.Encoding.UTF8, true))
+        {
+            lineWriter.Write((byte)BattleActionID.LogLine);
+            lineWriter.Write((byte)0);
+            line.Write(lineWriter);
         }
 
-        // Multiplayer: only the players in this battle see it, each with their own Pokémon highlighted
-        for (var side = 1; side <= 2; side++)
+        w.Write(buffer.GetBuffer(), 0, (int)buffer.Length);
+    }
+}
+
+/// <summary>
+///     A value in a battle line: plain text, a translation key (so each player reads it in their own language) or a
+///     Pokémon's name (highlighted blue for the reader's own Pokémon, orange for the others).
+/// </summary>
+public readonly record struct LogArg(byte Kind, string Text, string Hex, byte Side)
+{
+    public const byte LiteralKind = 0;
+    public const byte KeyKind = 1;
+    public const byte MonKind = 2;
+
+    public static LogArg Literal(string text, string hex = null) => new(LiteralKind, text, hex, 0);
+    public static LogArg Key(string key, string hex = null) => new(KeyKind, key, hex, 0);
+    public static LogArg Mon(int side, string name) => new(MonKind, name, null, (byte)side);
+
+    /// <summary>
+    ///     The text of this value for someone reading from <paramref name="viewerSide" /> (0 if just watching).
+    /// </summary>
+    public string Format(int viewerSide)
+    {
+        var text = Kind == KeyKind ? Language.GetTextValue(Text) : Text ?? string.Empty;
+        if (Kind == MonKind)
+            return BattleLog.HighlightMon(text, Side == viewerSide);
+        return string.IsNullOrEmpty(Hex) ? text : BattleLog.Highlight(text, Hex);
+    }
+}
+
+/// <summary>
+///     A battle line as it travels with the battle's actions: its translation key, color and values.
+/// </summary>
+public sealed class BattleLogLine(string key, Color color, LogArg[] args)
+{
+    public string Key { get; } = key;
+    public Color Color { get; } = color;
+    public LogArg[] Args { get; } = args;
+
+    public void Write(BinaryWriter w)
+    {
+        w.Write(Key ?? string.Empty);
+        w.Write(Color.PackedValue);
+        var count = Math.Min(Args?.Length ?? 0, byte.MaxValue);
+        w.Write((byte)count);
+        for (var i = 0; i < count; i++)
         {
-            var client = side == 1 ? source.ClientA : source.ClientB;
-            if (client.Provider is not TerramonPlayer player)
-                continue;
-            var text = NetworkText.FromKey(key,
-                Format(args, side).Select(a => NetworkText.FromLiteral(a.ToString())).ToArray());
-            ChatHelper.SendChatMessageToClient(text, color, player.Player.whoAmI);
+            var arg = Args![i];
+            w.Write(arg.Kind);
+            w.Write(arg.Text ?? string.Empty);
+            w.Write(arg.Hex ?? string.Empty);
+            w.Write(arg.Side);
         }
     }
+
+    public static BattleLogLine Read(BinaryReader r)
+    {
+        var key = r.ReadString();
+        var color = new Color { PackedValue = r.ReadUInt32() };
+        var count = r.ReadByte();
+        var args = new LogArg[count];
+        for (var i = 0; i < count; i++)
+        {
+            var kind = r.ReadByte();
+            var text = r.ReadString();
+            var hex = r.ReadString();
+            var side = r.ReadByte();
+            args[i] = new LogArg(kind, text, hex.Length == 0 ? null : hex, side);
+        }
+
+        return new BattleLogLine(key, color, args);
+    }
+
+    /// <summary>
+    ///     The line in the local language, for someone reading from <paramref name="viewerSide" /> (0 if just watching).
+    /// </summary>
+    public string Format(int viewerSide)
+        => Language.GetTextValue(Key, Args.Select(a => (object)a.Format(viewerSide)).ToArray());
 }

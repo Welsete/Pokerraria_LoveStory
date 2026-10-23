@@ -777,7 +777,14 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         return sb.ToString().TrimEnd(']');
     }
 
-    public void DefeatedPokemon(PokemonData defeated, bool battleLogs)
+    /// <param name="defeated">The Pokémon that was knocked out (or caught).</param>
+    /// <param name="battleLogs">Whether to write the EXP gained and level ups to the chat.</param>
+    /// <param name="deferredLogs">
+    ///     If given, the chat lines are added here instead of being shown, so they can be shown later (e.g. with the
+    ///     faint that gave the EXP, see <see cref="BattlePlayback" />).
+    /// </param>
+    public void DefeatedPokemon(PokemonData defeated, bool battleLogs,
+        List<(string Text, Color Color)> deferredLogs = null)
     {
         if (!ExpShareOn)
         {
@@ -789,7 +796,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
             active.GainExperience(expGain, out var levelsGained, out _);
             active.TrainEVs(evGain, out _);
             if (battleLogs)
-                LogYield(active, expGain, levelsGained, evGain);
+                LogYield(active, expGain, levelsGained, evGain, deferredLogs);
             return;
         }
 
@@ -811,21 +818,29 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
             poke.GainExperience(expGain, out var levelsGained, out _);
             poke.TrainEVs(evGain, out _);
             if (battleLogs)
-                LogYield(poke, expGain, levelsGained, evGain);
+                LogYield(poke, expGain, levelsGained, evGain, deferredLogs);
         }
     }
 
     private static void LogYield(PokemonData recipient, int expGain, int levelsGained,
-        IEnumerable<(StatID Stat, byte EffortIncrease)> gains)
+        IEnumerable<(StatID Stat, byte EffortIncrease)> gains, List<(string Text, Color Color)> deferredLogs)
     {
+        void Say(string text, Color color)
+        {
+            if (deferredLogs != null)
+                deferredLogs.Add((text, color));
+            else
+                BattleLog.Say(text, color);
+        }
+
         BattleInstance.Log($"{recipient.DisplayName} gained {expGain} EXP!", BattleInstance.BattleReceiveFollowup);
-        BattleLog.Say(Language.GetTextValue("Mods.Terramon.Battle.GainedExp", BattleLog.HighlightMon(recipient.DisplayName, true),
-            BattleLog.Highlight(expGain, "ffd75e")));
+        Say(Language.GetTextValue("Mods.Terramon.Battle.GainedExp", BattleLog.HighlightMon(recipient.DisplayName, true),
+            BattleLog.Highlight(expGain, "ffd75e")), Color.White);
         if (levelsGained != 0)
         {
             BattleInstance.Log($"{recipient.DisplayName} is now level {recipient.Level}!",
                 BattleInstance.BattleReceiveFollowup);
-            BattleLog.Say(Language.GetTextValue("Mods.Terramon.Battle.LevelUp", BattleLog.HighlightMon(recipient.DisplayName, true),
+            Say(Language.GetTextValue("Mods.Terramon.Battle.LevelUp", BattleLog.HighlightMon(recipient.DisplayName, true),
                 recipient.Level), Color.Gold);
         }
         if (gains is null)
@@ -1059,6 +1074,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         {
             case ResetEverythingStatement:
 
+                BattlePlayback.Clear();
                 foreach (var plr in Main.ActivePlayers)
                     ((IBattleProvider)plr.Terramon()).BattleStopped();
                 foreach (var npc in Main.ActiveNPCs)
@@ -1150,37 +1166,39 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 owner.StartBattleEffects(before: false);
                 break;
             case ForfeitStatement f:
-
-                // Show forfeit message and do battle end effects
+            {
+                // Show forfeit message and do battle end effects (once the last turn has been shown)
                 var forfeiter = f.Forfeiter;
                 var winner = forfeiter.Foe;
-                a = forfeiter.BattleName;
-                b = winner.BattleName;
-
                 // A wild Pokémon "forfeits" when it's caught mid-battle; the catch shows its own message
-                if (forfeiter is not Content.NPCs.PokemonNPC { PlasmaState: true })
-                    Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.Forfeited", a, b), Color.Lime);
+                var text = forfeiter is Content.NPCs.PokemonNPC { PlasmaState: true }
+                    ? null
+                    : Language.GetTextValue("Mods.Terramon.Battle.Forfeited", forfeiter.BattleName, winner.BattleName);
 
-                forfeiter.BattleStopped();
-                winner.BattleStopped();
+                AfterLastTurn(forfeiter, winner, () =>
+                {
+                    if (text != null)
+                        Main.NewText(text, Color.Lime);
+                });
                 break;
+            }
             case WinStatement w:
-
-                // Show win message and do battle end effects
-                winner = w.Winner;
+            {
+                // Show win message and do battle end effects (once the final hit has been shown)
+                var winner = w.Winner;
                 var loser = winner.Foe;
-                a = winner.BattleName;
-                b = loser.BattleName;
+                var text = Language.GetTextValue("Mods.Terramon.Battle.Defeated", winner.BattleName, loser.BattleName);
 
-                Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.Defeated", a, b), Color.Lime);
+                AfterLastTurn(winner, loser, () =>
+                {
+                    Main.NewText(text, Color.Lime);
 
-                // Reward the local player for beating a trainer
-                if (loser is TrainerNPC trainer && winner == this)
-                    trainer.OnDefeatedBy(this);
-
-                winner.BattleStopped();
-                loser.BattleStopped();
+                    // Reward the local player for beating a trainer
+                    if (loser is TrainerNPC trainer && winner == this)
+                        trainer.OnDefeatedBy(this);
+                });
                 break;
+            }
             case TieQuestion:
                 m.Sender.TieRequest = true;
                 break;
@@ -1188,30 +1206,54 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 m.Sender.TieRequest = false;
                 break;
             case TieStatement t:
-
-                // Show tie messsage and do battle end effects
+            {
+                // Show tie messsage and do battle end effects (once the last turn has been shown)
                 var either = t.EitherParticipant;
-                other = either.Foe;
-                a = either.BattleName;
-                b = other.BattleName;
-
-                switch (t.Type)
+                var foe = either.Foe;
+                var first = either.BattleName;
+                var second = foe.BattleName;
+                var (text, color) = t.Type switch
                 {
-                    case TieStatement.TieType.Regular:
-                        Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.TieRegular", a, b), Color.Yellow);
-                        break;
-                    case TieStatement.TieType.Agreed:
-                        Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.TieAgreed", a, b), Color.Yellow);
-                        break;
-                    case TieStatement.TieType.Forced:
-                        Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.TieForced", a, b), Color.Red);
-                        break;
-                }
+                    TieStatement.TieType.Agreed => (
+                        Language.GetTextValue("Mods.Terramon.Battle.TieAgreed", first, second), Color.Yellow),
+                    TieStatement.TieType.Forced => (
+                        Language.GetTextValue("Mods.Terramon.Battle.TieForced", first, second), Color.Red),
+                    _ => (Language.GetTextValue("Mods.Terramon.Battle.TieRegular", first, second), Color.Yellow)
+                };
 
-                either.BattleStopped();
-                other.BattleStopped();
+                AfterLastTurn(either, foe, () => Main.NewText(text, color));
                 break;
+            }
         }
+    }
+
+    /// <summary>
+    ///     Ends a battle for both participants after <paramref name="announce" />: right away, or once the battle's last
+    ///     turn has been shown (see <see cref="BattlePlayback" />), so the result never shows up before the final hit.
+    /// </summary>
+    private static void AfterLastTurn(IBattleProvider first, IBattleProvider second, Action announce)
+    {
+        var field = first?.BattleClient?.Battle ?? second?.BattleClient?.Battle;
+
+        void End()
+        {
+            announce();
+            Stop(first);
+            Stop(second);
+        }
+
+        // Stops a participant unless it already left this battle (or started another one meanwhile)
+        void Stop(IBattleProvider provider)
+        {
+            if (provider?.BattleClient is not { } client)
+                return;
+            if (field != null && client.Battle != null && client.Battle != field)
+                return;
+            provider.BattleStopped();
+        }
+
+        if (!BattlePlayback.Defer(field, End))
+            End();
     }
 
     public void SetActiveSlot(byte newSlot)

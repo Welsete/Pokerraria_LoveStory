@@ -236,10 +236,11 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         if (PlasmaState)
             return;
 
-        if (Data is { HP: 0 })
+        // The HP and status of the battle turn being shown (see BattlePlayback)
+        if (Data != null && BattlePlayback.ShownHP(Data) == 0)
             StatusVisuals.DrawDizzyStars(spriteBatch, NPC.Bottom - new Vector2(0f, NPC.frame.Width + 2f), screenPos,
                 NPC.whoAmI);
-        else if (Data is { Status: NonVolatileStatus.Slp })
+        else if (Data != null && BattlePlayback.ShownStatus(Data) == NonVolatileStatus.Slp)
             StatusVisuals.DrawSleepZ(spriteBatch, NPC.Top, screenPos, NPC.whoAmI);
     }
 
@@ -287,8 +288,10 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         {
             var battling = BattleClient?.Foe != null;
             PokemonAnimations.GetFrame(animSet, this, shiny, Math.Abs(NPC.velocity.X) > 0.2f,
-                !battling && Math.Abs(NPC.velocity.Y) > 1f, battling, Data is { Status: NonVolatileStatus.Slp },
-                Data is { HP: 0 }, out animTexture, out animSource, out animOrigin, NPC.noGravity);
+                !battling && Math.Abs(NPC.velocity.Y) > 1f, battling,
+                Data != null && BattlePlayback.ShownStatus(Data) == NonVolatileStatus.Slp,
+                Data != null && BattlePlayback.ShownHP(Data) == 0, out animTexture, out animSource, out animOrigin,
+                NPC.noGravity);
             drawPos = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY + 1f);
         }
         else if (transformedSheet != null)
@@ -301,7 +304,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         var animScale = animSet?.Scale ?? 1f;
 
-        if (Data is { HP: 0 } && !PlasmaState)
+        if (Data != null && BattlePlayback.ShownHP(Data) == 0 && !PlasmaState)
         {
             // Knocked out: tips over backwards onto its side, darkens, and blinks just before leaving
             var fall = Math.Min(_faintTime / 15f, 1f);
@@ -461,9 +464,10 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         if (Data != null && Data.HP != 0) NPC.life = Data.HP;
 
         if (Data != null && !PlasmaState)
-            StatusVisuals.SpawnDust(Data.Status, NPC.Hitbox);
+            StatusVisuals.SpawnDust(BattlePlayback.ShownStatus(Data), NPC.Hitbox);
 
-        if (Data is { HP: 0 } && !PlasmaState)
+        // Falls over once its faint is shown in the battle turn (right away on a server)
+        if (Data is { HP: 0 } && BattlePlayback.ShownHP(Data) == 0 && !PlasmaState)
         {
             UpdateKnockedOut();
             if (!NPC.active)

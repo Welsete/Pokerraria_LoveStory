@@ -4,6 +4,11 @@ namespace Terramon.Core.Battling;
 public sealed class BattleSide : IEnumerable<PokemonData>
 {
     public BattleSide Opposite;
+
+    /// <summary>
+    ///     The battle this side is part of (set by <see cref="BattleField.LinkSides" />).
+    /// </summary>
+    public BattleField Field;
     private byte _activeSlot;
     public int TeamCount;
     public BattlePokemon[] Team = new BattlePokemon[6];
@@ -40,10 +45,22 @@ public sealed class BattleSide : IEnumerable<PokemonData>
         if (side == null)
             return false;
         ref var active = ref side.ActivePokemon;
-        if (active.TransformedInto == 0 || active.HP == 0)
+        var into = active.TransformedInto;
+        var intoShiny = active.TransformedShiny;
+        // What the battle turn being shown says (see BattlePlayback)
+        if (side.Field != null &&
+            BattlePlayback.TryGetShownLook(side.Field, side.Field.A == side ? 1 : 2, active.Slot, out var shownInto,
+                out var shownShiny))
+        {
+            into = shownInto;
+            intoShiny = shownShiny;
+        }
+
+        var fainted = active.Data != null ? BattlePlayback.ShownHP(active.Data) == 0 : active.HP == 0;
+        if (into == 0 || fainted)
             return false;
-        species = active.TransformedInto;
-        shiny = active.TransformedShiny;
+        species = into;
+        shiny = intoShiny;
         return true;
     }
 

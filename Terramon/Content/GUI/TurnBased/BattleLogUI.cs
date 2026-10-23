@@ -84,13 +84,13 @@ public sealed class BattleLogUI : SmartUIState
         _window.Append(close);
 
         var cardWidth = (WindowWidth - _window.PaddingLeft - _window.PaddingRight - 8f) / 2f;
-        _window.Append(new PokemonCard(Label("YourPokemon"), () => TestBattleUI.PlayerPanel?.CurrentMon)
+        _window.Append(new PokemonCard(Label("YourPokemon"), () => TestBattleUI.PlayerPanel?.DisplayedMon)
         {
             Top = { Pixels = 28f },
             Width = { Pixels = cardWidth },
             Height = { Pixels = CardHeight }
         });
-        _window.Append(new PokemonCard(Label("Opponent"), () => TestBattleUI.FoePanel?.CurrentMon)
+        _window.Append(new PokemonCard(Label("Opponent"), () => TestBattleUI.FoePanel?.DisplayedMon)
         {
             Top = { Pixels = 28f },
             Left = { Pixels = cardWidth + 8f },
@@ -277,19 +277,22 @@ public sealed class PokemonCard(LocalizedText title, Func<PokemonData> source) :
             yield break;
         }
 
-        yield return $"{mon.DisplayName}  {Text("Level", mon.Level)}";
+        // What the battle turn being shown says (see BattlePlayback)
+        var hp = BattlePlayback.ShownHP(mon);
+        var shownStatus = BattlePlayback.ShownStatus(mon);
+        yield return $"{mon.DisplayName}  {Text("Level", BattlePlayback.ShownExp(mon).Level)}";
 
         var types = mon.Schema.Types.Select(t => Colored(t.GetHexColor(), Language.GetTextValue($"Mods.Terramon.Types.{t}")));
         yield return string.Join(" / ", types);
 
-        var ratio = mon.MaxHP == 0 ? 0f : mon.HP / (float)mon.MaxHP;
+        var ratio = mon.MaxHP == 0 ? 0f : hp / (float)mon.MaxHP;
         var hpColor = ratio > 0.5f ? "6ee06e" : ratio > 0.2f ? "f0d050" : "f05050";
-        yield return Colored(hpColor, Text("HP", mon.HP, mon.MaxHP));
+        yield return Colored(hpColor, Text("HP", hp, mon.MaxHP));
 
-        var statusKey = "Mods.Terramon.GUI.BattleLog.Status." + mon.Status;
-        var status = mon.HP == 0 ? Text("Status.Fnt") :
+        var statusKey = "Mods.Terramon.GUI.BattleLog.Status." + shownStatus;
+        var status = hp == 0 ? Text("Status.Fnt") :
             Language.Exists(statusKey) ? Language.GetTextValue(statusKey) : Text("Status.None");
-        var statusHex = mon.HP == 0 ? "f05050" : StatusVisuals.ColorOf(mon.Status)?.Hex3();
+        var statusHex = hp == 0 ? "f05050" : StatusVisuals.ColorOf(shownStatus)?.Hex3();
         yield return Text("StatusLabel", statusHex == null ? status : Colored(statusHex, status));
 
         var changes = new List<string>();

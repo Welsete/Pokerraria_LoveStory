@@ -20,6 +20,21 @@ public sealed class BattleField
             return;
         A.Opposite = B;
         B.Opposite = A;
+        A.Field = B.Field = this;
+    }
+
+    /// <summary>
+    ///     The side (1 or 2) of the local player in this battle, or 0 if they're only watching it.
+    /// </summary>
+    public int LocalSideIndex
+    {
+        get
+        {
+            if (Main.dedServ)
+                return 0;
+            var local = TerramonPlayer.LocalPlayer;
+            return A?.Provider == local ? 1 : B?.Provider == local ? 2 : 0;
+        }
     }
 
     public void ModifyBoosts(BoostModifierAction action)
@@ -37,8 +52,11 @@ public sealed class BattleField
     /// </summary>
     /// <param name="a">The received action.</param>
     /// <param name="r">The reader, used to read extra information depending on the <see cref="BattleAction.ID"/> of the action.</param>
-    public void Receive(in BattleAction a, BinaryReader r)
+    public void Receive(in BattleAction a, BinaryReader r, bool refine = false)
     {
+        // Each event gets its moment in the turn's playback (see BattlePlayback), except the exact copies of the
+        // secret half (refine), which only correct what the public half already queued
+        var show = !refine && !Main.dedServ;
         switch (a.ID)
         {
             case BattleActionID.SetPokemonDetails:
@@ -49,29 +67,45 @@ public sealed class BattleField
                 break;
             case BattleActionID.SetPokemonHP:
                 ref var hurt = ref GetMon(r);
-                var hpBefore = hurt.HP;
-                hurt.HPData = r.ReadPokemonHP();
-                if (hurt.HP < hpBefore && hurt.HP > 0)
-                    PokemonAnimations.Play(hurt.Side?.Provider, PokemonAnimState.Hurt);
-                else if (hurt.HP > hpBefore && hpBefore > 0)
-                    // Healing that isn't from a move (items, berries, Leftovers): eats
-                    PokemonAnimations.PlayIfQuiet(hurt.Side?.Provider, PokemonAnimState.Eat);
-                else if (hurt.HP == 0 && hpBefore > 0)
-                    // The other side celebrates the knockout
-                    PokemonAnimations.Play(hurt.Side?.Opposite?.Provider, PokemonAnimState.Pose);
+                var hp = r.ReadPokemonHP();
+                // The HP bar goes down (and the Hurt animation plays) when the hit is shown, not right now
+                if (show)
+                    BattlePlayback.QueueHP(this, hurt.Side, hurt.Data, hp.HP, hp.MaxHP);
+                hurt.HPData = hp;
+                if (refine)
+                    BattlePlayback.RefineHP(this, hurt.Data, hp.HP, hp.MaxHP);
                 break;
             case BattleActionID.MoveAnimation:
                 ref var user = ref GetMon(r);
                 var moveId = r.ReadUInt16();
-                MoveVisuals.Play(user.Side, moveId, a.Flags[0], a.Flags[1]);
+                if (show)
+                    BattlePlayback.QueueMove(this, user.Side, moveId, a.Flags[0], a.Flags[1]);
                 // The owner's game takes the PP right away. Showdown's next request sets the exact amount, but no
                 // request comes after the move that ends the battle
                 if (!Main.dedServ && user.Side?.Provider is TerramonPlayer { Player.whoAmI: var who } && who == Main.myPlayer)
                     user.Data?.UseMovePP((MoveID)moveId);
                 break;
             case BattleActionID.SwitchPokemon:
-                ref var switchedIn = ref GetMon(r);
-                // A transformed Pokémon goes back to its own looks when it leaves the field
+                var switchedID = r.ReadPokemonID();
+                ref var switchedIn = ref GetMon(switchedID);
+                // The side keeps showing its current Pokémon until the switch is shown
+                if (show && switchedIn.Side != null)
+                    BattlePlayback.QueueSwitch(this, switchedID.Side, switchedIn.Side.ActivePokemon.Data,
+                        switchedIn.Data);
+                // A transformed Pokémon goes back to its own looks when it leaves the field (when the switch is shown)
+                if (show && switchedIn.Side != null)
+                {
+                    for (var i = 0; i < switchedIn.Side.Team.Length; i++)
+                    {
+                        ref var leaving = ref switchedIn.Side.Team[i];
+                        if (leaving.TransformedInto == 0)
+                            continue;
+                        BattlePlayback.HoldLook(this, switchedID.Side, i, leaving.TransformedInto,
+                            leaving.TransformedShiny);
+                        BattlePlayback.QueueLook(this, switchedID.Side, i, 0, false);
+                    }
+                }
+
                 switchedIn.Side.ClearTransforms();
                 switchedIn.SetAsActive();
                 // Whatever was charging or recharging has left the field
@@ -84,10 +118,15 @@ public sealed class BattleField
                 break;
             case BattleActionID.SetPokemonStatus:
                 ref var mon = ref GetMon(r);
+                // The status badge and tint change when the status is shown
+                if (show)
+                    BattlePlayback.HoldStatus(this, mon.Data);
                 if (a.Flags[0]) // is cure status
                     mon.CureStatus();
                 else
                     mon.Status = (NonVolatileStatus)r.ReadByte();
+                if (show)
+                    BattlePlayback.QueueStatus(this, mon.Data, mon.Status);
                 break;
             case BattleActionID.SetPokemonBoost: // all three possibilities are so disparate that they should probably be their own separate things tbh :sob:
                 if (a.Flags[1]) // is swap
@@ -121,6 +160,8 @@ public sealed class BattleField
                 Turn++;
                 A.AdvanceTurn();
                 B.AdvanceTurn();
+                if (show)
+                    BattlePlayback.QueueTurn(this, LocalSideIndex != 0);
                 break;
             case BattleActionID.SetWeather:
                 Weather = (BattleWeather)r.ReadByte();
@@ -160,13 +201,40 @@ public sealed class BattleField
                     mon.AbilitySuppressed = true;
                 break;
             case BattleActionID.PokemonTransformDetails:
-                ref var transformed = ref GetMon(r);
+                var transformedID = r.ReadPokemonID();
+                ref var transformed = ref GetMon(transformedID);
+                // It keeps its own looks until its Transform is shown
+                if (show)
+                    BattlePlayback.HoldLook(this, transformedID.Side, transformedID.Slot, transformed.TransformedInto,
+                        transformed.TransformedShiny);
                 transformed.TransformedInto = r.ReadUInt16();
                 transformed.TransformedShiny = a.Flags[0];
+                if (show)
+                    BattlePlayback.QueueLook(this, transformedID.Side, transformedID.Slot, transformed.TransformedInto,
+                        transformed.TransformedShiny);
+                break;
+            case BattleActionID.LogLine:
+                // Always read, so the actions after it stay in place
+                var line = BattleLogLine.Read(r);
+                if (show)
+                {
+                    var viewer = LocalSideIndex;
+                    BattlePlayback.QueueLine(this, line.Format(viewer), line.Color, line.Key, viewer != 0);
+                }
+
                 break;
         }
     }
-    public void Receive(BinaryReader r)
+
+    /// <summary>
+    ///     Reads and applies every action in <paramref name="r" /> until its footer.
+    /// </summary>
+    /// <param name="r">The actions.</param>
+    /// <param name="refine">
+    ///     Whether these are the exact copies (secret half) of actions already received, which only correct HP numbers
+    ///     and get no moment of their own in the playback.
+    /// </param>
+    public void Receive(BinaryReader r, bool refine = false)
     {
         while (true)
         {
@@ -175,7 +243,7 @@ public sealed class BattleField
                 break;
             var flags = (BitsByte)r.ReadByte();
             var action = new BattleAction(actionID, flags);
-            Receive(in action, r);
+            Receive(in action, r, refine);
         }
     }
 

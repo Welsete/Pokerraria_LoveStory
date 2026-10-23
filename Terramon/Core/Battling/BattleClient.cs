@@ -98,6 +98,10 @@ public sealed class BattleClient(IBattleProvider provider)
         // Wait for the Poké Ball to finish shaking
         if (Foe is Content.NPCs.PokemonNPC { PlasmaState: true })
             return false;
+        // The local player chooses once the last turn has been shown (NPCs answer right away)
+        if (!Main.dedServ && Provider is TerramonPlayer { Player.whoAmI: var who } && who == Main.myPlayer &&
+            BattlePlayback.IsBusy(Battle))
+            return false;
 
         return CurrentRequest switch
         {

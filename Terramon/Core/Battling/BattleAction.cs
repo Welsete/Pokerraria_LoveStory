@@ -101,5 +101,10 @@ public enum BattleActionID : byte
     /// <summary>
     ///     <see cref="TransformElement"/>, <see cref="MegaElement"/>, <see cref="PrimalElement"/> and <see cref="BurstElement"/>
     /// </summary>
-    PokemonTransformDetails
+    PokemonTransformDetails,
+    /// <summary>
+    ///     A battle message for the chat, shown when its moment comes in the turn's playback.
+    ///     <b>Structure:</b> a <see cref="BattleLogLine" />.
+    /// </summary>
+    LogLine
 }
