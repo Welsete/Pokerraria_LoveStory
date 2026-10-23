@@ -47,6 +47,7 @@ public class HealCommand : DebugCommand
                 continue;
             data.HP = data.MaxHP;
             data.Status = NonVolatileStatus.None;
+            data.RestorePP();
             healed++;
         }
 

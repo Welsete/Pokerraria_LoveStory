@@ -109,6 +109,30 @@ public sealed class BattleInstance
                 ? $">eval {mon}.hp = 0; {mon}.fainted = true; {mon}.status = 'fnt'; battle.sides[{plr - 1}].pokemonLeft--"
                 : $">eval {mon}.hp = Math.min({hp}, {mon}.maxhp)");
         }
+
+        // Showdown also starts every move at full PP (with 3 PP Ups), so bring over the PP left and the real max
+        for (var i = 0; i < packedTeam.Length; i++)
+        {
+            var moves = packedTeam[i].Moves;
+            var slots = new StringBuilder();
+            for (var j = 0; j < 4; j++)
+            {
+                var move = moves[j];
+                if (move.ID == default)
+                    continue;
+                var max = PokemonData.MaxPPOf(move with { PPUp = (byte)packedTeam[i].PPUpOf(j) });
+                if (max <= 0)
+                    continue;
+                if (slots.Length > 0)
+                    slots.Append(',');
+                slots.Append($"[\"{move.ID.ToString().ToLowerInvariant()}\",{Math.Min(packedTeam[i].PPOf(j), max)},{max}]");
+            }
+
+            if (slots.Length == 0)
+                continue;
+            var mon = $"battle.sides[{plr - 1}].pokemon[{i}]";
+            Stream.Write($">eval for (const [id, pp, max] of [{slots}]) {{ const s = {mon}.baseMoveSlots.find(m => m.id === id); if (s) {{ s.maxpp = max; s.pp = pp; }} }}");
+        }
     }
 
     public void SubmitChoice(int plr, BattleChoice choice, int operand)

@@ -367,6 +367,7 @@ public sealed class AdminPanelUI : SmartUIState
                 continue;
             data.HP = data.MaxHP;
             data.Status = NonVolatileStatus.None;
+            data.RestorePP();
             healed++;
         }
 

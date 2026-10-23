@@ -62,7 +62,12 @@ public sealed class BattleField
                 break;
             case BattleActionID.MoveAnimation:
                 ref var user = ref GetMon(r);
-                MoveVisuals.Play(user.Side, r.ReadUInt16(), a.Flags[0], a.Flags[1]);
+                var moveId = r.ReadUInt16();
+                MoveVisuals.Play(user.Side, moveId, a.Flags[0], a.Flags[1]);
+                // The owner's game takes the PP right away. Showdown's next request sets the exact amount, but no
+                // request comes after the move that ends the battle
+                if (!Main.dedServ && user.Side?.Provider is TerramonPlayer { Player.whoAmI: var who } && who == Main.myPlayer)
+                    user.Data?.UseMovePP((MoveID)moveId);
                 break;
             case BattleActionID.SwitchPokemon:
                 ref var switchedIn = ref GetMon(r);

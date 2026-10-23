@@ -51,13 +51,13 @@ public class PartyHealingPlayer : ModPlayer
     }
 
     private static bool NeedsHealing(PokemonData data)
-        => data != null && (data.HP < data.MaxHP || data.Status != NonVolatileStatus.None);
+        => data != null && (data.HP < data.MaxHP || data.Status != NonVolatileStatus.None || data.MissingPP);
 
     private bool PartyNeedsHealing()
         => !BattleClient.LocalBattleOngoing && Player.Terramon().Party.Any(NeedsHealing);
 
     /// <summary>
-    ///     Restores every party Pokémon's HP and cures its status. Returns false if nobody needed it.
+    ///     Restores every party Pokémon's HP and PP and cures its status. Returns false if nobody needed it.
     /// </summary>
     private bool HealParty()
     {
@@ -70,6 +70,7 @@ public class PartyHealingPlayer : ModPlayer
                 continue;
             data.Heal(data.MaxHP);
             data.Status = NonVolatileStatus.None;
+            data.RestorePP();
         }
 
         SoundEngine.PlaySound(in SoundID.Item4);

@@ -420,6 +420,14 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         TerramonWorld.PlaySoundOverBGM(TerramonSoundID.PkballCatchPla);
 
+        // Caught mid-battle: like in the main games, catching gives the same EXP and EVs as knocking it out
+        // (and the level ups, new moves and evolutions that come with them, once the battle is over).
+        // One that was already knocked out gave its EXP when it fainted
+        var catcher = TerramonPlayer.LocalPlayer;
+        var inBattle = _capture.BattleClient?.Foe == catcher || catcher.BattleClient?.Foe == _capture;
+        if (inBattle && _capture.Data is { HP: > 0 })
+            catcher.DefeatedPokemon(_capture.Data, true);
+
         // Caught mid-battle: the battle is over
         _capture.EndBattleForCapture();
 
