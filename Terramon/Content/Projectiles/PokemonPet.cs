@@ -201,6 +201,10 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             // Call FindFrame delegate to determine the frame of the pet (set by behaviour components)
             FindFrame?.Invoke(this);
 
+        // Evolving: the evolution sequence draws it instead, at the same spot
+        if (IsHeldByEvolution)
+            return false;
+
         if (InBallFlight)
         {
             DrawBallFlight();
@@ -362,6 +366,18 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         return false;
     }
 
+    /// <summary>
+    ///     Whether this pet is evolving: hidden (<see cref="EvolutionAnimation" /> draws it) and held in place.
+    /// </summary>
+    private bool IsHeldByEvolution =>
+        !Projectile.isAPreviewDummy && EvolutionAnimation.FindOnPet(Projectile.owner) != null;
+
+    /// <summary>Whether the pet was last drawn flipped (facing right), to draw it the same way elsewhere.</summary>
+    internal bool DrawnFlipped => _lastEffects == SpriteEffects.FlipHorizontally;
+
+    /// <summary>How tall the pet was last drawn, in world pixels (0 before it's drawn).</summary>
+    internal float DrawnHeight => _lastSource.Height * _lastScale;
+
     /// <summary>Whether the ball is still flying out to where this pet comes out.</summary>
     private bool InBallFlight => !Projectile.isAPreviewDummy && !_skipSendOut && _sendOutTime < BallFlight;
 
@@ -425,7 +441,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         {
             _ballStart = owner.MountedCenter + new Vector2(owner.direction * 8f, -6f);
             // An evolution swaps the pet for its new form: it doesn't go back into its ball for that
-            _skipSendOut = PokeBallVisuals.IsEvolving(Projectile.owner);
+            _skipSendOut = EvolutionAnimation.IsPlayingFor(Projectile.owner);
         }
 
         _sendOutTime++;
@@ -437,7 +453,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
     {
         // Going back into its ball (not for the preview in the character menu, or an evolution swapping forms)
         if (Main.dedServ || Projectile.isAPreviewDummy || _lastTexture == null ||
-            PokeBallVisuals.IsEvolving(Projectile.owner))
+            EvolutionAnimation.IsPlayingFor(Projectile.owner))
             return;
         PokeBallVisuals.AddRecall(Projectile.owner, _lastTexture, _lastSource, _lastOrigin, _lastScale, _lastEffects,
             _lastFeet, Projectile.owner != Main.myPlayer);
@@ -445,7 +461,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 
     public override void PostDraw(Color lightColor)
     {
-        if (InBallFlight)
+        if (InBallFlight || IsHeldByEvolution)
             return;
         if (!Projectile.isAPreviewDummy && Data is { Status: NonVolatileStatus.Slp })
             StatusVisuals.DrawSleepZ(Main.spriteBatch, Projectile.Top, Main.screenPosition, Projectile.whoAmI);
@@ -607,8 +623,8 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         if (!owningPlayer.dead && owningPlayer.HasBuff(ModContent.BuffType<PokemonCompanion>()) &&
             activePokemon == Data && activePokemon.ID == _cachedID) Projectile.timeLeft = 2;
 
-        // Attacking NPCs (disabled during battles)
-        if (!modPlayer.BattleClient.BattleOngoing)
+        // Attacking NPCs (disabled during battles and while evolving)
+        if (!modPlayer.BattleClient.BattleOngoing && !IsHeldByEvolution)
         {
             const float maxDetectRadius = 400f;
             const float maxAttackRadius = 500f;
@@ -911,6 +927,13 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 
     public override void PostAI()
     {
+        // Evolving: stays right where the evolution sequence plays (runs after the movement components)
+        if (!Projectile.isAPreviewDummy && EvolutionAnimation.FindOnPet(Projectile.owner) is { } evolution)
+        {
+            Projectile.velocity = Vector2.Zero;
+            Projectile.Bottom = evolution.Feet;
+        }
+
         // Call FindFrame delegate to determine the frame of the pet (set by behaviour components)
         FindFrame?.Invoke(this);
     }

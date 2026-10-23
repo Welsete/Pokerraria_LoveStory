@@ -1,4 +1,5 @@
 ﻿using EasyPacketsLib;
+using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI;
 using Terramon.Content.NPCs;
@@ -17,10 +18,14 @@ internal abstract class BasePkballProjectile : ModProjectile
 {
     private const int MaxBounces = 5;
 
+    private static Asset<Texture2D> _glowTexture;
+
     private float _animSpeedMultiplier = 1;
     private int _bounces = MaxBounces;
     private PokemonNPC _capture;
     private float _catchRandom = -1;
+    private float _glowPulse;
+    private float _glowStrength;
     private int _catchTries = 3;
     private bool _hasContainedLocal;
     private bool _hasReleasedLocal;
@@ -31,6 +36,12 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     protected virtual int PokeballItem => ModContent.ItemType<BasePkballItem>();
     protected virtual float CatchModifier { get; private set; }
+
+    /// <summary>
+    ///     The color this ball glows while it holds a Pokémon (wobbling, clicking shut or bursting open), so the catch
+    ///     can be followed in the dark.
+    /// </summary>
+    protected virtual Color GlowColor => Color.White;
 
     /// <summary>
     ///     The denominator (1/x) for the probability of dropping this projectile's respective Poké Ball item,
@@ -51,6 +62,13 @@ internal abstract class BasePkballProjectile : ModProjectile
     public override void SetStaticDefaults()
     {
         Main.projFrames[Type] = 4;
+        if (!Main.dedServ)
+            _glowTexture ??= ModContent.Request<Texture2D>("Terramon/Assets/Misc/Evolution/Glow");
+    }
+
+    public override void Unload()
+    {
+        _glowTexture = null;
     }
 
     public override void SetDefaults()
@@ -69,9 +87,39 @@ internal abstract class BasePkballProjectile : ModProjectile
         var origin = new Vector2(texture.Width * 0.5f, 24 * 0.5f);
         var drawPos = Projectile.position - Main.screenPosition + origin + new Vector2(Projectile.gfxOffY) -
                       new Vector2(5, 5);
-        Main.EntitySpriteDraw(texture, drawPos, new Rectangle(0, Projectile.frame * 24, 24, 24),
-            Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale,
-            Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
+        var frame = new Rectangle(0, Projectile.frame * 24, 24, 24);
+        var effects = Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+
+        // While it holds a Pokémon: a soft glow and outline in the ball's color, brighter on every wobble
+        var glow = Math.Clamp(_glowStrength * (0.55f + 0.45f * _glowPulse), 0f, 1f);
+        if (glow > 0.01f)
+        {
+            // Alpha 0 makes the color add up like light
+            var glowColor = GlowColor with { A = 0 };
+            if (_glowTexture?.Value is { } glowTexture)
+            {
+                Main.EntitySpriteDraw(glowTexture, drawPos, null, glowColor * (0.75f * glow), 0f,
+                    glowTexture.Size() / 2f, 0.4f + 0.2f * _glowPulse, SpriteEffects.None);
+                Main.EntitySpriteDraw(glowTexture, drawPos, null, (Color.White with { A = 0 }) * (0.35f * glow), 0f,
+                    glowTexture.Size() / 2f, 0.2f + 0.1f * _glowPulse, SpriteEffects.None);
+            }
+
+            if (Projectile.alpha < 255)
+            {
+                var outline = 1.5f + 1.5f * _glowPulse;
+                for (var i = 0; i < 4; i++)
+                {
+                    var offset = (MathHelper.PiOver2 * i).ToRotationVector2() * outline;
+                    Main.EntitySpriteDraw(texture, drawPos + offset, frame, glowColor * (0.8f * glow),
+                        Projectile.rotation, origin, Projectile.scale, effects);
+                }
+            }
+        }
+
+        // Never darker than half lit while glowing, so it still reads in caves
+        var ballColor = Color.Lerp(lightColor, Color.White, 0.6f * glow);
+        Main.EntitySpriteDraw(texture, drawPos, frame, Projectile.GetAlpha(ballColor), Projectile.rotation, origin,
+            Projectile.scale, effects);
 
         if (_capture != null && Projectile.alpha == 0 && Main.mouseItem.IsAir && !Main.mouseText && !Main.inFancyUI &&
             !Main.LocalPlayer.cursorItemIconEnabled && !TooltipOverlay.IsHoldingPokemon())
@@ -136,7 +184,8 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     public override bool? CanHitNPC(NPC target)
     {
-        return target.ModNPC is PokemonNPC { PlasmaState: false } && _capture == null;
+        // A ball that just burst open stays a moment for its flash to fade: it can't catch anything anymore
+        return target.ModNPC is PokemonNPC { PlasmaState: false } && _capture == null && !_hasReleasedLocal;
     }
 
     public override void SendExtraAI(BinaryWriter writer)
@@ -194,11 +243,13 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     public override void AI()
     {
-        // Fade out any applied light before killing the projectile
+        UpdateGlow();
+
+        // Fade out any applied light (and the burst's glow) before killing the projectile
         if (_hasReleasedLocal)
         {
             Projectile.light -= 0.025f;
-            if (Projectile.light <= 0)
+            if (Projectile.light <= 0 && _glowStrength < 0.05f)
                 Projectile.Kill();
             return;
         }
@@ -225,6 +276,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             _isCaught = CatchPokemonChances(_capture, _catchRandom);
             AITimer = 0;
             AIState = (float)ActionState.Capture;
+            _glowPulse = 1f; // Landed: the wobbling starts
         }
 
         switch (AIState)
@@ -286,6 +338,8 @@ internal abstract class BasePkballProjectile : ModProjectile
                                 Projectile.position);
                             AIState = (float)ActionState.CaptureComplete;
                             AITimer = 0;
+                            _glowPulse = 1f;
+                            GlowBurst(10);
                         }
                         else
                         {
@@ -300,6 +354,7 @@ internal abstract class BasePkballProjectile : ModProjectile
                         _rotationVelocity = _rotationDirection ? shakeIntensity : -shakeIntensity;
                         SoundEngine.PlaySound(TerramonSoundID.CatchWobble[2 - _catchTries],
                             Projectile.position);
+                        _glowPulse = 1f;
                     }
 
                     AITimer = 0;
@@ -337,6 +392,49 @@ internal abstract class BasePkballProjectile : ModProjectile
                     PokemonCatchSuccess();
                 break;
             }
+        }
+    }
+
+    /// <summary>
+    ///     Fades the glow in while the ball holds a Pokémon and out once it's done, and lights up the area around it.
+    ///     Runs on every client, like the wobbling it follows.
+    /// </summary>
+    private void UpdateGlow()
+    {
+        float target;
+        if (_hasReleasedLocal)
+            target = 0f;
+        else
+            target = AIState switch
+            {
+                (float)ActionState.Catch => 0.6f,
+                (float)ActionState.Capture => 0.7f,
+                (float)ActionState.CaptureComplete => 1f - Projectile.alpha / 255f,
+                _ => 0f
+            };
+
+        // Bursting open fades a bit slower, so the flash is seen
+        _glowStrength += (target - _glowStrength) * (_hasReleasedLocal ? 0.08f : 0.15f);
+        _glowPulse *= 0.9f;
+        if (_glowStrength < 0.01f || Main.dedServ)
+            return;
+
+        var light = _glowStrength * (0.6f + 0.6f * _glowPulse);
+        Lighting.AddLight(Projectile.Center, GlowColor.ToVector3() * light);
+    }
+
+    /// <summary>
+    ///     A ring of sparkles in the ball's color, when it clicks shut or bursts open.
+    /// </summary>
+    private void GlowBurst(int count)
+    {
+        if (Main.dedServ)
+            return;
+        for (var i = 0; i < count; i++)
+        {
+            var velocity = (MathHelper.TwoPi * i / count).ToRotationVector2() * Main.rand.NextFloat(1.5f, 3f);
+            var dust = Dust.NewDustPerfect(Projectile.Center, DustID.RainbowMk2, velocity, 0, GlowColor, 1.1f);
+            dust.noGravity = true;
         }
     }
 
@@ -533,6 +631,11 @@ internal abstract class BasePkballProjectile : ModProjectile
     {
         if (_capture == null) return;
         SoundEngine.PlaySound(in TerramonSoundID.CatchFail, Projectile.position);
+
+        // Burst open: a last bright flash that fades out
+        _glowStrength = 1f;
+        _glowPulse = 1f;
+        GlowBurst(16);
 
         // Broke free mid-battle: come back out and the foe gets a free turn, as throwing the ball used the player's turn
         if (_capture.BattleClient?.Foe is TerramonPlayer thrower)

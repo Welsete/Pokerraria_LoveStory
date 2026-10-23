@@ -869,7 +869,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
             }
 
             // New moves wait until the evolution sequence is over
-            if (EvolutionScene.IsPlaying)
+            if (EvolutionQueue.IsPlaying)
                 continue;
 
             var pending = mon.PendingMoves;
@@ -916,14 +916,11 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
             return;
         }
 
-        TerramonWorld.PlaySoundOverBGM(TerramonSoundID.PkballCatchPla);
+        // The evolution sequence says what it evolved into (and plays the fanfare) once the new form is revealed
         for (var step = 0; step < 3 && queued != 0; step++)
         {
-            var oldName = mon.DisplayName;
             var evolvedSpeciesName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(queued);
             mon.EvolveInto(queued);
-            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", oldName, evolvedSpeciesName),
-                new Color(50, 255, 130));
             var justRegistered = UpdatePokedex(queued, PokedexEntryStatus.Registered, shiny: mon.IsShiny);
             if (justRegistered && clientConfig.ShowPokedexRegistrationMessages)
                 Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", evolvedSpeciesName),

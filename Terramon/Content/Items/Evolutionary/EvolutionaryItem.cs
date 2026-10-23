@@ -25,11 +25,8 @@ public abstract class EvolutionaryItem : TerramonItem, IPokemonDirectUse
         if (player.whoAmI != Main.myPlayer) return 0;
         var evolvedSpecies = GetEvolvedSpecies(data);
         var evolvedSpeciesName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(evolvedSpecies);
-        Main.NewText(
-            Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
-                evolvedSpeciesName), new Color(50, 255, 130));
+        // The evolution sequence says what it evolved into (and plays the fanfare) at the reveal
         data.EvolveInto(evolvedSpecies);
-        TerramonWorld.PlaySoundOverBGM(TerramonSoundID.PkballCatchPla);
         var justRegistered = player.Terramon()
             .UpdatePokedex(evolvedSpecies, PokedexEntryStatus.Registered, shiny: data.IsShiny);
         if (!justRegistered || !ClientConfig.Instance.ShowPokedexRegistrationMessages) return 1;

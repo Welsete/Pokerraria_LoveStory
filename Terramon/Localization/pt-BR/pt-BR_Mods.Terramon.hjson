@@ -1693,7 +1693,7 @@ Projectiles: {
 	PokeBallBobber.DisplayName: Boia de Poké Bola
 	PokemonPetGenericAttackProjectile.DisplayName: Projétil de Ataque Genérico do Pokémon Companheiro
 	OnixRockSpikes.DisplayName: Espinhos de Pedra do Onix
-	EvolutionGlow.DisplayName: Brilho da Evolução
+	EvolutionAnimation.DisplayName: Evolução
 }
 
 // Liga Pokémon: Líderes de Ginásio, Elite dos Quatro, Campeão, insígnias e itens de desafio (league)
@@ -2109,7 +2109,7 @@ Natures: {
 
 EvolutionScene: {
 	Evolving: O quê? {0} está evoluindo!
-	Skip: Aperte {0} para pular
+	Skip: Aperte {0} para pular a animação de evolução.
 }
 
 Passives: {

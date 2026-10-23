@@ -1,6 +1,5 @@
 using ReLogic.Content;
 using Terramon.Content.Dusts;
-using Terramon.Content.GUI;
 using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.Audio;
@@ -57,24 +56,6 @@ public sealed class PokeBallVisuals : ModSystem
     {
         Flashes.Clear();
         Recalls.Clear();
-    }
-
-    /// <summary>
-    ///     Whether <paramref name="owner" />'s Pokémon is evolving right now, which swaps its pet for the new form
-    ///     without going back into the ball.
-    /// </summary>
-    public static bool IsEvolving(int owner)
-    {
-        if (owner == Main.myPlayer && EvolutionScene.IsPlaying)
-            return true;
-        var glow = ModContent.ProjectileType<EvolutionGlow>();
-        foreach (var projectile in Main.ActiveProjectiles)
-        {
-            if (projectile.type == glow && projectile.owner == owner)
-                return true;
-        }
-
-        return false;
     }
 
     /// <summary>

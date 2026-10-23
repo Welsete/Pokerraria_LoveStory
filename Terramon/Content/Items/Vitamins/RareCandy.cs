@@ -82,16 +82,13 @@ public class RareCandy : Vitamin, IPokemonDirectUse
 
         if (evolutions.Count > 0) // Check if the Pokémon evolved
         {
-            TerramonWorld.PlaySoundOverBGM(TerramonSoundID.PkballCatchPla);
+            // The evolution sequence says what it evolved into (and plays the fanfare) at the reveal
             var modPlayer = player.Terramon();
             var showPokedexRegistrationMessages = clientConfig.ShowPokedexRegistrationMessages;
             // Iterate through all evolutions
             foreach (var evolution in evolutions)
             {
                 var evolvedSpeciesName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(evolution);
-                Main.NewText(
-                    Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
-                        evolvedSpeciesName), new Color(50, 255, 130));
                 data.EvolveInto(evolution);
                 var justRegistered =
                     modPlayer.UpdatePokedex(evolution, PokedexEntryStatus.Registered, shiny: data.IsShiny);

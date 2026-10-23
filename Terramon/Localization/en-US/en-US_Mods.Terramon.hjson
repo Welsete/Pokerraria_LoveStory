@@ -1693,7 +1693,7 @@ Projectiles: {
 	PokeBallBobber.DisplayName: Poké Ball Bobber
 	PokemonPetGenericAttackProjectile.DisplayName: Pokémon Companion Generic Attack Projectile
 	OnixRockSpikes.DisplayName: Onix Rock Spikes
-	EvolutionGlow.DisplayName: Evolution Glow
+	EvolutionAnimation.DisplayName: Evolution
 }
 
 // Pokémon League: Gym Leaders, Elite Four, Champion, badges and challenge items (league)
@@ -2109,7 +2109,7 @@ Natures: {
 
 EvolutionScene: {
 	Evolving: What? {0} is evolving!
-	Skip: Press {0} to skip
+	Skip: Press {0} to skip the evolution animation.
 }
 
 Passives: {

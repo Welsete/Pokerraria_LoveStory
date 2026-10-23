@@ -76,15 +76,12 @@ public abstract class ExpCandy : Vitamin, IPokemonDirectUse
                         new Color(50, 255, 130));
                     return amount;
                 }
-                TerramonWorld.PlaySoundOverBGM(TerramonSoundID.PkballCatchPla);
+                // The evolution sequence says what it evolved into (and plays the fanfare) at the reveal
                 var modPlayer = player.Terramon();
                 var showPokedexRegistrationMessages = clientConfig.ShowPokedexRegistrationMessages;
                 while (queuedEvolution != 0)
                 {
                     var evolvedSpeciesName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(queuedEvolution);
-                    Main.NewText(
-                        Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
-                            evolvedSpeciesName), new Color(50, 255, 130));
                     data.EvolveInto(queuedEvolution);
                     var justRegistered =
                         modPlayer.UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered, shiny: data.IsShiny);

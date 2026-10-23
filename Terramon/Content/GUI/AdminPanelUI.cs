@@ -403,11 +403,9 @@ public sealed class AdminPanelUI : SmartUIState
             return;
         }
 
-        var oldName = data.DisplayName;
+        // The evolution sequence says what it evolved into once the new form is revealed
         data.EvolveInto(evolution.ID);
         TerramonPlayer.LocalPlayer.UpdatePokedex(evolution.ID, PokedexEntryStatus.Registered, shiny: data.IsShiny);
-        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", oldName,
-            Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(evolution.ID)), new Color(50, 255, 130));
         SoundEngine.PlaySound(SoundID.Item4);
     }
 
