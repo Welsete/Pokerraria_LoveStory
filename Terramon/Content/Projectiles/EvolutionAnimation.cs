@@ -1,4 +1,5 @@
 using ReLogic.Content;
+using ReLogic.Utilities;
 using Terramon.Core.Systems;
 using Terramon.Helpers;
 using Terraria.Audio;
@@ -32,18 +33,22 @@ public sealed class EvolutionAnimation : ModProjectile
     internal const int FlagFlipped = 4;
 
     // Timeline, in ticks
-    private const int WhitenStart = 20; // The Pokémon starts turning white
-    private const int SwapStart = 80; // White silhouette; old and new forms start switching
-    private const int FlashStart = 320; // Switching is at its fastest; the light flashes
-    private const int RevealStart = 340; // The new form appears in color
-    private const int FadeOutStart = 440;
-    private const int End = 480;
+    // Timed to the evolution theme (TerramonSoundID.EvolutionTheme, 120 BPM, one beat = 30 ticks)
+    private const int WhitenStart = 60; // 1.0 s: after the intro's pause, the Pokémon starts turning white
+    private const int SwapStart = 120; // 2.0 s: white silhouette; old and new forms switch on the beat
+    private const int HalfBeatStart = 540; // 9.0 s: switches every half beat
+    private const int QuarterBeatStart = 780; // 13.0 s: switches every quarter beat
+    private const int FlashStart = 1050; // 17.5 s: the music swells; the light flashes
+    private const int RevealStart = 1080; // 18.0 s: the music's peak; the new form appears in color
+    private const int CongratsTime = 1200; // 20.0 s: the closing fanfare starts
+    private const int FadeOutStart = 1290;
+    private const int End = 1335; // 22.25 s: the music ends
 
     private static Asset<Texture2D> _ray, _sparkle;
 
     private readonly List<Sparkle> _sparkles = [];
     private bool _announced;
-    private bool _fanfarePlayed;
+    private SlotId _theme;
     private float _height = 40f;
     private bool _lastShowedNew;
     private string _oldName = string.Empty;
@@ -148,10 +153,14 @@ public sealed class EvolutionAnimation : ModProjectile
         {
             _time = RevealStart - 1;
             _sparkles.Clear();
+            StopTheme();
             SoundEngine.PlaySound(SoundID.MenuClose);
         }
         else if (_time < FadeOutStart)
+        {
             _time = FadeOutStart;
+            StopTheme();
+        }
         else
             return;
 
@@ -185,6 +194,7 @@ public sealed class EvolutionAnimation : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
+        StopTheme();
         // Cut short (skipped past, or the owner left): the owner still gets told what it evolved into
         Announce();
     }
@@ -216,45 +226,38 @@ public sealed class EvolutionAnimation : ModProjectile
         switch (_time)
         {
             case 1:
-                SoundEngine.PlaySound(SoundID.Item29 with { Volume = 0.6f, Pitch = -0.4f }, Feet);
+                // The owner hears the theme over quieter music; players nearby hear it from the Pokémon
+                _theme = isOwner
+                    ? TerramonWorld.PlaySoundOverBGM(TerramonSoundID.EvolutionTheme, 0.15f)
+                    : SoundEngine.PlaySound(TerramonSoundID.EvolutionTheme, Feet);
                 break;
             case 10:
-                SoundEngine.PlaySound(TerramonSoundID.GetCry(From, 0.3f), Feet);
+                SoundEngine.PlaySound(TerramonSoundID.GetCry(From, 0.25f), Feet);
                 break;
             case WhitenStart:
-                SoundEngine.PlaySound(SoundID.Item4 with { Volume = 0.5f, Pitch = -0.5f }, Feet);
                 FloatingText(Language.GetTextValue("Mods.Terramon.EvolutionScene.Evolving", OldName), Color.White);
-                break;
-            case FlashStart:
-                SoundEngine.PlaySound(SoundID.Item29 with { Volume = 0.8f, Pitch = 0.3f }, Feet);
-                SoundEngine.PlaySound(SoundID.Item4 with { Volume = 0.8f }, Feet);
                 break;
             case RevealStart:
                 RevealBurst();
                 break;
-            case RevealStart + 10:
+            case RevealStart + 20:
                 SoundEngine.PlaySound(TerramonSoundID.GetCry(To, 0.3f), Feet);
                 break;
-            case RevealStart + 30:
+            case CongratsTime:
                 FloatingText(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.EvolutionCongrats",
                     OldName, NewName), new Color(120, 255, 170));
                 break;
         }
 
         // After a skip these may have been jumped over
-        if (_time >= RevealStart + 30)
+        if (_time >= CongratsTime)
             Announce();
-        if (isOwner && !_fanfarePlayed && _time >= RevealStart + 40)
-        {
-            _fanfarePlayed = true;
-            TerramonWorld.PlaySoundOverBGM(TerramonSoundID.PkballCatchPla);
-        }
 
         if (_time is < SwapStart or >= FlashStart)
             return;
         var showsNew = ShowsNewForm();
         if (showsNew != _lastShowedNew)
-            SoundEngine.PlaySound(SoundID.Item9 with { Volume = 0.25f, Pitch = -0.4f + SwapProgress * 0.9f }, Feet);
+            SoundEngine.PlaySound(SoundID.Item9 with { Volume = 0.12f, Pitch = -0.4f + SwapProgress * 0.9f }, Feet);
         _lastShowedNew = showsNew;
     }
 
@@ -312,7 +315,8 @@ public sealed class EvolutionAnimation : ModProjectile
     }
 
     /// <summary>
-    ///     Whether the silhouette shows the new form right now. Switches faster and faster (about 14 times in all).
+    ///     Whether the silhouette shows the new form right now. Switches on the music's beat, then every half and
+    ///     quarter beat, then as fast as it can just before the flash.
     /// </summary>
     private bool ShowsNewForm()
     {
@@ -320,9 +324,25 @@ public sealed class EvolutionAnimation : ModProjectile
             return true;
         if (_time < SwapStart)
             return false;
-        var p = SwapProgress;
-        var cycles = 2f * p + 12f * p * p;
-        return MathF.Cos(cycles * MathHelper.TwoPi) < 0f;
+        int switches;
+        if (_time < HalfBeatStart)
+            switches = (_time - SwapStart) / 30;
+        else if (_time < QuarterBeatStart)
+            switches = (HalfBeatStart - SwapStart) / 30 + (_time - HalfBeatStart) / 15;
+        else if (_time < FlashStart)
+            switches = (HalfBeatStart - SwapStart) / 30 + (QuarterBeatStart - HalfBeatStart) / 15 +
+                       (_time - QuarterBeatStart) * 2 / 15;
+        else
+            switches = (HalfBeatStart - SwapStart) / 30 + (QuarterBeatStart - HalfBeatStart) / 15 +
+                       (FlashStart - QuarterBeatStart) * 2 / 15 + (_time - FlashStart) / 4;
+        return switches % 2 == 1;
+    }
+
+    private void StopTheme()
+    {
+        if (SoundEngine.TryGetActiveSound(_theme, out var sound))
+            sound.Stop();
+        _theme = SlotId.Invalid;
     }
 
     private void AddLight()

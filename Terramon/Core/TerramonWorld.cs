@@ -24,16 +24,17 @@ public partial class TerramonWorld : ModSystem
     /// </summary>
     /// <param name="style">The sound style containing the parameters for the sound to be played.</param>
     /// <param name="volumeMultiplier">The multiplier for quieting the background music volume.</param>
-    public static void PlaySoundOverBGM(SoundStyle style, float volumeMultiplier = 0.45f)
+    public static SlotId PlaySoundOverBGM(SoundStyle style, float volumeMultiplier = 0.45f)
     {
         var slotId = SoundEngine.PlaySound(style);
-        if (Main.soundVolume <= 0) return;
+        if (Main.soundVolume <= 0) return slotId;
         var reducedVolume = Main.soundVolume * volumeMultiplier;
-        if (Main.musicVolume <= reducedVolume) return;
+        if (Main.musicVolume <= reducedVolume) return slotId;
         _originalMusicVolume = Main.musicVolume;
         _currentSlotId = slotId;
         Main.musicVolume = reducedVolume;
         _lastMusicVolume = Main.musicVolume;
+        return slotId;
     }
 
     public static void UpdateWorldDex(int id, PokedexEntryStatus status, string lastUpdatedBy = null,

@@ -8,6 +8,11 @@ public static class TerramonSoundID
     public static readonly SoundStyle PkballConsume = new("Terramon/Sounds/pkball_consume") { Volume = 0.35f };
     public static readonly SoundStyle PkballThrow = new("Terramon/Sounds/pkball_throw") { Volume = 0.8f };
     public static readonly SoundStyle PkballBounce = new("Terramon/Sounds/pkball_bounce") { Volume = 0.75f };
+    /// <summary>
+    ///     The evolution theme (about 22 s). The evolution animation is timed to it.
+    /// </summary>
+    public static readonly SoundStyle EvolutionTheme = new("Terramon/Sounds/evolution_theme") { Volume = 0.8f };
+
     public static readonly SoundStyle PkballCatchPla = new("Terramon/Sounds/pkball_catch_pla") { Volume = 0.75f };
     public static readonly SoundStyle PkmnRecall = new("Terramon/Sounds/pkmn_recall") { Volume = 0.35f };
     public static readonly SoundStyle ButtonSmm = new("Terramon/Sounds/button_smm") { Pitch = 0.6f, Volume = 0.2925f };
