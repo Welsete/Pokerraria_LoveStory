@@ -938,6 +938,9 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 
         foePos = foeEntity.Center;
         foeDir = foeEntity.direction;
+        // A trainer's Pokémon stands in front of it: face that one instead of the trainer
+        if (battle.Foe is NPCs.Trainers.TrainerNPC { BattlePokemonCenter: { } trainerMon })
+            foePos = trainerMon;
 
         var xTarget = foePos.X + (foeDir * DistanceFromFoe);
         CustomTargetPosition = new Vector2(xTarget, foePos.Y);

@@ -1040,16 +1040,25 @@ internal sealed class SummaryWindow : UIElement
             new Color(77, 139, 255), new Color(156, 196, 255));
 
         // Base stats of the species
-        var colX = c.X + 314;
+        var colX = c.X + 302;
         var colW = c.Right - colX;
         var baseStats = data.Schema.BaseStats;
         int[] bases = [baseStats.HP, baseStats.Attack, baseStats.Defense, baseStats.SpAtk, baseStats.SpDef, baseStats.Speed];
         Text(sb, Upper(T("BaseStats")), colX, c.Y + 42, LabelText, 0.72f, 0f, 0.5f);
+
+        // The bars start after the widest label ("Def. Esp.", "Sp. Def"...) and end before the numbers
+        const float labelScale = 0.68f;
+        var labelWidth = 0f;
+        for (var i = 0; i < 6; i++)
+            labelWidth = Math.Max(labelWidth, Measure(T("Stat." + StatKeys[i]), labelScale).X);
+        var numberWidth = (int)Measure("255", labelScale).X + 6;
+        var barX = colX + (int)Math.Min(labelWidth + 6, colW * 0.45f);
+        var barWidth = Math.Max(20, c.Right - numberWidth - barX);
         for (var i = 0; i < 6; i++)
         {
             var y = c.Y + 64 + i * 20;
-            Text(sb, T("Stat." + StatKeys[i]), colX, y, DimText, 0.68f, 0f, 0.5f);
-            var bar = new Rectangle(colX + 44, y - 4, colW - 78, 8);
+            TextFit(sb, T("Stat." + StatKeys[i]), colX, y, barX - colX - 4, DimText, labelScale, 0.5f);
+            var bar = new Rectangle(barX, y - 4, barWidth, 8);
             Bar(sb, bar, bases[i] / 200f, BaseStatColor(bases[i]));
             Text(sb, bases[i].ToString(), c.Right, y, ValueText, 0.68f, 1f, 0.5f);
         }
@@ -1057,20 +1066,20 @@ internal sealed class SummaryWindow : UIElement
         Text(sb, T("BaseTotal", bases.Sum()), colX, c.Y + 190, DimText, 0.68f, 0f, 0.5f);
 
         // Nature box
-        var box = new Rectangle(colX - 4, c.Y + 210, colW + 4, 74);
+        var box = new Rectangle(colX - 4, c.Y + 210, colW + 4, 80);
         Fill(sb, box, PanelDarkBg);
         Outline(sb, box, PanelBorder);
         Text(sb, Upper(T("Nature")), box.X + 8, box.Y + 12, LabelText, 0.68f, 0f, 0.5f);
         TextFit(sb, NatureName(data.Nature), box.X + 8, box.Y + 32, box.Width - 16, GoldText, 0.82f, 0.5f);
         if (up < 0)
         {
-            Text(sb, T("NatureNeutral"), box.X + 8, box.Y + 54, DimText, 0.68f, 0f, 0.5f);
+            FitLines(sb, T("NatureNeutral"), box.X + 8, box.Y + 56, box.Width - 16, DimText, 0.68f);
         }
         else
         {
-            TextFit(sb, "+ " + T("StatLong." + StatKeys[up]), box.X + 8, box.Y + 50, box.Width - 16, PlusColor,
+            TextFit(sb, "+ " + T("StatLong." + StatKeys[up]), box.X + 8, box.Y + 52, box.Width - 16, PlusColor,
                 0.68f, 0.5f);
-            TextFit(sb, "- " + T("StatLong." + StatKeys[down]), box.X + 8, box.Y + 64, box.Width - 16, MinusColor,
+            TextFit(sb, "- " + T("StatLong." + StatKeys[down]), box.X + 8, box.Y + 68, box.Width - 16, MinusColor,
                 0.68f, 0.5f);
         }
 
@@ -1083,6 +1092,8 @@ internal sealed class SummaryWindow : UIElement
         int[] v = [ivs.HP, ivs.Attack, ivs.Defense, ivs.SpAtk, ivs.SpDef, ivs.Speed];
         var total = v.Sum();
         TabTitle(sb, c, T("Tabs.IVs"));
+        TitleHelp(sb, c, T("Tabs.IVs"),
+            $"[c/ffdd6e:{T("IVsWhat")}]\n" + MoveTooltip.Wrap(T("IVsInfo"), 340f));
 
         // A smaller radar on the left, so there's room for a plain-words rating of every stat
         var values = v.Select(x => x / 31f).ToArray();
@@ -1125,12 +1136,20 @@ internal sealed class SummaryWindow : UIElement
         Fill(sb, new Rectangle(colX, totalY + 53, 6, 6), GoldText);
         TextFit(sb, T("PerfectLegend"), colX + 12, totalY + 56, colW - 12, DimText, 0.62f, 0.5f);
 
-        // What IVs are, in a few plain words
-        var box = new Rectangle(c.X, c.Y + 256, c.Width, c.Bottom - (c.Y + 256));
-        Fill(sb, box, OutlineDark);
-        Fill(sb, Inset(box, 1), new Color(16, 22, 48));
-        Text(sb, Upper(T("IVsWhat")), box.X + 10, box.Y + 11, GoldText, 0.68f, 0f, 0.5f);
-        Paragraph(sb, T("IVsInfo"), box.X + 10, box.Y + 21, box.Width - 20, 0.62f, 4, Color.White);
+        // The space under the chart is left free on purpose (room for a future "raise IVs" menu)
+    }
+
+    /// <summary>
+    ///     A "?" badge after a tab title: hovering it shows <paramref name="tooltip" />, like the ability row does.
+    /// </summary>
+    private void TitleHelp(SpriteBatch sb, Rectangle c, string title, string tooltip)
+    {
+        var x = (int)(c.X + Measure(Upper(title), 0.85f).X + 8);
+        var hitbox = new Rectangle(x - 4, c.Y - 2, 21, 22);
+        var hover = Hovering(hitbox);
+        HelpBadge(sb, x, c.Y + 9, hover);
+        if (hover)
+            MoveTooltip.Show(tooltip);
     }
 
     /// <summary>
@@ -1782,6 +1801,34 @@ internal sealed class SummaryWindow : UIElement
         if (width > maxWidth)
             scale *= maxWidth / width;
         Text(sb, text, x, y, color, scale, 0f, anchorY);
+    }
+
+    /// <summary>
+    ///     One centred line at <paramref name="y" /> when <paramref name="text" /> fits in
+    ///     <paramref name="maxWidth" />, otherwise two smaller lines around it, so it never runs out of its box.
+    /// </summary>
+    private static void FitLines(SpriteBatch sb, string text, float x, float y, float maxWidth, Color color,
+        float scale)
+    {
+        if (string.IsNullOrEmpty(text) || maxWidth <= 0)
+            return;
+        if (Measure(text, scale).X <= maxWidth)
+        {
+            Text(sb, text, x, y, color, scale, 0f, 0.5f);
+            return;
+        }
+
+        var small = scale * 0.92f;
+        var lines = Utils.WordwrapString(text, Font, (int)(maxWidth / small), 2, out var lineCount);
+        if (lineCount < 1 || lines[1] == null)
+        {
+            TextFit(sb, text, x, y, maxWidth, color, scale, 0.5f);
+            return;
+        }
+
+        var gap = 15f * small / 0.62f;
+        TextFit(sb, lines[0].Trim(), x, y - gap / 2f, maxWidth, color, small, 0.5f);
+        TextFit(sb, lines[1].Trim(), x, y + gap / 2f, maxWidth, color, small, 0.5f);
     }
 
     private static void TextCentered(SpriteBatch sb, string text, Rectangle r, Color color, float scale)

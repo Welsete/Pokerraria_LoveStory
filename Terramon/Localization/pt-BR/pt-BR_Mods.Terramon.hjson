@@ -396,6 +396,16 @@ GUI: {
 			Frz: Congelado
 			Fnt: Desmaiado
 		}
+		// Short tags shown under the HP bar in battle, like in the main games
+		StatusShort: {
+			Brn: QUE
+			Par: PAR
+			Psn: ENV
+			Tox: TOX
+			Slp: DOR
+			Frz: CON
+			Fnt: DES
+		}
 		ShortStats: {
 			Atk: Atq
 			Def: Def

@@ -3,6 +3,7 @@ using ReLogic.Graphics;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.Localization;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
@@ -27,6 +28,18 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     }
     public bool DrawBallSlots;
     public bool DrawEXPBar;
+
+    /// <summary>
+    ///     The team shown in the Poké Ball slots under the panel. Null shows the local player's party; a function that
+    ///     returns null (e.g. against a wild Pokémon) hides the slots.
+    /// </summary>
+    public Func<IReadOnlyList<PokemonData>> BallParty;
+
+    /// <summary>
+    ///     The team whose Poké Balls are drawn right now, or null when no slots should be drawn.
+    /// </summary>
+    private IReadOnlyList<PokemonData> ShownParty
+        => !DrawBallSlots ? null : BallParty == null ? TerramonPlayer.LocalPlayer.Party : BallParty();
 
     static ParticipantPanel()
     {
@@ -63,15 +76,18 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         if (ticks == animationStart - 25)
             SoundEngine.PlaySound(in TerramonSoundID.BattleStart);
 
+        // The slots slide out even if the foe's team isn't known yet; they're only drawn once it is
         if (!DrawBallSlots || ticks > animationEnd || ticks < animationStart)
             return;
+        var party = BallParty == null ? TerramonPlayer.LocalPlayer.Party : null;
 
         for (int i = 0; i < _ballSlotXPositions.Length; i++)
         {
             int startTick = animationStart + (i * ticksPerSlot);
 
-            if (ticks == startTick + ticksPerSlot - 1)
-                SoundEngine.PlaySound(TerramonPlayer.LocalPlayer.Party[i] != null ? TerramonSoundID.BattlePing : TerramonSoundID.BattlePingEmpty);
+            // Only the player's own slots ping, so the sounds don't play twice
+            if (ticks == startTick + ticksPerSlot - 1 && party != null)
+                SoundEngine.PlaySound(i < party.Length && party[i] != null ? TerramonSoundID.BattlePing : TerramonSoundID.BattlePingEmpty);
 
             int endTick = startTick + ticksPerSlot;
             float targetXPosition = -8f + (i * 26f);
@@ -198,42 +214,83 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
                 Color.White, zoom);
         }
 
-        if (DrawBallSlots)
+        DrawStatusBadge(spriteBatch, drawHpPosition + new Vector2(16f, hpBarHeight * zoom), zoom);
+
+        if (ShownParty is { } party)
         {
             Texture2D ballSlots = BallSlots.Value;
-            PokemonData[] party = TerramonPlayer.LocalPlayer.Party;
-            Rectangle frame = ballSlots.Frame(3, 1, 2);
-            int next = 4;
-            if (!right)
-            {
-                frame.X -= frame.Width;
-                next = 0;
-            }
+            Texture2D bola = Terramon.Instance.Assets.Request<Texture2D>("Assets/Items/PokeBalls/PokeBallMiniItem")
+                .Value;
+            var slotWidth = ballSlots.Width / 3f * zoom;
 
             for (int i = _ballSlotXPositions.Length - 1; i >= 0; i--)
             {
-                if (i == next)
-                    frame.X -= frame.Width;
                 float slotPosition = _ballSlotXPositions[i];
                 if (i != 0 && slotPosition == -8)
                     continue;
-                Vector2 drawPosition = new(dims.X + slotPosition, dims.Y + dims.Height);
+
+                // The first slot is the square end at the panel's outer edge; on the right side everything is
+                // mirrored so the slots come out from the right edge of the screen
+                Rectangle frame = ballSlots.Frame(3, 1, i == 0 ? right ? 2 : 0 : 1);
+                Vector2 drawPosition = right
+                    ? new(dims.X + dims.Width - slotPosition - slotWidth, dims.Y + dims.Height)
+                    : new(dims.X + slotPosition, dims.Y + dims.Height);
 
                 spriteBatch.Draw(ballSlots, drawPosition, frame, Color.White, 0f, Vector2.Zero, zoom,
                     SpriteEffects.None, 0f);
 
-                if (party[i] is null)
+                var mon = i < party.Count ? party[i] : null;
+                if (mon is null)
                     continue;
 
-                Texture2D bola = Terramon.Instance.Assets.Request<Texture2D>("Assets/Items/PokeBalls/PokeBallMiniItem")
-                    .Value;
-
+                // Knocked out Pokémon get a grey ball, like in the main games
+                var fainted = mon.HP == 0 || mon.Status == NonVolatileStatus.Fnt;
                 drawPosition.X += 12f;
                 drawPosition.Y += 6f;
-                spriteBatch.Draw(bola, drawPosition, null, Color.White, 0f, Vector2.Zero, zoom, SpriteEffects.None, 0f);
+                spriteBatch.Draw(bola, drawPosition, null, fainted ? new Color(70, 70, 80) : Color.White, 0f,
+                    Vector2.Zero, zoom, SpriteEffects.None, 0f);
             }
         }
         // spriteBatch.Draw(TextureAssets.MagicPixel.Value, dims.ToRectangle(), Color.White * 0.5f);
+    }
+
+    /// <summary>
+    ///     A short colored tag for the status condition of <see cref="CurrentMon" /> (SLP, PSN, BRN...), drawn under
+    ///     the HP bar like in the main games. Nothing is drawn for a healthy Pokémon.
+    /// </summary>
+    private void DrawStatusBadge(SpriteBatch spriteBatch, Vector2 position, float zoom)
+    {
+        if (CurrentMon is not { } mon)
+            return;
+        var status = mon.HP == 0 ? NonVolatileStatus.Fnt : mon.Status;
+        if (status == NonVolatileStatus.None)
+            return;
+        var key = $"Mods.Terramon.GUI.BattleLog.StatusShort.{status}";
+        if (!Language.Exists(key))
+            return;
+
+        var label = Language.GetTextValue(key);
+        var color = StatusVisuals.ColorOf(status) ?? new Color(200, 70, 70);
+        const float textScale = 0.75f;
+        var font = FontAssets.MouseText.Value;
+        var textSize = font.MeasureString(label) * textScale;
+        var box = new Rectangle((int)position.X, (int)position.Y, (int)(textSize.X + 14f * zoom),
+            (int)(16f * zoom));
+        var pixel = TextureAssets.MagicPixel.Value;
+        var source = new Rectangle(0, 0, 1, 1);
+
+        // A pill: dark outline, the status color, and a lighter top half
+        spriteBatch.Draw(pixel, box with { X = box.X + 1, Width = box.Width - 2 }, source, BackColor);
+        spriteBatch.Draw(pixel, box with { Y = box.Y + 1, Height = box.Height - 2 }, source, BackColor);
+        var inner = new Rectangle(box.X + 1, box.Y + 1, box.Width - 2, box.Height - 2);
+        var fill = Color.Lerp(color, Color.Black, 0.35f);
+        spriteBatch.Draw(pixel, inner with { X = inner.X + 1, Width = inner.Width - 2 }, source, fill);
+        spriteBatch.Draw(pixel, inner with { Y = inner.Y + 1, Height = inner.Height - 2 }, source, fill);
+        spriteBatch.Draw(pixel, new Rectangle(inner.X + 2, inner.Y + 1, inner.Width - 4, inner.Height / 2 - 1),
+            source, Color.Lerp(color, Color.Black, 0.15f));
+
+        var textPosition = new Vector2(box.Center.X, box.Center.Y + 2f * textScale);
+        Utils.DrawBorderString(spriteBatch, label, textPosition, Color.White, textScale, 0.5f, 0.5f);
     }
 
     public static float GetParallelogramCenter(float y, in Rectangle bounds)

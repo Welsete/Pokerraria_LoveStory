@@ -172,6 +172,8 @@ public sealed class MoveVisuals : ModSystem
                 if (pet is { active: true })
                     return pet.Center;
                 return player.Player.active ? player.Player.Center : null;
+            case Content.NPCs.Trainers.TrainerNPC trainer when trainer.NPC.active && trainer.BattlePokemonCenter is { } mon:
+                return mon;
             default:
                 var entity = provider?.SyncedEntity;
                 return entity is { active: true } ? entity.Center : null;

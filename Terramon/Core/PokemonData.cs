@@ -111,6 +111,19 @@ public class PokemonData
     public string OT => _ot;
 
     /// <summary>
+    ///     Makes <paramref name="trainerName" /> this Pokémon's original trainer if it has none yet (a wild Pokémon that
+    ///     was just caught, a gift, or one saved before the original trainer was stored). Does nothing otherwise.
+    /// </summary>
+    /// <returns>True if the original trainer was set.</returns>
+    public bool ClaimIfUnowned(string trainerName)
+    {
+        if (!string.IsNullOrEmpty(_ot) || string.IsNullOrEmpty(trainerName))
+            return false;
+        _ot = trainerName;
+        return true;
+    }
+
+    /// <summary>
     ///     When this Pokémon was caught or received, if known.
     /// </summary>
     public DateTime? MetDate => _metDate;
@@ -136,6 +149,81 @@ public class PokemonData
         else
             HP = 0;
     }
+
+    #region PP
+
+    /// <summary>
+    ///     The most PP a move can have with its PP Ups (each one adds a fifth of the base PP, like the main games).
+    /// </summary>
+    public static int MaxPPOf(MoveData move)
+    {
+        var basePP = move.Schema?.PP ?? 0;
+        return Math.Min(basePP + basePP * move.PPUp / 5, 63);
+    }
+
+    /// <summary>
+    ///     Sets the PP left of the move in <paramref name="slot" />, kept between 0 and its max PP.
+    /// </summary>
+    public void SetMovePP(int slot, int pp)
+    {
+        if (Moves.IsDefault || slot is < 0 or > 3)
+            return;
+        var move = Moves[slot];
+        if (move.ID == MoveID.None)
+            return;
+        var clamped = (byte)Math.Clamp(pp, 0, MaxPPOf(move));
+        if (clamped != move.PP)
+            Moves[slot] = move with { PP = clamped };
+    }
+
+    /// <summary>
+    ///     Takes <paramref name="amount" /> PP from the move <paramref name="id" />, if this Pokémon knows it.
+    /// </summary>
+    public void UseMovePP(MoveID id, int amount = 1)
+    {
+        if (Moves.IsDefault || id == MoveID.None)
+            return;
+        for (var i = 0; i < 4; i++)
+        {
+            if (Moves[i].ID != id)
+                continue;
+            SetMovePP(i, Moves[i].PP - amount);
+            return;
+        }
+    }
+
+    /// <summary>
+    ///     Whether any move has less PP than its max.
+    /// </summary>
+    public bool MissingPP
+    {
+        get
+        {
+            if (Moves.IsDefault)
+                return false;
+            for (var i = 0; i < 4; i++)
+            {
+                var move = Moves[i];
+                if (move.ID != MoveID.None && move.PP < MaxPPOf(move))
+                    return true;
+            }
+
+            return false;
+        }
+    }
+
+    /// <summary>
+    ///     Gives every move all its PP back (Pokémon Center, beds, the Nurse...).
+    /// </summary>
+    public void RestorePP()
+    {
+        if (Moves.IsDefault)
+            return;
+        for (var i = 0; i < 4; i++)
+            SetMovePP(i, 63);
+    }
+
+    #endregion
 
     public void Heal(ushort amount)
     {
@@ -216,7 +304,7 @@ public class PokemonData
         var Lp = Level;
         var p = myOwner.HasExpCharm ? 1.5f : 1f;
         var s = shareMultiplier;
-        var t = _ot.Equals(myOwner.Player.name) ? 1f : 1.5f;
+        var t = string.IsNullOrEmpty(_ot) || _ot == myOwner.Player.name ? 1f : 1.5f;
         var v = (Schema.Evolution is not null && Level >= Schema.Evolution.AtLevel) ? smallBonus : 1f;
         var pow = (2f * L + 10) / (L + Lp + 10);
         var powFinal = pow * pow * Math.Sqrt(pow);
@@ -588,6 +676,12 @@ public class PokemonData
         IsShiny = packed.IsShiny;
         Level = packed.Level;
         Moves = packed.Moves;
+        for (var i = 0; i < 4; i++)
+        {
+            var move = Moves[i];
+            if (move.ID != MoveID.None)
+                Moves[i] = new MoveData(move.ID, (byte)packed.PPOf(i), (byte)packed.PPUpOf(i));
+        }
     }
 
     public bool CureStatus()

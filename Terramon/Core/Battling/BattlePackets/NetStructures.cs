@@ -131,7 +131,18 @@ public readonly record struct SimplePackedPokemon
     /// </summary>
     public readonly ushort HP;
 
+    /// <summary>
+    ///     The PP left (low 6 bits) and PP Ups (high 2 bits) of each move, one byte per move slot.
+    /// </summary>
+    public readonly uint MovePP;
+
     public const ushort FullHP = ushort.MaxValue;
+
+    /// <summary>The PP the move in <paramref name="slot" /> enters the battle with.</summary>
+    public readonly int PPOf(int slot) => (int)((MovePP >> (slot * 8)) & 0x3F);
+
+    /// <summary>The PP Ups used on the move in <paramref name="slot" />.</summary>
+    public readonly int PPUpOf(int slot) => (int)((MovePP >> (slot * 8 + 6)) & 0x3);
 
     public readonly bool HasNickname => (Header & 0b1) != 0;
     public readonly bool HasItem => (Header & 0b10) != 0;
@@ -162,6 +173,8 @@ public readonly record struct SimplePackedPokemon
         EVs = data.EVs;
         Level = data.Level;
         HP = data.HP >= data.MaxHP ? FullHP : data.HP;
+        for (var i = 0; i < 4 && !moves.IsDefault; i++)
+            MovePP |= (uint)((moves[i].PP & 0x3F) | ((moves[i].PPUp & 0x3) << 6)) << (i * 8);
 
         Header |= (byte)((uint)data.Gender << 2);
         Header |= (byte)((uint)(data.Ball > BallID.CherishBall ? BallID.PokeBall - 1 : data.Ball - 1) << 4);
@@ -213,6 +226,7 @@ public readonly record struct SimplePackedPokemon
         MovesA = r.ReadUInt32();
         MovesB = r.ReadByte();
         HP = r.ReadUInt16();
+        MovePP = r.ReadUInt32();
     }
 
     public void Write(BinaryWriter w)
@@ -228,6 +242,7 @@ public readonly record struct SimplePackedPokemon
         w.Write(MovesA);
         w.Write(MovesB);
         w.Write(HP);
+        w.Write(MovePP);
     }
 
     public override string ToString()

@@ -784,6 +784,11 @@ public sealed class BattleManager
                 .ToArray();
         }
 
+        // The PP Showdown has left for the active Pokémon's moves, so PP goes down in battle and stays down after it
+        var ppSlot = ReadActivePP(root, side, out var pp);
+        if (ppSlot >= 0 && client.Side is { } battleSide && ppSlot < battleSide.Team.Length)
+            ApplyPP(battleSide.Team[ppSlot].Data, pp);
+
         // Kept on the server too, so server-side code (e.g. skipping a turn) knows what's being asked
         client.CurrentRequest = sr;
         if (sr != ShowdownRequest.Wait)
@@ -791,7 +796,7 @@ public sealed class BattleManager
 
         if (Main.dedServ && client.Provider.SyncedEntity is Player plr)
         {
-            var sendReq = new ShowdownRequestRpc(sr, client.SwitchOrder);
+            var sendReq = new ShowdownRequestRpc(sr, client.SwitchOrder, ppSlot, pp);
             Mod.SendPacket(sendReq, toClient: plr.whoAmI);
         }
         else
@@ -802,6 +807,82 @@ public sealed class BattleManager
         }
     }
     
+    /// <summary>
+    ///     Reads the PP left of each move of the active Pokémon from a Showdown request.
+    ///     Returns its party slot, or -1 when the request doesn't say (waiting, or moves that don't match its own,
+    ///     e.g. after Transform or while locked into a move).
+    /// </summary>
+    /// <param name="pp">The PP left, by Showdown move id.</param>
+    private static int ReadActivePP(JsonElement root, JsonElement side, out Dictionary<string, int> pp)
+    {
+        pp = null;
+        if (!root.TryGetProperty("active", out var active) || active.ValueKind != JsonValueKind.Array ||
+            active.GetArrayLength() == 0 || !active[0].TryGetProperty("moves", out var moves) ||
+            !side.TryGetProperty("pokemon", out var team) || team.ValueKind != JsonValueKind.Array)
+            return -1;
+
+        var slot = -1;
+        foreach (var mon in team.EnumerateArray())
+        {
+            if (!mon.TryGetProperty("active", out var isActive) || isActive.ValueKind != JsonValueKind.True)
+                continue;
+            if (mon.TryGetProperty("ident", out var ident) &&
+                int.TryParse(ident.GetString()?.Split(": ", 2)[^1], out var n))
+                slot = n - 1;
+            break;
+        }
+
+        if (slot < 0)
+            return -1;
+
+        pp = [];
+        foreach (var move in moves.EnumerateArray())
+        {
+            if (move.TryGetProperty("id", out var id) && move.TryGetProperty("pp", out var left) &&
+                left.TryGetInt32(out var value) && id.GetString() is { } key)
+                pp[key] = value;
+        }
+
+        return pp.Count == 0 ? -1 : slot;
+    }
+
+    /// <summary>
+    ///     Sets the PP of the moves of <paramref name="data" /> from <paramref name="pp" /> (by Showdown move id).
+    ///     Only when the moves are exactly its own, so Transform's or Mimic's copies (5 PP) are never written back.
+    /// </summary>
+    public static void ApplyPP(PokemonData data, IReadOnlyDictionary<string, int> pp)
+    {
+        if (data == null || pp == null || data.Moves.IsDefault)
+            return;
+
+        // Every team gets Struggle as an extra move (see PokemonMoves.PackedString), which isn't one of its own
+        var knowsStruggle = false;
+        for (var i = 0; i < 4; i++)
+        {
+            var move = data.Moves[i];
+            if (move.ID == MoveID.Struggle)
+                knowsStruggle = true;
+            if (move.ID != MoveID.None && !pp.ContainsKey(ShowdownID(move.ID)))
+                return;
+        }
+
+        var extra = !knowsStruggle && pp.ContainsKey(ShowdownID(MoveID.Struggle)) ? 1 : 0;
+        if (pp.Count - extra != data.Moves.Count)
+            return;
+
+        for (var i = 0; i < 4; i++)
+        {
+            var move = data.Moves[i];
+            if (move.ID != MoveID.None)
+                data.SetMovePP(i, pp[ShowdownID(move.ID)]);
+        }
+    }
+
+    /// <summary>
+    ///     The id Showdown uses for a move ("ThunderPunch" -> "thunderpunch").
+    /// </summary>
+    public static string ShowdownID(MoveID move) => move.ToString().ToLowerInvariant();
+
     /// <summary>
     ///     Lets an NPC answer a request with <see cref="BattleAI"/>, falling back to the default choice if anything goes wrong.
     /// </summary>
