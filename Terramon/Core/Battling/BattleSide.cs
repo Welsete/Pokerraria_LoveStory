@@ -4,6 +4,11 @@ namespace Terramon.Core.Battling;
 public sealed class BattleSide : IEnumerable<PokemonData>
 {
     public BattleSide Opposite;
+
+    /// <summary>
+    ///     The battle this side is part of (set by <see cref="BattleField.LinkSides" />).
+    /// </summary>
+    public BattleField Field;
     private byte _activeSlot;
     public int TeamCount;
     public BattlePokemon[] Team = new BattlePokemon[6];

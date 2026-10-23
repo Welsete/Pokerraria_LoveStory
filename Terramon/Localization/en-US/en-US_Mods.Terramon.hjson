@@ -31,6 +31,7 @@ Battle: {
 	GainedExp: "{0} gained {1} Exp. Points!"
 	LevelUp: "{0} grew to Lv. {1}!"
 	ChooseNext: Choose another Pokémon to send out.
+	SkipTurnHint: Click to skip
 	ReturnedFainted: "{0} has fainted and returned to its Poké Ball. Use a Revive to heal it."
 	Log: {
 		SwitchedIn: "{0} entered the battle!"

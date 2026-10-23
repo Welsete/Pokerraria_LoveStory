@@ -51,9 +51,30 @@ public sealed class BattleInstance
     public static void Destroy(BattleInstance i)
     {
         i.Stop();
+
+        // Singleplayer: the participants are the local game's own, so they stay in the battle until its last turn
+        // has been shown (see BattlePlayback); the battle itself is already over
+        var field = i.Omniscient;
+        if (BattlePlayback.Defer(field, () =>
+            {
+                Reset(i.ClientA, field);
+                Reset(i.ClientB, field);
+            }))
+            return;
+
         i.ClientA.Battle = i.ClientB.Battle = null;
         i.ClientA.Foe = i.ClientB.Foe = null;
         i.ClientA.State = i.ClientB.State = ClientBattleState.None;
+    }
+
+    // Unless it already left this battle (or is in another one by now)
+    private static void Reset(BattleClient client, BattleField field)
+    {
+        if (client == null || client.Battle != field)
+            return;
+        client.Battle = null;
+        client.Foe = null;
+        client.State = ClientBattleState.None;
     }
 
     public BattleState State;
@@ -275,7 +296,7 @@ public sealed class BattleInstance
                     {
                         var parts = note[StageNote.Length..].Split(';');
                         if (parts.Length == 4 && int.TryParse(parts[3], out var amount))
-                            BattleLog.AccuracyStage(this, parts[0], parts[1], parts[2], amount);
+                            LogStageSafely(pWriter, parts[0], parts[1], parts[2], amount);
                         continue;
                     }
 
@@ -292,13 +313,14 @@ public sealed class BattleInstance
                         HandleSafely(mgr, sWriter, split.Secret, toSide: -1);
                         HandleSafely(mgr, pWriter, split.Public, toSide: tgt);
                         // The secret half has exact HP numbers, so damage can be shown in HP instead of %
-                        LogSafely(split.Secret is DamageElement or HealElement or SwitchElement or DragElement
+                        LogSafely(pWriter, split.Secret is DamageElement or HealElement or SwitchElement or DragElement
                             ? split.Secret
                             : split.Public);
                         continue;
                     }
-                    LogSafely(element);
                     HandleSafely(mgr, pWriter, element, toSide: -1);
+                    // After the element's own actions, so its line comes right after its move or hit in the playback
+                    LogSafely(pWriter, element);
                 }
             }
         }
@@ -395,15 +417,35 @@ public sealed class BattleInstance
         }
     }
 
-    private void LogSafely(ProtocolElement element)
+    private void LogSafely(BinaryWriter w, ProtocolElement element)
     {
+        var start = w.BaseStream.Position;
         try
         {
-            BattleLog.Handle(this, element);
+            BattleLog.Handle(this, element, w);
         }
-        catch (Exception ex)
+        catch (Exception ex) when (ex is not ObjectDisposedException)
         {
             Terramon.Instance.Logger.Error($"Battle log failed for {element}: {ex}");
+            w.Flush();
+            w.BaseStream.SetLength(start);
+            w.BaseStream.Position = start;
+        }
+    }
+
+    private void LogStageSafely(BinaryWriter w, string kind, string showdownMon, string stat, int amount)
+    {
+        var start = w.BaseStream.Position;
+        try
+        {
+            BattleLog.AccuracyStage(this, w, kind, showdownMon, stat, amount);
+        }
+        catch (Exception ex) when (ex is not ObjectDisposedException)
+        {
+            Terramon.Instance.Logger.Error($"Battle log failed for a stage change: {ex}");
+            w.Flush();
+            w.BaseStream.SetLength(start);
+            w.BaseStream.Position = start;
         }
     }
 
@@ -442,21 +484,23 @@ public sealed class BattleInstance
         if (s.BaseStream.Length != 0)
         {
             s.BaseStream.WriteByte(0); // footer
-            ObserveSafely(owner.ID, (MemoryStream)s.BaseStream, onlyToSelf: true);
+            // Exact copies of what the public half already showed: they only correct the HP numbers
+            ObserveSafely(owner.ID, (MemoryStream)s.BaseStream, onlyToSelf: true, refine: true);
 
             // Clients need the exact HP too, or their own Pokémon end up with the public percentage as HP
             if (Main.dedServ)
-                Terramon.Instance.SendPacket(new BattlePayloadRpc(owner, (MemoryStream)s.BaseStream));
+                Terramon.Instance.SendPacket(new BattlePayloadRpc(owner, (MemoryStream)s.BaseStream, refine: true));
             s.Dispose();
             s = new BinaryWriter(new MemoryStream());
         }
     }
 
-    private static void ObserveSafely(BattleParticipant owner, MemoryStream buffer, bool onlyToSelf)
+    private static void ObserveSafely(BattleParticipant owner, MemoryStream buffer, bool onlyToSelf,
+        bool refine = false)
     {
         try
         {
-            BattleManager.Instance.Observe(owner, buffer, onlyToSelf);
+            BattleManager.Instance.Observe(owner, buffer, onlyToSelf, refine);
         }
         catch (Exception ex) when (ex is not ObjectDisposedException)
         {

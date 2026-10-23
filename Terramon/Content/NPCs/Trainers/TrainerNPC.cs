@@ -348,6 +348,19 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
 
         if (BattleClient.Battle?.A != null && BattleClient.Battle.B != null && BattleClient.Side is { } side)
         {
+            // While a turn is being shown, the Pokémon it sends out only comes out at its moment
+            var field = BattleClient.Battle;
+            if (BattlePlayback.TryGetShownActive(field, field.A == side ? 1 : 2, out var shown))
+            {
+                for (var i = 0; i < side.Team.Length; i++)
+                {
+                    if (side.Team[i].Data != shown)
+                        continue;
+                    slot = i;
+                    return shown;
+                }
+            }
+
             ref var active = ref side.ActivePokemon;
             if (active.Data != null)
             {
@@ -429,7 +442,7 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
         }
 
         SoundEngine.PlaySound(TerramonSoundID.PkmnRecall, feet);
-        if (data.HP > 0)
+        if (BattlePlayback.ShownHP(data) > 0)
             SoundEngine.PlaySound(data.GetCry(), feet);
     }
 
@@ -447,8 +460,10 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
             feet.Y -= 18f + MathF.Sin((float)Main.timeForVisualEffects / 20f) * 3f;
 
         var light = Lighting.GetColor((int)(feet.X / 16f), (int)((feet.Y - 8f) / 16f));
-        var color = StatusVisuals.Tint(data.Status, light);
-        var fainted = data.HP == 0;
+        // The HP and status of the turn being shown (see BattlePlayback)
+        var status = BattlePlayback.ShownStatus(data);
+        var color = StatusVisuals.Tint(status, light);
+        var fainted = BattlePlayback.ShownHP(data) == 0;
         if (fainted)
             color = color.MultiplyRGB(new Color(150, 150, 170));
 
@@ -464,7 +479,7 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
         if (set != null)
         {
             PokemonAnimations.GetFrame(set, this, data.IsShiny, false, false, true,
-                data.Status == NonVolatileStatus.Slp, fainted, out var texture, out var source, out var origin,
+                status == NonVolatileStatus.Slp, fainted, out var texture, out var source, out var origin,
                 hovering);
             spriteBatch.Draw(texture, position, source, color, 0f, origin, set.Scale * grow, effects, 0f);
             height = source.Height * set.Scale * 0.6f;
@@ -480,7 +495,7 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
             return;
         if (fainted)
             StatusVisuals.DrawDizzyStars(spriteBatch, feet - new Vector2(0f, height * 0.6f), screenPos, NPC.whoAmI);
-        else if (data.Status == NonVolatileStatus.Slp)
+        else if (status == NonVolatileStatus.Slp)
             StatusVisuals.DrawSleepZ(spriteBatch, feet - new Vector2(0f, height), screenPos, NPC.whoAmI);
     }
 

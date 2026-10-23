@@ -1,5 +1,6 @@
 ﻿using ReLogic.Content;
 using ReLogic.Graphics;
+using Terramon.Core.Battling;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -28,6 +29,35 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     }
     public bool DrawBallSlots;
     public bool DrawEXPBar;
+
+    /// <summary>
+    ///     Whether this panel shows the foe's Pokémon (otherwise the local player's own).
+    /// </summary>
+    public bool IsFoe;
+
+    // The Pokémon drawn last frame, to restart the HP bar when another one is shown
+    private PokemonData _drawnMon;
+
+    /// <summary>
+    ///     The Pokémon to draw: <see cref="CurrentMon" />, unless the battle is still showing the turn in which it was
+    ///     sent out (see <see cref="BattlePlayback" />).
+    /// </summary>
+    public PokemonData DisplayedMon
+    {
+        get
+        {
+            var client = BattleClient.LocalClient;
+            var field = client?.Battle;
+            if (field?.A == null || field.B == null)
+                return CurrentMon;
+            var local = field.LocalSideIndex;
+            if (local == 0)
+                return CurrentMon;
+            return BattlePlayback.TryGetShownActive(field, IsFoe ? 3 - local : local, out var shown)
+                ? shown
+                : CurrentMon;
+        }
+    }
 
     /// <summary>
     ///     The team shown in the Poké Ball slots under the panel. Null shows the local player's party; a function that
@@ -121,10 +151,20 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         DynamicPixelRatioElement.DrawAdjustableParallelogram(spriteBatch, PanelTexture.Value, parallelogramRect,
             Color.White, zoom);
 
-        var monName = CurrentMon?.DisplayName ?? "???";
-        var monGender = (int)(CurrentMon?.Gender ?? Gender.Unspecified) - 1;
-        var monLevel = CurrentMon?.Level ?? 0;
-        var monHpFactor = CurrentMon is null ? 0f : CurrentMon.HP / (float)CurrentMon.MaxHP;
+        // What the turn being played shows: the HP bar goes down when the hit is shown, not when the battle applies it
+        var shownMon = DisplayedMon;
+        if (shownMon != _drawnMon)
+        {
+            _drawnMon = shownMon;
+            _hpVisual = 0f;
+        }
+
+        var shownHP = BattlePlayback.ShownHP(shownMon);
+        var (shownLevel, shownExp) = BattlePlayback.ShownExp(shownMon);
+        var monName = shownMon?.DisplayName ?? "???";
+        var monGender = (int)(shownMon?.Gender ?? Gender.Unspecified) - 1;
+        var monLevel = shownMon is null ? 0 : shownLevel;
+        var monHpFactor = shownMon is null || shownMon.MaxHP == 0 ? 0f : shownHP / (float)shownMon.MaxHP;
 
         Vector2 drawTextPosition = new(dims.X + 64f + sideShift, dims.Y + 16f);
         float textDrawScale = 0.7f;
@@ -191,7 +231,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * monHpFactor,
             Color.White, zoom);
 
-        string hpDisplay = CurrentMon is null ? "??? / ???" : $"HP: {CurrentMon.HP} / {CurrentMon.MaxHP}";
+        string hpDisplay = shownMon is null ? "??? / ???" : $"HP: {shownHP} / {shownMon.MaxHP}";
         Vector2 hpDisplaySize = smallFont.MeasureString(hpDisplay);
         Vector2 hpDisplayPosition = drawHpPosition + new Vector2(hpWidth * 0.5f, (hpBarHeight + 8) * 0.5f * zoom) -
                                     hpDisplaySize * 0.5f;
@@ -204,17 +244,17 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
             float xDifference = 128f;
             Vector2 expDrawPos = drawHpPosition + new Vector2(xDifference, hpBarHeight);
             float expWidth = hpWidth - xDifference - HPBar.Width() / 3;
-            float expFactor = CurrentMon is null ? 0f :
+            float expFactor = shownMon is null ? 0f :
                 monLevel == Terramon.MaxPokemonLevel ? 1f :
-                CurrentMon.TotalEXP /
-                (float)ExperienceLookupTable.GetLevelTotalExp(monLevel + 1, CurrentMon.Schema.GrowthRate);
+                shownExp /
+                (float)ExperienceLookupTable.GetLevelTotalExp(monLevel + 1, shownMon.Schema.GrowthRate);
             DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth, BackColor,
                 zoom);
             DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth * expFactor,
                 Color.White, zoom);
         }
 
-        DrawStatusBadge(spriteBatch, drawHpPosition + new Vector2(16f, hpBarHeight * zoom), zoom);
+        DrawStatusBadge(spriteBatch, shownMon, drawHpPosition + new Vector2(16f, hpBarHeight * zoom), zoom);
 
         if (ShownParty is { } party)
         {
@@ -244,7 +284,8 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
                     continue;
 
                 // Knocked out Pokémon get a grey ball, like in the main games
-                var fainted = mon.HP == 0 || mon.Status == NonVolatileStatus.Fnt;
+                var fainted = BattlePlayback.ShownHP(mon) == 0 ||
+                              BattlePlayback.ShownStatus(mon) == NonVolatileStatus.Fnt;
                 drawPosition.X += 12f;
                 drawPosition.Y += 6f;
                 spriteBatch.Draw(bola, drawPosition, null, fainted ? new Color(70, 70, 80) : Color.White, 0f,
@@ -255,14 +296,14 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     }
 
     /// <summary>
-    ///     A short colored tag for the status condition of <see cref="CurrentMon" /> (SLP, PSN, BRN...), drawn under
-    ///     the HP bar like in the main games. Nothing is drawn for a healthy Pokémon.
+    ///     A short colored tag for the status condition of the shown Pokémon (SLP, PSN, BRN...), drawn under the HP bar
+    ///     like in the main games. Nothing is drawn for a healthy Pokémon.
     /// </summary>
-    private void DrawStatusBadge(SpriteBatch spriteBatch, Vector2 position, float zoom)
+    private static void DrawStatusBadge(SpriteBatch spriteBatch, PokemonData mon, Vector2 position, float zoom)
     {
-        if (CurrentMon is not { } mon)
+        if (mon == null)
             return;
-        var status = mon.HP == 0 ? NonVolatileStatus.Fnt : mon.Status;
+        var status = BattlePlayback.ShownHP(mon) == 0 ? NonVolatileStatus.Fnt : BattlePlayback.ShownStatus(mon);
         if (status == NonVolatileStatus.None)
             return;
         var key = $"Mods.Terramon.GUI.BattleLog.StatusShort.{status}";

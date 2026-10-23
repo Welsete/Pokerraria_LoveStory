@@ -222,20 +222,45 @@ public struct BattlePokemon()
     public void Faint()
     {
         TransformedInto = 0;
+        var field = Side?.Field;
+        // It keeps looking healthy until its faint is shown (see BattlePlayback)
+        if (!Main.dedServ)
+            BattlePlayback.HoldStatus(field, Data);
         var justFainted = Data?.Faint() ?? false;
         _status = NonVolatileStatus.Fnt;
 
         if (!justFainted || Main.dedServ)
             return;
 
-        var own = Side.Provider == TerramonPlayer.LocalPlayer;
-        BattleLog.Say(Language.GetTextValue("Mods.Terramon.Battle.Fainted", BattleLog.HighlightMon(PokeMessage, own)),
-            new Color(255, 120, 110));
-
-        // Reward the local player's Pokémon for knocking out a foe (battles between players give no EXP)
         var local = TerramonPlayer.LocalPlayer;
+        var own = Side.Provider == local;
+        var text = Language.GetTextValue("Mods.Terramon.Battle.Fainted", BattleLog.HighlightMon(PokeMessage, own));
+
+        // Reward the local player's Pokémon for knocking out a foe (battles between players give no EXP). The EXP is
+        // given now, but its messages (and the new level and EXP bar) are shown with the faint
+        List<(string Text, Color Color)> yields = null;
+        PokemonData[] expHolders = null;
         if (Side.Provider != local && Side.Provider is not TerramonPlayer && local.BattleClient?.Foe == Side.Provider)
-            local.DefeatedPokemon(Data, true);
+        {
+            expHolders = local.Party.ToArray();
+            BattlePlayback.HoldExp(field, expHolders);
+            yields = [];
+            local.DefeatedPokemon(Data, true, yields);
+        }
+
+        // Only the players in this battle get its messages
+        BattlePlayback.QueueFaint(field, Data, text, field != null && field.LocalSideIndex != 0, yields, expHolders);
+
+        // Not part of a battle being shown: say it right away, as before
+        if (field == null)
+        {
+            BattleLog.Say(text, new Color(255, 120, 110));
+            if (yields != null)
+            {
+                foreach (var (line, color) in yields)
+                    BattleLog.Say(line, color);
+            }
+        }
     }
     public void CureStatus()
     {

@@ -292,7 +292,8 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             var battling = AnimOwner is TerramonPlayer { BattleClient.Foe: not null };
             PokemonAnimations.GetFrame(animSet, AnimOwner, shiny,
                 Math.Abs(Projectile.velocity.X) > 0.2f, !battling && Math.Abs(Projectile.velocity.Y) > 1f, battling,
-                Data is { Status: NonVolatileStatus.Slp }, Data is { HP: 0 }, out texture, out sourceRect,
+                Data != null && BattlePlayback.ShownStatus(Data) == NonVolatileStatus.Slp,
+                Data != null && BattlePlayback.ShownHP(Data) == 0, out texture, out sourceRect,
                 out origin, Flying);
             frameSize = sourceRect.Size() * animSet.Scale;
             drawPos.Y -= 3f;

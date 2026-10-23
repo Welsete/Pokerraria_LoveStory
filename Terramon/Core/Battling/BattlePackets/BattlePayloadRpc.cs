@@ -2,14 +2,18 @@
 
 namespace Terramon.Core.Battling.BattlePackets;
 
-public struct BattlePayloadRpc(IBattleProvider battleOwner, MemoryStream buffer) : IEasyPacket
+public struct BattlePayloadRpc(IBattleProvider battleOwner, MemoryStream buffer, bool refine = false) : IEasyPacket
 {
     private IBattleProvider _battleOwner = battleOwner;
     private MemoryStream _buffer = buffer;
+
+    // The battle's secret half: exact copies of actions already sent, which only correct HP numbers
+    private bool _refine = refine;
     
     public readonly void Serialise(BinaryWriter writer)
     {
         writer.Write(_battleOwner);
+        writer.Write(_refine);
         writer.Write((ushort)_buffer.Length);
         _buffer.WriteTo(writer.BaseStream);
     }
@@ -17,6 +21,7 @@ public struct BattlePayloadRpc(IBattleProvider battleOwner, MemoryStream buffer)
     public void Deserialise(BinaryReader reader, in SenderInfo sender)
     {
         _battleOwner = reader.ReadParticipant();
+        _refine = reader.ReadBoolean();
         var length = reader.ReadUInt16();
         _buffer = new MemoryStream(reader.ReadBytes(length));
     }
@@ -33,6 +38,6 @@ public struct BattlePayloadRpc(IBattleProvider battleOwner, MemoryStream buffer)
         // Clients that never saw this battle start have no field to apply it to
         if (o is null)
             return;
-        o.Receive(reader);
+        o.Receive(reader, _refine);
     }
 }

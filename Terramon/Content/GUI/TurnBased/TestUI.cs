@@ -24,6 +24,8 @@ public sealed class TestBattleUI : SmartUIState
 {
     private readonly static UIElement _optionsPanel;
     private readonly static UIText _promptText;
+    private readonly static UIElement _optionButtons;
+    private readonly static UIText _skipHint;
     private readonly static UIElement _movesPanel;
     private readonly static UIElement _pokemonPanel;
     private readonly static UIElement _bagPanel;
@@ -70,6 +72,15 @@ public sealed class TestBattleUI : SmartUIState
         optionButtons.Left.Percent = optionButtons.Width.Percent = 0.5f;
         optionButtons.Height.Percent = 1f;
         _optionsPanel.Append(optionButtons);
+        _optionButtons = optionButtons;
+
+        // Shown in the corner while a turn is being shown
+        _skipHint = new UIText(Terramon.Instance.GetLocalization("Battle.SkipTurnHint"), 0.8f)
+        {
+            HAlign = 1f,
+            VAlign = 1f,
+            TextColor = new Color(170, 170, 190)
+        };
 
         for (ButtonType i = ButtonType.Fight; i <= ButtonType.Run; i++)
         {
@@ -322,6 +333,7 @@ public sealed class TestBattleUI : SmartUIState
         PlayerPanel.Top.Pixels = 256f;
         FoePanel.Top.Pixels = 128f;
         FoePanel.HAlign = 1f;
+        FoePanel.IsFoe = true;
         PlayerPanel.DrawEXPBar = true;
         PlayerPanel.DrawBallSlots = true;
         // Trainers (and other players) show their team's Poké Balls too; wild Pokémon have none
@@ -351,6 +363,13 @@ public sealed class TestBattleUI : SmartUIState
     {
         PlayerPanel.ResetAnimation();
         FoePanel.ResetAnimation();
+
+        // Options shown again; hidden again on the next update if a turn is still being shown
+        _showingTurn = false;
+        _skipHint.Remove();
+        if (_optionButtons.Parent == null)
+            _optionsPanel.Append(_optionButtons);
+        _promptText.Width.Percent = 0.47f;
 
         UpdatePrompt();
         _bagPending = false;
@@ -846,6 +865,9 @@ public sealed class TestBattleUI : SmartUIState
 
     private static void RunButton(UIMouseEvent evt, UIElement listeningElement)
     {
+        // Not while the last turn is still being shown
+        if (BattlePlayback.LocalBusy)
+            return;
         SoundEngine.PlaySound(in TerramonSoundID.BattleRun);
 
         var forfeit = new ForfeitOrder
@@ -855,16 +877,71 @@ public sealed class TestBattleUI : SmartUIState
         forfeit.Send();
     }
 
+    // Whether the options are hidden because a turn is being shown
+    private static bool _showingTurn;
+
     public override void SafeUpdate(GameTime gameTime)
     {
         FitLabels();
+        UpdateTurnPlayback();
 
-        // When the active Pokémon faints, go straight to picking another one
-        if (_opened && _pokemonPanel.Parent == null &&
+        // When the active Pokémon faints, go straight to picking another one (once its faint has been shown)
+        if (_opened && !_showingTurn && _pokemonPanel.Parent == null &&
             BattleClient.LocalClient.CurrentRequest == ShowdownRequest.ForcedSwitch)
         {
             Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.ChooseNext"), Color.Orange);
             ChangePanel(_pokemonPanel);
+        }
+    }
+
+    /// <summary>
+    ///     While a turn is being shown (see <see cref="BattlePlayback" />), the options are hidden and the latest battle
+    ///     message is shown in their place, like in the main games. Clicking the panel shows the rest of the turn at once.
+    /// </summary>
+    private static void UpdateTurnPlayback()
+    {
+        var busy = _opened && BattlePlayback.LocalBusy;
+        if (busy != _showingTurn)
+        {
+            _showingTurn = busy;
+            if (busy)
+            {
+                // Back to the main options (e.g. from looking at the team while waiting for the foe)
+                if (_optionsPanel.Parent == null && BattleClient.LocalClient.CurrentRequest != ShowdownRequest.ForcedSwitch)
+                    ChangePanel(_optionsPanel);
+                _optionButtons.Remove();
+                if (_skipHint.Parent == null)
+                    _optionsPanel.Append(_skipHint);
+                _promptText.Width.Percent = 1f;
+                _promptText.SetText(string.Empty);
+            }
+            else
+            {
+                _skipHint.Remove();
+                if (_optionButtons.Parent == null)
+                    _optionsPanel.Append(_optionButtons);
+                _promptText.Width.Percent = 0.47f;
+                UpdatePrompt();
+            }
+
+            _optionsPanel.Recalculate();
+        }
+
+        if (!busy)
+            return;
+
+        var line = BattlePlayback.LocalLine ?? string.Empty;
+        if (_promptText.Text != line)
+        {
+            _promptText.SetText(line);
+            _promptText.Recalculate();
+        }
+
+        // A click on the panel skips to the end of the turn
+        if (Main.mouseLeft && Main.mouseLeftRelease && _mainPanel?.ContainsPoint(Main.MouseScreen) == true)
+        {
+            Main.mouseLeftRelease = false;
+            BattlePlayback.SkipLocal();
         }
     }
 
