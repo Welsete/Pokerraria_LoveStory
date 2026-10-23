@@ -472,10 +472,9 @@ public sealed class PartySidebarSlot : UICompositeImage
         }
         else if ((isSimulated || IsMouseHovering) && Data != null)
         {
-            var s = _isActiveSlot
-                ? TerramonSoundID.PkballConsume
-                : TerramonSoundID.PkmnRecall;
-            SoundEngine.PlaySound(in s);
+            // Sending it out, the release sound plays when its ball pops open (for everyone nearby, see PokemonPet)
+            if (_isActiveSlot)
+                SoundEngine.PlaySound(in TerramonSoundID.PkballConsume);
 
             CancellationTokenSource token = null;
             if (!_isActiveSlot)

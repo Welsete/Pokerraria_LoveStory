@@ -57,6 +57,23 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
     /// <summary>Whether this pet flies around (<see cref="ProjectileFlyingPet" />) instead of walking.</summary>
     public bool Flying;
 
+    // Coming out of the ball, like in the games: the ball flies from the trainer to the spot and pops open, then the
+    // Pokémon grows out of a white flash. Counted on every client from when the pet appears there, so other players
+    // see it too (pets are synced on their own).
+    private const int BallFlight = 14;
+    private const int GrowTime = 20;
+    private int _sendOutTime;
+    private bool _skipSendOut;
+    private Vector2 _ballStart;
+
+    // The last frame drawn, for the recall effect once the pet is gone (see PokeBallVisuals)
+    private Texture2D _lastTexture;
+    private Rectangle _lastSource;
+    private Vector2 _lastOrigin;
+    private float _lastScale;
+    private SpriteEffects _lastEffects;
+    private Vector2 _lastFeet;
+
     static PokemonPet()
     {
         // Don't run this on the server
@@ -160,18 +177,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         CustomSpriteDirection = direction;
         Projectile.position.X += direction * (MathF.Abs(Main.player[Projectile.owner].velocity.X) < 1.5f ? 40 : -30);
 
-        var dust = ModContent.DustType<SummonCloud>();
-        var mainPosition = new Vector2(Projectile.position.X - Projectile.width / 2f,
-            Projectile.position.Y - Projectile.height / 2f);
-        Dust.NewDust(new Vector2(mainPosition.X, mainPosition.Y + 4), Projectile.width, Projectile.height, dust);
-        Dust.NewDust(new Vector2(mainPosition.X, mainPosition.Y - 4), Projectile.width, Projectile.height, dust);
-        Dust.NewDust(new Vector2(mainPosition.X + 4, mainPosition.Y), Projectile.width, Projectile.height, dust);
-        Dust.NewDust(new Vector2(mainPosition.X - 4, mainPosition.Y), Projectile.width, Projectile.height, dust);
-        Dust.NewDust(new Vector2(mainPosition.X + 2, mainPosition.Y + 2), Projectile.width, Projectile.height, dust);
-        Dust.NewDust(new Vector2(mainPosition.X + 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
-        Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y + 2), Projectile.width, Projectile.height, dust);
-        Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
-
+        // The dust cloud comes when its ball pops open (see UpdateSendOut)
         ConfrontFoe(modPlayer.BattleClient);
 
         Data = modPlayer.GetActivePokemon();
@@ -194,6 +200,12 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         if (Projectile.isAPreviewDummy)
             // Call FindFrame delegate to determine the frame of the pet (set by behaviour components)
             FindFrame?.Invoke(this);
+
+        if (InBallFlight)
+        {
+            DrawBallFlight();
+            return false;
+        }
 
         if (_visualImmunityFrames > 0 && _visualImmunityFrames % 6 < 3)
             return false; // Skip draw to create flashing
@@ -310,11 +322,28 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             ? GrayscaleColor(lightColor)
             : lightColor;
 
+        // Growing out of the ball's flash: smaller and white at first
+        var grow = SendOutProgress;
+        var fullScale = Projectile.scale * (animSet?.Scale ?? 1f);
+        var drawScale = fullScale * (0.25f + 0.75f * (1f - (1f - grow) * (1f - grow)));
         Main.EntitySpriteDraw(texture,
             drawPos,
             sourceRect, adjustedColor,
             Projectile.rotation,
-            origin, Projectile.scale * (animSet?.Scale ?? 1f), effects);
+            origin, drawScale, effects);
+
+        if (grow < 1f)
+            DrawWhiteOverlay(texture, drawPos, sourceRect, origin, drawScale, effects, 1f - grow);
+
+        if (!Projectile.isAPreviewDummy)
+        {
+            _lastTexture = texture;
+            _lastSource = sourceRect;
+            _lastOrigin = origin;
+            _lastScale = fullScale;
+            _lastEffects = effects;
+            _lastFeet = drawPos + Main.screenPosition;
+        }
 
         var glowCache = Data?.IsShiny ?? false
             ? PokemonEntityLoader.ShinyGlowTextureCache
@@ -328,13 +357,96 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             drawPos,
             sourceRect, lightColor,
             Projectile.rotation,
-            origin, Projectile.scale, effects);
+            origin, drawScale, effects);
 
         return false;
     }
 
+    /// <summary>Whether the ball is still flying out to where this pet comes out.</summary>
+    private bool InBallFlight => !Projectile.isAPreviewDummy && !_skipSendOut && _sendOutTime < BallFlight;
+
+    /// <summary>0 when the ball pops open, 1 once the Pokémon is all the way out.</summary>
+    private float SendOutProgress => Projectile.isAPreviewDummy || _skipSendOut
+        ? 1f
+        : Math.Clamp((_sendOutTime - BallFlight) / (float)GrowTime, 0f, 1f);
+
+    /// <summary>
+    ///     The ball in the air, from the trainer to the pet's feet in an arc, spinning.
+    /// </summary>
+    private void DrawBallFlight()
+    {
+        var ball = BallAssets.GetBallIcon(Data?.Ball ?? BallID.PokeBall)?.Value;
+        if (ball == null)
+            return;
+        var t = _sendOutTime / (float)BallFlight;
+        var end = Projectile.Bottom + new Vector2(0f, Projectile.gfxOffY - 8f);
+        var position = Vector2.Lerp(_ballStart, end, t) - new Vector2(0f, MathF.Sin(t * MathHelper.Pi) * 36f);
+        var light = Lighting.GetColor((int)(position.X / 16f), (int)(position.Y / 16f));
+        Main.EntitySpriteDraw(ball, position - Main.screenPosition, null, Color.Lerp(light, Color.White, 0.5f),
+            t * MathHelper.TwoPi * 1.5f * -Main.player[Projectile.owner].direction, ball.Size() / 2f, 1.25f,
+            SpriteEffects.None);
+    }
+
+    /// <summary>
+    ///     Draws the frame again as a flat silhouette of <paramref name="color" /> (white coming out, red going back).
+    /// </summary>
+    internal static void DrawSilhouette(Texture2D texture, Vector2 position, Rectangle source, Vector2 origin,
+        float scale, SpriteEffects effects, Color color, float opacity, Matrix transform)
+    {
+        var spriteBatch = Main.spriteBatch;
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState,
+            DepthStencilState.None, Main.Rasterizer, null, transform);
+        ShaderAssets.FadeToColor.UseColor(color).UseOpacity(opacity).Apply();
+        spriteBatch.Draw(texture, position, source, Color.White, 0f, origin, scale, effects, 0f);
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
+            DepthStencilState.None, Main.Rasterizer, null, transform);
+    }
+
+    private void DrawWhiteOverlay(Texture2D texture, Vector2 drawPos, Rectangle source, Vector2 origin, float scale,
+        SpriteEffects effects, float opacity)
+    {
+        if (Projectile.isAPreviewDummy || Main.dedServ)
+            return;
+        DrawSilhouette(texture, drawPos, source, origin, scale, effects, Color.White, opacity,
+            Main.GameViewMatrix.TransformationMatrix);
+    }
+
+    /// <summary>
+    ///     Advances the send-out on this client and pops the ball open when it lands.
+    /// </summary>
+    private void UpdateSendOut(Player owner)
+    {
+        if (Projectile.isAPreviewDummy || _sendOutTime >= BallFlight + GrowTime)
+            return;
+
+        if (_sendOutTime == 0)
+        {
+            _ballStart = owner.MountedCenter + new Vector2(owner.direction * 8f, -6f);
+            // An evolution swaps the pet for its new form: it doesn't go back into its ball for that
+            _skipSendOut = PokeBallVisuals.IsEvolving(Projectile.owner);
+        }
+
+        _sendOutTime++;
+        if (_sendOutTime == BallFlight && !_skipSendOut && !Main.dedServ)
+            PokeBallVisuals.PopOpen(Projectile.Bottom + new Vector2(0f, -8f), Data?.Ball ?? BallID.PokeBall);
+    }
+
+    public override void OnKill(int timeLeft)
+    {
+        // Going back into its ball (not for the preview in the character menu, or an evolution swapping forms)
+        if (Main.dedServ || Projectile.isAPreviewDummy || _lastTexture == null ||
+            PokeBallVisuals.IsEvolving(Projectile.owner))
+            return;
+        PokeBallVisuals.AddRecall(Projectile.owner, _lastTexture, _lastSource, _lastOrigin, _lastScale, _lastEffects,
+            _lastFeet, Projectile.owner != Main.myPlayer);
+    }
+
     public override void PostDraw(Color lightColor)
     {
+        if (InBallFlight)
+            return;
         if (!Projectile.isAPreviewDummy && Data is { Status: NonVolatileStatus.Slp })
             StatusVisuals.DrawSleepZ(Main.spriteBatch, Projectile.Top, Main.screenPosition, Projectile.whoAmI);
 
@@ -476,6 +588,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         var owningPlayer = Main.player[Projectile.owner];
         var modPlayer = owningPlayer.Terramon();
         var activePokemon = modPlayer.GetActivePokemon();
+        UpdateSendOut(owningPlayer);
 
         if (Data != null && !Projectile.isAPreviewDummy)
             StatusVisuals.SpawnDust(Data.Status, Projectile.Hitbox);
