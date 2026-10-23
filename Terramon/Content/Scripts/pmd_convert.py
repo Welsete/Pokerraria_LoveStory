@@ -29,6 +29,8 @@ What it does:
   floats above the ground; "Float" is how far their lowest pixel stays above it. Standing Pokémon stand on their feet.
 - The first Idle frame is held for at least 300 ticks: PMD idles bounce every second, which looks restless here.
 - Hop frames are lined up on their feet, since the entity itself already moves up and down while jumping.
+- Every other state gets its own feet line when its drawing reaches lower (or, walking/resting, higher) than Idle's,
+  so walking and sleeping Pokémon don't sink into the ground (see FEET_BOTH).
 - Shiny: from the official shiny sprites when there are any, or else from the mod's old normal/shiny sprites (each PMD
   color takes the hue/saturation change of the closest old color). When it is a plain palette swap (every color always
   becomes the same shiny color), Anim.txt only gets a "Shiny" line with the color pairs (normal>shiny) and the game
@@ -56,6 +58,13 @@ STATES = [
     ('Eat', ['Eat']), ('Pose', ['Pose']),
 ]
 FEET_ALIGNED = {'Hop'}
+# Each animation keeps PMD's anchor (the middle of the shadow), but the drawings don't all reach down to the same line:
+# a walk or a lying pose often goes 1-9 pixels lower than the idle one, which here sinks it into the ground. Every state
+# gets its own feet line (5th number of its Anim.txt line) so its lowest pixel lands where Idle's does. Walking and
+# resting poses are lined up both ways; the others (attacks, hurt...) are only lifted, so jumps and flaps stay. Floating
+# Pokémon are only lifted too, since their wings and trails go up and down.
+FEET_BOTH = {'Walk', 'Sleep', 'Laying', 'Faint'}
+FEET_KEEP = {'Idle', 'Hop'}
 SCALE = 2
 IDLE_HOLD = 300
 # Lowest pixel usually this many pixels (or more) above the middle of the shadow: floating
@@ -121,6 +130,25 @@ def union_bbox(imgs):
     if not boxes:
         return None
     return (min(b[0] for b in boxes), min(b[1] for b in boxes), max(b[2] for b in boxes), max(b[3] for b in boxes))
+
+
+def lowest_line(strip, fw, fh):
+    """How far below the middle of a frame the lowest visible pixel of any frame of a strip goes (its bottom edge)."""
+    a = np.array(strip)[:, :, 3]
+    ys = [np.nonzero(a[:fh, i * fw:(i + 1) * fw].any(axis=1))[0] for i in range(strip.width // fw)]
+    ys = [y for y in ys if len(y)]
+    return max(int(y.max()) + 1 for y in ys) - fh // 2 if ys else None
+
+
+def feet_line(st, strip, fw, fh, ground, idle_line, floating):
+    """The feet line to write for a state, or None when it is the same as the set's Ground (see FEET_BOTH)."""
+    if st in FEET_KEEP or idle_line is None:
+        return None
+    line = lowest_line(strip, fw, fh)
+    d = 0 if line is None else line - idle_line
+    if d < 0 and (floating or st not in FEET_BOTH):
+        d = 0
+    return ground + d if d else None
 
 
 def shadow_y(folder, name, row=LEFT_ROW):
@@ -296,6 +324,7 @@ def convert(src, out, shiny_src=None, old=None, states=None, row=LEFT_ROW):
         return fixed
 
     lines, strips, raw, missing = [], {}, {}, []
+    idle_line = lowest_line(idle, ifw, ifh)
     for st, cands in STATES:
         if states and st not in states:
             continue
@@ -312,7 +341,8 @@ def convert(src, out, shiny_src=None, old=None, states=None, row=LEFT_ROW):
             d = [max(d[0], IDLE_HOLD)] + d[1:]
         strips[st] = (strip, fw, fh)
         strip.save(os.path.join(out, st + '.png'), optimize=True)
-        lines.append('%s %d %d %s' % (st, fw, fh, ','.join(map(str, d))))
+        feet = feet_line(st, strip, fw, fh, ground, idle_line, float_px > 0)
+        lines.append('%s %d %d %s' % (st, fw, fh, ','.join(map(str, d))) + (' %d' % feet if feet is not None else ''))
 
     # Shiny: the official shiny strips that match the normal ones pixel for pixel
     cmap, shiny_from, consistency, shiny_strips = {}, None, None, {}

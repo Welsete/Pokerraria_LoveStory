@@ -42,8 +42,9 @@ public sealed class PokemonAnimations : ModSystem
     private static readonly Dictionary<object, (PokemonAnimState State, uint Start)> OneShots = [];
     private static readonly Dictionary<object, uint> IdleSince = [];
     private static readonly HashSet<object> Asleep = [];
+    private static readonly HashSet<object> Resting = [];
 
-    // How long a Pokémon stands around before it sits, then lies down
+    // How long a Pokémon stands around before it sits, then lies down (or falls asleep)
     private const uint SitAfter = 60 * 10;
     private const uint LayAfter = 60 * 30;
 
@@ -74,6 +75,13 @@ public sealed class PokemonAnimations : ModSystem
         public int FrameHeight;
         public int[] Durations;
         public int Total;
+
+        /// <summary>
+        ///     How far below the middle of a frame the feet are in this animation, when it differs from
+        ///     <see cref="AnimSet.Ground" /> (a walk or a lying pose drawn a little lower than the idle one). Null uses the
+        ///     set's.
+        /// </summary>
+        public int? Ground;
     }
 
     public sealed class AnimSet
@@ -124,7 +132,8 @@ public sealed class PokemonAnimations : ModSystem
                     set.Float = int.Parse(parts[1]);
                 if (parts.Length > 1 && parts[0] == "Shiny")
                     set.ShinyColors = ParseColors(parts.Skip(1));
-                if (parts.Length != 4 || !Enum.TryParse(parts[0], out PokemonAnimState state))
+                // "State frameW frameH durations [feet]": the optional last number is that animation's own feet line
+                if (parts.Length is not (4 or 5) || !Enum.TryParse(parts[0], out PokemonAnimState state))
                     continue;
                 var durations = parts[3].Split(',').Select(int.Parse).ToArray();
                 set.Anims[state] = new Anim
@@ -136,7 +145,8 @@ public sealed class PokemonAnimations : ModSystem
                     FrameWidth = int.Parse(parts[1]),
                     FrameHeight = int.Parse(parts[2]),
                     Durations = durations,
-                    Total = durations.Sum()
+                    Total = durations.Sum(),
+                    Ground = parts.Length == 5 ? int.Parse(parts[4]) : null
                 };
             }
 
@@ -264,7 +274,8 @@ public sealed class PokemonAnimations : ModSystem
     {
         PokemonAnimState.Strike or PokemonAnimState.QuickStrike or PokemonAnimState.Swing
             or PokemonAnimState.Double => PokemonAnimState.Attack,
-        PokemonAnimState.Laying => PokemonAnimState.Sit,
+        // Most sets have no lying pose: they curl up asleep instead
+        PokemonAnimState.Laying => PokemonAnimState.Sleep,
         PokemonAnimState.Hop => PokemonAnimState.Walk,
         // Lying there with its eyes closed looks the most like fainting
         PokemonAnimState.Faint => PokemonAnimState.Sleep,
@@ -306,29 +317,45 @@ public sealed class PokemonAnimations : ModSystem
         else if (Asleep.Remove(owner) && !fainted)
             Play(owner, PokemonAnimState.Wake);
 
-        // Standing around for a while outside battle: sits down, then lies down
-        if (state != PokemonAnimState.Idle || inBattle || asleep || fainted || hovering || OneShots.ContainsKey(owner))
+        // Standing around for a while outside battle: sits down, then lies down. Sets without a lying pose (most of
+        // them) fall asleep instead, which loops (breathing) rather than holding its last frame.
+        var resting = false;
+        if (state != PokemonAnimState.Idle || inBattle || asleep || fainted || OneShots.ContainsKey(owner))
             IdleSince[owner] = now;
         else if (!IdleSince.ContainsKey(owner))
             IdleSince[owner] = now;
         else if (now - IdleSince[owner] >= SitAfter)
         {
-            // Plays through once and stays on the last frame. Pokémon without a sitting pose (the Mystery Dungeon
-            // one is seen from behind, so most sets leave it out) keep idling until they lie down.
+            // Pokémon without a sitting pose (the Mystery Dungeon one is seen from behind, so most sets leave it
+            // out) keep idling until they lie down. Pokémon that fly around don't sit, but do doze off in the air.
             var lying = now - IdleSince[owner] >= LayAfter;
-            if (lying && (set.Anims.ContainsKey(PokemonAnimState.Laying) || set.Anims.ContainsKey(PokemonAnimState.Sit)))
+            if (lying && set.Anims.ContainsKey(PokemonAnimState.Laying))
             {
                 state = PokemonAnimState.Laying;
                 elapsed = now - IdleSince[owner] - LayAfter;
                 once = true;
+                resting = true;
             }
-            else if (!lying && set.Anims.ContainsKey(PokemonAnimState.Sit))
+            else if (lying && set.Anims.ContainsKey(PokemonAnimState.Sleep))
+            {
+                state = PokemonAnimState.Sleep;
+                elapsed = now - IdleSince[owner] - LayAfter;
+                resting = true;
+            }
+            else if (!lying && !hovering && set.Anims.ContainsKey(PokemonAnimState.Sit))
             {
                 state = PokemonAnimState.Sit;
                 elapsed = now - IdleSince[owner] - SitAfter;
                 once = true;
             }
         }
+
+        // Getting up: woken by a battle or something it does (moving off just walks away)
+        if (resting)
+            Resting.Add(owner);
+        else if (Resting.Remove(owner) && state == PokemonAnimState.Idle && !asleep && !fainted &&
+                 !OneShots.ContainsKey(owner))
+            Play(owner, PokemonAnimState.Wake);
 
         OneShots.TryGetValue(owner, out var shot);
         if (fainted)
@@ -375,7 +402,8 @@ public sealed class PokemonAnimations : ModSystem
 
         texture = TextureOf(set, anim, shiny);
         source = new Rectangle(frame * anim.FrameWidth, 0, anim.FrameWidth, anim.FrameHeight);
-        origin = new Vector2(anim.FrameWidth / 2f, anim.FrameHeight / 2f + set.Ground - (hovering ? set.Float : 0));
+        origin = new Vector2(anim.FrameWidth / 2f,
+            anim.FrameHeight / 2f + (anim.Ground ?? set.Ground) - (hovering ? set.Float : 0));
     }
 
     /// <summary>
@@ -422,7 +450,7 @@ public sealed class PokemonAnimations : ModSystem
 
         var texture = TextureOf(set, anim, shiny);
         spriteBatch.Draw(texture, feet, new Rectangle(index * anim.FrameWidth, 0, anim.FrameWidth, anim.FrameHeight),
-            color ?? Color.White, 0f, new Vector2(anim.FrameWidth / 2f, anim.FrameHeight / 2f + set.Ground),
+            color ?? Color.White, 0f, new Vector2(anim.FrameWidth / 2f, anim.FrameHeight / 2f + (anim.Ground ?? set.Ground)),
             scale * set.Scale, effects, 0f);
     }
 
@@ -455,6 +483,7 @@ public sealed class PokemonAnimations : ModSystem
         OneShots.Clear();
         IdleSince.Clear();
         Asleep.Clear();
+        Resting.Clear();
     }
 
     public override void Unload()
