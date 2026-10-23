@@ -1,5 +1,6 @@
 Ground 4
 Scale 2
+Size 1.14
 Float 3
 Idle 32 56 300,8,8,8
 Walk 32 56 8,8,8,8,8,8,8,8,8,8,8,8 6

@@ -295,7 +295,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
                 Data != null && BattlePlayback.ShownStatus(Data) == NonVolatileStatus.Slp,
                 Data != null && BattlePlayback.ShownHP(Data) == 0, out texture, out sourceRect,
                 out origin, Flying);
-            frameSize = sourceRect.Size() * animSet.Scale;
+            frameSize = sourceRect.Size() * animSet.WorldScale;
             drawPos.Y -= 3f;
         }
         var effects = CustomSpriteDirection.HasValue
@@ -307,7 +307,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         // Draw name on mouse hover
         if (!Projectile.isAPreviewDummy && ClientConfig.Instance.ShowPetNameOnHover)
         {
-            var originOffsetDrawPos = drawPos - origin * (animSet?.Scale ?? 1f);
+            var originOffsetDrawPos = drawPos - origin * (animSet?.WorldScale ?? 1f);
             var drawRect = new Rectangle((int)originOffsetDrawPos.X, (int)originOffsetDrawPos.Y, (int)frameSize.X,
                 (int)frameSize.Y);
             if (drawRect.Contains(Main.mouseX, Main.mouseY))
@@ -329,7 +329,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 
         // Growing out of the ball's flash: smaller and white at first
         var grow = SendOutProgress;
-        var fullScale = Projectile.scale * (animSet?.Scale ?? 1f);
+        var fullScale = Projectile.scale * (animSet?.WorldScale ?? 1f);
         var drawScale = fullScale * (0.25f + 0.75f * (1f - (1f - grow) * (1f - grow)));
         Main.EntitySpriteDraw(texture,
             drawPos,

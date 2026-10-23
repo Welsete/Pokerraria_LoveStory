@@ -302,7 +302,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             drawPos = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY + 1f);
         }
 
-        var animScale = animSet?.Scale ?? 1f;
+        var animScale = animSet?.WorldScale ?? 1f;
 
         if (Data != null && BattlePlayback.ShownHP(Data) == 0 && !PlasmaState)
         {

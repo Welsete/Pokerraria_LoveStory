@@ -1,5 +1,6 @@
 Ground 11
 Scale 2
+Size 0.82
 Idle 32 32 300,16
 Walk 56 48 8,8,8 10
 Attack 80 72 2,6,2,2,2,2,2,2,2 12

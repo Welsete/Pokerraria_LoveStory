@@ -1,5 +1,6 @@
 Ground 4
 Scale 2
+Size 0.71
 Float 1
 Shiny E73F67>507AB2 FF8FAF>85BAE2 FFC7D7>A8E6FF
 Idle 32 56 300,8,12,8

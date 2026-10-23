@@ -446,7 +446,7 @@ public sealed class EvolutionAnimation : ModProjectile
             white = 1f - Math.Clamp((_time - RevealStart) / 30f, 0f, 1f);
 
         // A squash on every switch, so the change of shape reads clearly
-        var scale = _scale;
+        var scale = _scale * PokemonAnimations.SizeOf(id);
         if (_time is >= SwapStart and < RevealStart)
             scale *= 1f + 0.08f * MathF.Abs(MathF.Sin(_time * (0.15f + p * 0.6f)));
 

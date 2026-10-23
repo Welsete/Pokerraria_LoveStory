@@ -95,6 +95,15 @@ public sealed class PokemonAnimations : ModSystem
         public float Scale = 1f;
 
         /// <summary>
+        ///     How much bigger or smaller it is in the world than its sprite, so Pokémon keep the sizes they have in the
+        ///     main games next to each other (a Venusaur is much bigger than a Bulbasaur). Menus don't use it.
+        /// </summary>
+        public float Size = 1f;
+
+        /// <summary>The scale to draw it at in the world.</summary>
+        public float WorldScale => Scale * Size;
+
+        /// <summary>
         ///     For floating Pokémon: how far above <see cref="Ground" /> its lowest pixel stays. Pokémon that fly around
         ///     (and have no ground under them) are drawn from there instead.
         /// </summary>
@@ -128,6 +137,8 @@ public sealed class PokemonAnimations : ModSystem
                     set.Ground = int.Parse(parts[1]);
                 if (parts.Length == 2 && parts[0] == "Scale")
                     set.Scale = float.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture);
+                if (parts.Length == 2 && parts[0] == "Size")
+                    set.Size = float.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture);
                 if (parts.Length == 2 && parts[0] == "Float")
                     set.Float = int.Parse(parts[1]);
                 if (parts.Length > 1 && parts[0] == "Shiny")
@@ -411,6 +422,12 @@ public sealed class PokemonAnimations : ModSystem
     ///     pixels). Pokémon without an animation set draw the first frame of their normal sprite sheet instead.
     ///     <paramref name="state" /> loops; pass a different one to show attacks, sleeping, etc.
     /// </summary>
+    /// <summary>
+    ///     How much bigger or smaller a Pokémon is in the world than its sprite (see <see cref="AnimSet.Size" />).
+    /// </summary>
+    public static float SizeOf(ushort id)
+        => Get(Terramon.DatabaseV2.GetPokemon(id)?.Identifier)?.Size ?? 1f;
+
     public static void DrawInUI(SpriteBatch spriteBatch, ushort id, bool shiny, Vector2 feet, float scale,
         PokemonAnimState state = PokemonAnimState.Idle, bool facingRight = false, Color? color = null)
     {

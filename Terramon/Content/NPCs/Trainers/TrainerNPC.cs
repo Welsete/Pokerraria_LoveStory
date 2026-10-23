@@ -481,8 +481,8 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
             PokemonAnimations.GetFrame(set, this, data.IsShiny, false, false, true,
                 status == NonVolatileStatus.Slp, fainted, out var texture, out var source, out var origin,
                 hovering);
-            spriteBatch.Draw(texture, position, source, color, 0f, origin, set.Scale * grow, effects, 0f);
-            height = source.Height * set.Scale * 0.6f;
+            spriteBatch.Draw(texture, position, source, color, 0f, origin, set.WorldScale * grow, effects, 0f);
+            height = source.Height * set.WorldScale * 0.6f;
         }
         else if (PokemonAnimations.TryGetSheetFrame(data.ID, data.IsShiny, out var sheet, out var frame))
         {
