@@ -1117,15 +1117,19 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                     m.Sender.State = m.Recipient.State = ClientBattleState.PollingSlot;
                     m.Sender.Foe = m.Recipient;
 
-                    // Create battle field early to avoid nullrefs
-                    var bf = new BattleField
+                    // Create battle field early to avoid nullrefs. In singleplayer the battle already made the
+                    // field both sides use, and a second one would show every turn twice
+                    if (Main.netMode != NetmodeID.SinglePlayer)
                     {
-                        A = new(m.Recipient),
-                        B = new(m.Sender),
-                    };
-                    bf.LinkSides();
+                        var bf = new BattleField
+                        {
+                            A = new(m.Recipient),
+                            B = new(m.Sender),
+                        };
+                        bf.LinkSides();
 
-                    m.Recipient.Field = m.Sender.Field = bf;
+                        m.Recipient.Field = m.Sender.Field = bf;
+                    }
                 }
                 else
                 {

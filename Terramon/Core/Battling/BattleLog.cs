@@ -174,6 +174,19 @@ public static class BattleLog
             case CritElement:
                 Send("Crit", Notable);
                 break;
+            case HitCountElement hits:
+                Send("HitCount", LogColor, $"{hits.Num}");
+                break;
+            // Survived a blow at 1 HP
+            case AbilityElement { Ability: "Sturdy" } sturdy:
+                Send("Endured", Notable, Mon(source, sturdy.Pokemon));
+                break;
+            case ActivateElement activate when activate.Effect?.ToString() is "move: Endure" or "Endure":
+                Send("Endured", Notable, Mon(source, activate.Pokemon));
+                break;
+            case EndItemElement { Item: "Focus Sash" } sash:
+                Send("EnduredSash", Notable, Mon(source, sash.Pokemon));
+                break;
             case MissElement miss:
                 Send("Missed", Muted, Mon(source, miss.Source));
                 break;

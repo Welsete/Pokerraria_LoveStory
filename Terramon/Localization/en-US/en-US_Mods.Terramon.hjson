@@ -43,6 +43,9 @@ Battle: {
 		Resisted: It's not very effective...
 		Immune: "It doesn't affect {0}..."
 		Crit: A critical hit!
+		HitCount: "Hit {0} time(s)!"
+		Endured: "{0} endured the hit!"
+		EnduredSash: "{0} hung on using its Focus Sash!"
 		Missed: "{0}'s attack missed!"
 		Failed: But it failed!
 		StatRose: "{0}'s {1} rose!"

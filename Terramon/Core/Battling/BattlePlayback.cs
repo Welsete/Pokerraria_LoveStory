@@ -17,14 +17,14 @@ namespace Terramon.Core.Battling;
 public sealed class BattlePlayback : ModSystem
 {
     // How long each kind of moment lasts (ticks, 60 per second)
-    private const int PhysicalHitDelay = 16;
-    private const int SpecialHitDelay = 22;
-    private const int StatusHitDelay = 20;
-    private const int StillHitDelay = 8;
-    private const int LineHold = 26;
-    private const int FaintHold = 40;
-    private const int SwitchHold = 10;
-    private const int MoveGap = 54;
+    private const int PhysicalHitDelay = 20;
+    private const int SpecialHitDelay = 26;
+    private const int StatusHitDelay = 24;
+    private const int StillHitDelay = 10;
+    private const int LineHold = 34;
+    private const int FaintHold = 50;
+    private const int SwitchHold = 14;
+    private const int MoveGap = 72;
     private const int EndPause = 30;
 
     // A timeline that never empties (it shouldn't happen) is played out at once after this long, so nobody gets stuck
@@ -167,7 +167,27 @@ public sealed class BattlePlayback : ModSystem
         if (!Enabled || field == null)
             return;
         lock (Sync)
-            Touch(field).Steps.AddLast(step);
+            Append(Touch(field), step);
+    }
+
+    // A Pokémon faints in the battle as soon as its HP hits 0, before the lines and hits that come with that blow
+    // (the damage line, recoil, items...). Those go before its faint, so "X fainted!" and its EXP come last, like in
+    // the main games. Call while holding Sync
+    private static void Append(Timeline timeline, Step step)
+    {
+        if (step.Kind is Kind.Line or Kind.HP or Kind.Status)
+        {
+            LinkedListNode<Step> firstFaint = null;
+            for (var node = timeline.Steps.Last; node != null && node.Value.Kind == Kind.Faint; node = node.Previous)
+                firstFaint = node;
+            if (firstFaint != null)
+            {
+                timeline.Steps.AddBefore(firstFaint, step);
+                return;
+            }
+        }
+
+        timeline.Steps.AddLast(step);
     }
 
     #region Queueing (called while the battle is applied)
@@ -185,7 +205,7 @@ public sealed class BattlePlayback : ModSystem
             var timeline = Touch(field);
             if (mon != null)
                 timeline.HP.TryAdd(mon, mon.HP);
-            timeline.Steps.AddLast(new Step
+            Append(timeline, new Step
             {
                 Kind = Kind.HP,
                 Side = side,
