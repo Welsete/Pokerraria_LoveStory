@@ -249,6 +249,25 @@ public sealed class TestBattleUI : SmartUIState
     public override bool Visible => _opened;
     private static float PixelRatioForUI() => 1f;
 
+    private static readonly PokemonData[] FoeTeamBuffer = new PokemonData[6];
+
+    /// <summary>
+    ///     The team of the trainer or player the local player is battling, for the Poké Ball slots under the foe's
+    ///     panel. Null against a wild Pokémon or outside battle.
+    /// </summary>
+    private static IReadOnlyList<PokemonData> FoeTeam()
+    {
+        var client = BattleClient.LocalClient;
+        if (client.Foe is null or PokemonNPC || client.Battle == null || client.SideIndex == 0)
+            return null;
+        var foeSide = client.Battle[client.SideIndex == 1 ? 2 : 1];
+        if (foeSide == null)
+            return null;
+        for (var i = 0; i < FoeTeamBuffer.Length; i++)
+            FoeTeamBuffer[i] = foeSide.Team[i].Data;
+        return FoeTeamBuffer;
+    }
+
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
         if (_opened)
@@ -305,6 +324,9 @@ public sealed class TestBattleUI : SmartUIState
         FoePanel.HAlign = 1f;
         PlayerPanel.DrawEXPBar = true;
         PlayerPanel.DrawBallSlots = true;
+        // Trainers (and other players) show their team's Poké Balls too; wild Pokémon have none
+        FoePanel.DrawBallSlots = true;
+        FoePanel.BallParty = FoeTeam;
         Append(PlayerPanel);
         Append(FoePanel);
 

@@ -548,6 +548,8 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         justRegistered = UpdatePokedex(data.ID, PokedexEntryStatus.Registered, shiny: data.IsShiny);
         var nextIndex = NextFreePartyIndex();
         if (nextIndex == 6) return false;
+        // Caught or given Pokémon without an original trainer become this player's
+        data.ClaimIfUnowned(Player.name);
         Party[nextIndex] = data;
 
         return true;
@@ -655,6 +657,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
     public PCBox TransferPokemonToPC(PokemonData data)
     {
+        data?.ClaimIfUnowned(Player.name);
         return _pc.StorePokemon(data);
     }
 
@@ -718,6 +721,8 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         {
             var tagName = $"p{i}";
             if (tag.ContainsKey(tagName)) Party[i] = PokemonData.Load(tag.GetCompound(tagName));
+            // Pokémon caught before the original trainer was saved belong to this player
+            Party[i]?.ClaimIfUnowned(Player.name);
         }
     }
 
@@ -753,6 +758,8 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         foreach (var box in boxes)
         {
             box.Service = _pc;
+            for (var i = 0; i < PCBox.Capacity; i++)
+                box[i]?.ClaimIfUnowned(Player.name);
             _pc.Boxes.Add(box);
         }
     }
@@ -1103,6 +1110,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                         A = new(m.Recipient),
                         B = new(m.Sender),
                     };
+                    bf.LinkSides();
 
                     m.Recipient.Field = m.Sender.Field = bf;
                 }

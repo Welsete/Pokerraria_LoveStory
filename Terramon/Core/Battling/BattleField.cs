@@ -11,6 +11,17 @@ public sealed class BattleField
     public FieldCondition Condition;
     public int Turn;
 
+    /// <summary>
+    ///     Points each side at the other through <see cref="BattleSide.Opposite" />. Call once both sides are set.
+    /// </summary>
+    public void LinkSides()
+    {
+        if (A == null || B == null)
+            return;
+        A.Opposite = B;
+        B.Opposite = A;
+    }
+
     public void ModifyBoosts(BoostModifierAction action)
     {
         for (int i = 0; i < 6; i++)

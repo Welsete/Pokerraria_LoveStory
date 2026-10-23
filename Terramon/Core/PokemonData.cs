@@ -111,6 +111,19 @@ public class PokemonData
     public string OT => _ot;
 
     /// <summary>
+    ///     Makes <paramref name="trainerName" /> this Pokémon's original trainer if it has none yet (a wild Pokémon that
+    ///     was just caught, a gift, or one saved before the original trainer was stored). Does nothing otherwise.
+    /// </summary>
+    /// <returns>True if the original trainer was set.</returns>
+    public bool ClaimIfUnowned(string trainerName)
+    {
+        if (!string.IsNullOrEmpty(_ot) || string.IsNullOrEmpty(trainerName))
+            return false;
+        _ot = trainerName;
+        return true;
+    }
+
+    /// <summary>
     ///     When this Pokémon was caught or received, if known.
     /// </summary>
     public DateTime? MetDate => _metDate;
@@ -216,7 +229,7 @@ public class PokemonData
         var Lp = Level;
         var p = myOwner.HasExpCharm ? 1.5f : 1f;
         var s = shareMultiplier;
-        var t = _ot.Equals(myOwner.Player.name) ? 1f : 1.5f;
+        var t = string.IsNullOrEmpty(_ot) || _ot == myOwner.Player.name ? 1f : 1.5f;
         var v = (Schema.Evolution is not null && Level >= Schema.Evolution.AtLevel) ? smallBonus : 1f;
         var pow = (2f * L + 10) / (L + Lp + 10);
         var powFinal = pow * pow * Math.Sqrt(pow);

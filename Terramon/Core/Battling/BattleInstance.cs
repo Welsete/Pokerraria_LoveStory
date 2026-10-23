@@ -35,6 +35,7 @@ public sealed class BattleInstance
             A = new BattleSide(pa),
             B = new BattleSide(pb),
         };
+        bf.LinkSides();
 
         a.Battle = b.Battle = bf;
         a.Foe = pb;

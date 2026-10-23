@@ -396,6 +396,16 @@ GUI: {
 			Frz: Frozen
 			Fnt: Fainted
 		}
+		// Short tags shown under the HP bar in battle, like in the main games
+		StatusShort: {
+			Brn: BRN
+			Par: PAR
+			Psn: PSN
+			Tox: TOX
+			Slp: SLP
+			Frz: FRZ
+			Fnt: FNT
+		}
 		ShortStats: {
 			Atk: Atk
 			Def: Def
