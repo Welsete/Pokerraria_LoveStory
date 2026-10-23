@@ -354,7 +354,7 @@ public sealed class PokemonAnimations : ModSystem
         if (resting)
             Resting.Add(owner);
         else if (Resting.Remove(owner) && state == PokemonAnimState.Idle && !asleep && !fainted &&
-                 !OneShots.ContainsKey(owner))
+                 !OneShots.ContainsKey(owner) && set.Anims.ContainsKey(PokemonAnimState.Wake))
             Play(owner, PokemonAnimState.Wake);
 
         OneShots.TryGetValue(owner, out var shot);
