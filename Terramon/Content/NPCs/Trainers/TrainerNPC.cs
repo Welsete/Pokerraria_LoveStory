@@ -1,7 +1,10 @@
+using Terramon.Content.Dusts;
 using Terramon.Content.GUI.TurnBased;
 using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
+using Terramon.Core.Loaders;
+using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.Localization;
 
@@ -121,6 +124,21 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
     public override string Texture => CustomTexture ?? $"Terraria/Images/NPC_{LookAlike}";
 
     /// <summary>
+    ///     How far (in pixels) in front of the trainer its Pokémon stands during a battle.
+    /// </summary>
+    private const float PokemonDistance = 44f;
+
+    /// <summary>
+    ///     How long (in ticks) a Pokémon takes to come out of its Poké Ball.
+    /// </summary>
+    private const int SendOutTicks = 18;
+
+    // The battle Pokémon drawn next to the trainer (visual only, on every client): which one is out and since when
+    private int _shownSlot = -1;
+    private ushort _shownSpecies;
+    private uint _sendOutStart;
+
+    /// <summary>
     ///     Whether the player is allowed to challenge this trainer, e.g. only after a certain boss is defeated.
     /// </summary>
     public virtual bool CanChallenge(Player player) => true;
@@ -159,6 +177,8 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
     public override void AI()
     {
         var inBattle = BattleClient?.Foe != null;
+        if (!Main.dedServ)
+            UpdateBattlePokemon();
         var talkedTo = IsBeingTalkedTo();
         var server = Main.netMode != NetmodeID.MultiplayerClient;
 
@@ -312,6 +332,159 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
             new Vector2(texture.Width / 2f, frameHeight), CustomTextureScale, effects, 0f);
         return false;
     }
+
+    #region Battle Pokémon (visual only)
+
+    /// <summary>
+    ///     The Pokémon this trainer has out in the current battle, or null outside battle. It is only drawn next to the
+    ///     trainer (there is no entity), so it can't be hit, caught or pushed around, and every client shows it the
+    ///     same way from the battle it already mirrors.
+    /// </summary>
+    private PokemonData ActiveBattlePokemon(out int slot)
+    {
+        slot = -1;
+        if (Main.dedServ || BattleClient?.Foe == null)
+            return null;
+
+        if (BattleClient.Battle?.A != null && BattleClient.Battle.B != null && BattleClient.Side is { } side)
+        {
+            ref var active = ref side.ActivePokemon;
+            if (active.Data != null)
+            {
+                slot = active.Slot;
+                return active.Data;
+            }
+        }
+
+        // Not mirroring this battle (e.g. someone else's): show the lead
+        var team = _team;
+        if (team.Length == 0 || team[0] == null)
+            return null;
+        slot = 0;
+        return team[0];
+    }
+
+    /// <summary>
+    ///     Where the feet of this trainer's battle Pokémon are (world coordinates), on the ground in front of it.
+    /// </summary>
+    private Vector2 BattlePokemonFeet
+    {
+        get
+        {
+            var x = NPC.Center.X + NPC.direction * PokemonDistance;
+            var feetY = NPC.Bottom.Y;
+            var tileX = (int)(x / 16f);
+            var feetTile = (int)((feetY - 1f) / 16f) + 1;
+            for (var y = feetTile - 2; y <= feetTile + 3; y++)
+            {
+                if (!WorldGen.InWorld(tileX, y, 1) || !IsGround(tileX, y) || IsGround(tileX, y - 1))
+                    continue;
+                return new Vector2(x, y * 16f);
+            }
+
+            return new Vector2(x, feetY);
+        }
+    }
+
+    private static bool IsGround(int x, int y)
+    {
+        var tile = Main.tile[x, y];
+        return tile.HasTile && !tile.IsActuated && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType]);
+    }
+
+    /// <summary>
+    ///     The middle of this trainer's battle Pokémon (world coordinates), or null when it has none out. Used to aim
+    ///     moves at it and to place the challenger's Pokémon in front of it.
+    /// </summary>
+    public Vector2? BattlePokemonCenter
+        => ActiveBattlePokemon(out _) == null ? null : BattlePokemonFeet - new Vector2(0f, 20f);
+
+    /// <summary>
+    ///     Notices when a new Pokémon comes out (start of the battle or a switch) to play its send-out effect.
+    /// </summary>
+    private void UpdateBattlePokemon()
+    {
+        var data = ActiveBattlePokemon(out var slot);
+        if (data == null)
+        {
+            _shownSlot = -1;
+            _shownSpecies = 0;
+            return;
+        }
+
+        if (slot == _shownSlot && data.ID == _shownSpecies)
+            return;
+
+        _shownSlot = slot;
+        _shownSpecies = data.ID;
+        _sendOutStart = Main.GameUpdateCount;
+
+        // A puff of smoke where the ball opens, and its cry
+        var feet = BattlePokemonFeet;
+        var dust = ModContent.DustType<SummonCloud>();
+        for (var i = 0; i < 8; i++)
+        {
+            var angle = MathHelper.TwoPi * i / 8f;
+            Dust.NewDust(feet - new Vector2(12f, 28f), 24, 24, dust, MathF.Cos(angle), MathF.Sin(angle) - 0.5f);
+        }
+
+        SoundEngine.PlaySound(TerramonSoundID.PkmnRecall, feet);
+        if (data.HP > 0)
+            SoundEngine.PlaySound(data.GetCry(), feet);
+    }
+
+    public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+    {
+        var data = ActiveBattlePokemon(out _);
+        var schema = data?.Schema;
+        if (schema == null)
+            return;
+
+        var feet = BattlePokemonFeet;
+        var hovering = PokemonEntityLoader.IDToNPCType?.TryGetValue(data.ID, out var npcType) == true &&
+                       ContentSamples.NpcsByNetId.TryGetValue(npcType, out var sample) && sample.noGravity;
+        if (hovering)
+            feet.Y -= 18f + MathF.Sin((float)Main.timeForVisualEffects / 20f) * 3f;
+
+        var light = Lighting.GetColor((int)(feet.X / 16f), (int)((feet.Y - 8f) / 16f));
+        var color = StatusVisuals.Tint(data.Status, light);
+        var fainted = data.HP == 0;
+        if (fainted)
+            color = color.MultiplyRGB(new Color(150, 150, 170));
+
+        // Coming out of the ball: grows from a small white shape
+        var sendOut = Math.Clamp((Main.GameUpdateCount - _sendOutStart) / (float)SendOutTicks, 0f, 1f);
+        var grow = MathHelper.Lerp(0.15f, 1f, 1f - (1f - sendOut) * (1f - sendOut));
+        color = Color.Lerp(Color.White, color, sendOut);
+
+        var effects = NPC.direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+        var position = (feet - screenPos).Floor();
+        var height = 40f;
+        var set = PokemonAnimations.Get(schema.Identifier, data);
+        if (set != null)
+        {
+            PokemonAnimations.GetFrame(set, this, data.IsShiny, false, false, true,
+                data.Status == NonVolatileStatus.Slp, fainted, out var texture, out var source, out var origin,
+                hovering);
+            spriteBatch.Draw(texture, position, source, color, 0f, origin, set.Scale * grow, effects, 0f);
+            height = source.Height * set.Scale * 0.6f;
+        }
+        else if (PokemonAnimations.TryGetSheetFrame(data.ID, data.IsShiny, out var sheet, out var frame))
+        {
+            spriteBatch.Draw(sheet, position, frame, color, 0f, new Vector2(frame.Width / 2f, frame.Height), grow,
+                effects, 0f);
+            height = frame.Height;
+        }
+
+        if (sendOut < 1f)
+            return;
+        if (fainted)
+            StatusVisuals.DrawDizzyStars(spriteBatch, feet - new Vector2(0f, height * 0.6f), screenPos, NPC.whoAmI);
+        else if (data.Status == NonVolatileStatus.Slp)
+            StatusVisuals.DrawSleepZ(spriteBatch, feet - new Vector2(0f, height), screenPos, NPC.whoAmI);
+    }
+
+    #endregion
 
     private bool IsBeingTalkedTo()
     {

@@ -116,6 +116,8 @@ public sealed class BattleUI : SmartUIState
         }
 
         var otherCenter = other.Center;
+        if (BattleClient.LocalClient.Foe is Content.NPCs.Trainers.TrainerNPC { BattlePokemonCenter: { } trainerMon })
+            otherCenter = trainerMon;
 
         var targetX = otherCenter.X + other.direction * (PokemonPet.DistanceFromFoe * 0.5f);
         var targetY = (myPet.Center.Y + otherCenter.Y) * 0.5f;
