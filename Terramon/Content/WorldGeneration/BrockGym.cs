@@ -26,7 +26,7 @@ public class BrockGymSystem : ModSystem
     public static Point LeaderSpot { get; internal set; }
 
     /// <summary>
-    ///     The top of the rope shaft at the surface, under the stone arch.
+    ///     The top of the rope shaft at the surface (the first ground row), next to the gym's sign.
     /// </summary>
     public static Point SurfaceEntrance { get; internal set; }
 
@@ -233,6 +233,7 @@ public static class BrockGymBuilder
     private const int Shell = 2;
     private const int EntranceGap = 6; // Tunnel between the left door and the rope shaft
     private const int StageHeight = 3;
+    private const int RopeAbove = 3; // How many rope tiles stick out of the ground at the entrance
 
     private const byte NoPaint = 0;
 
@@ -269,6 +270,8 @@ public static class BrockGymBuilder
 
                 Build(left, top);
                 GenVars.structures?.AddProtectedStructure(Footprint(left, top), 4);
+                GenVars.structures?.AddProtectedStructure(
+                    new Rectangle(left - EntranceGap - 4, BrockGymSystem.SurfaceEntrance.Y - 6, 12, 12), 2);
                 Terramon.Instance.Logger.Info(
                     $"Built Brock's Gym at ({left}, {top}) (offset {maxOffset}, solid {solidPercent}%).");
                 return true;
@@ -330,6 +333,23 @@ public static class BrockGymBuilder
     ///     the surface, and remembers it.
     /// </summary>
     public static void Build(int left, int top)
+    {
+        // Rebuilding over a gym that's already there (dev panel) has to be able to change its tiles
+        var bypass = ProtectedAreas.Bypass;
+        ProtectedAreas.Bypass = true;
+        try
+        {
+            BuildHall(left, top);
+        }
+        finally
+        {
+            ProtectedAreas.Bypass = bypass;
+        }
+
+        Protect(left, top, BrockGymSystem.SurfaceEntrance);
+    }
+
+    private static void BuildHall(int left, int top)
     {
         var right = left + Width - 1;
         var bottom = top + Height - 1;
@@ -396,6 +416,103 @@ public static class BrockGymBuilder
             () => Decorate(inLeft, inRight, ceilingY, floorY, centerLeft, centerRight, stageLeft, stageTop));
 
         WorldGen.RangeFrame(left - EntranceGap - 4, top - 2, right + 2, bottom + 2);
+    }
+
+    /// <summary>
+    ///     Makes the gym, its tunnel and its rope shaft unbreakable (see <see cref="ProtectedAreas" />).
+    /// </summary>
+    private static void Protect(int left, int top, Point surfaceEntrance)
+    {
+        var floorY = top + Height - 1 - Shell;
+        var shaftX = left - EntranceGap;
+        ProtectedAreas.Add(new Rectangle(left, top, Width, Height));
+        ProtectedAreas.Add(new Rectangle(shaftX - 1, floorY - 4, left - shaftX + 1, 5));
+        if (surfaceEntrance != Point.Zero && surfaceEntrance.X == shaftX && surfaceEntrance.Y < floorY)
+            ProtectedAreas.Add(new Rectangle(shaftX - 1, surfaceEntrance.Y - RopeAbove,
+                3, floorY - surfaceEntrance.Y + RopeAbove + 1));
+    }
+
+    /// <summary>
+    ///     Protects the Brock's Gym of a world made before <see cref="ProtectedAreas" /> existed, and its sign.
+    /// </summary>
+    internal static void ProtectExisting()
+    {
+        if (!BrockGymSystem.Exists)
+            return;
+        var interior = BrockGymSystem.Interior;
+        var left = interior.X - Shell;
+        Protect(left, interior.Y - Shell, BrockGymSystem.SurfaceEntrance);
+
+        // The sign used to stand a few tiles right of the shaft
+        var entrance = BrockGymSystem.SurfaceEntrance;
+        if (entrance == Point.Zero)
+            return;
+        for (var x = entrance.X + 1; x <= entrance.X + 7; x++)
+        {
+            for (var y = entrance.Y - 8; y <= entrance.Y + 6; y++)
+            {
+                if (!WorldGen.InWorld(x, y, 10) || !Main.tile[x, y].HasTile || Main.tile[x, y].TileType != TileID.Signs)
+                    continue;
+                var sign = Main.tile[x, y];
+                ProtectedAreas.Add(new Rectangle(x - sign.TileFrameX % 36 / 18, y - sign.TileFrameY % 36 / 18, 2,
+                    3));
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Set when a world from before the entrance was only a sign and a rope is loaded: its stone arch is taken
+    ///     down once (see <see cref="RemoveOldArch" />).
+    /// </summary>
+    internal static bool NeedsArchRemoved { get; set; }
+
+    /// <summary>
+    ///     Takes down the stone arch (and its torches) older versions built over the rope at the surface, if it's
+    ///     still exactly there, so the entrance is just the sign and the rope. Runs on the server or in singleplayer.
+    /// </summary>
+    internal static void RemoveOldArch()
+    {
+        var entrance = BrockGymSystem.SurfaceEntrance;
+        if (!BrockGymSystem.Exists || entrance == Point.Zero)
+            return;
+        var (x0, surface) = (entrance.X, entrance.Y);
+        if (!WorldGen.InWorld(x0, surface - 8, 20) || !WorldGen.InWorld(x0, surface, 20))
+            return;
+
+        bool Is(int x, int y, ushort type) => Main.tile[x, y].HasTile && Main.tile[x, y].TileType == type;
+        if (!Is(x0, surface - 7, TileID.GrayBrick) || !Is(x0, surface - 6, TileID.StoneSlab) ||
+            !Is(x0 - 3, surface - 3, TileID.GrayBrick) || !Is(x0 + 3, surface - 3, TileID.GrayBrick))
+            return;
+
+        void Clear(int x, int y, ushort type)
+        {
+            if (Is(x, y, type))
+                Main.tile[x, y].ClearTile();
+        }
+
+        for (var x = x0 - 3; x <= x0 + 3; x++)
+        {
+            Clear(x, surface - 6, TileID.StoneSlab);
+            if (Math.Abs(x - x0) <= 2)
+                Clear(x, surface - 7, TileID.GrayBrick);
+        }
+
+        foreach (var x in new[] { x0 - 3, x0 + 3 })
+        {
+            Clear(x, surface - 7, TileID.Torches);
+            for (var y = surface - 5; y < surface; y++)
+                Clear(x, y, TileID.GrayBrick);
+        }
+
+        // The rope went up into the arch: keep only the part sticking out of the ground
+        for (var y = surface - 5; y < surface - RopeAbove; y++)
+            Clear(x0, y, TileID.Rope);
+
+        WorldGen.RangeFrame(x0 - 4, surface - 8, x0 + 4, surface + 1);
+        if (Main.netMode == NetmodeID.Server)
+            NetMessage.SendTileSquare(-1, x0 - 4, surface - 8, 9, 10);
+        Terramon.Instance.Logger.Info($"Took down the old stone arch over Brock's Gym entrance at {entrance}.");
     }
 
     private static void TryStep(string name, Action step)
@@ -631,8 +748,8 @@ public static class BrockGymBuilder
     }
 
     /// <summary>
-    ///     A short brick tunnel out of the left door, then a shaft with a rope all the way up to the surface, under a
-    ///     stone arch with a sign.
+    ///     A short brick tunnel out of the left door, then a shaft with a rope all the way up to the surface, where the
+    ///     entrance is just the rope sticking out of the ground and a sign next to it.
     /// </summary>
     private static void BuildEntrance(int left, int floorY)
     {
@@ -664,56 +781,48 @@ public static class BrockGymBuilder
             }
         }
 
-        for (var y = surface - 1; y < floorY; y++)
+        // Clear the air over the hole too, so trees or grass don't hide the rope
+        for (var y = surface - RopeAbove - 1; y < floorY; y++)
         {
             for (var x = shaftX - 1; x <= shaftX + 1; x++)
             {
                 var tile = Main.tile[x, y];
+                // A tree in the way is cut down whole instead of leaving its top floating
+                if (y < surface && tile.HasTile)
+                    WorldGen.KillTile(x, y, false, false, true);
                 tile.ClearTile();
                 tile.LiquidAmount = 0;
                 if (y > surface + 2)
                     tile.WallType = WallID.GrayBrick;
             }
+        }
 
-            // Ropes are set directly, top to bottom, so each one hangs from the one above
+        // Ropes are set directly, top to bottom, so each one hangs from the one above. The top few stick out of the
+        // ground so the entrance is easy to spot and to grab.
+        for (var y = surface - RopeAbove; y < floorY; y++)
+        {
             var rope = Main.tile[shaftX, y];
             rope.HasTile = true;
             rope.TileType = TileID.Rope;
         }
 
-        // A stone arch marking the entrance at the surface
-        for (var x = shaftX - 3; x <= shaftX + 3; x++)
-        {
-            PlaceBlock(x, surface - 6, TileID.StoneSlab);
-            if (Math.Abs(x - shaftX) <= 2)
-                PlaceBlock(x, surface - 7, TileID.GrayBrick);
-        }
-
-        foreach (var x in new[] { shaftX - 3, shaftX + 3 })
-        {
-            for (var y = surface - 5; y < surface; y++)
-                PlaceBlock(x, y, TileID.GrayBrick);
-            WorldGen.PlaceTile(x, surface - 7, TileID.Torches, true, false, -1, 0);
-        }
-
-        for (var y = surface - 5; y < surface - 1; y++)
-        {
-            var rope = Main.tile[shaftX, y];
-            rope.ClearTile();
-            rope.HasTile = true;
-            rope.TileType = TileID.Rope;
-        }
-
-        // A sign next to the arch
-        var signX = shaftX + 5;
+        // The sign right next to the hole, on the ground
+        var signX = shaftX + 3;
         var signGround = surface;
         for (var y = surface - 6; y < surface + 6; y++)
         {
-            if (Main.tile[signX, y].HasTile && Main.tileSolid[Main.tile[signX, y].TileType])
+            if (Main.tile[signX, y].HasTile && Main.tileSolid[Main.tile[signX, y].TileType] &&
+                Main.tile[signX + 1, y].HasTile && Main.tileSolid[Main.tile[signX + 1, y].TileType])
             {
                 signGround = y;
                 break;
             }
+        }
+
+        for (var x = signX; x <= signX + 1; x++)
+        {
+            if (!Main.tile[x, signGround].HasTile || !Main.tileSolid[Main.tile[x, signGround].TileType])
+                PlaceBlock(x, signGround, TileID.GrayBrick);
         }
 
         if (WorldGen.PlaceObject(signX, signGround - 1, TileID.Signs, true))
@@ -721,6 +830,7 @@ public static class BrockGymBuilder
             var sign = Sign.ReadSign(signX, signGround - 2, true);
             if (sign >= 0)
                 Sign.TextSign(sign, Language.GetTextValue("Mods.Terramon.BrockGym.Sign"));
+            ProtectedAreas.Add(new Rectangle(signX, signGround - 2, 2, 3));
         }
 
         BrockGymSystem.SurfaceEntrance = new Point(shaftX, surface);

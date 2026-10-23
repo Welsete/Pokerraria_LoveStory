@@ -2054,11 +2054,13 @@ Items.LeaguePedestalItem: {
 
 BrockGym: {
 	Welcome: "{0} está te esperando no palco. Fale com ele para desafiar o Ginásio de Pewter!"
-	Sign: Ginásio de Pewter. Líder: Brock, o treinador Pokémon duro como pedra! Desça pela corda.
-	Announce: "O Ginásio do Brock fica nas cavernas, a {0} blocos a {1} do ponto de nascimento. Procure o arco de pedra com uma placa e uma corda descendo, ou a Insígnia Rocha no mapa."
+	Sign: Ginásio de Pewter. Líder: Brock, o treinador Pokémon duro como pedra! Ele usa Pokémon do tipo Pedra: os tipos Água e Planta levam vantagem. Desça pela corda para entrar.
+	Announce: "O Ginásio do Brock fica nas cavernas, a {0} blocos a {1} do ponto de nascimento. Procure uma placa ao lado de uma corda descendo para dentro do chão, ou a Insígnia Rocha no mapa."
 	MapName: Ginásio do Brock (Pewter)
 	MapEntrance: Entrada do Ginásio do Brock
 }
+
+ProtectedAreas.Blocked: Os ginásios e a Liga Pokémon são protegidos: nada neles pode ser quebrado nem construído por cima.
 
 WorldGen.BrockGymPass: Escavando o Ginásio do Brock
 

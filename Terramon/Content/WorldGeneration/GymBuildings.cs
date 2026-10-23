@@ -188,12 +188,38 @@ public class GymBuildingsPass(string name, float loadWeight) : GenPass(name, loa
                 continue;
 
             pedestal = Build(left, floorY, width, style, pedestalType);
+            ProtectedAreas.Add(Area(left, floorY, width));
             GenVars.structures?.AddProtectedStructure(
                 new Rectangle(left - 2, floorY - Height - 3, width + 4, Height + 10), 4);
             return true;
         }
 
         return false;
+    }
+
+    /// <summary>
+    ///     The tiles <see cref="ProtectedAreas" /> keeps safe for a building: from the top of the roof down to the floor
+    ///     and the row under it, one tile past the walls on each side.
+    /// </summary>
+    private static Rectangle Area(int left, int floorY, int width)
+        => new(left - 1, floorY - Height - 1, width + 2, Height + 3);
+
+    /// <summary>
+    ///     Protects the Gym and League of a world made before <see cref="ProtectedAreas" /> existed, from where their
+    ///     pedestals are.
+    /// </summary>
+    internal static void ProtectExisting()
+    {
+        foreach (var (pedestal, width) in new[]
+                 {
+                     (GymBuildingsSystem.GymPosition, GymWidth), (GymBuildingsSystem.LeaguePosition, LeagueWidth)
+                 })
+        {
+            if (pedestal == Point.Zero)
+                continue;
+            // Build() puts the pedestal at (left + width / 2 - 1, floorY - 2)
+            ProtectedAreas.Add(Area(pedestal.X - width / 2 + 1, pedestal.Y + 2, width));
+        }
     }
 
     /// <summary>
