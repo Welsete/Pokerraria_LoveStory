@@ -47,6 +47,17 @@ public class HubUI : SmartUIState
     private UIText _rangeText;
     private UIText _seenAmountText;
     private UIHoverImage _seenBallIcon;
+    private UITextPanel<string> _typeFilterButton;
+    private UITextPanel<string> _statusFilterButton;
+    private UITextPanel<string> _sortButton;
+
+    // Pokédex filters, kept while the game is open: a type (seen Pokémon only), what was caught or seen, and the order
+    private static readonly PokemonType[] FilterTypes = Enum.GetValues<PokemonType>()
+        .Where(t => t is not (PokemonType.None or PokemonType.Stellar)).ToArray();
+    private static int _typeFilter = -1; // Index in FilterTypes, -1 = every type
+    private static int _statusFilter; // 0 every Pokémon, 1 obtained, 2 seen only, 3 not seen yet
+    private static bool _sortByName;
+    private static bool Filtered => _typeFilter >= 0 || _statusFilter != 0 || _sortByName;
 
     static HubUI()
     {
@@ -101,6 +112,8 @@ public class HubUI : SmartUIState
         if (Active == active) return;
         Active = active;
         var hubState = UILoader.GetUIState<HubUI>();
+        if (active)
+            hubState.ApplyFilters();
         hubState.RefreshPokedex(closeOverview: !active);
         if (active)
         {
@@ -183,7 +196,7 @@ public class HubUI : SmartUIState
         _pokedexPage = new PokedexPageDisplay(470, 694, 9, 6)
         {
             Left = { Pixels = 6 },
-            Top = { Pixels = 114 }
+            Top = { Pixels = 158 }
         };
 
         // Page buttons for the Pokédex
@@ -227,6 +240,7 @@ public class HubUI : SmartUIState
                 _filterButton.SetHoverText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.WorldDexFilter"));
             _filterButton.SetImage(WorldDexMode ? WorldDexFilterTexture : PlayerDexFilterTexture);
             _filterButton.SetHoverRarity(ItemRarityID.White);
+            ApplyFilters();
             RefreshPokedex(closeOverview: true);
         };
         _filterButton.OnRightClick += (_, _) =>
@@ -238,6 +252,7 @@ public class HubUI : SmartUIState
             ShinyActive = !ShinyActive;
             _filterButton.SetImage(ShinyActive ? PlayerShinyDexFilterTexture : PlayerDexFilterTexture);
             _filterButton.SetHoverRarity(ShinyActive ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.White);
+            ApplyFilters();
             RefreshPokedex(closeOverview: true);
         };
         _mainPanel.Append(_filterButton);
@@ -317,6 +332,13 @@ public class HubUI : SmartUIState
 
         _mainPanel.Append(_pokedexPage);
 
+        // Filters: type, caught/seen, and order (left click goes forward, right click back)
+        _typeFilterButton = FilterButton(6, 150, () => CycleType(1), () => CycleType(-1));
+        _statusFilterButton = FilterButton(166, 160, () => _statusFilter = (_statusFilter + 1) % 4,
+            () => _statusFilter = (_statusFilter + 3) % 4);
+        _sortButton = FilterButton(336, 140, () => _sortByName = !_sortByName, () => _sortByName = !_sortByName);
+        UpdateFilterTexts();
+
         // Pokémon overview panel
         _overviewPanel = new PokedexOverviewPanel
         {
@@ -357,6 +379,90 @@ public class HubUI : SmartUIState
         ((UIPanel)evt.Target).BorderColor = Color.Black;
     }
 
+    private UITextPanel<string> FilterButton(int left, int width, Action next, Action previous)
+    {
+        var button = new UITextPanel<string>(string.Empty, 0.8f)
+        {
+            BackgroundColor = new Color(63, 82, 151) * 0.8f
+        };
+        button.OnMouseOver += FadedMouseOver;
+        button.OnMouseOut += FadedMouseOut;
+        button.OnLeftClick += (_, _) => ChangeFilter(next);
+        button.OnRightClick += (_, _) => ChangeFilter(previous);
+        AddElement(button, left, 112, width, 34, _mainPanel);
+        return button;
+    }
+
+    private static Color TypeColor(PokemonType type)
+    {
+        var hex = type.GetHexColor();
+        return uint.TryParse(hex, System.Globalization.NumberStyles.HexNumber, null, out var rgb)
+            ? new Color((byte)(rgb >> 16), (byte)(rgb >> 8), (byte)rgb)
+            : Color.White;
+    }
+
+    private static void CycleType(int direction)
+    {
+        // -1 (every type) and each type in turn
+        var count = FilterTypes.Length + 1;
+        _typeFilter = (_typeFilter + 1 + direction + count) % count - 1;
+    }
+
+    private void ChangeFilter(Action change)
+    {
+        SoundEngine.PlaySound(in SoundID.MenuTick);
+        change();
+        UpdateFilterTexts();
+        ApplyFilters();
+        RefreshPokedex(closeOverview: true);
+    }
+
+    private void UpdateFilterTexts()
+    {
+        var all = Language.GetTextValue("Mods.Terramon.GUI.Pokedex.FilterAll");
+        var type = _typeFilter < 0 ? all : Language.GetTextValue($"Mods.Terramon.Types.{FilterTypes[_typeFilter]}");
+        _typeFilterButton.SetText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.FilterType", type));
+        _typeFilterButton.TextColor = _typeFilter < 0 ? Color.White : TypeColor(FilterTypes[_typeFilter]);
+        _statusFilterButton.SetText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.FilterStatus",
+            Language.GetTextValue($"Mods.Terramon.GUI.Pokedex.FilterStatus{_statusFilter}")));
+        _sortButton.SetText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.SortBy",
+            Language.GetTextValue(_sortByName ? "Mods.Terramon.GUI.Pokedex.SortName" : "Mods.Terramon.GUI.Pokedex.SortNumber")));
+    }
+
+    /// <summary>
+    ///     Shows only the Pokémon that pass the filters, in the chosen order. The type of a Pokémon not seen yet stays a
+    ///     secret, so a type filter only shows Pokémon already seen.
+    /// </summary>
+    private void ApplyFilters()
+    {
+        if (_pokedexPage == null)
+            return;
+        var pokedex = WorldDexMode ? TerramonWorld.GetWorldDex() : TerramonPlayer.LocalPlayer?.GetPokedex(ShinyActive);
+        if (pokedex == null)
+            return;
+        IEnumerable<ushort> ids = _pokedexPage.AllIds;
+        ids = ids.Where(id =>
+        {
+            var status = pokedex.Entries.GetValueOrDefault(id)?.Status ?? PokedexEntryStatus.Undiscovered;
+            var statusOk = _statusFilter switch
+            {
+                1 => status == PokedexEntryStatus.Registered,
+                2 => status == PokedexEntryStatus.Seen,
+                3 => status == PokedexEntryStatus.Undiscovered,
+                _ => true
+            };
+            if (!statusOk)
+                return false;
+            if (_typeFilter < 0)
+                return true;
+            return status != PokedexEntryStatus.Undiscovered &&
+                   Terramon.DatabaseV2.GetPokemon(id)?.Types.Contains(FilterTypes[_typeFilter]) == true;
+        });
+        if (_sortByName)
+            ids = ids.OrderBy(id => DatabaseV2.GetLocalizedPokemonNameDirect(Terramon.DatabaseV2.GetPokemon(id)));
+        _pokedexPage.SetIds(ids.ToList());
+    }
+
     public override void Draw(SpriteBatch spriteBatch)
     {
         base.Draw(spriteBatch);
@@ -394,9 +500,7 @@ public class HubUI : SmartUIState
         {
             var dirIsRight = UILinkPointNavigator.CurrentPage == TerramonPageID.HackySwitchPageRight;
 
-            var currentRange = _pokedexPage.GetPageRange();
-            if ((!dirIsRight && currentRange.Item1 == 1) ||
-                (dirIsRight && currentRange.Item2 == Terramon.LoadedPokemonCount))
+            if ((!dirIsRight && _pokedexPage.OnFirstPage) || (dirIsRight && _pokedexPage.OnLastPage))
             {
                 SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
             }
@@ -443,8 +547,16 @@ public class HubUI : SmartUIState
         {
             // Update the range text
             var range = _pokedexPage.GetPageRange();
-            _rangeText.SetText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.ShowingRange", range.Item1, range.Item2,
-                Terramon.LoadedPokemonCount));
+            if (Filtered)
+            {
+                // Positions in the filtered list, since the numbers may not follow each other
+                var (first, last) = _pokedexPage.GetPagePositions();
+                _rangeText.SetText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.ShowingFiltered", first, last,
+                    _pokedexPage.Count));
+            }
+            else
+                _rangeText.SetText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.ShowingRange", range.Item1,
+                    range.Item2, Terramon.LoadedPokemonCount));
             _rangePanel.Width.Set((int)_rangeText.MinWidth.Pixels, 0f);
         }
 
@@ -488,6 +600,7 @@ public class HubUI : SmartUIState
         ShinyActive = false; // Reset to non-shiny mode
         _filterButton.SetImage(PlayerDexFilterTexture);
         _filterButton.SetHoverRarity(ItemRarityID.White);
+        ApplyFilters();
         RefreshPokedex();
     }
 
@@ -507,9 +620,9 @@ public class HubUI : SmartUIState
         // Resize the overview panel based on the main panel's height
         _overviewPanel?.Height.Set(mainPanelHeight - 140, 0f);
 
-        // Resize the Pokédex page display based on the main panel's height
-        if (_pokedexPage == null || _pokedexPage.Height.Pixels == mainPanelHeight - 140) return;
-        _pokedexPage.Height.Set(mainPanelHeight - 140, 0f);
+        // Resize the Pokédex page display based on the main panel's height (it sits under the filter buttons)
+        if (_pokedexPage == null || _pokedexPage.Height.Pixels == mainPanelHeight - 184) return;
+        _pokedexPage.Height.Set(mainPanelHeight - 184, 0f);
         _pokedexPage.Reset();
         if (Active) RefreshPokedex(closeOverview: true);
     }
@@ -615,8 +728,9 @@ internal sealed class PokedexPageDisplay : UIElement
 
     private readonly List<PokedexEntryIcon> _entries = [];
 
-    // Cache the sorted Pokémon IDs for efficient paging
-    private readonly List<ushort> _sortedPokemonIds;
+    // Every Pokémon of the Pokédex, and the ones shown (filtered and sorted, see HubUI.ApplyFilters)
+    public readonly List<ushort> AllIds;
+    private List<ushort> _sortedPokemonIds;
 
     private int _cols;
     private int _rows;
@@ -631,10 +745,11 @@ internal sealed class PokedexPageDisplay : UIElement
         Height.Set(height, 0);
 
         // Cache and sort all available Pokémon IDs
-        _sortedPokemonIds = Terramon.DatabaseV2.Pokemon.Keys!
+        AllIds = Terramon.DatabaseV2.Pokemon.Keys!
             .Where(id => id <= Terramon.HighestPokemonID)
             .OrderBy(id => id)
             .ToList();
+        _sortedPokemonIds = AllIds;
 
         _startPokemonId = _sortedPokemonIds.FirstOrDefault();
         Reset();
@@ -668,6 +783,33 @@ internal sealed class PokedexPageDisplay : UIElement
 
         _startPokemonId = _sortedPokemonIds[newIndex];
         Reset();
+    }
+
+    public int Count => _sortedPokemonIds.Count;
+    public bool OnFirstPage => _sortedPokemonIds.IndexOf(_startPokemonId) <= 0;
+    public bool OnLastPage => _sortedPokemonIds.IndexOf(_startPokemonId) + _rows * _cols >= _sortedPokemonIds.Count;
+
+    /// <summary>
+    ///     Shows these Pokémon, in this order. Stays on the same page if its first Pokémon is still there.
+    /// </summary>
+    public void SetIds(List<ushort> ids)
+    {
+        var keep = ids.IndexOf(_startPokemonId);
+        _sortedPokemonIds = ids;
+        if (keep < 0 || keep % Math.Max(1, _rows * _cols) != 0)
+            _startPokemonId = ids.FirstOrDefault();
+        Reset();
+    }
+
+    /// <summary>
+    ///     The first and last place (from 1) of the current page in the list shown.
+    /// </summary>
+    public (int First, int Last) GetPagePositions()
+    {
+        var start = _sortedPokemonIds.IndexOf(_startPokemonId);
+        if (start < 0)
+            return (0, 0);
+        return (start + 1, Math.Min(start + _rows * _cols, _sortedPokemonIds.Count));
     }
 
     public void ReturnToFirstPage()

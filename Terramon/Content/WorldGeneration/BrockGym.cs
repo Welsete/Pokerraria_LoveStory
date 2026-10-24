@@ -233,7 +233,8 @@ public static class BrockGymBuilder
     private const int Shell = 2;
     private const int EntranceGap = 6; // Tunnel between the left door and the rope shaft
     private const int StageHeight = 3;
-    private const int RopeAbove = 3; // How many rope tiles stick out of the ground at the entrance
+    private const int RopeAbove = 2; // How many rope tiles stick out of the shrine's floor at the entrance
+    private const int ShrineHalf = 8; // The entrance shrine spans this many tiles each side of the rope
 
     private const byte NoPaint = 0;
 
@@ -391,21 +392,13 @@ public static class BrockGymBuilder
         BuildWalls(inLeft, inRight, ceilingY, floorY, centerLeft, centerRight);
         BuildArenaFloor(centerLeft - 3, stageLeft - 1, floorY);
 
-        // Brock's raised stage: gray brick with a stone slab top, and steps down to the arena
+        // Brock's raised stage: gray brick with a stone slab top (low enough to jump onto)
         for (var x = stageLeft; x <= inRight; x++)
         {
             for (var y = stageTop; y < floorY; y++)
                 PlaceBlock(x, y, y == stageTop ? TileID.StoneSlab : TileID.GrayBrick);
         }
 
-        for (var step = 1; step < StageHeight; step++)
-        {
-            for (var y = floorY - step; y < floorY; y++)
-                PlaceBlock(stageLeft - step, y, TileID.GrayBrick);
-        }
-
-        for (var step = 0; step < StageHeight; step++)
-            WorldGen.SlopeTile(stageLeft - step, floorY - StageHeight + step, (int)SlopeType.SlopeDownRight);
 
         BrockGymSystem.Interior = new Rectangle(inLeft, ceilingY, inRight - inLeft + 1, floorY - ceilingY);
         BrockGymSystem.LeaderSpot = new Point(inRight - 6, stageTop);
@@ -579,7 +572,7 @@ public static class BrockGymBuilder
         }
 
         // The rope went up into the arch: keep only the part sticking out of the ground
-        for (var y = surface - 5; y < surface - RopeAbove; y++)
+        for (var y = surface - 5; y < surface - 3; y++)
             Clear(x0, y, TileID.Rope);
 
         WorldGen.RangeFrame(x0 - 4, surface - 8, x0 + 4, surface + 1);
@@ -801,15 +794,12 @@ public static class BrockGymBuilder
             }
         }
 
-        // Clear the air over the hole too, so trees or grass don't hide the rope
-        for (var y = surface - RopeAbove - 1; y < floorY; y++)
+        // Below the shrine the shaft has brick walls
+        for (var y = surface + 1; y < floorY; y++)
         {
             for (var x = shaftX - 1; x <= shaftX + 1; x++)
             {
                 var tile = Main.tile[x, y];
-                // A tree in the way is cut down whole instead of leaving its top floating
-                if (y < surface && tile.HasTile)
-                    WorldGen.KillTile(x, y, false, false, true);
                 tile.ClearTile();
                 tile.LiquidAmount = 0;
                 if (y > surface + 2)
@@ -817,43 +807,111 @@ public static class BrockGymBuilder
             }
         }
 
-        // Ropes are set directly, top to bottom, so each one hangs from the one above. The top few stick out of the
-        // ground so the entrance is easy to spot and to grab.
+        BuildShrine(shaftX, surface);
+
+        // Ropes are set directly, top to bottom, so each one hangs from the one above. The top ones stick out of the
+        // shrine's floor so they are easy to grab.
         for (var y = surface - RopeAbove; y < floorY; y++)
         {
             var rope = Main.tile[shaftX, y];
+            rope.ClearTile();
             rope.HasTile = true;
             rope.TileType = TileID.Rope;
         }
 
-        // The sign right next to the hole, on the ground
-        var signX = shaftX + 3;
-        var signGround = surface;
-        for (var y = surface - 6; y < surface + 6; y++)
+        // The sign inside the shrine, next to the rope
+        if (WorldGen.PlaceObject(shaftX + 3, surface - 1, TileID.Signs, true))
         {
-            if (Main.tile[signX, y].HasTile && Main.tileSolid[Main.tile[signX, y].TileType] &&
-                Main.tile[signX + 1, y].HasTile && Main.tileSolid[Main.tile[signX + 1, y].TileType])
-            {
-                signGround = y;
-                break;
-            }
-        }
-
-        for (var x = signX; x <= signX + 1; x++)
-        {
-            if (!Main.tile[x, signGround].HasTile || !Main.tileSolid[Main.tile[x, signGround].TileType])
-                PlaceBlock(x, signGround, TileID.GrayBrick);
-        }
-
-        if (WorldGen.PlaceObject(signX, signGround - 1, TileID.Signs, true))
-        {
-            var sign = Sign.ReadSign(signX, signGround - 2, true);
+            var sign = Sign.ReadSign(shaftX + 3, surface - 2, true);
             if (sign >= 0)
                 Sign.TextSign(sign, Language.GetTextValue("Mods.Terramon.BrockGym.Sign"));
-            ProtectedAreas.Add(new Rectangle(signX, signGround - 2, 2, 3));
         }
 
         BrockGymSystem.SurfaceEntrance = new Point(shaftX, surface);
+    }
+
+    /// <summary>
+    ///     A small stone shrine over the rope at the surface: a leveled stone slab floor on a foundation, gray column
+    ///     pillars, a brick beam with eaves and a pointed roof, lanterns, and a hole in the floor for the rope.
+    /// </summary>
+    private static void BuildShrine(int x0, int floor)
+    {
+        const int inner = 6; // Free height inside
+        var beam = floor - inner - 1;
+        var cave = WallByName("Cave8Unsafe", WallID.Stone);
+
+        // Clear the space (trees are cut down whole), then the floor and its foundation
+        for (var x = x0 - ShrineHalf - 1; x <= x0 + ShrineHalf + 1; x++)
+        {
+            for (var y = beam - ShrineHalf; y < floor; y++)
+            {
+                var tile = Main.tile[x, y];
+                if (tile.HasTile && (tile.TileType == TileID.Trees || !Main.tileSolid[tile.TileType]))
+                    WorldGen.KillTile(x, y, false, false, true);
+                tile.ClearEverything();
+            }
+
+            if (Math.Abs(x - x0) > ShrineHalf)
+                continue;
+            PlaceBlock(x, floor, x == x0 ? TileID.GrayBrick : TileID.StoneSlab);
+            for (var y = floor + 1; y < floor + 8; y++)
+            {
+                var tile = Main.tile[x, y];
+                if (tile.HasTile && Main.tileSolid[tile.TileType])
+                    break;
+                PlaceBlock(x, y, TileID.Stone);
+            }
+        }
+
+        Main.tile[x0, floor].ClearTile(); // The hole for the rope
+
+        // Back wall and pillars
+        for (var x = x0 - ShrineHalf + 2; x <= x0 + ShrineHalf - 2; x++)
+        {
+            for (var y = beam; y < floor; y++)
+            {
+                var tile = Main.tile[x, y];
+                var edge = Math.Abs(x - x0);
+                tile.WallType = edge >= ShrineHalf - 3 ? WallID.PalladiumColumn : cave;
+                tile.WallColor = edge >= ShrineHalf - 3 ? PaintID.GrayPaint : NoPaint;
+            }
+        }
+
+        // The beam with eaves sticking out, a slab band over it, then the roof
+        for (var x = x0 - ShrineHalf - 1; x <= x0 + ShrineHalf + 1; x++)
+            PlaceBlock(x, beam, TileID.GrayBrick);
+        WorldGen.SlopeTile(x0 - ShrineHalf - 1, beam, (int)SlopeType.SlopeUpRight);
+        WorldGen.SlopeTile(x0 + ShrineHalf + 1, beam, (int)SlopeType.SlopeUpLeft);
+        for (var x = x0 - ShrineHalf + 1; x <= x0 + ShrineHalf - 1; x++)
+            PlaceBlock(x, beam - 1, TileID.StoneSlab);
+
+        for (var k = 0; k < ShrineHalf - 1; k++)
+        {
+            var y = beam - 2 - k;
+            var half = ShrineHalf - 1 - k;
+            for (var x = x0 - half; x <= x0 + half; x++)
+            {
+                if (Math.Abs(x - x0) == half)
+                {
+                    PlaceBlock(x, y, TileID.GrayBrick);
+                    WorldGen.SlopeTile(x, y, (int)(x < x0 ? SlopeType.SlopeDownRight : SlopeType.SlopeDownLeft));
+                }
+                else
+                {
+                    // The gable: brick wall with a few dark windows
+                    var tile = Main.tile[x, y];
+                    tile.WallType = (x - x0) % 2 == 0 && k is 1 or 3 ? WallID.Obsidian : WallID.GrayBrick;
+                }
+            }
+        }
+
+        PlaceBlock(x0, beam - 1 - ShrineHalf, TileID.GrayBrick); // The tip
+
+        foreach (var x in new[] { x0 - 3, x0 + 3 })
+            HangLantern(x, beam + 1, 1, ChainLantern);
+
+        var top = beam - 1 - ShrineHalf;
+        ProtectedAreas.Add(new Rectangle(x0 - ShrineHalf - 1, top, ShrineHalf * 2 + 3, floor - top + 1));
     }
 
     /// <summary>

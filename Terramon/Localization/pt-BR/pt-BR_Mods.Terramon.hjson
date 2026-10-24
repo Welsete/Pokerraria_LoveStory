@@ -809,6 +809,17 @@ GUI: {
 	Pokedex: {
 		NumberPrefix: Nº
 		ShowingRange: Mostrando {$GUI.Pokedex.NumberPrefix} {0}-{1} ({2})
+		ShowingFiltered: "Mostrando {0}-{1} de {2}"
+		FilterAll: Todos
+		FilterType: "Tipo: {0}"
+		FilterStatus: "Mostrar: {0}"
+		FilterStatus0: Todos
+		FilterStatus1: Obtidos
+		FilterStatus2: Só vistos
+		FilterStatus3: Não vistos
+		SortBy: "Ordem: {0}"
+		SortNumber: Número
+		SortName: Nome
 		Obtained: Obtidos
 		Seen: Vistos
 		ObtainedBy:
@@ -2110,8 +2121,8 @@ Items.LeaguePedestalItem: {
 
 BrockGym: {
 	Welcome: "{0} está te esperando no palco. Fale com ele para desafiar o Ginásio de Pewter!"
-	Sign: Ginásio de Pewter. Líder: Brock, o treinador Pokémon duro como pedra! Ele usa Pokémon do tipo Pedra: os tipos Água e Planta levam vantagem. Desça pela corda para entrar.
-	Announce: "O Ginásio do Brock fica nas cavernas, a {0} blocos a {1} do ponto de nascimento. Procure uma placa ao lado de uma corda descendo para dentro do chão, ou a Insígnia Rocha no mapa."
+	Sign: Ginásio de Pewter. Líder: Brock, o treinador Pokémon duro como pedra! Ele usa Pokémon do tipo Pedra: os tipos Água e Planta levam vantagem. Para desafiá-lo é preciso ter derrotado o Olho de Cthulhu. Desça pela corda e cuidado com as armadilhas no caminho!
+	Announce: "O Ginásio do Brock fica nas cavernas, a {0} blocos a {1} do ponto de nascimento. Procure um pequeno templo de pedra com uma corda descendo para dentro do chão, ou a Insígnia Rocha no mapa."
 	MapName: Ginásio do Brock (Pewter)
 	MapEntrance: Entrada do Ginásio do Brock
 }

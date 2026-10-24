@@ -809,6 +809,17 @@ GUI: {
 	Pokedex: {
 		NumberPrefix: No.
 		ShowingRange: Showing {$GUI.Pokedex.NumberPrefix} {0}-{1} ({2})
+		ShowingFiltered: "Showing {0}-{1} of {2}"
+		FilterAll: All
+		FilterType: "Type: {0}"
+		FilterStatus: "Show: {0}"
+		FilterStatus0: All
+		FilterStatus1: Obtained
+		FilterStatus2: Seen only
+		FilterStatus3: Not seen
+		SortBy: "Order: {0}"
+		SortNumber: Number
+		SortName: Name
 		Obtained: Obtained
 		Seen: Seen
 		ObtainedBy:
@@ -2110,8 +2121,8 @@ Items.LeaguePedestalItem: {
 
 BrockGym: {
 	Welcome: "{0} is waiting for you on the stage. Talk to him to challenge the Pewter City Gym!"
-	Sign: Pewter City Gym. Leader: Brock, the rock-solid Pokémon trainer! He uses Rock-type Pokémon: Water and Grass types have the edge. Climb down the rope to enter.
-	Announce: "Brock's Gym is in the caverns {0} tiles {1} of spawn. Look for a sign next to a rope going down into the ground, or for the Boulder Badge on the map."
+	Sign: Pewter City Gym. Leader: Brock, the rock-solid Pokémon trainer! He uses Rock-type Pokémon: Water and Grass types have the edge. You can challenge him once the Eye of Cthulhu is defeated. Climb down the rope and watch out for traps on the way!
+	Announce: "Brock's Gym is in the caverns {0} tiles {1} of spawn. Look for a small stone shrine with a rope going down into the ground, or for the Boulder Badge on the map."
 	MapName: Brock's Gym (Pewter City)
 	MapEntrance: Entrance to Brock's Gym
 }
