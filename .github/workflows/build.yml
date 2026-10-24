@@ -34,12 +34,17 @@ jobs:
                   GH_TOKEN: ${{ github.token }}
               run: |
                   files=("$RUNNER_TEMP"/tmlsave/Mods/*.tmod)
-                  # A version tag (v0.2.0) gets a real release, with its CHANGELOG.md section as notes
+                  # A version tag (v0.2.0) gets a real release with the .tmod files and its CHANGELOG.md section.
+                  # The tag can come from "Draft a new release" on GitHub: that release just gets the files.
                   if [[ "$GITHUB_REF_TYPE" == "tag" && "$GITHUB_REF_NAME" == v* ]]; then
                       version="${GITHUB_REF_NAME#v}"
                       awk -v v="## $version" '$0 == v {on=1; next} /^## / {on=0} on' CHANGELOG.md > notes.md
-                      gh release create "$GITHUB_REF_NAME" "${files[@]}" --target "$GITHUB_SHA" \
-                          --title "Pokerraria: LoveStory $GITHUB_REF_NAME" --notes-file notes.md -R "$GITHUB_REPOSITORY"
+                      if gh release view "$GITHUB_REF_NAME" -R "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+                          gh release upload "$GITHUB_REF_NAME" "${files[@]}" --clobber -R "$GITHUB_REPOSITORY"
+                      else
+                          gh release create "$GITHUB_REF_NAME" "${files[@]}" --target "$GITHUB_SHA" \
+                              --title "Pokerraria: LoveStory $GITHUB_REF_NAME" --notes-file notes.md -R "$GITHUB_REPOSITORY"
+                      fi
                       exit 0
                   fi
                   tag="build-${GITHUB_REF_NAME//\//-}"
