@@ -308,7 +308,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     ///     A short colored tag for the status condition of the shown Pokémon (SLP, PSN, BRN...), drawn under the HP bar
     ///     like in the main games. Nothing is drawn for a healthy Pokémon.
     /// </summary>
-    private static void DrawStatusBadge(SpriteBatch spriteBatch, PokemonData mon, Vector2 position, float zoom)
+    internal static void DrawStatusBadge(SpriteBatch spriteBatch, PokemonData mon, Vector2 position, float zoom)
     {
         if (mon == null)
             return;

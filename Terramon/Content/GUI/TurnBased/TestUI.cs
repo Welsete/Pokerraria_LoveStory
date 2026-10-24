@@ -142,8 +142,9 @@ public sealed class TestBattleUI : SmartUIState
             button.Top.Percent = yFactor;
             button.Width.Percent = 1f / 3f;
             button.Height.Percent = 0.5f;
-            UIText label = new(string.Empty, 0.75f, true) { VAlign = 0.5f };
-            BesideIcon(label, 0.75f, true);
+            // Name at the top; level, HP bar and status are drawn under it (see DrawPokemonDetails)
+            UIText label = new(string.Empty, 0.6f, true) { VAlign = 0.22f };
+            BesideIcon(label, 0.6f, true);
             UIImage image = new(TextureAssets.Npc[0])
             {
                 VAlign = 0.5f
@@ -554,6 +555,70 @@ public sealed class TestBattleUI : SmartUIState
             poke.DataRef = pokemon;
             poke.PartySlot = i;
         }
+    }
+
+    /// <summary>
+    ///     Like the team screen of the main games: each Pokémon shows its level, an HP bar with its HP and its status
+    ///     under the name. Hovering one shows its types and moves.
+    /// </summary>
+    private static void DrawPokemonDetails(SpriteBatch spriteBatch)
+    {
+        if (_pokemonPanel.Parent == null)
+            return;
+        var pixel = TextureAssets.MagicPixel.Value;
+        var source = new Rectangle(0, 0, 1, 1);
+        foreach (var child in _pokemonPanel.Children)
+        {
+            var mon = child.Children.OfType<PokemonReference>().FirstOrDefault()?.DataRef;
+            if (mon == null)
+                continue;
+            var box = child.GetDimensions();
+            var left = box.X + box.Width * LabelLeft;
+            var width = box.Width * LabelWidth - 8f;
+
+            // HP bar
+            var hp = BattlePlayback.ShownHP(mon);
+            var factor = mon.MaxHP == 0 ? 0f : Math.Clamp((float)hp / mon.MaxHP, 0f, 1f);
+            var bar = new Rectangle((int)left, (int)(box.Y + box.Height * 0.46f), (int)width, 8);
+            spriteBatch.Draw(pixel, bar, source, new Color(20, 20, 30));
+            var inner = new Rectangle(bar.X + 1, bar.Y + 1, bar.Width - 2, bar.Height - 2);
+            spriteBatch.Draw(pixel, inner, source, new Color(60, 60, 70));
+            var hpColor = factor > 0.5f ? new Color(80, 220, 100) : factor > 0.2f ? new Color(240, 200, 60) : new Color(230, 70, 60);
+            spriteBatch.Draw(pixel, inner with { Width = (int)(inner.Width * factor) }, source, hpColor);
+
+            // Level on the left, HP on the right, status in between
+            const float scale = 0.7f;
+            var textY = bar.Bottom + 4f;
+            var level = Language.GetTextValue("Mods.Terramon.GUI.Party.LevelDisplay", mon.Level);
+            Utils.DrawBorderString(spriteBatch, level, new Vector2(bar.X, textY), Color.White, scale);
+            var hpText = $"{hp}/{mon.MaxHP}";
+            var hpSize = FontAssets.MouseText.Value.MeasureString(hpText) * scale;
+            Utils.DrawBorderString(spriteBatch, hpText, new Vector2(bar.Right - hpSize.X, textY), Color.White, scale);
+            var levelWidth = FontAssets.MouseText.Value.MeasureString(level).X * scale;
+            ParticipantPanel.DrawStatusBadge(spriteBatch, mon, new Vector2(bar.X + levelWidth + 8f, textY + 1f), 1f);
+
+            if (child.ContainsPoint(Main.MouseScreen))
+                MoveTooltip.Show(PokemonSwitchTooltip(mon));
+        }
+    }
+
+    private static string PokemonSwitchTooltip(PokemonData mon)
+    {
+        var types = string.Join(" / ", mon.Schema.Types.Select(t => Language.GetTextValue($"Mods.Terramon.Types.{t}")));
+        var text = $"[c/ffdd6e:{mon.DisplayName}]  {types}";
+        if (!mon.HeldItem.IsAir)
+            text += "\n" + Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotHeldItem", Lang.GetItemNameValue(mon.HeldItem.type));
+        foreach (var move in mon.Moves)
+        {
+            if (move.ID == MoveID.None || move.Schema == null)
+                continue;
+            var maxPP = move.Schema.PP + move.Schema.PP * move.PPUp / 5;
+            var color = move.Schema.Type.GetHexColor();
+            text += $"\n[c/{color}:{Language.GetTextValue($"Mods.Terramon.Moves.{move.ID}.DisplayName")}]  " +
+                    $"[c/9FA2AD:PP {move.PP}/{maxPP}]";
+        }
+
+        return text;
     }
 
     private static void ClickPokemonButton(UIMouseEvent evt, UIElement listeningElement)
@@ -1032,6 +1097,7 @@ public sealed class TestBattleUI : SmartUIState
         base.Draw(spriteBatch);
 
         DrawBackButton(spriteBatch);
+        DrawPokemonDetails(spriteBatch);
 
         // After the buttons, so the move's tooltip panel covers them instead of mixing with them
         DrawMoveTooltip();
