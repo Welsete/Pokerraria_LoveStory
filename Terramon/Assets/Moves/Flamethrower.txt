@@ -1,6 +1,6 @@
-Frames 14
+Frames 13
 Travel 0
+Beam 0 5
 Ticks 4
 Face 1
-At middle
 Scale 1

@@ -88,6 +88,13 @@ public sealed class BattlePlayback : ModSystem
         public bool Refinable;
         public bool Refined;
 
+        /// <summary>
+        ///     Another hit of a multi-hit move (Double Kick, Icicle Spear...): the move's animation plays again before
+        ///     this HP goes down. Set when the hit count comes in (see <see cref="QueueLine" />).
+        /// </summary>
+        public Step Rehit;
+        public bool Replayed;
+
         // Status
         public NonVolatileStatus Status;
 
@@ -502,6 +509,8 @@ public sealed class BattlePlayback : ModSystem
         // a short moment for the bar to move
         // A status move's full description is long: it's kept in the history, and a short line says what it did
         var historyOnly = name is "Damage" or "Healed" or "MoveEffect";
+        if (name == "HitCount")
+            MarkRehits(field);
         Add(field, new Step
         {
             Kind = Kind.Line,
@@ -514,6 +523,49 @@ public sealed class BattlePlayback : ModSystem
             // "X used Y!" stays while its move plays out: its hit and HP bar wait for it to be written out
             Hold = historyOnly ? 0 : intro ? TypingTicks(text) + 30 : HoldFor(text)
         });
+    }
+
+    /// <summary>
+    ///     A multi-hit move ended: its hits on the target after the first one each get the move's animation again.
+    /// </summary>
+    private static void MarkRehits(BattleField field)
+    {
+        if (!Enabled || field == null)
+            return;
+        lock (Sync)
+        {
+            var timeline = Get(field, false);
+            if (timeline == null)
+                return;
+            var hits = new List<Step>();
+            Step move = null;
+            for (var node = timeline.Steps.Last; node != null; node = node.Previous)
+            {
+                if (node.Value.Kind == Kind.Move)
+                {
+                    move = node.Value;
+                    break;
+                }
+
+                if (node.Value.Kind == Kind.HP)
+                    hits.Add(node.Value);
+            }
+
+            // The move may already be on screen; then the rest of its hits just go down as before
+            if (move == null || move.Miss)
+                return;
+            var target = move.Side?.Opposite;
+            hits.Reverse();
+            var first = true;
+            foreach (var hit in hits)
+            {
+                if (hit.Side != target)
+                    continue;
+                if (!first)
+                    hit.Rehit = move;
+                first = false;
+            }
+        }
     }
 
     /// <summary>
@@ -840,6 +892,14 @@ public sealed class BattlePlayback : ModSystem
                         timeline.PendingHit = 0;
                         return;
                     }
+                    else if (step.Rehit is { } move && !step.Replayed)
+                    {
+                        // The next hit of a multi-hit move: its animation again, then this HP goes down
+                        step.Replayed = true;
+                        MoveVisuals.Play(move.Side, move.MoveId, false, false);
+                        timeline.Wait = HitDelay(move) - 1;
+                        return;
+                    }
                 }
 
                 timeline.Steps.RemoveFirst();
@@ -870,12 +930,14 @@ public sealed class BattlePlayback : ModSystem
     {
         if (move.Still)
             return StillHitDelay;
-        return Terramon.DatabaseV2.GetMove(move.MoveId)?.Category switch
+        var delay = Terramon.DatabaseV2.GetMove(move.MoveId)?.Category switch
         {
             MoveCategory.Physical => PhysicalHitDelay,
             MoveCategory.Special => SpecialHitDelay,
             _ => StatusHitDelay
         };
+        // A move with its own drawn animation hits once the animation is over
+        return Math.Max(delay, MoveVisuals.AnimationTicks(move.MoveId));
     }
 
     private static void Finish(Timeline timeline)

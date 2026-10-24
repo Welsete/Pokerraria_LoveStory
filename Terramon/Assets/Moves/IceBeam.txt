@@ -1,5 +1,7 @@
 Frames 7
-Travel 0
+Charge 1
+Travel 1
+Beam 2 4
 Ticks 5
 Face 1
 Scale 1

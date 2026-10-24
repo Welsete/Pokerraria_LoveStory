@@ -15,6 +15,9 @@ namespace Terramon.Core.Battling;
 ///     from the user to the target; 0 = it all plays on the target), <c>Ticks N</c> (per frame) and <c>Scale X</c>.
 ///     Optional: <c>Face 1</c> mirrors the whole animation when the target is on the left (fists, beams, wind), and
 ///     <c>At user|middle|target</c> says where the frames after the flight play (status moves play on the user).
+///     <c>Charge N</c>: the first N frames play on the user before anything flies (Solar Beam gathering light).
+///     <c>Beam A B</c>: frames A to B are beams whose tip is at the frame's center; they are stretched and turned so
+///     the beam goes all the way from the user to the target.
 /// </summary>
 public sealed class MoveVisuals : ModSystem
 {
@@ -37,11 +40,29 @@ public sealed class MoveVisuals : ModSystem
     private sealed class MoveSprite
     {
         public Asset<Texture2D> Texture;
-        public int Frames = 1, Travel, Ticks = 5;
+        public int Frames = 1, Travel, Ticks = 5, Charge;
+        public int BeamFrom = -1, BeamTo = -1;
         public float Scale = 1f;
         public bool Face;
         public string At;
+        public int ChargeTime => Charge * Ticks;
         public int TravelTime => Travel > 0 ? TravelTicks : 0;
+
+        /// <summary>
+        ///     When the move reaches the target: after the charge and the flight.
+        /// </summary>
+        public int HitTime => ChargeTime + TravelTime;
+
+        public int Duration => HitTime + (Frames - Charge - Travel) * Ticks;
+
+        public int FrameAt(int time)
+        {
+            if (time < ChargeTime)
+                return time / Ticks;
+            if (time < HitTime)
+                return Charge + (time - ChargeTime) / Ticks % Travel;
+            return Math.Min(Frames - 1, Charge + Travel + (time - HitTime) / Ticks);
+        }
     }
 
     private static readonly List<Effect> Effects = [];
@@ -84,6 +105,12 @@ public sealed class MoveVisuals : ModSystem
                         case "Frames" when int.TryParse(parts[1], out var v): sprite.Frames = Math.Max(1, v); break;
                         case "Travel" when int.TryParse(parts[1], out var v): sprite.Travel = Math.Max(0, v); break;
                         case "Ticks" when int.TryParse(parts[1], out var v): sprite.Ticks = Math.Max(1, v); break;
+                        case "Charge" when int.TryParse(parts[1], out var v): sprite.Charge = Math.Max(0, v); break;
+                        case "Beam" when parts.Length > 2 && int.TryParse(parts[1], out var from) &&
+                                         int.TryParse(parts[2], out var to):
+                            sprite.BeamFrom = from;
+                            sprite.BeamTo = to;
+                            break;
                         case "Face" when int.TryParse(parts[1], out var v): sprite.Face = v != 0; break;
                         case "At": sprite.At = parts[1].ToLowerInvariant(); break;
                         case "Scale" when float.TryParse(parts[1], System.Globalization.NumberStyles.Float,
@@ -92,12 +119,18 @@ public sealed class MoveVisuals : ModSystem
                 }
             }
 
-            sprite.Travel = Math.Min(sprite.Travel, sprite.Frames - 1);
+            sprite.Charge = Math.Min(sprite.Charge, sprite.Frames - 1);
+            sprite.Travel = Math.Min(sprite.Travel, sprite.Frames - 1 - sprite.Charge);
         }
 
         Sprites[moveId] = sprite;
         return sprite;
     }
+
+    /// <summary>
+    ///     How long a move's own drawn animation takes, or 0 if it has none: its hit is shown once it's over.
+    /// </summary>
+    public static int AnimationTicks(ushort moveId) => Main.dedServ ? 0 : SpriteFor(moveId)?.Duration ?? 0;
 
     /// <summary>
     ///     Starts the animation of a move. <paramref name="still" /> moves (e.g. the charging turn of Solar Beam) have
@@ -130,7 +163,7 @@ public sealed class MoveVisuals : ModSystem
             _ => 8
         };
         if (effect.Sprite is { } sprite)
-            effect.Duration = sprite.TravelTime + (sprite.Frames - sprite.Travel) * sprite.Ticks;
+            effect.Duration = sprite.Duration;
 
         if (Position(effect.User) is not { } from)
             return;
@@ -169,7 +202,7 @@ public sealed class MoveVisuals : ModSystem
         if (effect.Sprite is { } sprite)
         {
             // Its own animation: flying frames, then the rest on the target (drawn in DrawSpritesOverDust)
-            if (effect.Time == sprite.TravelTime)
+            if (effect.Time == sprite.HitTime)
             {
                 if (effect.Miss)
                 {
@@ -250,14 +283,16 @@ public sealed class MoveVisuals : ModSystem
 
     private static Vector2 SpritePosition(Effect effect, MoveSprite sprite)
     {
-        if (effect.Time >= sprite.TravelTime)
+        if (effect.Time < sprite.ChargeTime)
+            return effect.From;
+        if (effect.Time >= sprite.HitTime)
             return (sprite.At ?? (effect.Category == MoveCategory.Status ? "user" : "target")) switch
             {
                 "user" => effect.From,
                 "middle" => Vector2.Lerp(effect.From, effect.To, 0.5f),
                 _ => effect.To
             };
-        var progress = effect.Time / (float)sprite.TravelTime;
+        var progress = (effect.Time - sprite.ChargeTime) / (float)sprite.TravelTime;
         return Vector2.Lerp(effect.From, effect.To, progress) + new Vector2(0f, -MathF.Sin(progress * MathF.PI) * 18f);
     }
 
@@ -279,17 +314,26 @@ public sealed class MoveVisuals : ModSystem
                 continue;
             var texture = sprite.Texture.Value;
             var width = texture.Width / sprite.Frames;
-            var travelling = effect.Time < sprite.TravelTime;
-            var frame = travelling
-                ? effect.Time / sprite.Ticks % sprite.Travel
-                : Math.Min(sprite.Frames - 1, sprite.Travel + (effect.Time - sprite.TravelTime) / sprite.Ticks);
+            var travelling = effect.Time >= sprite.ChargeTime && effect.Time < sprite.HitTime;
+            var frame = sprite.FrameAt(effect.Time);
+            var source = new Rectangle(frame * width, 0, width, texture.Height);
+            var origin = new Vector2(width, texture.Height) * 0.5f;
+            if (!travelling && frame >= sprite.BeamFrom && frame <= sprite.BeamTo)
+            {
+                // A beam: its tip on the target, stretched back to the user
+                var line = effect.To - effect.From;
+                var length = Math.Max(16f, line.Length());
+                spriteBatch.Draw(texture, (effect.To - Main.screenPosition).Floor(), source, Color.White,
+                    line.ToRotation(), origin, new Vector2(length / (width * 0.5f), sprite.Scale), SpriteEffects.None, 0f);
+                continue;
+            }
+
             // The sheet is drawn going right; flying left mirrors the flying frames (all of them for Face moves)
             var flip = (travelling || sprite.Face) && effect.To.X < effect.From.X
                 ? SpriteEffects.FlipHorizontally
                 : SpriteEffects.None;
-            spriteBatch.Draw(texture, (SpritePosition(effect, sprite) - Main.screenPosition).Floor(),
-                new Rectangle(frame * width, 0, width, texture.Height), Color.White, 0f,
-                new Vector2(width, texture.Height) * 0.5f, sprite.Scale, flip, 0f);
+            spriteBatch.Draw(texture, (SpritePosition(effect, sprite) - Main.screenPosition).Floor(), source,
+                Color.White, 0f, origin, sprite.Scale, flip, 0f);
         }
 
         spriteBatch.End();

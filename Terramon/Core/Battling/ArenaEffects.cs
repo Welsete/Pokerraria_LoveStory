@@ -151,10 +151,25 @@ public sealed class ArenaEffects : ModSystem
         switch (weather)
         {
             case BattleWeather.RainDance or BattleWeather.PrimordialSea or BattleWeather.StormSurge:
+            {
+                // Terraria only lets as many raindrops exist as the clouds allow (none on a clear day), so the sky
+                // counts as cloudy while the battle's drops are made. Nothing in the world's weather changes
+                var clouds = Main.cloudAlpha;
+                Main.cloudAlpha = 1f;
                 for (var i = 0; i < (weather == BattleWeather.RainDance ? 5 : 9); i++)
                     Rain.NewRain(new Vector2(RandomX(arena), top + Main.rand.NextFloat(0f, 60f)),
                         new Vector2(Main.rand.NextFloat(-0.6f, 0.6f), Main.rand.NextFloat(11f, 14f)));
+                Main.cloudAlpha = clouds;
+                // Drops splashing around the Pokémon too, in case the rain is hidden
+                for (var i = 0; i < 2; i++)
+                {
+                    var d = Dust.NewDustPerfect(new Vector2(RandomX(arena), Main.rand.NextFloat(top, arena.Bottom - 20f)),
+                        DustID.Water, new Vector2(Main.rand.NextFloat(-0.3f, 0.3f), Main.rand.NextFloat(6f, 8f)), 0,
+                        default, 1.1f);
+                    d.noGravity = true;
+                }
                 break;
+            }
 
             case BattleWeather.SunnyDay or BattleWeather.DesolateLand:
                 for (var x = arena.Left; x < arena.Right; x += 48f)
