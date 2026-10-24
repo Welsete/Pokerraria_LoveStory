@@ -278,6 +278,20 @@ public sealed class PokemonAnimations : ModSystem
         Play(owner, state);
     }
 
+    // Pokémon with wings that aren't Flying type
+    private static readonly HashSet<ushort> ExtraWinged = [NationalDexID.Venomoth, NationalDexID.Beedrill];
+
+    /// <summary>
+    ///     Whether a Pokémon flaps wings when it's in the air (Flying types, and a few others with wings).
+    /// </summary>
+    public static bool HasWings(ushort id)
+    {
+        if (ExtraWinged.Contains(id))
+            return true;
+        var types = Terramon.DatabaseV2.GetPokemon(id)?.Types;
+        return types != null && types.Contains(PokemonType.Flying);
+    }
+
     /// <summary>
     ///     What to show instead when a Pokémon doesn't have an animation.
     /// </summary>
@@ -313,12 +327,16 @@ public sealed class PokemonAnimations : ModSystem
     /// </summary>
     public static void GetFrame(AnimSet set, object owner, bool shiny, bool moving, bool airborne, bool inBattle,
         bool asleep, bool fainted, out Texture2D texture, out Rectangle source, out Vector2 origin,
-        bool hovering = false)
+        bool hovering = false, bool winged = false)
     {
         if (hovering)
             airborne = false;
         var now = Main.GameUpdateCount;
-        var state = airborne ? PokemonAnimState.Hop : moving ? PokemonAnimState.Walk : PokemonAnimState.Idle;
+        // In the air (jumping, or following a player who flies): Pokémon with wings flap them (their idle loop),
+        // the others hold one pose of their hop instead of looping it or walking on air
+        var state = airborne
+            ? winged ? PokemonAnimState.Idle : PokemonAnimState.Hop
+            : moving ? PokemonAnimState.Walk : PokemonAnimState.Idle;
         var elapsed = now;
         var once = false;
 
@@ -331,7 +349,7 @@ public sealed class PokemonAnimations : ModSystem
         // Standing around for a while outside battle: sits down, then lies down. Sets without a lying pose (most of
         // them) fall asleep instead, which loops (breathing) rather than holding its last frame.
         var resting = false;
-        if (state != PokemonAnimState.Idle || inBattle || asleep || fainted || OneShots.ContainsKey(owner))
+        if (state != PokemonAnimState.Idle || airborne || inBattle || asleep || fainted || OneShots.ContainsKey(owner))
             IdleSince[owner] = now;
         else if (!IdleSince.ContainsKey(owner))
             IdleSince[owner] = now;
@@ -396,6 +414,9 @@ public sealed class PokemonAnimations : ModSystem
                 state = PokemonAnimState.Sleep;
         }
 
+        var holdInAir = airborne && !winged && !once;
+        if (holdInAir && !set.Anims.ContainsKey(PokemonAnimState.Hop))
+            state = PokemonAnimState.Idle;
         TryGet(set, ref state, out var anim);
 
         var frame = anim.Durations.Length - 1;
@@ -410,6 +431,9 @@ public sealed class PokemonAnimations : ModSystem
 
             t -= (uint)anim.Durations[i];
         }
+
+        if (holdInAir)
+            frame = state == PokemonAnimState.Hop ? anim.Durations.Length / 2 : 0;
 
         texture = TextureOf(set, anim, shiny);
         source = new Rectangle(frame * anim.FrameWidth, 0, anim.FrameWidth, anim.FrameHeight);

@@ -300,7 +300,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 !battling && Math.Abs(NPC.velocity.Y) > 1f, battling,
                 Data != null && BattlePlayback.ShownStatus(Data) == NonVolatileStatus.Slp,
                 Data != null && BattlePlayback.ShownHP(Data) == 0, out animTexture, out animSource, out animOrigin,
-                NPC.noGravity);
+                NPC.noGravity, PokemonAnimations.HasWings(ID));
             drawPos = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY + 1f);
         }
         else if (transformedSheet != null)

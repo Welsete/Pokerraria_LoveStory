@@ -234,7 +234,7 @@ public static class BrockGymBuilder
     private const int EntranceGap = 6; // Tunnel between the left door and the rope shaft
     private const int StageHeight = 3;
     private const int RopeAbove = 2; // How many rope tiles stick out of the shrine's floor at the entrance
-    private const int ShrineHalf = 8; // The entrance shrine spans this many tiles each side of the rope
+    private const int ShrineHalf = 8; // Half width of the entrance shrine's floor and pillars
 
     private const byte NoPaint = 0;
 
@@ -831,87 +831,107 @@ public static class BrockGymBuilder
     }
 
     /// <summary>
-    ///     A small stone shrine over the rope at the surface: a leveled stone slab floor on a foundation, gray column
-    ///     pillars, a brick beam with eaves and a pointed roof, lanterns, and a hole in the floor for the rope.
+    ///     A small stone shrine over the rope at the surface, after Isa's picture: a stone slab floor on a mound of stone,
+    ///     light pillars with dark trim around a dark stone back wall, a lintel with dark caps, a wide eave with its tips
+    ///     turned up, and a pointed gable with dark window slits and a little spire. The rope goes down through the floor.
     /// </summary>
     private static void BuildShrine(int x0, int floor)
     {
-        const int inner = 6; // Free height inside
-        var beam = floor - inner - 1;
+        const int pillarHeight = 7;
+        const int gable = 6; // Half width of the gable's base
+        var lintel = floor - pillarHeight - 1;
+        var eave = lintel - 1;
+        var top = eave - gable - 4;
         var cave = WallByName("Cave8Unsafe", WallID.Stone);
+        var slits = WallByName("ObsidianBrick", WallID.Stone);
 
-        // Clear the space (trees are cut down whole), then the floor and its foundation
-        for (var x = x0 - ShrineHalf - 1; x <= x0 + ShrineHalf + 1; x++)
+        // Clear the space (trees are cut down whole)
+        for (var x = x0 - ShrineHalf - 4; x <= x0 + ShrineHalf + 4; x++)
         {
-            for (var y = beam - ShrineHalf; y < floor; y++)
+            for (var y = top; y < floor; y++)
             {
                 var tile = Main.tile[x, y];
                 if (tile.HasTile && (tile.TileType == TileID.Trees || !Main.tileSolid[tile.TileType]))
                     WorldGen.KillTile(x, y, false, false, true);
                 tile.ClearEverything();
             }
+        }
 
-            if (Math.Abs(x - x0) > ShrineHalf)
-                continue;
-            PlaceBlock(x, floor, x == x0 ? TileID.GrayBrick : TileID.StoneSlab);
-            for (var y = floor + 1; y < floor + 8; y++)
-            {
-                var tile = Main.tile[x, y];
-                if (tile.HasTile && Main.tileSolid[tile.TileType])
-                    break;
+        // Floor on a mound of stone, which also lines the top of the shaft
+        for (var dx = -ShrineHalf - 2; dx <= ShrineHalf + 2; dx++)
+        {
+            var x = x0 + dx;
+            if (Math.Abs(dx) <= ShrineHalf && dx != 0)
+                PlaceBlock(x, floor, TileID.StoneSlab);
+            var depth = Math.Abs(dx) <= 1 ? 0 : Math.Abs(dx) <= 3 ? 12 : 4 - Math.Abs(dx) / 4;
+            for (var y = floor + (Math.Abs(dx) <= ShrineHalf ? 1 : 0); y <= floor + depth; y++)
                 PlaceBlock(x, y, TileID.Stone);
-            }
         }
 
-        Main.tile[x0, floor].ClearTile(); // The hole for the rope
-
-        // Back wall and pillars
-        for (var x = x0 - ShrineHalf + 2; x <= x0 + ShrineHalf - 2; x++)
+        for (var y = floor + 1; y <= floor + 12; y++)
         {
-            for (var y = beam; y < floor; y++)
-            {
-                var tile = Main.tile[x, y];
-                var edge = Math.Abs(x - x0);
-                tile.WallType = edge >= ShrineHalf - 3 ? WallID.PalladiumColumn : cave;
-                tile.WallColor = edge >= ShrineHalf - 3 ? PaintID.GrayPaint : NoPaint;
-            }
+            for (var dx = -1; dx <= 1; dx++)
+                Main.tile[x0 + dx, y].WallType = cave;
         }
 
-        // The beam with eaves sticking out, a slab band over it, then the roof
-        for (var x = x0 - ShrineHalf - 1; x <= x0 + ShrineHalf + 1; x++)
-            PlaceBlock(x, beam, TileID.GrayBrick);
-        WorldGen.SlopeTile(x0 - ShrineHalf - 1, beam, (int)SlopeType.SlopeUpRight);
-        WorldGen.SlopeTile(x0 + ShrineHalf + 1, beam, (int)SlopeType.SlopeUpLeft);
-        for (var x = x0 - ShrineHalf + 1; x <= x0 + ShrineHalf - 1; x++)
-            PlaceBlock(x, beam - 1, TileID.StoneSlab);
-
-        for (var k = 0; k < ShrineHalf - 1; k++)
+        // Pillars (light, with dark trim on the inside) and the back wall
+        for (var dx = -ShrineHalf; dx <= ShrineHalf; dx++)
         {
-            var y = beam - 2 - k;
-            var half = ShrineHalf - 1 - k;
-            for (var x = x0 - half; x <= x0 + half; x++)
+            for (var y = lintel; y < floor; y++)
             {
-                if (Math.Abs(x - x0) == half)
-                {
-                    PlaceBlock(x, y, TileID.GrayBrick);
-                    WorldGen.SlopeTile(x, y, (int)(x < x0 ? SlopeType.SlopeDownRight : SlopeType.SlopeDownLeft));
-                }
-                else
-                {
-                    // The gable: brick wall with a few dark windows
-                    var tile = Main.tile[x, y];
-                    tile.WallType = (x - x0) % 2 == 0 && k is 1 or 3 ? WallByName("ObsidianBrick", WallID.Stone) : WallID.GrayBrick;
-                }
+                var tile = Main.tile[x0 + dx, y];
+                var edge = Math.Abs(dx);
+                tile.WallType = edge >= ShrineHalf - 1 ? WallID.StoneSlab : edge == ShrineHalf - 2 ? WallID.GrayBrick : cave;
             }
         }
 
-        PlaceBlock(x0, beam - 1 - ShrineHalf, TileID.GrayBrick); // The tip
+        // Lintel: dark caps over the pillars, light in between
+        for (var dx = -ShrineHalf; dx <= ShrineHalf; dx++)
+            PlaceBlock(x0 + dx, lintel, Math.Abs(dx) >= ShrineHalf - 2 ? TileID.GrayBrick : TileID.StoneSlab);
 
-        foreach (var x in new[] { x0 - 3, x0 + 3 })
-            HangLantern(x, beam + 1, 1, ChainLantern);
+        // The eave: a wide light ledge with its tips turned up, and a dark band on it
+        for (var dx = -ShrineHalf - 3; dx <= ShrineHalf + 3; dx++)
+            PlaceBlock(x0 + dx, eave, TileID.StoneSlab);
+        foreach (var side in new[] { -1, 1 })
+        {
+            PlaceBlock(x0 + side * (ShrineHalf + 3), eave - 1, TileID.StoneSlab);
+            WorldGen.SlopeTile(x0 + side * (ShrineHalf + 3), eave - 1,
+                (int)(side < 0 ? SlopeType.SlopeDownLeft : SlopeType.SlopeDownRight));
+        }
 
-        var top = beam - 1 - ShrineHalf;
-        ProtectedAreas.Add(new Rectangle(x0 - ShrineHalf - 1, top, ShrineHalf * 2 + 3, floor - top + 1));
+        for (var dx = -ShrineHalf - 1; dx <= ShrineHalf + 1; dx++)
+            PlaceBlock(x0 + dx, eave - 1, TileID.GrayBrick);
+
+        // The gable: light sloped edges, a light line inside them, dark brick with window slits
+        for (var k = 0; k <= gable; k++)
+        {
+            var y = eave - 2 - k;
+            var half = gable - k;
+            for (var dx = -half; dx <= half; dx++)
+            {
+                if (Math.Abs(dx) == half)
+                {
+                    PlaceBlock(x0 + dx, y, TileID.StoneSlab);
+                    if (half > 0)
+                        WorldGen.SlopeTile(x0 + dx, y, (int)(dx < 0 ? SlopeType.SlopeDownRight : SlopeType.SlopeDownLeft));
+                    continue;
+                }
+
+                var tile = Main.tile[x0 + dx, y];
+                tile.WallType = Math.Abs(dx) == half - 1 ? WallID.StoneSlab
+                    : dx % 2 == 0 && k is >= 1 and <= 3 ? slits : WallID.GrayBrick;
+            }
+        }
+
+        // The spire
+        PlaceBlock(x0, eave - 3 - gable, TileID.StoneSlab);
+        PlaceBlock(x0, eave - 4 - gable, TileID.GrayBrick);
+
+        // A torch on each pillar
+        foreach (var side in new[] { -1, 1 })
+            WorldGen.PlaceTile(x0 + side * (ShrineHalf - 1), floor - 4, TileID.Torches, true, false, -1, 0);
+
+        ProtectedAreas.Add(new Rectangle(x0 - ShrineHalf - 3, top, ShrineHalf * 2 + 7, floor + 13 - top));
     }
 
     /// <summary>

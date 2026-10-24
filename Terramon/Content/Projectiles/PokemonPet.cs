@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.Buffs;
@@ -294,7 +294,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
                 Math.Abs(Projectile.velocity.X) > 0.2f, !battling && Math.Abs(Projectile.velocity.Y) > 1f, battling,
                 Data != null && BattlePlayback.ShownStatus(Data) == NonVolatileStatus.Slp,
                 Data != null && BattlePlayback.ShownHP(Data) == 0, out texture, out sourceRect,
-                out origin, Flying);
+                out origin, Flying, Data != null && PokemonAnimations.HasWings(Data.ID));
             frameSize = sourceRect.Size() * animSet.WorldScale;
             drawPos.Y -= 3f;
         }
