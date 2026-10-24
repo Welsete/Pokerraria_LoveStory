@@ -4,7 +4,6 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from scipy import ndimage as ndi
 
-# Usage: python3 logo.py <folder that contains Terramon/> ; then python3 gif.py
 ROOT = sys.argv[1] if len(sys.argv) > 1 else "."
 FONT = "/usr/share/fonts/opentype/inter/Inter-Black.otf"
 rng = np.random.default_rng(7)
@@ -199,7 +198,25 @@ def heart_mask(size):
     return a[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
 
 
-def build(palette, icon=None):
+def heart_beat(t):
+    """Two quick beats per loop, like a heartbeat (0 = rest, 1 = biggest)."""
+    u = t % 0.5
+    return math.exp(-((u - 0.06) ** 2) / 0.0015) + 0.6 * math.exp(-((u - 0.17) ** 2) / 0.0015)
+
+
+def star(canvas, x, y, r, color):
+    for i in range(-r, r + 1):
+        a = 255
+        for (yy, xx) in ((y, x + i), (y + i, x)):
+            if 0 <= yy < H and 0 <= xx < W:
+                canvas[yy, xx] = (*color, a)
+    if r >= 2:
+        canvas[y, x] = (255, 255, 255, 255)
+
+
+def build(palette, icon=None, t=None):
+    """The logo; with t (0 to 1) the LoveStory part is animated: letters hop in a wave, the heart beats,
+    a shine runs across the letters and little stars twinkle."""
     canvas = np.zeros((H, W, 4), np.uint8)
     x0 = 74
     base = 92  # baseline of the title
@@ -224,7 +241,9 @@ def build(palette, icon=None):
     xl = xe + (erraria.shape[1] - love.shape[1] - heart.shape[1] - 8) // 2 + heart.shape[1] + 8
     yl = base + 10
     ml = place(love, xl, yl)
-    mh = place(heart, xl - heart.shape[1] - 7, yl + (love.shape[0] - heart.shape[0]) // 2 + 1)
+    hcx = xl - heart.shape[1] // 2 - 7
+    hcy = yl + love.shape[0] // 2 + 1
+    mh = place(heart, hcx - heart.shape[1] // 2, hcy - heart.shape[0] // 2)
 
     pal = PALETTES[palette]
     grass(canvas, dil(mP | mk | disc, 4) | me, pal, 11)
@@ -235,21 +254,52 @@ def build(palette, icon=None):
     tx = xe + erraria.shape[1] // 3
     top = np.argmax(canvas[:, tx, 3] > 0)
     sprout(canvas, tx, top - 5)
-    # subtitle on a dark ribbon so it reads over the grass
-    rib = dil(ml | mh, 5)
+
+    # subtitle on a dark ribbon so it reads over the grass (room for the hops and the beat)
+    rib = dil(ml | np.roll(ml, -4, axis=0) | dil(mh, 3), 5)
     paint(canvas, dil(rib, 1) & ~rib, (40, 8, 30))
     paint(canvas, rib, (90, 20, 60))
     paint(canvas, rib & ~np.roll(rib, 2, axis=0), (130, 40, 90))
-    metal(canvas, ml, "pink", band=2, stripes=False)
-    metal(canvas, mh, "red", band=2, stripes=False)
-    # shine on the heart
-    hy, hx = np.argwhere(mh)[0]
+
+    if t is None:
+        letters, hm = ml, mh
+    else:
+        lab, n = ndi.label(ml)
+        order = sorted(range(1, n + 1), key=lambda i: np.argwhere(lab == i)[:, 1].min())
+        letters = np.zeros_like(ml)
+        for idx, comp in enumerate(order):
+            hop = max(0.0, math.sin(2 * math.pi * t * 2 - idx * 0.55))
+            dy = -round(4 * hop ** 1.5)
+            letters |= np.roll(lab == comp, dy, axis=0)
+        size = 26 + round(7 * heart_beat(t))
+        big = heart_mask(size)
+        hm = place(big, hcx - big.shape[1] // 2, hcy - big.shape[0] // 2)
+    metal(canvas, letters, "pink", band=2, stripes=False)
+    metal(canvas, hm, "red", band=2, stripes=False)
+    hy, hx = np.argwhere(hm)[0]
     canvas[hy + 2:hy + 4, hx + 2:hx + 4] = (255, 214, 232, 255)
+
+    if t is not None:
+        # a shine running across the letters once per loop
+        core = ero(letters, 1)
+        lx0, lx1 = xl - 30, xl + love.shape[1] + 30
+        c = lx0 + (t % 1) * (lx1 - lx0) * 1.6
+        band = np.abs((xx + (yy - yl)) - c) < 2.5
+        paint(canvas, core & band, (255, 236, 244))
+        # twinkling stars around the subtitle
+        spots = [(xl - 30, yl - 2, 0.0), (xl + love.shape[1] // 3, yl - 9, 0.35),
+                 (xl + love.shape[1] + 9, yl + 4, 0.6), (xl + 2 * love.shape[1] // 3, yl + love.shape[0] + 8, 0.8),
+                 (hcx - 20, hcy - 12, 0.15), (xl + love.shape[1] // 6, yl + love.shape[0] + 7, 0.5),
+                 (xl + 5 * love.shape[1] // 6, yl - 8, 0.9)]
+        for sx, sy, ph in spots:
+            v = math.sin(2 * math.pi * (t * 2 + ph))
+            if v > 0.2:
+                star(canvas, sx, sy, 1 if v < 0.5 else (2 if v < 0.85 else 3), (255, 200, 225))
+
     img = Image.fromarray(canvas, "RGBA")
     if icon is not None:
         img.alpha_composite(icon, (0, (H - icon.height) // 2 - 4))
-    bbox = img.getbbox()
-    return img.crop((0, 0, bbox[2] + 2, H))
+    return img.crop((0, 0, 418, H))
 
 
 def recolor(icon, palette):
@@ -285,14 +335,47 @@ def sprout(canvas, x, y):
 
 
 if __name__ == "__main__":
-    src = Image.open(f"{ROOT}/Terramon/Assets/Misc/MenuLogo_0.png").convert("RGBA")
-    src1 = Image.open(f"{ROOT}/Terramon/Assets/Misc/MenuLogo_1.png").convert("RGBA")
+    src = Image.open(f"{ROOT}/orig_0.png").convert("RGBA")
+    src1 = Image.open(f"{ROOT}/orig_1.png").convert("RGBA")
     icon0 = src.crop((0, 0, 72, 114))
     icon1 = src1.crop((0, 0, 72, 114))
     out = {}
     for name, icon in (("green", icon0), ("pink", recolor(icon0, "pink")), ("purple", icon1)):
         out[name] = build(name, icon)
         out[name].save(f"logo_{name}.png")
+    if "--gif" in sys.argv:
+        icons = {"green": icon0, "pink": recolor(icon0, "pink"), "purple": icon1}
+        names = ["green", "pink", "purple"]
+        hold, fade = 30, 8
+        frames = []
+        f = 0
+        for i, n in enumerate(names):
+            m = names[(i + 1) % 3]
+            for j in range(hold + fade):
+                t = (f % hold) / hold
+                a = np.asarray(build(n, icons[n], t), np.float32)
+                if j >= hold:
+                    k = (j - hold + 1) / (fade + 1)
+                    b = np.asarray(build(m, icons[m], t), np.float32)
+                    a = a * (1 - k) + b * k
+                frames.append(a)
+                f += 1
+        def q(fr):
+            im = Image.fromarray(fr.clip(0, 255).astype(np.uint8), "RGBA")
+            alpha = im.getchannel("A")
+            p = im.convert("RGB").quantize(255, method=Image.Quantize.MEDIANCUT)
+            p.paste(255, mask=alpha.point(lambda v: 255 if v < 128 else 0))
+            return p
+        qs = [q(fr) for fr in frames]
+        qs[0].save("banner.gif", save_all=True, append_images=qs[1:], duration=70, loop=0, transparency=255, disposal=2)
+        big = [p.resize((p.width * 2, p.height * 2), Image.NEAREST) for p in qs]
+        big[0].save("banner@2x.gif", save_all=True, append_images=big[1:], duration=70, loop=0, transparency=255, disposal=2)
+        sheet = Image.new("RGBA", (418 * 2, H * 4), (34, 36, 54, 255))
+        for i, idx in enumerate([0, 4, 8, 12, 16, 20, 24, 28]):
+            sheet.alpha_composite(Image.fromarray(frames[idx].clip(0, 255).astype(np.uint8), "RGBA"), ((i % 2) * 418, (i // 2) * H))
+        sheet.save("anim_sheet.png")
+        print("frames", len(frames))
+        sys.exit()
     prev = Image.new("RGBA", (out["green"].width, H * 3), (34, 36, 54, 255))
     for i, n in enumerate(out):
         prev.alpha_composite(out[n], (0, i * H))
