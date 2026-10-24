@@ -170,6 +170,7 @@ They were cut into single-direction strips and drawn at 2x for Terramon (see `Co
 | 387 | Turtwig | Spike Chunsoft | Chi (PMDCollab 1) | Spike Chunsoft | Chi (PMDCollab 1) |
 | 390 | Chimchar | Spike Chunsoft | Lovi (PMDCollab 1) | Spike Chunsoft, Emmuffin (PMDCollab 1) | Lovi (PMDCollab 1), Emmuffin (PMDCollab 2) |
 | 393 | Piplup | Spike Chunsoft | Lovi (PMDCollab 1) | Spike Chunsoft | Lovi (PMDCollab 1) |
+| 242 | Blissey (Pokémon Center helper, sprites only) | Spike Chunsoft | - | - | - |
 | 448 | Lucario | Spike Chunsoft, Emmuffin (PMDCollab 1), Emmuffin (CC BY-NC 4.0) | Scizivire (PMDCollab 1), Emmuffin (PMDCollab 1), Emmuffin (CC BY-NC 4.0) | Spike Chunsoft, JFain (PMDCollab 1), Emmuffin (PMDCollab 1) | Anonymous (PMDCollab 1), JFain (PMDCollab 1), Emmuffin (PMDCollab 1), Emmuffin (PMDCollab 2) |
 | 495 | Snivy | NeroIntruder (PMDCollab 1), G〜 (PMDCollab 1) | Emmuffin (PMDCollab 1), G〜 (PMDCollab 1) | Emmuffin (PMDCollab 1), Emmuffin (CC BY-NC 4.0) | Emmuffin (PMDCollab 1), Emmuffin (CC BY-NC 4.0) |
 | 498 | Tepig | NeroIntruder (PMDCollab 1), Emboarger (PMDCollab 1), NikolaP (PMDCollab 1) | Emboarger (PMDCollab 1), NikolaP (PMDCollab 1) | mucrush (PMDCollab 1), Noivern (PMDCollab 1), Emmuffin (PMDCollab 1) | Emmuffin (PMDCollab 1), Emboarger (PMDCollab 1) |

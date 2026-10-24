@@ -1,4 +1,5 @@
 using Terramon.Content.NPCs.Trainers;
+using Terramon.Core.Systems;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items;
@@ -25,6 +26,11 @@ public abstract class BadgeItem : KeyItem
         tooltips.Add(new TooltipLine(Mod, "BadgeCase",
             Language.GetTextValue("Mods.Terramon.CommonTooltips.BadgeCase", League.BadgeCount(player),
                 League.GymLeaders.Length)));
+
+        var cap = LevelCap.Compute(player);
+        tooltips.Add(new TooltipLine(Mod, "LevelCap", LevelCap.HasLimit(cap)
+            ? Language.GetTextValue("Mods.Terramon.CommonTooltips.LevelCap", cap)
+            : Language.GetTextValue("Mods.Terramon.CommonTooltips.NoLevelCap")));
 
         var hallOfFame = player.GetModPlayer<GymPlayer>().HallOfFame;
         if (hallOfFame.Count > 0)

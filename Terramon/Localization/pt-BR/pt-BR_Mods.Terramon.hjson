@@ -117,6 +117,10 @@ Battle: {
 			frz: "{0} está congelado!"
 			flinch: "{0} recuou e não conseguiu se mover!"
 			recharge: "{0} precisa recarregar!"
+			disobey: "{0} não quer obedecer!"
+			loaf: "{0} está vadiando!"
+			nap: "{0} resolveu tirar um cochilo!"
+			disobeymove: "{0} ignorou a ordem e usou outro golpe!"
 		}
 	}
 }
@@ -478,6 +482,10 @@ GUI: {
 		NoBrockGym: Este mundo não tem Ginásio do Brock. Crie um mundo novo ou use "Construir Ginásio do Brock aqui".
 		SingleplayerOnly: Isso só funciona no modo de um jogador.
 		BrockGymBuilt: O Ginásio do Brock foi construído ao seu redor.
+		TeleportPokemonCenter: Ir ao Centro Pokémon
+		BuildPokemonCenter: Construir Centro Pokémon aqui
+		NoPokemonCenter: Este mundo não tem Centro Pokémon. Crie um mundo novo ou use "Construir Centro Pokémon aqui".
+		PokemonCenterBuilt: O Centro Pokémon foi construído onde você estava.
 		SpawnOnix: Chamar Onix selvagem
 		CallOak: Chamar o Professor Carvalho
 		OakCalled: O Professor Carvalho está chegando (dá para ouvir a história de novo).
@@ -689,6 +697,7 @@ GUI: {
 		EXP: EXP
 		ToNextLevel: "Faltam {0} de EXP para o Nv. {1}"
 		MaxLevel: Nível máximo alcançado!
+		AboveCap: "Acima do seu limite de insígnias (Nv. {0}): pode desobedecer"
 		BaseStats: Atributos base
 		BaseTotal: "Total base: {0}"
 		StatsHint: Atributo em vermelho: a natureza aumenta. Em azul: diminui.
@@ -1761,6 +1770,8 @@ Projectiles: {
 // Liga Pokémon: Líderes de Ginásio, Elite dos Quatro, Campeão, insígnias e itens de desafio (league)
 CommonTooltips.BadgeCase: "Insígnias: {0}/{1}"
 CommonTooltips.HallOfFame: "Hall da Fama: Campeão desde {0}"
+CommonTooltips.LevelCap: "Seus Pokémon obedecem até o Nv. {0}"
+CommonTooltips.NoLevelCap: Seus Pokémon obedecem em qualquer nível
 
 NPCs.Trainers: {
 	Busy: "{0} está no meio de uma batalha. Espere a sua vez!"
@@ -2310,4 +2321,46 @@ NPCs.ProfessorOak: {
 		AgainButton: Conte de novo
 		Unbound: (sem tecla definida)
 	}
+}
+
+WorldGen.PokemonCenterPass: Construindo o Centro Pokémon
+
+PokemonCenter: {
+	Sign: Centro Pokémon. A Enfermeira Joy cura seus Pokémon de graça! Por aqui os Pokémon selvagens são sempre fracos, um bom lugar para começar. O PC só funciona dentro de casas (porta, luz, mesa e cadeira) e aqui no Centro.
+	Announce: "O Centro Pokémon fica a {0} blocos a {1} do ponto de nascimento. Procure o prédio branco de telhado vermelho, ou a Poké Bola no mapa."
+	MapName: Centro Pokémon
+	PCNeedsHouse: O PC só pode ser colocado dentro de uma casa válida (porta, luz, mesa e cadeira) ou no Centro Pokémon.
+}
+
+NPCs.NurseJoy: {
+	DisplayName: Enfermeira Joy
+
+	Dialogue: {
+		Greeting1: Bem-vindo ao Centro Pokémon, {0}! Posso cuidar dos seus Pokémon um pouquinho?
+		Greeting2: Olá, {0}! A Chansey e a Blissey estão prontas para ajudar. Quer que eu cure seus Pokémon?
+		Greeting3: Seus Pokémon parecem cansados, {0}. Um descanso aqui e eles ficam novinhos!
+		Greeting4: Que bom te ver, {0}! Aqui seus Pokémon recuperam toda a energia, sem custo nenhum.
+		HealButton: Curar meus Pokémon
+		AboutButton: Sobre o Centro
+		BackButton: Voltar
+		About: "Aqui curamos Pokémon de graça, e os Pokémon selvagens perto do Centro e do ponto de nascimento continuam fracos. Com as suas insígnias, seus Pokémon obedecem até o Nv. {0}: acima disso eles podem ignorar suas ordens. Cada insígnia de ginásio aumenta esse limite."
+		NoPokemon: Você ainda não tem Pokémon! Fale primeiro com o Professor Carvalho.
+		InBattle: Termine a sua batalha primeiro e depois volte aqui!
+		AlreadyHealthy: Seus Pokémon já estão com a saúde perfeita!
+		Healed: Obrigada por esperar! Seus Pokémon estão totalmente recuperados. Volte sempre!
+	}
+}
+
+NPCs.CenterChansey: {
+	DisplayName: Chansey
+	Chat1: Chansey! ♪ (A Chansey está carregando uma bandeja de ovos.)
+	Chat2: Chan-sey! (A Chansey faz uma reverência educada para {0}.)
+	Chat3: Chansey? (A Chansey confere se seus Pokémon estão bem.)
+}
+
+NPCs.CenterBlissey: {
+	DisplayName: Blissey
+	Chat1: Blissey! ♪ (A Blissey cantarola enquanto arruma o balcão.)
+	Chat2: Bliss-ey! (A Blissey dá um sorriso caloroso para {0}.)
+	Chat3: Blissey... (A Blissey parece orgulhosa do trabalho no Centro.)
 }

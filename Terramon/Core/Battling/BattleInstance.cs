@@ -6,6 +6,7 @@ using System.Text;
 using EasyPacketsLib;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
+using Terramon.Core.Systems;
 
 namespace Terramon.Core.Battling;
 
@@ -153,6 +154,13 @@ public sealed class BattleInstance
                 continue;
             var mon = $"battle.sides[{plr - 1}].pokemon[{i}]";
             Stream.Write($">eval for (const [id, pp, max] of [{slots}]) {{ const s = {mon}.baseMoveSlots.find(m => m.id === id); if (s) {{ s.maxpp = max; s.pp = pp; }} }}");
+        }
+
+        // A player's Pokémon above the level their badges allow can disobey
+        if (client.Provider is TerramonPlayer owner && LevelCap.Of(owner.Player) is var cap && LevelCap.HasLimit(cap))
+        {
+            foreach (var command in LevelCap.ShowdownCommands(plr, cap))
+                Stream.Write(command);
         }
     }
 

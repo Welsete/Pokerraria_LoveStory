@@ -4,8 +4,8 @@ using Terraria.DataStructures;
 namespace Terramon.Core.Systems;
 
 /// <summary>
-///     Levels of wild Pokémon, scaled by the furthest boss progression reached in the world and by depth,
-///     and the evolution stage that matches a level.
+///     Levels of wild Pokémon, scaled by the furthest boss progression reached in the world and by depth (but always
+///     low near spawn and the Pokémon Center), and the evolution stage that matches a level.
 /// </summary>
 public static class WildPokemonLevels
 {
@@ -45,16 +45,63 @@ public static class WildPokemonLevels
         return 0;
     }
 
-    public static (int Min, int Max) GetLevelRange(int tileY)
+    /// <summary>
+    ///     Up to this many tiles from spawn or the Pokémon Center, wild Pokémon always have starting levels.
+    /// </summary>
+    public const int SafeZoneRadius = 150;
+
+    /// <summary>
+    ///     How many tiles past the safe zone it takes for wild Pokémon to reach the level of the world.
+    /// </summary>
+    public const int SafeZoneFade = 250;
+
+    private const int SafeMin = 2;
+    private const int SafeMax = 12;
+
+    /// <summary>
+    ///     How far this tile is from the closest base (the spawn point or the Pokémon Center), in tiles.
+    /// </summary>
+    public static float DistanceToBase(int tileX, int tileY)
+    {
+        var distance = Vector2.Distance(new Vector2(tileX, tileY), new Vector2(Main.spawnTileX, Main.spawnTileY));
+        if (Content.WorldGeneration.PokemonCenterSystem.Exists)
+        {
+            var center = Content.WorldGeneration.PokemonCenterSystem.Interior.Center;
+            distance = Math.Min(distance, Vector2.Distance(new Vector2(tileX, tileY), new Vector2(center.X, center.Y)));
+        }
+
+        return distance;
+    }
+
+    /// <summary>
+    ///     0 in the safe zone around spawn and the Pokémon Center, 1 far enough from them that wild Pokémon have the
+    ///     world's level, in between while walking away.
+    /// </summary>
+    public static float Wildness(int tileX, int tileY)
+        => Math.Clamp((DistanceToBase(tileX, tileY) - SafeZoneRadius) / SafeZoneFade, 0f, 1f);
+
+    public static (int Min, int Max) GetLevelRange(int tileX, int tileY)
     {
         var (min, max) = GetProgressionRange();
         var bonus = GetDepthBonus(tileY);
-        return (Math.Clamp(min + bonus, 1, Terramon.MaxPokemonLevel), Math.Clamp(max + bonus, 1, Terramon.MaxPokemonLevel));
+        min += bonus;
+        max += bonus;
+
+        // Near the bases, new players always find Pokémon of their level, whatever bosses were beaten
+        var wild = Wildness(tileX, tileY);
+        if (wild < 1f)
+        {
+            min = (int)MathHelper.Lerp(Math.Min(min, SafeMin + bonus / 2), min, wild);
+            max = (int)MathHelper.Lerp(Math.Min(max, SafeMax), max, wild);
+            max = Math.Max(max, min);
+        }
+
+        return (Math.Clamp(min, 1, Terramon.MaxPokemonLevel), Math.Clamp(max, 1, Terramon.MaxPokemonLevel));
     }
 
-    public static byte RollLevel(int tileY)
+    public static byte RollLevel(int tileX, int tileY)
     {
-        var (min, max) = GetLevelRange(tileY);
+        var (min, max) = GetLevelRange(tileX, tileY);
         return (byte)Main.rand.Next(min, max + 1);
     }
 
@@ -150,7 +197,7 @@ public static class WildPokemonLevels
         }
         else
         {
-            level = RollLevel((int)(worldPosition.Y / 16f));
+            level = RollLevel((int)(worldPosition.X / 16f), (int)(worldPosition.Y / 16f));
         }
 
         var (min, max) = GetStageBounds(id);

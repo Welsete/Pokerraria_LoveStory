@@ -225,7 +225,7 @@ public class GymBuildingsPass(string name, float loadWeight) : GenPass(name, loa
     /// <summary>
     ///     Checks that the ground under [left, left + width) is flat, dry, natural surface, and returns the floor row.
     /// </summary>
-    private static bool TryFindFloor(int left, int width, out int floorY)
+    internal static bool TryFindFloor(int left, int width, out int floorY)
     {
         floorY = 0;
         var right = left + width - 1;
@@ -298,7 +298,7 @@ public class GymBuildingsPass(string name, float loadWeight) : GenPass(name, loa
         return -1;
     }
 
-    private static bool IsNaturalGround(ushort type)
+    internal static bool IsNaturalGround(ushort type)
     {
         if (TileID.Sets.Ore[type] || Main.tileCut[type])
             return true;

@@ -2,6 +2,7 @@ using EasyPacketsLib;
 using ReLogic.Content;
 using Terramon.Content.Commands;
 using Terramon.Content.GUI;
+using Terramon.Content.WorldGeneration;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -67,6 +68,28 @@ public abstract class PCTile : ModTile
         TileObjectData.newTile.UsesCustomCanPlace = true;
         TileObjectData.newTile.DrawYOffset = 2;
         TileObjectData.addTile(Type);
+    }
+
+    private static uint _lastPlaceMessage;
+
+    /// <summary>
+    ///     A PC can only be set up inside a valid house (the same room a town NPC could move into) or in the Pokémon
+    ///     Center. PCs placed before this rule keep working.
+    /// </summary>
+    public override bool CanPlace(int i, int j)
+    {
+        if (WorldGen.generatingWorld || PokemonCenterSystem.Contains(i, j))
+            return true;
+        if (WorldGen.StartRoomCheck(i, j) && WorldGen.RoomNeeds(NPCID.Guide))
+            return true;
+
+        if (!Main.dedServ && Main.GameUpdateCount - _lastPlaceMessage > 180)
+        {
+            _lastPlaceMessage = Main.GameUpdateCount;
+            Main.NewText(Language.GetTextValue("Mods.Terramon.PokemonCenter.PCNeedsHouse"), new Color(255, 190, 90));
+        }
+
+        return false;
     }
 
     public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)

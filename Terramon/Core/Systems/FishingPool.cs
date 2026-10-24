@@ -88,7 +88,7 @@ public static class FishingPool
             roll -= weight;
         }
 
-        var level = WildPokemonLevels.RollLevel(attempt.Y);
+        var level = WildPokemonLevels.RollLevel(attempt.X, attempt.Y);
         return WildPokemonLevels.GetStageForLevel(chosen, level);
     }
 }

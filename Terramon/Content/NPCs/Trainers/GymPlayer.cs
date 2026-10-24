@@ -1,3 +1,5 @@
+using EasyPacketsLib;
+using Terramon.Core.Systems;
 using Terraria.ModLoader.IO;
 
 namespace Terramon.Content.NPCs.Trainers;
@@ -22,6 +24,12 @@ public class GymPlayer : ModPlayer
     ///     Every time this player became Champion: the date and the species in their party.
     /// </summary>
     public List<(DateTime Date, ushort[] Party)> HallOfFame { get; } = [];
+
+    /// <summary>
+    ///     This player's level limit as their game last sent it (see <see cref="LevelCap" />). Only used for other
+    ///     players: the local player works theirs out from their badges.
+    /// </summary>
+    public int SyncedLevelCap { get; set; }
 
     private int _pendingSpawnType;
     private int _pendingSpawnTimer;
@@ -59,6 +67,23 @@ public class GymPlayer : ModPlayer
         var type = _pendingSpawnType;
         _pendingSpawnType = 0;
         League.RequestSpawn(Player, type);
+    }
+
+    public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+    {
+        Mod.SendPacket(new LevelCapRpc((byte)Player.whoAmI, (byte)LevelCap.Compute(Player)), toWho, fromWho);
+    }
+
+    public override void CopyClientState(ModPlayer targetCopy)
+    {
+        ((GymPlayer)targetCopy).SyncedLevelCap = LevelCap.Compute(Player);
+    }
+
+    public override void SendClientChanges(ModPlayer clientPlayer)
+    {
+        var cap = LevelCap.Compute(Player);
+        if (((GymPlayer)clientPlayer).SyncedLevelCap != cap)
+            Mod.SendPacket(new LevelCapRpc((byte)Player.whoAmI, (byte)cap), -1, Main.myPlayer, true);
     }
 
     public override void SaveData(TagCompound tag)

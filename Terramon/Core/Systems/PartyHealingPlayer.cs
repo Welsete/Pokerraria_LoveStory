@@ -57,9 +57,19 @@ public class PartyHealingPlayer : ModPlayer
         => !BattleClient.LocalBattleOngoing && Player.Terramon().Party.Any(NeedsHealing);
 
     /// <summary>
+    ///     Whether someone in the party is hurt (or low on PP, or has a status) and a heal can be given right now.
+    /// </summary>
+    public bool CanHealParty => PartyNeedsHealing();
+
+    /// <summary>
+    ///     Whether the party can't be healed because a battle is going on.
+    /// </summary>
+    public bool PartyBattling => BattleClient.LocalBattleOngoing;
+
+    /// <summary>
     ///     Restores every party Pokémon's HP and PP and cures its status. Returns false if nobody needed it.
     /// </summary>
-    private bool HealParty()
+    public bool HealParty()
     {
         if (!PartyNeedsHealing())
             return false;

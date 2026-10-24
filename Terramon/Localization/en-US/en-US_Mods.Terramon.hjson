@@ -117,6 +117,10 @@ Battle: {
 			frz: "{0} is frozen solid!"
 			flinch: "{0} flinched and couldn't move!"
 			recharge: "{0} must recharge!"
+			disobey: "{0} won't obey!"
+			loaf: "{0} is loafing around!"
+			nap: "{0} took a nap instead!"
+			disobeymove: "{0} ignored orders and used another move!"
 		}
 	}
 }
@@ -478,6 +482,10 @@ GUI: {
 		NoBrockGym: This world has no Brock's Gym. Create a new world or use "Build Brock's Gym here".
 		SingleplayerOnly: This only works in singleplayer.
 		BrockGymBuilt: Brock's Gym was built around you.
+		TeleportPokemonCenter: Go to the Pokémon Center
+		BuildPokemonCenter: Build Pokémon Center here
+		NoPokemonCenter: This world has no Pokémon Center. Create a new world or use "Build Pokémon Center here".
+		PokemonCenterBuilt: The Pokémon Center was built where you were standing.
 		SpawnOnix: Spawn wild Onix
 		CallOak: Call Professor Oak
 		OakCalled: Professor Oak is on his way (you can hear his story again).
@@ -689,6 +697,7 @@ GUI: {
 		EXP: EXP
 		ToNextLevel: "{0} EXP to Lv. {1}"
 		MaxLevel: Maximum level reached!
+		AboveCap: "Above your badge limit (Lv. {0}): it may disobey"
 		BaseStats: Base stats
 		BaseTotal: "Base total: {0}"
 		StatsHint: Red stat: raised by the nature. Blue: lowered.
@@ -1761,6 +1770,8 @@ Projectiles: {
 // Pokémon League: Gym Leaders, Elite Four, Champion, badges and challenge items (league)
 CommonTooltips.BadgeCase: "Badge Case: {0}/{1}"
 CommonTooltips.HallOfFame: "Hall of Fame: Champion since {0}"
+CommonTooltips.LevelCap: "Your Pokémon obey up to Lv. {0}"
+CommonTooltips.NoLevelCap: Your Pokémon obey at any level
 
 NPCs.Trainers: {
 	Busy: "{0} is in the middle of a battle. Wait your turn!"
@@ -2310,4 +2321,46 @@ NPCs.ProfessorOak: {
 		AgainButton: Tell me again
 		Unbound: (no key set)
 	}
+}
+
+WorldGen.PokemonCenterPass: Building the Pokémon Center
+
+PokemonCenter: {
+	Sign: Pokémon Center. Nurse Joy heals your Pokémon for free! Around here wild Pokémon are always weak, a good place to start. The PC works only inside houses (door, light, table and chair) and here at the Center.
+	Announce: "The Pokémon Center is {0} tiles {1} of the spawn point. Look for the white building with the red roof, or the Poké Ball on the map."
+	MapName: Pokémon Center
+	PCNeedsHouse: A PC can only be set up inside a valid house (door, light, table and chair) or at the Pokémon Center.
+}
+
+NPCs.NurseJoy: {
+	DisplayName: Nurse Joy
+
+	Dialogue: {
+		Greeting1: Welcome to the Pokémon Center, {0}! Shall I take your Pokémon for a while?
+		Greeting2: Hello, {0}! Chansey and Blissey are ready to help. Would you like your Pokémon healed?
+		Greeting3: Your Pokémon look tired, {0}. A little rest here will fix them right up!
+		Greeting4: Good to see you, {0}! We restore your Pokémon to full health, free of charge.
+		HealButton: Heal my Pokémon
+		AboutButton: About the Center
+		BackButton: Back
+		About: "Here we heal Pokémon for free, and wild Pokémon around the Center and the spawn point stay weak. With your badges, your Pokémon obey you up to Lv. {0}: above that they may ignore orders. Every Gym badge raises that limit."
+		NoPokemon: You don't have any Pokémon yet! Talk to Professor Oak first.
+		InBattle: Finish your battle first, then come back!
+		AlreadyHealthy: Your Pokémon are already in perfect health!
+		Healed: Thank you for waiting! Your Pokémon are fighting fit. We hope to see you again!
+	}
+}
+
+NPCs.CenterChansey: {
+	DisplayName: Chansey
+	Chat1: Chansey! ♪ (Chansey is carrying a tray of fresh eggs.)
+	Chat2: Chan-sey! (Chansey bows politely to {0}.)
+	Chat3: Chansey? (Chansey checks if your Pokémon are alright.)
+}
+
+NPCs.CenterBlissey: {
+	DisplayName: Blissey
+	Chat1: Blissey! ♪ (Blissey hums while tidying the counter.)
+	Chat2: Bliss-ey! (Blissey gives {0} a warm smile.)
+	Chat3: Blissey... (Blissey looks proud of its work at the Center.)
 }

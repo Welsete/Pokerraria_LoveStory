@@ -104,6 +104,8 @@ public sealed class AdminPanelUI : SmartUIState
             ("ResetBadges", ResetBadges),
             ("TeleportBrockGym", TeleportToBrockGym),
             ("BuildBrockGym", BuildBrockGymHere),
+            ("TeleportPokemonCenter", TeleportToPokemonCenter),
+            ("BuildPokemonCenter", BuildPokemonCenterHere),
             ("CallOak", CallProfessorOak)
         ]),
         ("TabTerraria", [
@@ -835,5 +837,43 @@ public sealed class AdminPanelUI : SmartUIState
         BrockGymBuilder.Build(left, top);
         TeleportToBrockGym();
         Say("BrockGymBuilt");
+    }
+
+    private static void TeleportToPokemonCenter()
+    {
+        if (!PokemonCenterSystem.Exists)
+        {
+            Main.NewText(Text("NoPokemonCenter"), TerramonCommand.ChatColorRed);
+            return;
+        }
+
+        var player = Main.LocalPlayer;
+        var inside = PokemonCenterSystem.Interior;
+        var position = new Point(inside.X + 3, inside.Bottom).ToWorldCoordinates(8f, 0f) -
+                       new Vector2(player.width / 2f, player.height);
+        player.Teleport(position, TeleportationStyleID.RodOfDiscord);
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, player.whoAmI, position.X, position.Y,
+                TeleportationStyleID.RodOfDiscord);
+    }
+
+    /// <summary>
+    ///     Builds the Pokémon Center with its floor under the player's feet, for worlds made before it existed.
+    ///     Singleplayer only, like Brock's Gym.
+    /// </summary>
+    private static void BuildPokemonCenterHere()
+    {
+        if (Main.netMode != NetmodeID.SinglePlayer)
+        {
+            Main.NewText(Text("SingleplayerOnly"), TerramonCommand.ChatColorRed);
+            return;
+        }
+
+        var feet = Main.LocalPlayer.Bottom.ToTileCoordinates();
+        var left = Math.Clamp(feet.X - PokemonCenterBuilder.Width / 2, 60, Main.maxTilesX - PokemonCenterBuilder.Width - 60);
+        var floor = Math.Clamp(feet.Y, PokemonCenterBuilder.Height + 60, Main.maxTilesY - 100);
+        PokemonCenterBuilder.Build(left, floor);
+        TeleportToPokemonCenter();
+        Say("PokemonCenterBuilt");
     }
 }

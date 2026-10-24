@@ -376,6 +376,7 @@ internal sealed class SummaryWindow : UIElement
     private static readonly Color LabelText = new(120, 210, 245);
     private static readonly Color ValueText = new(240, 232, 160);
     private static readonly Color DimText = new(150, 165, 210);
+    private static readonly Color AboveCapText = new(255, 160, 70);
     private static readonly Color HeaderRed = new(160, 34, 46);
     private static readonly Color HeaderDark = new(100, 18, 28);
     private static readonly Color HeaderLight = new(210, 70, 78);
@@ -676,7 +677,10 @@ internal sealed class SummaryWindow : UIElement
         var number = $"#{data.ID:D3}";
         Text(sb, number, plate.X + 12, plate.Center.Y, DimText, 0.8f, 0f, 0.5f);
         var level = Language.GetTextValue("Mods.Terramon.GUI.Party.LevelDisplay", data.Level);
-        Text(sb, level, plate.Right - 12, plate.Center.Y, ValueText, 0.8f, 1f, 0.5f);
+        // Above the badge limit: orange level, and the EXP line says it may disobey
+        var cap = LevelCap.Compute(Main.LocalPlayer);
+        var aboveCap = data.Level > cap;
+        Text(sb, level, plate.Right - 12, plate.Center.Y, aboveCap ? AboveCapText : ValueText, 0.8f, 1f, 0.5f);
         var nameRight = plate.Right - 12 - Measure(level, 0.8f).X - 8;
         if (data.Gender is Gender.Male or Gender.Female)
         {
@@ -740,7 +744,10 @@ internal sealed class SummaryWindow : UIElement
 
         Bar(sb, new Rectangle(bars.X + 52, bars.Y + 34, 120, 10), expPercent, new Color(80, 170, 255));
         Text(sb, $"{(int)(expPercent * 100)}%", bars.Right - 12, bars.Y + 39, ValueText, 0.75f, 1f, 0.5f);
-        TextFit(sb, expNote, bars.X + 12, bars.Y + 60, bars.Width - 24, DimText, 0.7f, 0.5f);
+        if (aboveCap)
+            TextFit(sb, T("AboveCap", cap), bars.X + 12, bars.Y + 60, bars.Width - 24, AboveCapText, 0.7f, 0.5f);
+        else
+            TextFit(sb, expNote, bars.X + 12, bars.Y + 60, bars.Width - 24, DimText, 0.7f, 0.5f);
     }
 
     /// <summary>

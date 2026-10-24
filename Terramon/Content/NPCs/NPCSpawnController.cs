@@ -266,7 +266,7 @@ public class NPCSpawnController : NPCComponent
     private static void ApplyEvolutionStages(IDictionary<int, float> pool, HashSet<int> typesAdded,
         NPCSpawnInfo spawnInfo)
     {
-        var level = WildPokemonLevels.RollLevel(spawnInfo.SpawnTileY);
+        var level = WildPokemonLevels.RollLevel(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY);
         WildPokemonLevels.SetPendingSpawnLevel(level);
 
         foreach (var type in typesAdded)
