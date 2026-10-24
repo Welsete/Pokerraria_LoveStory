@@ -413,6 +413,7 @@ internal sealed class SummaryWindow : UIElement
     private readonly Rectangle[] _tabRects = new Rectangle[5];
     private Rectangle _animButton;
     private Rectangle _closeButton;
+    private Rectangle _dexButton;
     private Rectangle _nextButton;
     private Rectangle _prevButton;
     private Rectangle _scene;
@@ -444,6 +445,13 @@ internal sealed class SummaryWindow : UIElement
         if (_closeButton.Contains(p))
         {
             SummaryUI.Close();
+            return;
+        }
+
+        if (_dexButton.Contains(p))
+        {
+            SummaryUI.Close();
+            HubUI.OpenToPokemon(data.ID, data.IsShiny);
             return;
         }
 
@@ -610,6 +618,18 @@ internal sealed class SummaryWindow : UIElement
         if (closeHover)
             Main.instance.MouseText(T("Close"));
 
+        // Pokédex entry of this Pokémon
+        var dexText = T("Pokedex");
+        var dexWidth = (int)Measure(dexText, 0.75f).X + 16;
+        var dexRight = SummaryUI.Count > 1 ? _closeButton.X - 118 : _closeButton.X - 10;
+        _dexButton = new Rectangle(dexRight - dexWidth, _closeButton.Y, dexWidth, 22);
+        var dexHover = Hovering(_dexButton);
+        Fill(sb, _dexButton, OutlineDark);
+        Fill(sb, Inset(_dexButton, 1), dexHover ? HeaderLight : HeaderDark);
+        TextCentered(sb, dexText, _dexButton, Color.White, 0.75f);
+        if (dexHover)
+            Main.instance.MouseText(T("PokedexHint"));
+
         // Previous/next Pokémon
         if (SummaryUI.Count > 1)
         {
@@ -688,18 +708,7 @@ internal sealed class SummaryWindow : UIElement
         InfoRow(sb, T("Nature"), NatureText(data), info.X + 12, valueX, rowY, valueWidth);
         DrawAbilityRow(sb, data, info, valueX, rowY + 24, valueWidth);
 
-        var item = data.HeldItem;
-        if (item == null || item.IsAir)
-        {
-            InfoRow(sb, T("Item"), T("NoItem"), info.X + 12, valueX, rowY + 48, valueWidth);
-        }
-        else
-        {
-            ItemSlot.DrawItemIcon(item, ItemSlot.Context.MouseItem, sb, new Vector2(valueX + 8, rowY + 48), 1f, 18f,
-                Color.White);
-            InfoRow(sb, T("Item"), Lang.GetItemNameValue(item.type), info.X + 12, valueX + 22, rowY + 48,
-                valueWidth - 22);
-        }
+        DrawItemRow(sb, data, info, valueX, rowY + 48, valueWidth);
 
         InfoRow(sb, T("Trainer"), string.IsNullOrEmpty(data.OT) ? T("Unknown") : data.OT, info.X + 12, valueX,
             rowY + 72, valueWidth);
@@ -760,6 +769,59 @@ internal sealed class SummaryWindow : UIElement
     /// <summary>
     ///     A small "?" square that tells the player they can hover something to read more about it.
     /// </summary>
+    /// <summary>
+    ///     The held item row of the info panel, with a "?" badge like the ability: hovering it shows what the item does.
+    /// </summary>
+    private void DrawItemRow(SpriteBatch sb, PokemonData data, Rectangle info, int valueX, int y, int valueWidth)
+    {
+        var item = data.HeldItem;
+        if (item == null || item.IsAir)
+        {
+            InfoRow(sb, T("Item"), T("NoItem"), info.X + 12, valueX, y, valueWidth);
+            return;
+        }
+
+        var row = new Rectangle(info.X + 6, y - 11, info.Width - 12, 22);
+        var hover = Hovering(row);
+        if (hover)
+            Fill(sb, row, new Color(42, 57, 110));
+
+        const int badgeSpace = 20;
+        var name = Lang.GetItemNameValue(item.type);
+        ItemSlot.DrawItemIcon(item, ItemSlot.Context.MouseItem, sb, new Vector2(valueX + 8, y), 1f, 18f, Color.White);
+        InfoRow(sb, T("Item"), name, info.X + 12, valueX + 22, y, valueWidth - 22 - badgeSpace);
+        var nameWidth = Math.Min(Measure(name, 0.78f).X, valueWidth - 22 - badgeSpace);
+        HelpBadge(sb, (int)(valueX + 22 + nameWidth + 6), y, hover);
+        if (hover)
+            MoveTooltip.Show(HeldItemTooltip(item));
+    }
+
+    /// <summary>
+    ///     The item's name and what it does, for hovering a held item.
+    /// </summary>
+    internal static string HeldItemTooltip(Item item)
+    {
+        var text = $"[c/ffdd6e:{Lang.GetItemNameValue(item.type)}]";
+        var description = HeldItemDescription(item);
+        if (description.Length > 0)
+            text += "\n" + MoveTooltip.Wrap(description, 340f);
+        return text;
+    }
+
+    internal static string HeldItemDescription(Item item)
+    {
+        var tooltip = Lang.GetTooltip(item.type);
+        var lines = new List<string>();
+        for (var i = 0; i < tooltip.Lines; i++)
+        {
+            var line = tooltip.GetLine(i);
+            if (!string.IsNullOrWhiteSpace(line))
+                lines.Add(line);
+        }
+
+        return string.Join("\n", lines);
+    }
+
     private static void HelpBadge(SpriteBatch sb, int x, int centerY, bool active)
     {
         var r = new Rectangle(x, centerY - 7, 13, 13);

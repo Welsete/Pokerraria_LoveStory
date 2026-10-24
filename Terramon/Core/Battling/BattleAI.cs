@@ -201,7 +201,7 @@ public static class BattleAI
         }
     }
 
-    private static List<PokemonType> TypesOf(ushort species)
+    public static List<PokemonType> TypesOf(ushort species)
     {
         var schema = Terramon.DatabaseV2?.GetPokemon(species);
         return schema?.Types?.Where(t => t is > PokemonType.None and <= PokemonType.Fairy).ToList() ?? [];

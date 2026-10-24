@@ -446,7 +446,8 @@ public sealed class TestBattleUI : SmartUIState
             label.SetText(Language.GetText($"Mods.Terramon.Moves.{move.ID}.DisplayName"));
             var schema = move.Schema;
             typeLine.SetText(Language.GetTextValue($"Mods.Terramon.Types.{schema.Type}") + "  ·  " +
-                             Language.GetTextValue($"Mods.Terramon.Battle.MoveInfo.{schema.Category}"));
+                             Language.GetTextValue($"Mods.Terramon.Battle.MoveInfo.{schema.Category}") +
+                             EffectivenessTag(schema.Type, schema.Category));
             var maxPP = schema.PP + schema.PP * move.PPUp / 5;
             statsLine.SetText(Language.GetTextValue("Mods.Terramon.Battle.MoveInfo.Stats",
                 schema.Power is > 1 ? schema.Power.ToString() : "—",
@@ -457,6 +458,27 @@ public sealed class TestBattleUI : SmartUIState
 
             cur++;
         }
+    }
+
+    /// <summary>
+    ///     How effective a damaging move is against the foe's active Pokémon (0x, 0,5x, 1x, 2x, 4x...), colored like
+    ///     the battle messages. Status moves show nothing.
+    /// </summary>
+    private static string EffectivenessTag(PokemonType type, MoveCategory category)
+    {
+        var foe = FoePanel?.CurrentMon;
+        if (foe == null || category is MoveCategory.Status or MoveCategory.Dynamic)
+            return string.Empty;
+        var mult = BattleAI.Effectiveness(type, BattleAI.TypesOf(foe.ID));
+        var color = mult switch
+        {
+            0f => "8c8c96",
+            < 1f => "ff7864",
+            > 1f => "78ff78",
+            _ => "ffffff"
+        };
+        var text = mult.ToString("0.##", Language.ActiveCulture.CultureInfo) + "x";
+        return $"  ·  [c/{color}:{text}]";
     }
 
     /// <summary>
@@ -884,10 +906,58 @@ public sealed class TestBattleUI : SmartUIState
     private static string _typedLine = string.Empty;
     private static uint _typedSince;
 
+    /// <summary>
+    ///     A small "Back" button above the battle box while the moves, bag, team or item target are shown, so going
+    ///     back doesn't need Esc.
+    /// </summary>
+    private static bool BackButtonShown => _opened && !_showingTurn && _mainPanel != null &&
+                                           _optionsPanel.Parent == null &&
+                                           BattleClient.LocalClient.CurrentRequest != ShowdownRequest.ForcedSwitch;
+
+    private static Rectangle BackButtonRect()
+    {
+        var box = _mainPanel.GetDimensions();
+        var text = Language.GetTextValue("Mods.Terramon.Battle.Back");
+        var size = FontAssets.MouseText.Value.MeasureString(text);
+        var w = (int)size.X + 28;
+        const int h = 34;
+        return new Rectangle((int)box.X + 12, (int)box.Y - h - 4, w, h);
+    }
+
+    private static void UpdateBackButton()
+    {
+        if (!BackButtonShown)
+            return;
+        var rect = BackButtonRect();
+        if (!rect.Contains(Main.MouseScreen.ToPoint()))
+            return;
+        Main.LocalPlayer.mouseInterface = true;
+        if (Main.mouseLeft && Main.mouseLeftRelease)
+        {
+            Main.mouseLeftRelease = false;
+            GoBack();
+        }
+    }
+
+    private static void DrawBackButton(SpriteBatch spriteBatch)
+    {
+        if (!BackButtonShown)
+            return;
+        var rect = BackButtonRect();
+        var hovered = rect.Contains(Main.MouseScreen.ToPoint());
+        Utils.DrawInvBG(spriteBatch, rect, hovered ? new Color(73, 94, 171) * 0.95f : new Color(44, 57, 105) * 0.9f);
+        var text = Language.GetTextValue("Mods.Terramon.Battle.Back");
+        var size = FontAssets.MouseText.Value.MeasureString(text);
+        Utils.DrawBorderString(spriteBatch, text,
+            new Vector2(rect.X + (rect.Width - size.X) / 2f, rect.Y + (rect.Height - size.Y) / 2f + 4f),
+            hovered ? Color.Yellow : Color.White);
+    }
+
     public override void SafeUpdate(GameTime gameTime)
     {
         FitLabels();
         UpdateTurnPlayback();
+        UpdateBackButton();
 
         // When the active Pokémon faints, go straight to picking another one (once its faint has been shown)
         if (_opened && !_showingTurn && _pokemonPanel.Parent == null &&
@@ -960,6 +1030,8 @@ public sealed class TestBattleUI : SmartUIState
     public override void Draw(SpriteBatch spriteBatch)
     {
         base.Draw(spriteBatch);
+
+        DrawBackButton(spriteBatch);
 
         // After the buttons, so the move's tooltip panel covers them instead of mixing with them
         DrawMoveTooltip();

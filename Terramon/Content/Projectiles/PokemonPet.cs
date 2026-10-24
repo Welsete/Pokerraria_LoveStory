@@ -194,7 +194,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 
     public override bool PreDraw(ref Color lightColor)
     {
-        lightColor = StatusVisuals.Tint(Data?.Status ?? NonVolatileStatus.None, lightColor);
+        lightColor = StatusVisuals.Tint(Data != null ? BattlePlayback.ShownStatus(Data) : NonVolatileStatus.None, lightColor);
         _mainTexture ??= PokemonEntityLoader.RequestTexture(this);
 
         if (Projectile.isAPreviewDummy)
@@ -464,7 +464,8 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
     {
         if (InBallFlight || IsHeldByEvolution)
             return;
-        if (!Projectile.isAPreviewDummy && Data is { Status: NonVolatileStatus.Slp })
+        // What the battle turn being shown says, so it doesn't fall asleep before the move that puts it to sleep
+        if (!Projectile.isAPreviewDummy && Data != null && BattlePlayback.ShownStatus(Data) == NonVolatileStatus.Slp)
             StatusVisuals.DrawSleepZ(Main.spriteBatch, Projectile.Top, Main.screenPosition, Projectile.whoAmI);
 
         // Marks this pet for HP bar rendering if it needs one
@@ -608,7 +609,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         UpdateSendOut(owningPlayer);
 
         if (Data != null && !Projectile.isAPreviewDummy)
-            StatusVisuals.SpawnDust(Data.Status, Projectile.Hitbox);
+            StatusVisuals.SpawnDust(BattlePlayback.ShownStatus(Data), Projectile.Hitbox);
 
         var isShiny = Data is { IsShiny: true };
 

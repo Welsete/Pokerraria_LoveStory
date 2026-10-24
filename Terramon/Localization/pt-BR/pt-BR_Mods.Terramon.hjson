@@ -32,6 +32,7 @@ Battle: {
 	LevelUp: "{0} subiu para o Nv. {1}!"
 	ChooseNext: Escolha outro Pokémon para mandar à batalha.
 	SkipTurnHint: Clique para pular
+	Back: "« Voltar"
 	ReturnedFainted: "{0} desmaiou e voltou para a Poké Bola. Use um Reviver para curá-lo."
 	Log: {
 		SwitchedIn: "{0} entrou na batalha!"
@@ -563,6 +564,7 @@ GUI: {
 		SlotTooltipPCModeActive: "[c/FFFFFF:Na Equipe (Ativo)]"
 		SlotTooltipUseItem: Clique esquerdo para usar {0}
 		SlotTooltipGiveHeldItem: Clique direito para entregar {0}
+		SlotHeldItem: "Segurando: [c/FFDD6E:{0}]"
 		SlotTooltipSwapHeldItem: Clique direito para trocar pelo {0} segurado
 		SlotTooltipSwapHeldItemSpecify: Clique direito para trocar {0} pelo {1} segurado
 		CannotRemoveLastPokemon: Sua equipe precisa ter pelo menos um Pokémon!
@@ -640,6 +642,8 @@ GUI: {
 		Title: Resumo do Pokémon
 		Hint: "[c/9FA2AD:Clique do meio ou {0}: abrir resumo]"
 		Close: Fechar (Esc)
+		Pokedex: Pokédex
+		PokedexHint: Ver este Pokémon na Pokédex
 		Previous: Pokémon anterior (←)
 		Next: Próximo Pokémon (→)
 		CryHint: Clique para ouvir o grito

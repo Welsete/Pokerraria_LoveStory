@@ -255,7 +255,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        drawColor = StatusVisuals.Tint(Data?.Status ?? NonVolatileStatus.None, drawColor);
+        drawColor = StatusVisuals.Tint(Data != null ? BattlePlayback.ShownStatus(Data) : NonVolatileStatus.None, drawColor);
         _mainTexture ??= PokemonEntityLoader.RequestTexture(this);
         var mainTextureValue = _mainTexture.Value;
 

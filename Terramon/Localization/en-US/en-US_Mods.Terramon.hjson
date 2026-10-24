@@ -32,6 +32,7 @@ Battle: {
 	LevelUp: "{0} grew to Lv. {1}!"
 	ChooseNext: Choose another Pokémon to send out.
 	SkipTurnHint: Click to skip
+	Back: "« Back"
 	ReturnedFainted: "{0} has fainted and returned to its Poké Ball. Use a Revive to heal it."
 	Log: {
 		SwitchedIn: "{0} entered the battle!"
@@ -563,6 +564,7 @@ GUI: {
 		SlotTooltipPCModeActive: "[c/FFFFFF:In Party (Active)]"
 		SlotTooltipUseItem: Left click to use {0}
 		SlotTooltipGiveHeldItem: Right click to give {0}
+		SlotHeldItem: "Holding: [c/FFDD6E:{0}]"
 		SlotTooltipSwapHeldItem: Right click to swap with held {0}
 		SlotTooltipSwapHeldItemSpecify: Right click to swap {0} with held {1}
 		CannotRemoveLastPokemon: Your party must have at least one Pokémon!
@@ -640,6 +642,8 @@ GUI: {
 		Title: Pokémon Summary
 		Hint: "[c/9FA2AD:Middle click or {0}: open summary]"
 		Close: Close (Esc)
+		Pokedex: Pokédex
+		PokedexHint: See this Pokémon in the Pokédex
 		Previous: Previous Pokémon (←)
 		Next: Next Pokémon (→)
 		CryHint: Click to hear its cry

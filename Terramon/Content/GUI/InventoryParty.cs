@@ -803,6 +803,16 @@ internal sealed class CustomPartyItemSlot : UIImage
             tooltip += '\n' + Language.GetTextValue(key);
         }
 
+        // What the held item does, so it doesn't have to be looked up
+        if (Data.HeldItem is { IsAir: false } held)
+        {
+            tooltip += '\n' + Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotHeldItem",
+                Lang.GetItemNameValue(held.type));
+            var description = SummaryUI.HeldItemDescription(held);
+            if (description.Length > 0)
+                tooltip += "\n[c/9FA2AD:" + description.Replace("\n", "]\n[c/9FA2AD:") + "]";
+        }
+
         // The full summary has its own screen now; just say how to open it
         tooltip += '\n' + SummaryUI.HintText();
 
