@@ -861,7 +861,10 @@ public static class BrockGymBuilder
         for (var dx = -ShrineHalf - 2; dx <= ShrineHalf + 2; dx++)
         {
             var x = x0 + dx;
-            if (Math.Abs(dx) <= ShrineHalf && dx != 0)
+            // A hole 3 tiles wide over the shaft, so a player fits through it
+            if (Math.Abs(dx) <= 1)
+                Main.tile[x, floor].ClearTile();
+            else if (Math.Abs(dx) <= ShrineHalf)
                 PlaceBlock(x, floor, TileID.StoneSlab);
             var depth = Math.Abs(dx) <= 1 ? 0 : Math.Abs(dx) <= 3 ? 12 : 4 - Math.Abs(dx) / 4;
             for (var y = floor + (Math.Abs(dx) <= ShrineHalf ? 1 : 0); y <= floor + depth; y++)
