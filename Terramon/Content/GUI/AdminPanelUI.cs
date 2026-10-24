@@ -91,6 +91,7 @@ public sealed class AdminPanelUI : SmartUIState
             ("SpawnWild", SpawnWild),
             ("SpawnOnix", SpawnOnix),
             ("SpawnLucario", SpawnLucario),
+            ("SpawnVulpix", SpawnVulpix),
             ("GiveLucario", GiveLucario),
             ("ClearWild", ClearWild),
             ("ClearBattles", ClearBattles)
@@ -217,6 +218,8 @@ public sealed class AdminPanelUI : SmartUIState
     /// <summary>
     ///     Every item of the mod in a scrollable grid: left click gives one, right click a full stack.
     /// </summary>
+    private UIGrid _itemGrid;
+
     private void BuildItemGrid()
     {
         var hint = new UIText(Label("ItemsHint"), 0.75f) { HAlign = 0.5f };
@@ -241,6 +244,7 @@ public sealed class AdminPanelUI : SmartUIState
                      .OrderBy(i => i.Type))
             grid.Add(new ItemCell(item.Type));
 
+        _itemGrid = grid;
         _buttons.Add(grid);
         _buttons.Add(scrollbar);
         _panel.Append(grid);
@@ -305,6 +309,10 @@ public sealed class AdminPanelUI : SmartUIState
             _panel.Top.Pixels = position.Y;
             _panel.Recalculate();
         }
+
+        // The grid only moves its items when it's laid out again, so scrolling needs this every frame
+        if (_itemGrid?.Parent != null)
+            _itemGrid.Recalculate();
 
         // Don't use items or click the world through the panel
         if (_panel.ContainsPoint(Main.MouseScreen))
@@ -652,6 +660,14 @@ public sealed class AdminPanelUI : SmartUIState
     private static void SpawnOnix()
     {
         if (!PokemonEntityLoader.IDToNPCType.TryGetValue(NationalDexID.Onix, out var type))
+            return;
+        var pos = InFrontOfPlayer();
+        NPC.NewNPC(Main.LocalPlayer.GetSource_FromThis(), (int)pos.X, (int)pos.Y, type);
+    }
+
+    private static void SpawnVulpix()
+    {
+        if (!PokemonEntityLoader.IDToNPCType.TryGetValue(NationalDexID.Vulpix, out var type))
             return;
         var pos = InFrontOfPlayer();
         NPC.NewNPC(Main.LocalPlayer.GetSource_FromThis(), (int)pos.X, (int)pos.Y, type);

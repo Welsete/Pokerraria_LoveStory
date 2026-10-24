@@ -482,6 +482,7 @@ GUI: {
 		CallOak: Call Professor Oak
 		OakCalled: Professor Oak is on his way (you can hear his story again).
 		SpawnLucario: Spawn wild Lucario
+		SpawnVulpix: Spawn wild Vulpix
 		GiveLucario: Get Lucario (Lv. 30)
 		LucarioGiven: A Lucario joined your party.
 		PartyFull: Your party is full.
