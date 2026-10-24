@@ -1,4 +1,4 @@
-﻿using Showdown.NET.Definitions;
+using Showdown.NET.Definitions;
 using Terramon.Content.NPCs;
 using Terramon.Content.NPCs.Trainers;
 using Terramon.Core.Battling.BattlePackets;
@@ -45,6 +45,13 @@ public struct BattlePokemon()
         };
 
     public HashSet<VolatileEffect> Volatiles = [];
+
+    // The last move it used (and on which turn), and the move Disable blocks (see BattleField.DisabledTurnsLeft)
+    public ushort LastMove;
+    public int LastMoveTurn;
+    public ushort DisabledMove;
+    public int DisabledTurn;
+    public bool DisabledAfterMoving;
 
     /// <summary>
     ///     The species this Pokémon looks like after Transform or Imposter, or 0 if it isn't transformed.

@@ -48,7 +48,25 @@ public sealed class PartyDisplay : SmartUIState
         }
 
         Append(Sidebar);
+
+        // A small tab on the sidebar's edge that slides it away to the left and back (same as its key)
+        _toggleTab = new UITextPanel<string>("<", 0.9f)
+        {
+            VAlign = 0.5f,
+            Width = { Pixels = 22 },
+            Height = { Pixels = 56 },
+            BackgroundColor = new Color(63, 82, 151) * 0.8f
+        };
+        _toggleTab.SetPadding(0);
+        _toggleTab.OnLeftClick += (_, _) =>
+        {
+            SoundEngine.PlaySound(in SoundID.MenuTick);
+            Sidebar.Toggle();
+        };
+        Append(_toggleTab);
     }
+
+    private UITextPanel<string> _toggleTab;
 
     private static void UpdateSlot(PokemonData data, int index)
     {
@@ -112,6 +130,15 @@ public sealed class PartyDisplay : SmartUIState
                 (partyData != null && partyData.IsNetStateDirty(slot.CloneData,
                     PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitNickname | PokemonData.BitHP, out _)))
                 UpdateSlot(partyData, slot.Index);
+        }
+
+        _toggleTab.Left.Pixels = Sidebar.Left.Pixels + 122;
+        _toggleTab.SetText(Sidebar.IsToggled ? "<" : ">");
+        if (_toggleTab.IsMouseHovering)
+        {
+            Main.LocalPlayer.mouseInterface = true;
+            Main.hoverItemName = Language.GetTextValue("Mods.Terramon.GUI.Party.ToggleTab",
+                KeybindSystem.TogglePartyKeybind.GetAssignedKeys().FirstOrDefault() ?? "-");
         }
 
         Recalculate();

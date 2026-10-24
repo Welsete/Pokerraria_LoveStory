@@ -26,6 +26,9 @@ Battle: {
 	}
 
 	MissPopup: Errou!
+	MoveDisabled: Desativado
+	MoveDisabledTurns: "Faltam {0} turno(s)"
+	MoveDisabledClick: "{0} está desativado e não pode ser usado por mais {1} turno(s)."
 	KnockedOutHint: "Jogue uma Poké Bola rápido para tentar capturar {0}!"
 	CantBattleFainted: "{0} está desmaiado e não pode batalhar!"
 	GainedExp: "{0} ganhou {1} pontos de Exp.!"
@@ -630,6 +633,7 @@ GUI: {
 	}
 
 	Party: {
+		ToggleTab: "Esconder ou mostrar a equipe (tecla {0})"
 		LevelDisplay: Nv. {0}
 		SlotHover: Clique esquerdo para enviar
 		SlotHoverActive: Clique esquerdo para recolher

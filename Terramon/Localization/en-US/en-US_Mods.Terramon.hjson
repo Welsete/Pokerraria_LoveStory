@@ -26,6 +26,9 @@ Battle: {
 	}
 
 	MissPopup: Miss!
+	MoveDisabled: Disabled
+	MoveDisabledTurns: "{0} turn(s) left"
+	MoveDisabledClick: "{0} is disabled and can't be used for {1} more turn(s)."
 	KnockedOutHint: "Throw a Poké Ball quickly to try to catch {0}!"
 	CantBattleFainted: "{0} has fainted and can't battle!"
 	GainedExp: "{0} gained {1} Exp. Points!"
@@ -630,6 +633,7 @@ GUI: {
 	}
 
 	Party: {
+		ToggleTab: "Hide or show the party (key {0})"
 		LevelDisplay: Lv. {0}
 		SlotHover: Left click to send out
 		SlotHoverActive: Left click to recall

@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using EasyPacketsLib;
 using ReLogic.Content;
 using Terramon.Core.Battling;
@@ -457,8 +457,30 @@ public sealed class TestBattleUI : SmartUIState
             moveRef.DataRef = data;
             moveRef.Move = cur;
 
+            // Disabled: grayed out, saying for how many more turns
+            moveRef.DisabledTurns = DisabledTurnsLeft(move.ID);
+            if (moveRef.DisabledTurns > 0)
+            {
+                actual.Color = Color.Lerp(actual.Color, Color.DimGray, 0.75f);
+                typeLine.SetText(Language.GetTextValue("Mods.Terramon.Battle.MoveDisabled"));
+                statsLine.SetText(Language.GetTextValue("Mods.Terramon.Battle.MoveDisabledTurns", moveRef.DisabledTurns));
+            }
+
             cur++;
         }
+    }
+
+    /// <summary>
+    ///     Turns left of Disable on one of the local player's active Pokémon's moves, 0 if it isn't disabled.
+    /// </summary>
+    private static int DisabledTurnsLeft(MoveID move)
+    {
+        var field = BattleClient.LocalClient?.Battle;
+        var side = field?[field.LocalSideIndex];
+        if (side == null)
+            return 0;
+        ref var active = ref side.ActivePokemon;
+        return active.DisabledMove != 0 && active.DisabledMove == (ushort)move ? field.DisabledTurnsLeft(active) : 0;
     }
 
     /// <summary>
@@ -510,8 +532,17 @@ public sealed class TestBattleUI : SmartUIState
 
     private static void ClickMoveButton(UIMouseEvent evt, UIElement listeningElement)
     {
-        SoundEngine.PlaySound(in TerramonSoundID.BattleDecide);
         var move = (MoveReference)listeningElement.Children.First(e => e is MoveReference);
+        if (move.DisabledTurns > 0)
+        {
+            SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
+            var name = Language.GetTextValue($"Mods.Terramon.Moves.{move.DataRef.Moves[move.Move].ID}.DisplayName");
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.MoveDisabledClick", name, move.DisabledTurns),
+                new Color(255, 120, 100));
+            return;
+        }
+
+        SoundEngine.PlaySound(in TerramonSoundID.BattleDecide);
 
         if (BattleClient.LocalClient.MakeChoice(BattleChoice.Move, move.Move))
         {
@@ -1130,6 +1161,9 @@ public sealed class MoveReference : UIElement
 {
     public PokemonData DataRef;
     public int Move;
+
+    /// <summary>Turns left of Disable on this move, 0 if it can be used.</summary>
+    public int DisabledTurns;
 }
 
 public sealed class BagItemReference : UIElement

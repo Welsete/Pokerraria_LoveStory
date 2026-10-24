@@ -78,6 +78,8 @@ public sealed class BattleField
             case BattleActionID.MoveAnimation:
                 ref var user = ref GetMon(r);
                 var moveId = r.ReadUInt16();
+                user.LastMove = moveId;
+                user.LastMoveTurn = Turn;
                 if (show)
                     BattlePlayback.QueueMove(this, user.Side, moveId, a.Flags[0], a.Flags[1]);
                 // The owner's game takes the PP right away. Showdown's next request sets the exact amount, but no
@@ -106,6 +108,9 @@ public sealed class BattleField
                     }
                 }
 
+                // Disable ends when the Pokémon leaves the field
+                if (switchedIn.Side != null)
+                    switchedIn.Side.ActivePokemon.DisabledMove = 0;
                 // Stat stages stay with the Pokémon only while it's on the field
                 if (switchedIn.Side.ActivePokemon.Data is { } left && left != switchedIn.Data)
                     left.StatStages = default;
@@ -227,6 +232,13 @@ public sealed class BattleField
                     mon.Volatiles.Add(vol);
                 else
                     mon.Volatiles.Remove(vol);
+                // Disable blocks the last move the Pokémon used
+                if (vol == VolatileEffect.Disable)
+                {
+                    mon.DisabledMove = a.Flags[0] ? mon.LastMove : (ushort)0;
+                    mon.DisabledTurn = Turn;
+                    mon.DisabledAfterMoving = mon.LastMoveTurn == Turn;
+                }
                 // todo: certain volatiles have more effects than just being set as flags on the mon
                 break;
             case BattleActionID.PokemonItem:
@@ -304,6 +316,16 @@ public sealed class BattleField
             return;
         foreach (var mon in mons)
             BattlePlayback.QueueBoosts(this, mon);
+    }
+
+    /// <summary>
+    ///     How many more turns (counting this one) Disable keeps blocking the move. It lasts 4 turns after the one it
+    ///     was used in if the Pokémon had already moved, or 4 turns counting that one if it hadn't.
+    /// </summary>
+    public int DisabledTurnsLeft(in BattlePokemon mon)
+    {
+        var total = mon.DisabledAfterMoving ? 5 : 4;
+        return Math.Clamp(total - (Turn - mon.DisabledTurn), 1, 4);
     }
 
     public ref BattlePokemon GetMon(BinaryReader r) => ref GetMon(r.ReadPokemonID());
