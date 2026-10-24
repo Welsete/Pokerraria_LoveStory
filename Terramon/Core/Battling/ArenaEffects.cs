@@ -6,7 +6,9 @@ namespace Terramon.Core.Battling;
 /// <summary>
 ///     Shows a battle's weather and terrain around the battle itself, with Terraria's own effects: rain falling, a warm
 ///     sun, a sandstorm, snow and hail, flowers growing on Grassy Terrain, sparks on Electric Terrain, pink mist on
-///     Misty Terrain and a purple glow on Psychic Terrain. Only the area of the battle is touched and nothing in the
+///     Misty Terrain and a purple glow on Psychic Terrain. Side conditions show on their own side: a gust of wind with
+///     leaves for Tailwind, a shimmer in front of the Pokémon for Reflect, Light Screen, Safeguard and Mist, and rocks or
+///     spikes on the ground for entry hazards. Only the area of the battle is touched and nothing in the
 ///     world changes; the effects follow what the battle has shown so far (see <see cref="BattlePlayback.ShownField" />).
 /// </summary>
 [Autoload(Side = ModSide.Client)]
@@ -24,6 +26,7 @@ public sealed class ArenaEffects : ModSystem
     {
         public BattleField Field;
         public float Left, Right, Bottom;
+        public Vector2 PosA, PosB;
         public bool Alive;
         public readonly List<Flower> Flowers = [];
     }
@@ -81,6 +84,8 @@ public sealed class ArenaEffects : ModSystem
             arena.Left = Math.Min(a.Center.X, b.Center.X) - Margin;
             arena.Right = Math.Max(a.Center.X, b.Center.X) + Margin;
             arena.Bottom = (a.Bottom.Y + b.Bottom.Y) * 0.5f;
+            arena.PosA = a.Center;
+            arena.PosB = b.Center;
 
             var (weather, terrain) = BattlePlayback.ShownField(field);
             if (terrain == FieldCondition.GrassyTerrain)
@@ -92,6 +97,8 @@ public sealed class ArenaEffects : ModSystem
                 continue;
             Weather(arena, weather);
             Terrain(arena, terrain);
+            Side(arena, BattlePlayback.ShownSide(field, field.A), arena.PosA, arena.PosB);
+            Side(arena, BattlePlayback.ShownSide(field, field.B), arena.PosB, arena.PosA);
         }
 
         for (var i = Arenas.Count - 1; i >= 0; i--)
@@ -252,6 +259,81 @@ public sealed class ArenaEffects : ModSystem
                     Lighting.AddLight(new Vector2(x, arena.Bottom - 16f), 0.45f, 0.15f, 0.6f);
                 break;
         }
+    }
+
+    private static bool Has(uint conditions, SideCondition condition) => (conditions & (1u << (int)condition)) != 0;
+
+    /// <summary>
+    ///     The effects of one side's conditions; <paramref name="own" /> is that side's Pokémon and
+    ///     <paramref name="foe" /> the one it faces.
+    /// </summary>
+    private static void Side(Arena arena, uint conditions, Vector2 own, Vector2 foe)
+    {
+        if (conditions == 0)
+            return;
+        var toward = foe.X >= own.X ? 1f : -1f;
+
+        if (Has(conditions, SideCondition.Tailwind))
+        {
+            // Wind streaks blowing from behind the Pokémon towards the foe, carrying a few leaves
+            var from = own.X - toward * Margin;
+            for (var i = 0; i < 3; i++)
+            {
+                var d = Dust.NewDustPerfect(
+                    new Vector2(from + toward * Main.rand.NextFloat(0f, 80f), own.Y + Main.rand.NextFloat(-90f, 40f)),
+                    DustID.Cloud, new Vector2(toward * Main.rand.NextFloat(9f, 14f), Main.rand.NextFloat(-0.4f, 0.4f)), 150,
+                    default, Main.rand.NextFloat(0.8f, 1.3f));
+                d.noGravity = true;
+                d.fadeIn = 0.4f;
+            }
+
+            if (Main.rand.NextBool(3))
+            {
+                var d = Dust.NewDustPerfect(new Vector2(from, own.Y + Main.rand.NextFloat(-70f, 30f)), DustID.Grass,
+                    new Vector2(toward * Main.rand.NextFloat(6f, 9f), Main.rand.NextFloat(-1.5f, 0.5f)), 0, default, 1.2f);
+                d.noGravity = true;
+            }
+        }
+
+        // Screens: a thin shimmering wall between the Pokémon and its foe
+        Wall(conditions, SideCondition.Reflect, DustID.GoldFlame, own, toward, 0.6f, 0.5f, 0.15f);
+        Wall(conditions, SideCondition.LightScreen, DustID.PinkTorch, own, toward, 0.6f, 0.3f, 0.5f);
+        Wall(conditions, SideCondition.Safeguard, DustID.BlueTorch, own, toward, 0.2f, 0.4f, 0.7f);
+        Wall(conditions, SideCondition.Mist, DustID.IceTorch, own, toward, 0.4f, 0.55f, 0.6f);
+
+        // Entry hazards lie on the ground in front of the Pokémon
+        Hazard(arena, conditions, SideCondition.StealthRock, DustID.Stone, own, toward, 1.3f);
+        Hazard(arena, conditions, SideCondition.Spikes, DustID.Iron, own, toward, 1f);
+        Hazard(arena, conditions, SideCondition.ToxicSpikes, DustID.Venom, own, toward, 1f);
+        Hazard(arena, conditions, SideCondition.StickyWeb, DustID.Web, own, toward, 1f);
+    }
+
+    private static void Wall(uint conditions, SideCondition condition, int dust, Vector2 own, float toward, float r,
+        float g, float b)
+    {
+        if (!Has(conditions, condition))
+            return;
+        var x = own.X + toward * 40f;
+        if (Main.rand.NextBool(2))
+        {
+            var d = Dust.NewDustPerfect(new Vector2(x + Main.rand.NextFloat(-3f, 3f), own.Y + Main.rand.NextFloat(-56f, 32f)),
+                dust, new Vector2(0f, Main.rand.NextFloat(-0.6f, -0.2f)), 100, default, 1.1f);
+            d.noGravity = true;
+        }
+
+        Lighting.AddLight(new Vector2(x, own.Y - 16f), r, g, b);
+        Lighting.AddLight(new Vector2(x, own.Y + 16f), r, g, b);
+    }
+
+    private static void Hazard(Arena arena, uint conditions, SideCondition condition, int dust, Vector2 own, float toward,
+        float scale)
+    {
+        if (!Has(conditions, condition) || !Main.rand.NextBool(5))
+            return;
+        var x = own.X + toward * Main.rand.NextFloat(-24f, 72f);
+        var d = Dust.NewDustPerfect(new Vector2(x, Ground(x, arena.Bottom) - 2f), dust,
+            new Vector2(Main.rand.NextFloat(-0.2f, 0.2f), Main.rand.NextFloat(-0.8f, -0.2f)), 0, default, scale);
+        d.noGravity = true;
     }
 
     /// <summary>

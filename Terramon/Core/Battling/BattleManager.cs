@@ -1,4 +1,4 @@
-﻿using Showdown.NET.Protocol;
+using Showdown.NET.Protocol;
 using System.Text;
 using System.Text.Json;
 using EasyPacketsLib;
@@ -527,17 +527,17 @@ public sealed class BattleManager
                 }
                 break;
             case SideStartElement sd:
-                Write(BattleActionID.SetSideCondition, sd.Tags != null && sd.Tags.Contains("[persistent]"));
+                Write(BattleActionID.SetSideCondition); // the first flag means a swap
                 {
                     w.Write((byte)sd.Side.Player);
                     w.Write((byte)ParseOrNone<SideCondition>(sd.Condition));
                 }
                 break;
             case SideEndElement sd:
-                Write(BattleActionID.SetSideCondition);
+                Write(BattleActionID.SetSideCondition, false, true); // is end
                 {
                     w.Write((byte)sd.Side.Player);
-                    w.Write((byte)0);
+                    w.Write((byte)ParseOrNone<SideCondition>(sd.Condition));
                 }
                 break;
             case SwapSideConditionsElement:

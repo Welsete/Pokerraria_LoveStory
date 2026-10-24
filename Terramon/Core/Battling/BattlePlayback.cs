@@ -115,6 +115,7 @@ public sealed class BattlePlayback : ModSystem
         // Field (weather and terrain) and Boost (stat stages)
         public BattleWeather Weather;
         public FieldCondition Terrain;
+        public uint SideA, SideB;
         public uint Boost;
     }
 
@@ -161,6 +162,7 @@ public sealed class BattlePlayback : ModSystem
         public readonly Dictionary<PokemonData, uint> Boosts = new(ReferenceEqualityComparer.Instance);
         public BattleWeather? Weather;
         public FieldCondition? Terrain;
+        public uint? SideA, SideB;
 
         public bool Busy => Steps.Count > 0 || Wait > 0 || PendingHit > 0;
     }
@@ -322,6 +324,8 @@ public sealed class BattlePlayback : ModSystem
             var timeline = Touch(field);
             timeline.Weather ??= field.Weather;
             timeline.Terrain ??= field.Condition;
+            timeline.SideA ??= field.A?.Conditions ?? 0;
+            timeline.SideB ??= field.B?.Conditions ?? 0;
         }
     }
 
@@ -332,7 +336,11 @@ public sealed class BattlePlayback : ModSystem
     {
         if (field == null)
             return;
-        Add(field, new Step { Kind = Kind.Field, Weather = field.Weather, Terrain = field.Condition });
+        Add(field, new Step
+        {
+            Kind = Kind.Field, Weather = field.Weather, Terrain = field.Condition, SideA = field.A?.Conditions ?? 0,
+            SideB = field.B?.Conditions ?? 0
+        });
     }
 
     /// <summary>
@@ -373,6 +381,29 @@ public sealed class BattlePlayback : ModSystem
         }
 
         return (field.Weather, field.Condition);
+    }
+
+    /// <summary>
+    ///     The side conditions (Tailwind, Reflect...) the arena shows for side <paramref name="side" /> of a battle, as
+    ///     <see cref="BattleSide.Conditions" /> bits (see <see cref="ShownHP" />).
+    /// </summary>
+    public static uint ShownSide(BattleField field, BattleSide side)
+    {
+        if (field == null || side == null)
+            return 0;
+        if (Enabled && Timelines.Count > 0)
+        {
+            lock (Sync)
+            {
+                foreach (var timeline in Timelines)
+                {
+                    if (timeline.Field == field)
+                        return (side == field.A ? timeline.SideA : timeline.SideB) ?? side.Conditions;
+                }
+            }
+        }
+
+        return side.Conditions;
     }
 
     /// <summary>
@@ -907,6 +938,8 @@ public sealed class BattlePlayback : ModSystem
                 {
                     timeline.Weather = step.Weather;
                     timeline.Terrain = step.Terrain;
+                    timeline.SideA = step.SideA;
+                    timeline.SideB = step.SideB;
                 }
                 break;
 

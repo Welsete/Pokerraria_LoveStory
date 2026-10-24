@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 
 namespace Terramon.Core.Battling;
 public sealed class BattleSide : IEnumerable<PokemonData>
@@ -13,7 +13,11 @@ public sealed class BattleSide : IEnumerable<PokemonData>
     public int TeamCount;
     public BattlePokemon[] Team = new BattlePokemon[6];
     public IBattleProvider Provider;
-    public SideCondition Condition;
+    /// <summary>
+    ///     The side conditions (Tailwind, Reflect, Spikes...) up on this side, one bit per <see cref="SideCondition" />.
+    /// </summary>
+    public uint Conditions;
+    public bool Has(SideCondition condition) => (Conditions & (1u << (int)condition)) != 0;
     public int Trapped;
     public ref BattlePokemon ActivePokemon => ref Team[_activeSlot];
     public void SetActivePokemon(byte slot)

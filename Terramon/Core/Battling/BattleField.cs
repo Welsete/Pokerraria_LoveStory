@@ -1,4 +1,4 @@
-﻿using Showdown.NET.Definitions;
+using Showdown.NET.Definitions;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.ID;
 
@@ -201,12 +201,24 @@ public sealed class BattleField
                     BattlePlayback.QueueField(this);
                 break;
             case BattleActionID.SetSideCondition:
+                if (show)
+                    BattlePlayback.HoldField(this);
                 if (a.Flags[0])
                 {
-                    (A.Condition, B.Condition) = (B.Condition, A.Condition);
+                    (A.Conditions, B.Conditions) = (B.Conditions, A.Conditions);
                 }
                 else
-                    this[r.ReadByte()].Condition = (SideCondition)r.ReadByte();
+                {
+                    var side = this[r.ReadByte()];
+                    var bit = 1u << r.ReadByte();
+                    if (a.Flags[1]) // is end
+                        side.Conditions &= ~bit;
+                    else
+                        side.Conditions |= bit;
+                }
+
+                if (show)
+                    BattlePlayback.QueueField(this);
                 break;
             case BattleActionID.SetPokemonVolatile:
                 mon = ref GetMon(r);
