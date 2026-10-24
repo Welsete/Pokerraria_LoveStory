@@ -49,12 +49,13 @@ public sealed class PartyDisplay : SmartUIState
 
         Append(Sidebar);
 
-        // A small tab on the sidebar's edge that slides it away to the left and back (same as its key)
-        _toggleTab = new UITextPanel<string>("<", 0.9f)
+        // A small button over the sidebar's top left corner that slides it away to the left and back (same as its
+        // key). It stays where it is when the sidebar is away, so it can bring it back.
+        _toggleTab = new UITextPanel<string>("<", 0.7f)
         {
-            VAlign = 0.5f,
-            Width = { Pixels = 22 },
-            Height = { Pixels = 56 },
+            Left = { Pixels = 4 },
+            Width = { Pixels = 24 },
+            Height = { Pixels = 18 },
             BackgroundColor = new Color(63, 82, 151) * 0.8f
         };
         _toggleTab.SetPadding(0);
@@ -132,7 +133,7 @@ public sealed class PartyDisplay : SmartUIState
                 UpdateSlot(partyData, slot.Index);
         }
 
-        _toggleTab.Left.Pixels = Sidebar.Left.Pixels + 122;
+        _toggleTab.Top.Pixels = Sidebar.GetDimensions().Y - 24;
         _toggleTab.SetText(Sidebar.IsToggled ? "<" : ">");
         if (_toggleTab.IsMouseHovering)
         {
