@@ -43,6 +43,16 @@ Battle: {
 		Resisted: Não é muito eficaz...
 		Immune: "Não afeta {0}..."
 		Crit: Um golpe crítico!
+		From: {
+			Recoil: "{0} sofreu dano de recuo!"
+			Poison: "{0} sofreu dano do veneno!"
+			Burn: "{0} sofreu dano da queimadura!"
+			Confusion: "{0} está tão confuso que se feriu!"
+			Sandstorm: "{0} foi atingido pela tempestade de areia!"
+			Hail: "{0} foi atingido pelo granizo!"
+			LeechSeed: "A Leech Seed drenou a energia de {0}!"
+			LifeOrb: "{0} perdeu PS por causa da Life Orb!"
+		}
 		HitCount: "Acertou {0} vez(es)!"
 		Endured: "{0} aguentou o golpe!"
 		EnduredSash: "{0} aguentou o golpe com a Faixa de Foco!"

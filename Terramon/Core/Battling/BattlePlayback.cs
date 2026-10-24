@@ -21,11 +21,14 @@ public sealed class BattlePlayback : ModSystem
     private const int SpecialHitDelay = 26;
     private const int StatusHitDelay = 24;
     private const int StillHitDelay = 10;
-    private const int LineHold = 34;
+    private const int LineHold = 45;
     private const int FaintHold = 50;
     private const int SwitchHold = 14;
-    private const int MoveGap = 72;
-    private const int EndPause = 30;
+    private const int MoveGap = 90;
+    private const int EndPause = 45;
+
+    // The last message of a turn stays a moment before the menu comes back
+    private const int TurnHold = 50;
 
     // A timeline that never empties (it shouldn't happen) is played out at once after this long, so nobody gets stuck
     private const int MaxBusyTicks = 60 * 30;
@@ -114,7 +117,7 @@ public sealed class BattlePlayback : ModSystem
         public int PendingHit;
         public int SinceMove = MoveGap;
         public int BusyTicks;
-        public string LastText;
+        public readonly List<string> RecentText = [];
 
         /// <summary>
         ///     Ticks this timeline is kept after it empties, so what it holds isn't dropped between a value being held
@@ -376,7 +379,7 @@ public sealed class BattlePlayback : ModSystem
     ///     A new turn starts (written in the battle history).
     /// </summary>
     public static void QueueTurn(BattleField field, bool print)
-        => Add(field, new Step { Kind = Kind.Turn, Print = print });
+        => Add(field, new Step { Kind = Kind.Turn, Print = print, Hold = TurnHold });
 
     /// <summary>
     ///     Runs <paramref name="action" /> once everything already queued for this battle has been shown (e.g. the end
@@ -420,7 +423,8 @@ public sealed class BattlePlayback : ModSystem
     public static bool LocalBusy => IsBusy(BattleClient.LocalClient?.Battle);
 
     /// <summary>
-    ///     The latest message shown in the local player's battle while it plays, without color tags.
+    ///     The latest messages shown in the local player's battle while it plays (the last two, older first, one per
+    ///     line), without color tags.
     /// </summary>
     public static string LocalLine
     {
@@ -428,7 +432,9 @@ public sealed class BattlePlayback : ModSystem
         {
             var battle = BattleClient.LocalClient?.Battle;
             lock (Sync)
-                return Get(battle, false)?.LastText;
+                return Get(battle, false) is { RecentText.Count: > 0 } timeline
+                    ? string.Join("\n", timeline.RecentText)
+                    : null;
         }
     }
 
@@ -800,7 +806,11 @@ public sealed class BattlePlayback : ModSystem
         Main.NewText(text, color);
         BattleLog.Record(text, color, timeline.Field);
         lock (Sync)
-            timeline.LastText = StripTags(text);
+        {
+            timeline.RecentText.Add(StripTags(text));
+            if (timeline.RecentText.Count > 2)
+                timeline.RecentText.RemoveAt(0);
+        }
     }
 
     /// <summary>

@@ -157,6 +157,9 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         {
             _drawnMon = shownMon;
             _hpVisual = 0f;
+            // Shiny Pokémon twinkle when they come into the battle, like in the main games
+            if (shownMon is { IsShiny: true })
+                SoundEngine.PlaySound(in TerramonSoundID.ShinySparkle);
         }
 
         var shownHP = BattlePlayback.ShownHP(shownMon);
@@ -181,6 +184,14 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
             drawGenderPosition = drawGenderPosition.Floor();
             
             spriteBatch.Draw(GenderIcon.Value, drawGenderPosition, GenderIcon.Frame(2, 1, monGender), Color.White);
+        }
+
+        if (shownMon is { IsShiny: true })
+        {
+            // Twinkling stars after the name (and gender)
+            var nameWidth = bigFont.MeasureString(monName + " ").X * textDrawScale;
+            var starsX = drawTextPosition.X + nameWidth + (monGender != -1 ? GenderIcon.Width() / 2f + 6f : 0f);
+            DrawShinyStars(spriteBatch, new Vector2(starsX, drawTextPosition.Y + 10f));
         }
 
         string lv = "Lv. ";
@@ -351,5 +362,24 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
             f = Math.Max(f - step, target);
         else if (f < target)
             f = Math.Min(f + step, target);
+    }
+
+    // Three little four-pointed stars that twinkle one after another
+    private static void DrawShinyStars(SpriteBatch spriteBatch, Vector2 position)
+    {
+        var pixel = TextureAssets.MagicPixel.Value;
+        var gold = new Color(255, 221, 87);
+        for (var i = 0; i < 3; i++)
+        {
+            var phase = Main.GameUpdateCount * 0.1f - i * 1.2f;
+            var twinkle = 0.55f + 0.45f * MathF.Sin(phase);
+            var size = i == 1 ? 5 : 4;
+            var center = (position + new Vector2(i * 11f, i == 1 ? -4f : 0f)).Floor();
+            var arm = (int)Math.Round(size * (0.7f + 0.3f * twinkle));
+            var color = Color.Lerp(gold, Color.White, twinkle * 0.5f) * (0.6f + 0.4f * twinkle);
+            spriteBatch.Draw(pixel, new Rectangle((int)center.X - 1, (int)center.Y - arm, 2, arm * 2), color);
+            spriteBatch.Draw(pixel, new Rectangle((int)center.X - arm, (int)center.Y - 1, arm * 2, 2), color);
+            spriteBatch.Draw(pixel, new Rectangle((int)center.X - 1, (int)center.Y - 1, 2, 2), Color.White * twinkle);
+        }
     }
 }

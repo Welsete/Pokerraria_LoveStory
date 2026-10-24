@@ -63,6 +63,10 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     private Vector2 _plasmaStateVelocity;
     private bool _noGravityBeforeCapture;
     private int _shinySparkleTimer;
+    private bool _shinyAnnounced;
+
+    // How close (in pixels) the local player has to be to hear a shiny Pokémon's twinkle
+    private const float ShinyNoticeRange = 16f * 60f;
 
     static PokemonNPC()
     {
@@ -517,6 +521,14 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         if (_mainTexture == null)
             SoundEngine.PlaySound(in SoundID.Item30, NPC.position);
+
+        // A twinkle the first time the local player comes near it, so a shiny doesn't go unnoticed
+        if (!_shinyAnnounced && !Main.dedServ && !NPC.SpawnedFromStatue &&
+            NPC.DistanceSQ(Main.LocalPlayer.Center) < ShinyNoticeRange * ShinyNoticeRange)
+        {
+            _shinyAnnounced = true;
+            SoundEngine.PlaySound(in TerramonSoundID.ShinySparkle);
+        }
 
         ShinyEffect();
     }

@@ -269,6 +269,9 @@ public static class BattleAI
         return list;
     }
 
+    private static bool IsStruggle(MoveOption move)
+        => move.ID == MoveID.Struggle || move.RawID.Equals("struggle", StringComparison.OrdinalIgnoreCase);
+
     private static List<MoveOption> ReadMoves(JsonElement active)
     {
         var list = new List<MoveOption>();
@@ -297,6 +300,10 @@ public static class BattleAI
                 Data = id == MoveID.None ? null : Terramon.DatabaseV2?.GetMove(id),
             });
         }
+        // Every Pokémon also carries Struggle (see PokemonMoves.PackedString). It's only for when nothing else is left,
+        // like in the main games, not a move to pick: it barely hurts and costs a quarter of the user's HP
+        if (list.Any(m => !IsStruggle(m)))
+            list.RemoveAll(IsStruggle);
         return list;
     }
 

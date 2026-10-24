@@ -43,6 +43,16 @@ Battle: {
 		Resisted: It's not very effective...
 		Immune: "It doesn't affect {0}..."
 		Crit: A critical hit!
+		From: {
+			Recoil: "{0} is damaged by recoil!"
+			Poison: "{0} is hurt by poison!"
+			Burn: "{0} is hurt by its burn!"
+			Confusion: "{0} hurt itself in its confusion!"
+			Sandstorm: "{0} is buffeted by the sandstorm!"
+			Hail: "{0} is buffeted by the hail!"
+			LeechSeed: "{0}'s health is sapped by Leech Seed!"
+			LifeOrb: "{0} lost some of its HP!"
+		}
 		HitCount: "Hit {0} time(s)!"
 		Endured: "{0} endured the hit!"
 		EnduredSash: "{0} hung on using its Focus Sash!"

@@ -13,6 +13,9 @@ public static class TerramonSoundID
     /// </summary>
     public static readonly SoundStyle EvolutionTheme = new("Terramon/Sounds/evolution_theme") { Volume = 0.8f };
 
+    // Twinkle played when a shiny Pokémon is near or enters a battle
+    public static readonly SoundStyle ShinySparkle = new("Terramon/Sounds/shiny_sparkle") { Volume = 0.6f };
+
     public static readonly SoundStyle PkballCatchPla = new("Terramon/Sounds/pkball_catch_pla") { Volume = 0.75f };
     public static readonly SoundStyle PkmnRecall = new("Terramon/Sounds/pkmn_recall") { Volume = 0.35f };
     public static readonly SoundStyle ButtonSmm = new("Terramon/Sounds/button_smm") { Pitch = 0.6f, Volume = 0.2925f };

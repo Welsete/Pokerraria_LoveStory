@@ -144,6 +144,9 @@ public static class BattleLog
             case DamageElement damage:
             {
                 var lost = TrackHP(source, damage.Pokemon, damage.HP);
+                // Damage that isn't from a hit says where it came from first (recoil, poison, Life Orb...)
+                if (lost > 0 && DamageSource(damage.Tags) is { } from)
+                    Send("From." + from, Muted, Mon(source, damage.Pokemon));
                 if (lost > 0)
                     Send("Damage", LogColor, Mon(source, damage.Pokemon), Highlight(lost, DamageHex),
                         HPLeft(source, damage.Pokemon));
@@ -237,6 +240,36 @@ public static class BattleLog
             Send(w, amount > 1 ? "StatRoseSharply" : "StatRose", Good, Mon(source, showdownMon), Stat(stat));
         else
             Send(w, amount > 1 ? "StatFellHarshly" : "StatFell", Bad, Mon(source, showdownMon), Stat(stat));
+    }
+
+    /// <summary>
+    ///     Where damage that isn't from a hit came from, as a <c>Log.From.*</c> key, from its "[from] ..." tag.
+    /// </summary>
+    private static string DamageSource(string[] tags)
+    {
+        if (tags == null)
+            return null;
+        foreach (var tag in tags)
+        {
+            if (!tag.StartsWith("[from]"))
+                continue;
+            var from = tag["[from]".Length..].Trim();
+            return from switch
+            {
+                "Recoil" or "recoil" => "Recoil",
+                "psn" or "tox" => "Poison",
+                "brn" => "Burn",
+                "confusion" => "Confusion",
+                "Sandstorm" => "Sandstorm",
+                "Hail" => "Hail",
+                "Leech Seed" or "move: Leech Seed" => "LeechSeed",
+                "item: Life Orb" => "LifeOrb",
+                "Struggle" or "move: Struggle" => "Recoil",
+                _ => null
+            };
+        }
+
+        return null;
     }
 
     private static bool ConsumeSkippedTurn(BattleInstance source, int side)
