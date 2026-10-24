@@ -135,6 +135,9 @@ public sealed class PartyDisplay : SmartUIState
 
         _toggleTab.Top.Pixels = Sidebar.GetDimensions().Y - 24;
         _toggleTab.SetText(Sidebar.IsToggled ? "<" : ">");
+        // Highlighted border while the mouse is over it
+        _toggleTab.BorderColor = _toggleTab.IsMouseHovering ? Colors.FancyUIFatButtonMouseOver : Color.Black;
+        _toggleTab.BackgroundColor = _toggleTab.IsMouseHovering ? new Color(73, 94, 171) : new Color(63, 82, 151) * 0.8f;
         if (_toggleTab.IsMouseHovering)
         {
             Main.LocalPlayer.mouseInterface = true;
