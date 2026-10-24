@@ -217,6 +217,17 @@ public static class BattleLog
                         Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(species));
                 break;
             }
+            // What a field, weather or team effect does, in a short line (the move's full description is in the history)
+            case FieldStartElement field when EffectKey(field.Condition) is { } fieldKey:
+                Send("Field." + fieldKey, Notable);
+                break;
+            case WeatherElement { Upkeep: false } weather when EffectKey(weather.Weather) is { } weatherKey:
+                Send("Weather." + weatherKey, Notable);
+                break;
+            case SideStartElement side when EffectKey(side.Condition) is { } sideKey:
+                Send("Side." + sideKey, Notable,
+                    LogArg.Mon(side.Side.Player, source[side.Side.Player]?.Provider?.BattleName ?? "?"));
+                break;
             case CureStatusElement cure:
                 Send("Cured", Good, Mon(source, cure.Pokemon));
                 break;
@@ -270,6 +281,16 @@ public static class BattleLog
         }
 
         return null;
+    }
+
+    // "move: Grassy Terrain" → "GrassyTerrain"; "RainDance" stays. Lines without a translation are skipped by Send
+    private static string EffectKey(string condition)
+    {
+        if (string.IsNullOrEmpty(condition))
+            return null;
+        var name = condition.Contains(':') ? condition[(condition.IndexOf(':') + 1)..] : condition;
+        name = new string(name.Where(char.IsLetterOrDigit).ToArray());
+        return name.Length == 0 ? null : name;
     }
 
     private static bool ConsumeSkippedTurn(BattleInstance source, int side)

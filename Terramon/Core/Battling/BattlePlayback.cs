@@ -25,8 +25,8 @@ public sealed class BattlePlayback : ModSystem
 
     // Messages are written out letter by letter (this many per tick, see TypedLine), then stay a moment to be read
     public const float LettersPerTick = 1.2f;
-    private const int ReadHold = 70;
-    private const int LineHold = 90;
+    private const int ReadHold = 90;
+    private const int LineHold = 110;
     private const int LongestHold = 260;
 
     /// <summary>
@@ -369,7 +369,8 @@ public sealed class BattlePlayback : ModSystem
         var intro = name is "UsedMove" or "MoveEffect";
         // How much HP went down or up is already shown by the HP bar: it's only kept in the battle history (L), with
         // a short moment for the bar to move
-        var historyOnly = name is "Damage" or "Healed";
+        // A status move's full description is long: it's kept in the history, and a short line says what it did
+        var historyOnly = name is "Damage" or "Healed" or "MoveEffect";
         Add(field, new Step
         {
             Kind = Kind.Line,
@@ -380,7 +381,7 @@ public sealed class BattlePlayback : ModSystem
             HistoryOnly = historyOnly,
             AfterHit = name is "Crit" or "SuperEffective" or "Resisted",
             // "X used Y!" stays while its move plays out: its hit and HP bar wait for it to be written out
-            Hold = historyOnly ? 0 : intro ? TypingTicks(text) + 10 : HoldFor(text)
+            Hold = historyOnly ? 0 : intro ? TypingTicks(text) + 30 : HoldFor(text)
         });
     }
 

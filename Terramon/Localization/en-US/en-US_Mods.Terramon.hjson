@@ -43,6 +43,32 @@ Battle: {
 		Resisted: It's not very effective...
 		Immune: "It doesn't affect {0}..."
 		Crit: A critical hit!
+		Field: {
+			GrassyTerrain: "Grass grew to cover the battlefield!"
+			ElectricTerrain: "An electric current ran across the battlefield!"
+			PsychicTerrain: "The battlefield got weird!"
+			MistyTerrain: "Mist swirled around the battlefield!"
+			TrickRoom: "The dimensions were twisted!"
+			Gravity: "Gravity intensified!"
+		}
+		Weather: {
+			RainDance: "It started to rain!"
+			SunnyDay: "The sunlight turned harsh!"
+			Sandstorm: "A sandstorm kicked up!"
+			Hail: "It started to hail!"
+			Snow: "It started to snow!"
+			none: "The weather returned to normal."
+		}
+		Side: {
+			Reflect: "Reflect made {0}'s team stronger against physical moves!"
+			LightScreen: "Light Screen made {0}'s team stronger against special moves!"
+			Safeguard: "{0}'s team cloaked itself in a mystical veil!"
+			Mist: "{0}'s team became shrouded in mist!"
+			Tailwind: "The Tailwind blew from behind {0}'s team!"
+			Spikes: "Spikes were scattered around {0}'s team!"
+			StealthRock: "Pointed stones float in the air around {0}'s team!"
+			ToxicSpikes: "Poison spikes were scattered around {0}'s team!"
+		}
 		From: {
 			Recoil: "{0} is damaged by recoil!"
 			Poison: "{0} is hurt by poison!"

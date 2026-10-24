@@ -43,6 +43,32 @@ Battle: {
 		Resisted: Não é muito eficaz...
 		Immune: "Não afeta {0}..."
 		Crit: Um golpe crítico!
+		Field: {
+			GrassyTerrain: "A grama cresceu e cobriu o campo de batalha!"
+			ElectricTerrain: "Uma corrente elétrica percorre o campo de batalha!"
+			PsychicTerrain: "O campo de batalha ficou estranho!"
+			MistyTerrain: "Uma névoa cobriu o campo de batalha!"
+			TrickRoom: "As dimensões foram distorcidas!"
+			Gravity: "A gravidade se intensificou!"
+		}
+		Weather: {
+			RainDance: "Começou a chover!"
+			SunnyDay: "A luz do sol ficou forte!"
+			Sandstorm: "Uma tempestade de areia começou!"
+			Hail: "Começou a cair granizo!"
+			Snow: "Começou a nevar!"
+			none: "O tempo voltou ao normal."
+		}
+		Side: {
+			Reflect: "Reflect protege a equipe de {0} contra golpes físicos!"
+			LightScreen: "Light Screen protege a equipe de {0} contra golpes especiais!"
+			Safeguard: "A equipe de {0} está protegida contra problemas de status!"
+			Mist: "A equipe de {0} foi coberta pela névoa!"
+			Tailwind: "Um vento a favor sopra atrás da equipe de {0}!"
+			Spikes: "Espinhos foram espalhados em volta da equipe de {0}!"
+			StealthRock: "Pedras pontudas flutuam em volta da equipe de {0}!"
+			ToxicSpikes: "Espinhos venenosos foram espalhados em volta da equipe de {0}!"
+		}
 		From: {
 			Recoil: "{0} sofreu dano de recuo!"
 			Poison: "{0} sofreu dano do veneno!"
