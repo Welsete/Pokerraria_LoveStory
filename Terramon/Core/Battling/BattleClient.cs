@@ -143,12 +143,14 @@ public sealed class BattleClient(IBattleProvider provider)
 
     public void BattleStopped()
     {
-        // Sleep and freeze only last during battle, so nobody stays asleep in the world afterwards
+        // Sleep, freeze and stat stages only last during battle, so nobody stays asleep in the world afterwards
         var team = Provider is TerramonPlayer or Content.NPCs.PokemonNPC ? Provider.GetBattleTeam() : null;
         foreach (var mon in team ?? [])
         {
             if (mon?.Status is NonVolatileStatus.Slp or NonVolatileStatus.Frz)
                 mon.Status = NonVolatileStatus.None;
+            if (mon != null)
+                mon.StatStages = default;
         }
 
         Provider.StopBattleEffects();

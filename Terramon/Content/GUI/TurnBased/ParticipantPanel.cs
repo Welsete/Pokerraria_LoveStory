@@ -1,4 +1,5 @@
 ﻿using ReLogic.Content;
+using Showdown.NET.Definitions;
 using ReLogic.Graphics;
 using Terramon.Core.Battling;
 using Terramon.Helpers;
@@ -265,6 +266,13 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
 
         DrawStatusBadge(spriteBatch, shownMon, drawHpPosition + new Vector2(16f, hpBarHeight * zoom), zoom);
 
+        // Stat stages above the HP bar, like "Atk +1  Def -2", green going up and red going down
+        var boosts = BoostText(shownMon);
+        if (boosts.Length > 0)
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, boosts,
+                new Vector2(drawHpPosition.X + 8f, drawHpPosition.Y - 22f).Floor(), Color.White, 0f, Vector2.Zero,
+                new Vector2(0.8f));
+
         if (ShownParty is { } party)
         {
             Texture2D ballSlots = BallSlots.Value;
@@ -308,6 +316,28 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     ///     A short colored tag for the status condition of the shown Pokémon (SLP, PSN, BRN...), drawn under the HP bar
     ///     like in the main games. Nothing is drawn for a healthy Pokémon.
     /// </summary>
+    private static readonly StatID[] ShownStats = [StatID.Atk, StatID.Def, StatID.SpA, StatID.SpD, StatID.Spe];
+
+    private static string BoostText(PokemonData mon)
+    {
+        if (mon == null)
+            return string.Empty;
+        var stages = BattlePlayback.ShownBoosts(mon);
+        if (stages.Packed == 0)
+            return string.Empty;
+        var parts = new List<string>();
+        foreach (var stat in ShownStats)
+        {
+            var value = stages[stat];
+            if (value == 0)
+                continue;
+            var name = Language.GetTextValue($"Mods.Terramon.GUI.Summary.Stat.{stat}");
+            parts.Add(value > 0 ? $"[c/78FF78:{name} +{value}]" : $"[c/FF7864:{name} {value}]");
+        }
+
+        return string.Join("  ", parts);
+    }
+
     internal static void DrawStatusBadge(SpriteBatch spriteBatch, PokemonData mon, Vector2 position, float zoom)
     {
         if (mon == null)

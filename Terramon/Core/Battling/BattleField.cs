@@ -106,6 +106,9 @@ public sealed class BattleField
                     }
                 }
 
+                // Stat stages stay with the Pokémon only while it's on the field
+                if (switchedIn.Side.ActivePokemon.Data is { } left && left != switchedIn.Data)
+                    left.StatStages = default;
                 switchedIn.Side.ClearTransforms();
                 switchedIn.SetAsActive();
                 // Whatever was charging or recharging has left the field
@@ -134,27 +137,47 @@ public sealed class BattleField
                     var pair = r.ReadPokemonIDs();
                     ref var src = ref GetMon(pair.Source);
                     ref var tgt = ref GetMon(pair.Target);
+                    HoldBoosts(show, src.Data, tgt.Data);
                     StatID stat = (StatID)r.ReadByte();
                     var srcValue = src.StatStages[stat];
                     var tgtValue = tgt.StatStages[stat];
                     src.SetStat(stat, tgtValue, true);
                     tgt.SetStat(stat, srcValue, true);
+                    QueueBoosts(show, src.Data, tgt.Data);
                 }
                 else if (a.Flags[2]) // is copy
                 {
                     var pair = r.ReadPokemonIDs();
                     ref var src = ref GetMon(pair.Source);
                     ref var tgt = ref GetMon(pair.Target);
+                    HoldBoosts(show, tgt.Data);
                     tgt.PackedStats = src.PackedStats;
+                    QueueBoosts(show, tgt.Data);
                 }
                 else
-                    GetMon(r).SetStat(r.ReadByte(), r.ReadSByte(), a.Flags[0]);
+                {
+                    ref var boosted = ref GetMon(r);
+                    HoldBoosts(show, boosted.Data);
+                    boosted.SetStat(r.ReadByte(), r.ReadSByte(), a.Flags[0]);
+                    QueueBoosts(show, boosted.Data);
+                }
                 break;
             case BattleActionID.AllPokemonBoost:
                 if (a.Flags[0]) // is clear-all
+                {
+                    for (var i = 0; i < 6; i++)
+                        HoldBoosts(show, A[i].Data, B[i].Data);
                     ModifyBoosts(BoostModifierAction.ClearAll);
+                    for (var i = 0; i < 6; i++)
+                        QueueBoosts(show, A[i].Data, B[i].Data);
+                }
                 else
-                    GetMon(r).ModifyBoosts((BoostModifierAction)r.ReadByte());
+                {
+                    ref var modified = ref GetMon(r);
+                    HoldBoosts(show, modified.Data);
+                    modified.ModifyBoosts((BoostModifierAction)r.ReadByte());
+                    QueueBoosts(show, modified.Data);
+                }
                 break;
             case BattleActionID.AdvanceTurn:
                 Turn++;
@@ -164,10 +187,18 @@ public sealed class BattleField
                     BattlePlayback.QueueTurn(this, LocalSideIndex != 0);
                 break;
             case BattleActionID.SetWeather:
+                if (show)
+                    BattlePlayback.HoldField(this);
                 Weather = (BattleWeather)r.ReadByte();
+                if (show)
+                    BattlePlayback.QueueField(this);
                 break;
             case BattleActionID.SetFieldCondition:
+                if (show)
+                    BattlePlayback.HoldField(this);
                 Condition = (FieldCondition)r.ReadByte();
+                if (show)
+                    BattlePlayback.QueueField(this);
                 break;
             case BattleActionID.SetSideCondition:
                 if (a.Flags[0])
@@ -245,6 +276,22 @@ public sealed class BattleField
             var action = new BattleAction(actionID, flags);
             Receive(in action, r, refine);
         }
+    }
+
+    private void HoldBoosts(bool show, params PokemonData[] mons)
+    {
+        if (!show)
+            return;
+        foreach (var mon in mons)
+            BattlePlayback.HoldBoosts(this, mon);
+    }
+
+    private void QueueBoosts(bool show, params PokemonData[] mons)
+    {
+        if (!show)
+            return;
+        foreach (var mon in mons)
+            BattlePlayback.QueueBoosts(this, mon);
     }
 
     public ref BattlePokemon GetMon(BinaryReader r) => ref GetMon(r.ReadPokemonID());

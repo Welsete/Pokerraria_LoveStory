@@ -58,7 +58,9 @@ public sealed class BattlePlayback : ModSystem
         Faint,
         Turn,
         Pause,
-        End
+        End,
+        Field,
+        Boost
     }
 
     private sealed class Step
@@ -108,6 +110,11 @@ public sealed class BattlePlayback : ModSystem
 
         // End
         public Action Action;
+
+        // Field (weather and terrain) and Boost (stat stages)
+        public BattleWeather Weather;
+        public FieldCondition Terrain;
+        public uint Boost;
     }
 
     /// <summary>
@@ -150,6 +157,9 @@ public sealed class BattlePlayback : ModSystem
         public readonly Dictionary<PokemonData, (byte Level, int Exp)> Exp = new(ReferenceEqualityComparer.Instance);
         public readonly Dictionary<int, PokemonData> Active = [];
         public readonly Dictionary<(int Side, int Slot), (ushort Into, bool Shiny)> Looks = [];
+        public readonly Dictionary<PokemonData, uint> Boosts = new(ReferenceEqualityComparer.Instance);
+        public BattleWeather? Weather;
+        public FieldCondition? Terrain;
 
         public bool Busy => Steps.Count > 0 || Wait > 0 || PendingHit > 0;
     }
@@ -198,7 +208,7 @@ public sealed class BattlePlayback : ModSystem
     // the main games. Call while holding Sync
     private static void Append(Timeline timeline, Step step)
     {
-        if (step.Kind is Kind.Line or Kind.HP or Kind.Status)
+        if (step.Kind is Kind.Line or Kind.HP or Kind.Status or Kind.Field or Kind.Boost)
         {
             LinkedListNode<Step> firstFaint = null;
             for (var node = timeline.Steps.Last; node != null && node.Value.Kind == Kind.Faint; node = node.Previous)
@@ -297,6 +307,94 @@ public sealed class BattlePlayback : ModSystem
     /// <summary>
     ///     Called just before a Pokémon's status changes in the battle: it keeps showing its current status until then.
     /// </summary>
+    /// <summary>
+    ///     Called just before the weather or terrain changes in the battle: the arena keeps its current look until the
+    ///     change is shown (see <see cref="QueueField" />).
+    /// </summary>
+    public static void HoldField(BattleField field)
+    {
+        if (!Enabled || field == null)
+            return;
+        lock (Sync)
+        {
+            var timeline = Touch(field);
+            timeline.Weather ??= field.Weather;
+            timeline.Terrain ??= field.Condition;
+        }
+    }
+
+    /// <summary>
+    ///     Shows the battle's current weather and terrain when their moment comes.
+    /// </summary>
+    public static void QueueField(BattleField field)
+    {
+        if (field == null)
+            return;
+        Add(field, new Step { Kind = Kind.Field, Weather = field.Weather, Terrain = field.Condition });
+    }
+
+    /// <summary>
+    ///     Called just before a Pokémon's stat stages change: the arrows next to its name change when it's shown.
+    /// </summary>
+    public static void HoldBoosts(BattleField field, PokemonData mon)
+    {
+        if (!Enabled || field == null || mon == null)
+            return;
+        lock (Sync)
+            Touch(field).Boosts.TryAdd(mon, mon.StatStages.Packed);
+    }
+
+    public static void QueueBoosts(BattleField field, PokemonData mon)
+    {
+        if (mon == null)
+            return;
+        Add(field, new Step { Kind = Kind.Boost, Mon = mon, Boost = mon.StatStages.Packed });
+    }
+
+    /// <summary>
+    ///     The weather and terrain the arena shows for a battle (see <see cref="ShownHP" />).
+    /// </summary>
+    public static (BattleWeather Weather, FieldCondition Terrain) ShownField(BattleField field)
+    {
+        if (field == null)
+            return (BattleWeather.None, FieldCondition.None);
+        if (Enabled && Timelines.Count > 0)
+        {
+            lock (Sync)
+            {
+                foreach (var timeline in Timelines)
+                {
+                    if (timeline.Field == field)
+                        return (timeline.Weather ?? field.Weather, timeline.Terrain ?? field.Condition);
+                }
+            }
+        }
+
+        return (field.Weather, field.Condition);
+    }
+
+    /// <summary>
+    ///     The stat stages to show for a Pokémon (see <see cref="ShownHP" />).
+    /// </summary>
+    public static StatStages ShownBoosts(PokemonData mon)
+    {
+        if (mon == null)
+            return default;
+        if (Enabled && Timelines.Count > 0)
+        {
+            lock (Sync)
+            {
+                foreach (var timeline in Timelines)
+                {
+                    if (timeline.Boosts.TryGetValue(mon, out var packed))
+                        return new StatStages { Packed = packed };
+                }
+            }
+        }
+
+        return mon.StatStages;
+    }
+
     public static void HoldStatus(BattleField field, PokemonData mon)
     {
         if (!Enabled || field == null || mon == null)
@@ -800,6 +898,19 @@ public sealed class BattlePlayback : ModSystem
             case Kind.Status:
                 lock (Sync)
                     timeline.Status[step.Mon] = step.Status;
+                break;
+
+            case Kind.Field:
+                lock (Sync)
+                {
+                    timeline.Weather = step.Weather;
+                    timeline.Terrain = step.Terrain;
+                }
+                break;
+
+            case Kind.Boost:
+                lock (Sync)
+                    timeline.Boosts[step.Mon] = step.Boost;
                 break;
 
             case Kind.Active:
