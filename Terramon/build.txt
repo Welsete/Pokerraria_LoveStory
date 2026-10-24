@@ -1,6 +1,6 @@
 displayName = Pokerraria: LoveStory
 homepage = https://github.com/Welsete/Pokerraria_LoveStory
-author = Welsete & Isa (based on Terramon by The Terramon Team)
+author = Welsete (based on Terramon by The Terramon Team)
 version = 0.2.0
 modReferences = TmonRuntimes@7.5.0
 dllReferences = EasyPacketsLib, Showdown.NET, SharpCompress, ZstdSharp

@@ -3,13 +3,13 @@ using Terraria.GameContent;
 namespace Terramon.Content.GUI;
 
 /// <summary>
-///     A faint "Pokerraria: LoveStory vX.Y.Z · Welsete &amp; Isa" in the bottom right corner while playing, so
+///     A faint "Pokerraria: LoveStory vX.Y.Z · Welsete" in the bottom right corner while playing, so
 ///     screenshots and videos of the mod show where it comes from and which version it is.
 /// </summary>
 [Autoload(Side = ModSide.Client)]
 public class Watermark : ModSystem
 {
-    public const string Authors = "Welsete & Isa";
+    public const string Authors = "Welsete";
 
     public static string Text => $"{Terramon.Instance.DisplayNameClean} v{Terramon.Instance.Version} · {Authors}";
 

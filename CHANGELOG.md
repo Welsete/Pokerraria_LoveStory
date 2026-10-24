@@ -1,6 +1,6 @@
 # Changelog
 
-Versions of **Pokerraria: LoveStory**, by Welsete & Isa. Based on [Terramon](https://github.com/JamzOJamz/Terramon) 0.1.3.1 (GPL-3.0).
+Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://github.com/JamzOJamz/Terramon) 0.1.3.1 (GPL-3.0).
 
 ## 0.2.0
 
