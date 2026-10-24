@@ -16,7 +16,7 @@ public class TerramonMenu : ModMenu
         LogoCorruption = ModContent.Request<Texture2D>("Terramon/Assets/Misc/MenuLogo_1");
     }
 
-    public override string DisplayName => "Terramon Mod";
+    public override string DisplayName => "Pokerraria: LoveStory";
 
     public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/TitleTheme");
 
