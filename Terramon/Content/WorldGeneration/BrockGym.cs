@@ -900,7 +900,7 @@ public static class BrockGymBuilder
                 {
                     // The gable: brick wall with a few dark windows
                     var tile = Main.tile[x, y];
-                    tile.WallType = (x - x0) % 2 == 0 && k is 1 or 3 ? WallID.Obsidian : WallID.GrayBrick;
+                    tile.WallType = (x - x0) % 2 == 0 && k is 1 or 3 ? WallByName("ObsidianBrick", WallID.Stone) : WallID.GrayBrick;
                 }
             }
         }
