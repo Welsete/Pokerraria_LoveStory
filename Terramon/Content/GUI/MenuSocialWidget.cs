@@ -29,7 +29,7 @@ internal static class MenuSocialWidget
         if (ModLoader.HasMod("TerrariaOverhaul"))
             drawPos.Y = Main.screenHeight / 2f - 74;
         DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value,
-            $"{mod.DisplayNameClean} v{mod.Version}", drawPos, Color.White, 0f, Vector2.Zero,
+            Watermark.Text, drawPos, Color.White, 0f, Vector2.Zero,
             1.07f, SpriteEffects.None, 0f, alphaMult: 0.76f);
 
         // Draw Mod Config link text

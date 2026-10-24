@@ -194,9 +194,9 @@ public class Terramon : Mod
         // Check how many times the mod has been loaded
         TimesLoaded = CheckLoadCount();
 
-        // Check if first ever time loading the mod, and if so, force switch to Terramon's mod menu
-        if (TimesLoaded == 1)
-            ModContent.GetInstance<TerramonMenu>().ForceSwitchToThis();
+        // Always open on the Pokerraria: LoveStory menu (logo and title music), instead of only the first time.
+        // Another menu can still be picked with the arrows for the rest of the session.
+        ModContent.GetInstance<TerramonMenu>().ForceSwitchToThis();
     }
 
     public override void Unload()
