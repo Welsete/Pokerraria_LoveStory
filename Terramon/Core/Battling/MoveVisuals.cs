@@ -13,6 +13,8 @@ namespace Terramon.Core.Battling;
 ///     A move can have its own drawn animation instead: <c>Assets/Moves/&lt;MoveID name&gt;.png</c>, a row of frames, and
 ///     a <c>.txt</c> next to it with <c>Frames N</c>, <c>Travel N</c> (how many of the first frames loop while it flies
 ///     from the user to the target; 0 = it all plays on the target), <c>Ticks N</c> (per frame) and <c>Scale X</c>.
+///     Optional: <c>Face 1</c> mirrors the whole animation when the target is on the left (fists, beams, wind), and
+///     <c>At user|middle|target</c> says where the frames after the flight play (status moves play on the user).
 /// </summary>
 public sealed class MoveVisuals : ModSystem
 {
@@ -37,6 +39,8 @@ public sealed class MoveVisuals : ModSystem
         public Asset<Texture2D> Texture;
         public int Frames = 1, Travel, Ticks = 5;
         public float Scale = 1f;
+        public bool Face;
+        public string At;
         public int TravelTime => Travel > 0 ? TravelTicks : 0;
     }
 
@@ -80,6 +84,8 @@ public sealed class MoveVisuals : ModSystem
                         case "Frames" when int.TryParse(parts[1], out var v): sprite.Frames = Math.Max(1, v); break;
                         case "Travel" when int.TryParse(parts[1], out var v): sprite.Travel = Math.Max(0, v); break;
                         case "Ticks" when int.TryParse(parts[1], out var v): sprite.Ticks = Math.Max(1, v); break;
+                        case "Face" when int.TryParse(parts[1], out var v): sprite.Face = v != 0; break;
+                        case "At": sprite.At = parts[1].ToLowerInvariant(); break;
                         case "Scale" when float.TryParse(parts[1], System.Globalization.NumberStyles.Float,
                             System.Globalization.CultureInfo.InvariantCulture, out var f): sprite.Scale = f; break;
                     }
@@ -245,7 +251,12 @@ public sealed class MoveVisuals : ModSystem
     private static Vector2 SpritePosition(Effect effect, MoveSprite sprite)
     {
         if (effect.Time >= sprite.TravelTime)
-            return effect.To;
+            return (sprite.At ?? (effect.Category == MoveCategory.Status ? "user" : "target")) switch
+            {
+                "user" => effect.From,
+                "middle" => Vector2.Lerp(effect.From, effect.To, 0.5f),
+                _ => effect.To
+            };
         var progress = effect.Time / (float)sprite.TravelTime;
         return Vector2.Lerp(effect.From, effect.To, progress) + new Vector2(0f, -MathF.Sin(progress * MathF.PI) * 18f);
     }
@@ -272,8 +283,10 @@ public sealed class MoveVisuals : ModSystem
             var frame = travelling
                 ? effect.Time / sprite.Ticks % sprite.Travel
                 : Math.Min(sprite.Frames - 1, sprite.Travel + (effect.Time - sprite.TravelTime) / sprite.Ticks);
-            // The sheet is drawn going right; flying left mirrors the flying frames only
-            var flip = travelling && effect.To.X < effect.From.X ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            // The sheet is drawn going right; flying left mirrors the flying frames (all of them for Face moves)
+            var flip = (travelling || sprite.Face) && effect.To.X < effect.From.X
+                ? SpriteEffects.FlipHorizontally
+                : SpriteEffects.None;
             spriteBatch.Draw(texture, (SpritePosition(effect, sprite) - Main.screenPosition).Floor(),
                 new Rectangle(frame * width, 0, width, texture.Height), Color.White, 0f,
                 new Vector2(width, texture.Height) * 0.5f, sprite.Scale, flip, 0f);

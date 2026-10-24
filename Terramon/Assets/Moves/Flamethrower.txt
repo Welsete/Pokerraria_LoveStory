@@ -1,0 +1,6 @@
+Frames 14
+Travel 0
+Ticks 4
+Face 1
+At middle
+Scale 1

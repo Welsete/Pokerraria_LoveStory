@@ -1,0 +1,4 @@
+Frames 8
+Travel 1
+Ticks 5
+Scale 1
