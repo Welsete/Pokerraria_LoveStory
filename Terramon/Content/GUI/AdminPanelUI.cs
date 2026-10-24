@@ -84,6 +84,7 @@ public sealed class AdminPanelUI : SmartUIState
             ("FaintActive", FaintActive),
             ("PerfectIVs", PerfectIVs),
             ("ToggleShiny", ToggleShiny),
+            ("TeachSpriteMove", TeachSpriteMove),
             ("GiveItems", GiveItems),
             ("GiveHeldItems", GiveHeldItems),
             ("GiveStones", GiveEvolutionStones),
@@ -418,6 +419,28 @@ public sealed class AdminPanelUI : SmartUIState
         data.IVs = new PokemonIVs(31, 31, 31, 31, 31, 31);
         data.HP = (ushort)Math.Clamp(data.HP + data.MaxHP - oldMaxHP, 0, data.MaxHP);
         Say("PerfectIVsDone", data.DisplayName);
+    }
+
+    private static int _spriteMoveIndex;
+
+    /// <summary>
+    ///     Puts a move that has its own drawn animation (Assets/Moves) in the active Pokémon's first slot, one after the
+    ///     other on each click, so the animations can be tried without leveling up.
+    /// </summary>
+    private static void TeachSpriteMove()
+    {
+        var data = GetActiveOrWarn();
+        if (data == null)
+            return;
+        var moves = Enum.GetValues<MoveID>()
+            .Where(m => m != MoveID.None && ModContent.HasAsset($"Terramon/Assets/Moves/{m}"))
+            .Distinct()
+            .ToArray();
+        if (moves.Length == 0)
+            return;
+        var move = moves[_spriteMoveIndex++ % moves.Length];
+        data.SetMove(0, move);
+        Say("TeachSpriteMoveDone", data.DisplayName, MoveLearnUI.MoveName(move));
     }
 
     private static void ToggleShiny()

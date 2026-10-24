@@ -488,6 +488,7 @@ GUI: {
 		LevelUp10: Active +10 levels
 		EvolveActive: Evolve active Pokémon
 		PerfectIVs: Perfect IVs (active)
+		TeachSpriteMove: Teach move with sprite (active)
 		ToggleShiny: Toggle shiny (active)
 		GiveHeldItems: Give held items
 		GiveStones: Give evolution stones
@@ -504,6 +505,7 @@ GUI: {
 		RevealMap: Reveal map
 		NoEvolution: "{0} doesn't evolve by level."
 		PerfectIVsDone: "{0} now has 31 in every IV."
+		TeachSpriteMoveDone: "{0} learned {1} in the first slot."
 		ShinyOn: "{0} is now shiny."
 		ShinyOff: "{0} is no longer shiny."
 		HeldItemsGiven: You got one of each held item.

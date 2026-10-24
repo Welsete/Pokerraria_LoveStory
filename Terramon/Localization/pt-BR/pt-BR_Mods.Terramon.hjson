@@ -488,6 +488,7 @@ GUI: {
 		LevelUp10: Ativo +10 níveis
 		EvolveActive: Evoluir Pokémon ativo
 		PerfectIVs: IVs perfeitos (ativo)
+		TeachSpriteMove: Ensinar golpe com sprite (ativo)
 		ToggleShiny: Alternar shiny (ativo)
 		GiveHeldItems: Dar itens de segurar
 		GiveStones: Dar pedras de evolução
@@ -504,6 +505,7 @@ GUI: {
 		RevealMap: Revelar mapa
 		NoEvolution: "{0} não evolui por nível."
 		PerfectIVsDone: "{0} agora tem 31 em todos os IVs."
+		TeachSpriteMoveDone: "{0} aprendeu {1} no 1º espaço."
 		ShinyOn: "{0} agora é shiny."
 		ShinyOff: "{0} não é mais shiny."
 		HeldItemsGiven: Você recebeu um de cada item de segurar.
