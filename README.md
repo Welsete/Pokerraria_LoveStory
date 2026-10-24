@@ -4,7 +4,7 @@
 
 ### Catch 'em all in Terraria. Beat the bosses. Earn the badges. Become the Champion.
 
-<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-feature-ginasios"><img src="https://img.shields.io/badge/Download-latest%20build-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Download"></a>
+<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main"><img src="https://img.shields.io/badge/Download-latest%20build-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Download"></a>
 <img src="https://img.shields.io/badge/tModLoader-1.4.4-2b3a7a?style=for-the-badge" alt="tModLoader 1.4.4">
 <img src="https://img.shields.io/badge/Pok%C3%A9mon-151%20%2B%20Lucario-b8323a?style=for-the-badge" alt="151 Pokémon">
 <img src="https://img.shields.io/badge/Languages-PT--BR%20%7C%20EN-3f7a35?style=for-the-badge" alt="PT-BR and EN">
@@ -121,7 +121,7 @@ Each Gym Leader appears after a Terraria boss and the previous badge. Call them 
 
 ## 📦 Install
 
-1. Download **Terramon.tmod** and **TmonRuntimes.tmod** from the [latest build](https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-feature-ginasios).
+1. Download **Terramon.tmod** and **TmonRuntimes.tmod** from the [latest build](https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main).
 2. Put both files in `Documents/My Games/Terraria/tModLoader/Mods`.
 3. Open tModLoader, go to **Workshop → Manage Mods**, enable both and reload.
 4. Start a new world to get the gyms, the League buildings and Professor Oak.
@@ -145,7 +145,7 @@ The language follows your game: Portuguese (Brasil) or English. Pokerraria: Love
 ## 💛 Credits
 
 - **Terramon** is made by the [Terramon team](https://github.com/JamzOJamz/Terramon) and licensed under GPL-3.0. This fork keeps the same license.
-- **Pokémon sprites and portraits** come from the [PMD SpriteCollab](https://github.com/PMDCollab/SpriteCollab) project, licensed under CC BY-NC 4.0. The artists of each Pokémon are listed in [CREDITS.md](https://github.com/Welsete/Pokerraria_LoveStory/blob/feature/ginasios/Terramon/Assets/Pokemon/Anim/CREDITS.md).
+- **Pokémon sprites and portraits** come from the [PMD SpriteCollab](https://github.com/PMDCollab/SpriteCollab) project, licensed under CC BY-NC 4.0. The artists of each Pokémon are listed in [CREDITS.md](https://github.com/Welsete/Pokerraria_LoveStory/blob/main/Terramon/Assets/Pokemon/Anim/CREDITS.md).
 - **Battles** run on [Pokémon Showdown](https://github.com/smogon/pokemon-showdown).
 - **Pokerraria: LoveStory** original art for Brock, the held items, Onix and Professor Oak.
 
