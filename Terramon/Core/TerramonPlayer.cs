@@ -1191,7 +1191,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
                 // Beaten wild Pokémon stay knocked out for a moment, the chance to catch them
                 var lines = new List<(string, Color)> { (text, Color.Lime) };
-                if (loser is PokemonNPC wild && winner == this && IsLocalProvider)
+                if (loser is Content.NPCs.PokemonNPC wild && winner == this && IsLocalProvider)
                 {
                     lines.Add((Language.GetTextValue("Mods.Terramon.Battle.KnockedOutHint", wild.Data?.DisplayName),
                         new Color(255, 215, 94)));
