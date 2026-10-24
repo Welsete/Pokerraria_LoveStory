@@ -808,7 +808,7 @@ internal sealed class CustomPartyItemSlot : UIImage
         {
             tooltip += '\n' + Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotHeldItem",
                 Lang.GetItemNameValue(held.type));
-            var description = SummaryUI.HeldItemDescription(held);
+            var description = SummaryWindow.HeldItemDescription(held);
             if (description.Length > 0)
                 tooltip += "\n[c/9FA2AD:" + description.Replace("\n", "]\n[c/9FA2AD:") + "]";
         }
