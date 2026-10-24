@@ -11,6 +11,8 @@ public abstract class GymLeader : TrainerNPC
     /// </summary>
     protected abstract bool GateBossDefeated { get; }
 
+    public override bool SharpAI => true;
+
     /// <summary>
     ///     The item given (besides the badge) the first time this Gym Leader is beaten.
     /// </summary>

@@ -1,3 +1,5 @@
+using System.Text;
+using ReLogic.Content;
 using Terramon.ID;
 using Terraria.Audio;
 using Terraria.Localization;
@@ -8,6 +10,9 @@ namespace Terramon.Core.Battling;
 ///     Shows a move being used in the world: physical moves hit the target with a burst, special moves fly from the
 ///     user to the target, status moves glow around the user. The colors and sounds follow the move's type.
 ///     Visual only, so it never runs on a server.
+///     A move can have its own drawn animation instead: <c>Assets/Moves/&lt;MoveID name&gt;.png</c>, a row of frames, and
+///     a <c>.txt</c> next to it with <c>Frames N</c>, <c>Travel N</c> (how many of the first frames loop while it flies
+///     from the user to the target; 0 = it all plays on the target), <c>Ticks N</c> (per frame) and <c>Scale X</c>.
 /// </summary>
 public sealed class MoveVisuals : ModSystem
 {
@@ -23,9 +28,70 @@ public sealed class MoveVisuals : ModSystem
         public bool Miss;
         public int Time;
         public int Duration;
+        public MoveSprite Sprite;
+        public Vector2 From, To;
+    }
+
+    private sealed class MoveSprite
+    {
+        public Asset<Texture2D> Texture;
+        public int Frames = 1, Travel, Ticks = 5;
+        public float Scale = 1f;
+        public int TravelTime => Travel > 0 ? TravelTicks : 0;
     }
 
     private static readonly List<Effect> Effects = [];
+    private static readonly Dictionary<ushort, MoveSprite> Sprites = [];
+
+    public override void Load()
+    {
+        if (!Main.dedServ)
+            On_Main.DrawDust += DrawSpritesOverDust;
+    }
+
+    public override void Unload()
+    {
+        Sprites.Clear();
+    }
+
+    /// <summary>
+    ///     The drawn animation of a move, if it has one (see the class summary).
+    /// </summary>
+    private static MoveSprite SpriteFor(ushort moveId)
+    {
+        if (Sprites.TryGetValue(moveId, out var cached))
+            return cached;
+        MoveSprite sprite = null;
+        var name = ((MoveID)moveId).ToString();
+        var mod = Terramon.Instance;
+        var path = "Assets/Moves/" + name;
+        if (ModContent.HasAsset($"Terramon/{path}"))
+        {
+            sprite = new MoveSprite { Texture = mod.Assets.Request<Texture2D>(path) };
+            if (mod.FileExists(path + ".txt"))
+            {
+                foreach (var line in Encoding.UTF8.GetString(mod.GetFileBytes(path + ".txt")).Split('\n'))
+                {
+                    var parts = line.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length < 2)
+                        continue;
+                    switch (parts[0])
+                    {
+                        case "Frames" when int.TryParse(parts[1], out var v): sprite.Frames = Math.Max(1, v); break;
+                        case "Travel" when int.TryParse(parts[1], out var v): sprite.Travel = Math.Max(0, v); break;
+                        case "Ticks" when int.TryParse(parts[1], out var v): sprite.Ticks = Math.Max(1, v); break;
+                        case "Scale" when float.TryParse(parts[1], System.Globalization.NumberStyles.Float,
+                            System.Globalization.CultureInfo.InvariantCulture, out var f): sprite.Scale = f; break;
+                    }
+                }
+            }
+
+            sprite.Travel = Math.Min(sprite.Travel, sprite.Frames - 1);
+        }
+
+        Sprites[moveId] = sprite;
+        return sprite;
+    }
 
     /// <summary>
     ///     Starts the animation of a move. <paramref name="still" /> moves (e.g. the charging turn of Solar Beam) have
@@ -48,7 +114,8 @@ public sealed class MoveVisuals : ModSystem
             Target = userSide.Opposite?.Provider,
             Type = move.Type,
             Category = move.Category,
-            Miss = miss
+            Miss = miss,
+            Sprite = SpriteFor(moveId)
         };
         effect.Duration = effect.Category switch
         {
@@ -56,6 +123,8 @@ public sealed class MoveVisuals : ModSystem
             MoveCategory.Status => AuraTicks,
             _ => 8
         };
+        if (effect.Sprite is { } sprite)
+            effect.Duration = sprite.TravelTime + (sprite.Frames - sprite.Travel) * sprite.Ticks;
 
         if (Position(effect.User) is not { } from)
             return;
@@ -88,6 +157,26 @@ public sealed class MoveVisuals : ModSystem
         var to = Position(effect.Target) ?? from + new Vector2(64f, 0f);
         var dust = DustFor(effect.Type);
         var color = ColorFor(effect.Type);
+        effect.From = from;
+        effect.To = to;
+
+        if (effect.Sprite is { } sprite)
+        {
+            // Its own animation: flying frames, then the rest on the target (drawn in DrawSpritesOverDust)
+            if (effect.Time == sprite.TravelTime)
+            {
+                if (effect.Miss)
+                {
+                    Impact(effect, to, dust, 0);
+                    return false;
+                }
+
+                SoundEngine.PlaySound(effect.Category == MoveCategory.Physical ? SoundID.NPCHit4 : SoundID.Item14, to);
+            }
+
+            Lighting.AddLight(SpritePosition(effect, sprite), color.ToVector3());
+            return true;
+        }
 
         switch (effect.Category)
         {
@@ -151,6 +240,46 @@ public sealed class MoveVisuals : ModSystem
             Spawn(at, DustID.SilverFlame, Main.rand.NextVector2Circular(3f, 3f), 1.1f);
         Lighting.AddLight(at, ColorFor(effect.Type).ToVector3() * 1.5f);
         SoundEngine.PlaySound(effect.Category == MoveCategory.Physical ? SoundID.NPCHit4 : SoundID.Item10, at);
+    }
+
+    private static Vector2 SpritePosition(Effect effect, MoveSprite sprite)
+    {
+        if (effect.Time >= sprite.TravelTime)
+            return effect.To;
+        var progress = effect.Time / (float)sprite.TravelTime;
+        return Vector2.Lerp(effect.From, effect.To, progress) + new Vector2(0f, -MathF.Sin(progress * MathF.PI) * 18f);
+    }
+
+    /// <summary>
+    ///     Moves with their own animation are drawn right after dust, so they show in front of the Pokémon.
+    /// </summary>
+    private static void DrawSpritesOverDust(On_Main.orig_DrawDust orig, Main self)
+    {
+        orig(self);
+        if (Effects.Count == 0 || !Effects.Exists(e => e.Sprite != null))
+            return;
+
+        var spriteBatch = Main.spriteBatch;
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
+            DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        foreach (var effect in Effects)
+        {
+            if (effect.Sprite is not { } sprite || effect.Time > effect.Duration)
+                continue;
+            var texture = sprite.Texture.Value;
+            var width = texture.Width / sprite.Frames;
+            var travelling = effect.Time < sprite.TravelTime;
+            var frame = travelling
+                ? effect.Time / sprite.Ticks % sprite.Travel
+                : Math.Min(sprite.Frames - 1, sprite.Travel + (effect.Time - sprite.TravelTime) / sprite.Ticks);
+            // The sheet is drawn going right; flying left mirrors the flying frames only
+            var flip = travelling && effect.To.X < effect.From.X ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            spriteBatch.Draw(texture, (SpritePosition(effect, sprite) - Main.screenPosition).Floor(),
+                new Rectangle(frame * width, 0, width, texture.Height), Color.White, 0f,
+                new Vector2(width, texture.Height) * 0.5f, sprite.Scale, flip, 0f);
+        }
+
+        spriteBatch.End();
     }
 
     private static void Spawn(Vector2 at, int type, Vector2 velocity, float scale)

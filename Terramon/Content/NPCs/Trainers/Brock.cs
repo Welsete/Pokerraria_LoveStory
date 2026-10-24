@@ -15,6 +15,13 @@ public class Brock : GymLeader
         (NationalDexID.Onix, 14)
     ];
 
+    // Close to his team in the games: Geodude rolls up with Defense Curl into Rollout, Onix slows foes with Rock Tomb
+    protected override Dictionary<ushort, MoveID[]> TeamMoves { get; } = new()
+    {
+        [NationalDexID.Geodude] = [MoveID.RockThrow, MoveID.Bulldoze, MoveID.DefenseCurl, MoveID.Rollout],
+        [NationalDexID.Onix] = [MoveID.RockTomb, MoveID.SmackDown, MoveID.Bind, MoveID.RockPolish]
+    };
+
     protected override int LookAlike => NPCID.Guide;
 
     // Isa's walk cycle: 8 frames of her 20x32 pixel art (facing left), stored at 1.5x (30x48 per frame) so he is

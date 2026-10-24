@@ -5,6 +5,7 @@ using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders;
 using Terramon.Helpers;
+using Terramon.ID;
 using Terraria.Audio;
 using Terraria.Localization;
 
@@ -49,6 +50,17 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
     ///     The species and level of each Pokémon this trainer battles with, in order (up to 6).
     /// </summary>
     protected abstract (ushort ID, byte Level)[] TeamSpec { get; }
+
+    /// <summary>
+    ///     Hand-picked moves for some of the team, by species, instead of the last ones they learned by level.
+    /// </summary>
+    protected virtual Dictionary<ushort, MoveID[]> TeamMoves => null;
+
+    /// <summary>
+    ///     Whether this trainer battles at its best: it almost always picks the move that looks strongest (see
+    ///     <see cref="BattleAI" />). Gym Leaders do.
+    /// </summary>
+    public virtual bool SharpAI => false;
 
     /// <summary>
     ///     The item given to the player the first time they defeat this trainer, or 0 for none.
@@ -650,6 +662,8 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
                 data.IVs = new PokemonIVs(RollIV(min, max), RollIV(min, max), RollIV(min, max),
                     RollIV(min, max), RollIV(min, max), RollIV(min, max));
                 data.HP = data.MaxHP; // IVs changed the max HP
+                if (TeamMoves != null && TeamMoves.TryGetValue(s.ID, out var moves))
+                    data.Moves = new PokemonMoves(moves);
                 return data;
             })
             .ToArray();

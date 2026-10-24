@@ -445,12 +445,13 @@ public static class BattleAI
 
     private static MoveOption PickTrainerMove(Context ctx, SideState state, List<MoveOption> moves)
     {
+        var sharp = ctx.Client.Provider is Content.NPCs.Trainers.TrainerNPC { SharpAI: true };
         var scored = new List<(MoveOption Move, float Score)>();
         foreach (var m in moves)
         {
             var s = ScoreMove(ctx, state, m);
-            // A little randomness so trainers aren't fully predictable
-            s *= 0.85f + Random.Shared.NextSingle() * 0.3f;
+            // A little randomness so trainers aren't fully predictable (less for Gym Leaders)
+            s *= sharp ? 0.95f + Random.Shared.NextSingle() * 0.1f : 0.85f + Random.Shared.NextSingle() * 0.3f;
             scored.Add((m, s));
         }
 
@@ -462,7 +463,7 @@ public static class BattleAI
         }
 
         // Usually the best move, sometimes another good one
-        if (Random.Shared.NextSingle() < 0.8f)
+        if (Random.Shared.NextSingle() < (sharp ? 0.95f : 0.8f))
             return scored.First(s => s.Score == best).Move;
 
         var good = scored.Where(s => s.Score >= best * 0.7f).Select(s => (s.Move, s.Score * s.Score)).ToList<(MoveOption, float)>();

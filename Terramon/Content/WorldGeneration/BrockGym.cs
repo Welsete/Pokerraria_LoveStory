@@ -241,6 +241,8 @@ public static class BrockGymBuilder
     private const int ChainLantern = 0;
     private const int BrassLantern = 1;
 
+    private const int GrayPressurePlate = 2; // Pressed by players only
+
     /// <summary>
     ///     Tries random spots underground, a short walk from spawn, and builds the gym in the first that fits. If
     ///     nothing fits, the rules are loosened step by step (farther away, more open caves, more liquid around) so
@@ -416,6 +418,77 @@ public static class BrockGymBuilder
             () => Decorate(inLeft, inRight, ceilingY, floorY, centerLeft, centerRight, stageLeft, stageTop));
 
         WorldGen.RangeFrame(left - EntranceGap - 4, top - 2, right + 2, bottom + 2);
+
+        // After framing, so the boulders stay up in the ceiling until a trap drops them
+        TryStep("traps", () => BuildTraps(left, ceilingY, floorY, centerLeft, centerRight));
+    }
+
+    /// <summary>
+    ///     Traps on the way to Brock: a dart trap behind whoever comes down the rope, and two boulders set in the arena's
+    ///     ceiling that drop when someone steps on the pressure plates under them. All wired with red wire, like the
+    ///     traps of Terraria's caves.
+    /// </summary>
+    private static void BuildTraps(int left, int ceilingY, int floorY, int centerLeft, int centerRight)
+    {
+        // Dart trap at the far end of the entrance tunnel, shooting at the door
+        var shaftX = left - EntranceGap;
+        var dartX = shaftX - 1;
+        var dart = Main.tile[dartX, floorY - 2];
+        dart.ClearTile();
+        dart.HasTile = true;
+        dart.TileType = TileID.Traps;
+        dart.TileFrameX = 18; // Facing right
+        dart.TileFrameY = 0; // Dart trap
+        PressurePlate(shaftX + 2, floorY - 1);
+        Wire(shaftX + 2, floorY - 1, dartX, floorY - 2);
+
+        // Boulders in a hollow of the ceiling, with a plate a little before and after each one
+        var mid = (centerLeft + centerRight) / 2;
+        foreach (var bx in new[] { mid - 5, mid + 4 })
+        {
+            for (var dx = 0; dx < 2; dx++)
+            {
+                for (var dy = 0; dy < 2; dy++)
+                {
+                    var tile = Main.tile[bx + dx, ceilingY - 2 + dy];
+                    tile.ClearTile();
+                    tile.HasTile = true;
+                    tile.TileType = TileID.Boulder;
+                    tile.TileFrameX = (short)(dx * 18);
+                    tile.TileFrameY = (short)(dy * 18);
+                }
+            }
+
+            foreach (var px in new[] { bx - 2, bx + 3 })
+            {
+                PressurePlate(px, floorY - 1);
+                Wire(px, floorY - 1, bx, ceilingY - 1);
+            }
+        }
+    }
+
+    private static void PressurePlate(int x, int y)
+    {
+        Main.tile[x, y].ClearTile();
+        WorldGen.PlaceTile(x, y, TileID.PressurePlates, true, true, -1, GrayPressurePlate);
+    }
+
+    /// <summary>
+    ///     Red wire straight up (or down) from one tile, then sideways to the other.
+    /// </summary>
+    private static void Wire(int x1, int y1, int x2, int y2)
+    {
+        for (var y = Math.Min(y1, y2); y <= Math.Max(y1, y2); y++)
+        {
+            var tile = Main.tile[x1, y];
+            tile.RedWire = true;
+        }
+
+        for (var x = Math.Min(x1, x2); x <= Math.Max(x1, x2); x++)
+        {
+            var tile = Main.tile[x, y2];
+            tile.RedWire = true;
+        }
     }
 
     /// <summary>
@@ -559,46 +632,15 @@ public static class BrockGymBuilder
     }
 
     /// <summary>
-    ///     The middle of the arena: uneven ground of stone, mudstone and dirt, with ramps between the steps.
+    ///     The middle of the arena: flat ground of mixed stone, stone slab and mud or dirt.
     /// </summary>
     private static void BuildArenaFloor(int from, int to, int floorY)
     {
         var mud = WorldGen.genRand.NextBool() ? TileID.Mud : TileID.Dirt;
-        var heights = new int[to - from + 1];
-        var height = 0;
-        for (var i = 0; i < heights.Length; i++)
+        for (var x = from; x <= to; x++)
         {
-            // A gentle random walk, flat near both ends so the halls join up
-            var nearEnd = i < 3 || i > heights.Length - 4;
-            if (nearEnd)
-                height = 0;
-            else if (WorldGen.genRand.NextBool(3))
-                height = Math.Clamp(height + WorldGen.genRand.Next(-1, 2), 0, 2);
-            heights[i] = height;
-        }
-
-        for (var i = 0; i < heights.Length; i++)
-        {
-            var x = from + i;
-            for (var y = floorY - heights[i]; y <= floorY; y++)
-            {
-                var roll = WorldGen.genRand.Next(10);
-                var type = roll < 6 ? TileID.Stone : roll < 8 ? TileID.StoneSlab : (ushort)mud;
-                PlaceBlock(x, y, type);
-            }
-        }
-
-        // Ramps wherever the ground steps up or down, so walking across never needs a jump
-        for (var i = 1; i < heights.Length - 1; i++)
-        {
-            var x = from + i;
-            var y = floorY - heights[i];
-            if (heights[i] <= 0)
-                continue;
-            if (heights[i - 1] < heights[i])
-                WorldGen.SlopeTile(x, y, (int)SlopeType.SlopeDownRight);
-            else if (heights[i + 1] < heights[i])
-                WorldGen.SlopeTile(x, y, (int)SlopeType.SlopeDownLeft);
+            var roll = WorldGen.genRand.Next(10);
+            PlaceBlock(x, floorY, roll < 6 ? TileID.Stone : roll < 8 ? TileID.StoneSlab : (ushort)mud);
         }
     }
 
@@ -702,28 +744,6 @@ public static class BrockGymBuilder
             WorldGen.PlaceTile(x, floorY - 1, TileID.Pots, true, false, -1, WorldGen.genRand.Next(4));
         foreach (var x in new[] { inRight - 1, stageLeft + 1 })
             WorldGen.PlaceTile(x, stageTop - 1, TileID.Pots, true, false, -1, WorldGen.genRand.Next(4));
-
-        // Boulders resting on flat spots of the arena (they only roll if someone digs under them)
-        var placed = 0;
-        for (var x = centerLeft + 2; x < stageLeft - 4 && placed < 3; x += WorldGen.genRand.Next(5, 9))
-        {
-            var ground = GroundBelow(x, ceilingY, floorY);
-            if (ground == GroundBelow(x + 1, ceilingY, floorY) && Main.tile[x, ground].Slope == SlopeType.Solid &&
-                Main.tile[x + 1, ground].Slope == SlopeType.Solid &&
-                WorldGen.PlaceObject(x, ground - 1, TileID.Boulder, true))
-                placed++;
-        }
-    }
-
-    private static int GroundBelow(int x, int fromY, int floorY)
-    {
-        for (var y = fromY; y <= floorY; y++)
-        {
-            if (Main.tile[x, y].HasTile && Main.tileSolid[Main.tile[x, y].TileType])
-                return y;
-        }
-
-        return floorY;
     }
 
     /// <summary>
@@ -851,5 +871,56 @@ public static class BrockGymBuilder
         tile.TileType = type;
         tile.Slope = SlopeType.Solid;
         tile.IsHalfBlock = false;
+    }
+}
+
+/// <summary>
+///     Makes sure a wired boulder always drops: if Terraria didn't let it fall (the gym's blocks are protected), it is
+///     turned into a falling boulder here, the tick after the wire was hit.
+/// </summary>
+public class BoulderTrapGlobalTile : GlobalTile
+{
+    internal static readonly List<Point> Hit = [];
+
+    public override void HitWire(int i, int j, int type)
+    {
+        if (type == TileID.Boulder)
+            Hit.Add(new Point(i, j));
+    }
+}
+
+public class BoulderTrapSystem : ModSystem
+{
+    public override void PostUpdateWorld()
+    {
+        var hit = BoulderTrapGlobalTile.Hit;
+        if (hit.Count == 0)
+            return;
+        foreach (var point in hit.ToArray())
+        {
+            var (i, j) = (point.X, point.Y);
+            var tile = Main.tile[i, j];
+            if (!tile.HasTile || tile.TileType != TileID.Boulder)
+                continue;
+            var x = i - tile.TileFrameX % 36 / 18;
+            var y = j - tile.TileFrameY % 36 / 18;
+            for (var dx = 0; dx < 2; dx++)
+            {
+                for (var dy = 0; dy < 2; dy++)
+                {
+                    var part = Main.tile[x + dx, y + dy];
+                    if (part.TileType == TileID.Boulder)
+                        part.ClearTile();
+                }
+            }
+
+            WorldGen.RangeFrame(x - 1, y - 1, x + 3, y + 3);
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendTileSquare(-1, x, y, 2, 2);
+            Projectile.NewProjectile(new EntitySource_Wiring(x, y), new Vector2(x * 16 + 16, y * 16 + 16), Vector2.Zero,
+                ProjectileID.Boulder, 50, 10f, Main.myPlayer);
+        }
+
+        hit.Clear();
     }
 }
