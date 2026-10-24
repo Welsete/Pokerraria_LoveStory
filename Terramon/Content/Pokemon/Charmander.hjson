@@ -1,0 +1,51 @@
+{
+  // Drawn with the Mystery Dungeon-style animations in Assets/Pokemon/Anim (see PokemonAnimations)
+  Common:
+  {
+    Transform:
+    {
+      Width: 34
+      Height: 38
+    }
+    Visuals:
+    {
+      TorchLightID: 0
+      LightStrength: 0.4
+      DamperAmount: 0.5
+      DustID: 6
+      DustFrequency: 45
+      DustOffsetX: 21
+      DustOffsetY: 12
+    }
+  }
+  NPC:
+  {
+    WalkingBehaviour:
+    {
+      FrameCount: 4
+      FrameTime: 7
+      IsClassic: false
+    }
+    SpawnController:
+    {
+      Stage: 1
+      Conditions:
+      [
+        {
+          Overworld: true
+          DayTime: true
+          Chance: 0.1
+        }
+      ]
+    }
+  }
+  Projectile:
+  {
+    GenericPet:
+    {
+      FrameCount: 4
+      FrameTime: 7
+      IsClassic: false
+    }
+  }
+}

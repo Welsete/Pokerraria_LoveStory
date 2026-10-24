@@ -1,0 +1,16 @@
+[h1]Pokerraria: LoveStory[/h1]
+
+Pokerraria: LoveStory is a Terraria and Pokémon crossover with turn-based battles, Gyms tied to Terraria's bosses and a story of its own.
+
+Features:
+- Catch, train and evolve the Kanto Pokémon, including their Shiny forms.
+- Turn-based battles against wild Pokémon, trainers and Gym Leaders.
+- Gym badges set how high a level your Pokémon obey, like in the main games.
+- A Pokémon Center next to spawn, where Nurse Joy heals your Pokémon for free.
+- Animated Pokémon, Pokédex, Summary screen, held items and much more.
+
+The source code is available at
+[url=https://github.com/Welsete/Pokerraria_LoveStory]GitHub (Source Code)[/url]
+
+Based on the Terramon mod by The Terramon Team (GPL-3.0).
+Disclaimer: This fan-made mod acknowledges all rights to Nintendo and Game Freak.

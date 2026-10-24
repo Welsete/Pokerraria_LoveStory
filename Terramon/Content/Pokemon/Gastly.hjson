@@ -1,0 +1,46 @@
+{
+  // Drawn with the Mystery Dungeon-style animations in Assets/Pokemon/Anim (see PokemonAnimations)
+  Common:
+  {
+    Transform:
+    {
+      Width: 50
+      Height: 51
+    }
+    Visuals:
+    {
+      LightColor: "0.662745, 0.48627451, 0.88627451"
+      ShinyLightColor: "0.247, 0.42745, 0.9372549"
+      LightStrength: 1.15
+      DamperAmount: 0.5
+    }
+  }
+  NPC:
+  {
+    WanderingHoverBehaviour:
+    {
+      FrameCount: 12
+      FrameTime: 6
+    }
+    SpawnController:
+    {
+      Stage: 1
+      Conditions:
+      [
+        {
+          Overworld: true
+          DayTime: true
+          Chance: 0.1
+        }
+      ]
+    }
+  }
+  Projectile:
+  {
+    FlyingPet:
+    {
+      FrameCount: 12
+      FrameTime: 6
+    }
+  }
+}

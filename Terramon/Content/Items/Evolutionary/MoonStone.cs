@@ -1,0 +1,33 @@
+using Terramon.ID;
+
+namespace Terramon.Content.Items;
+
+public class MoonStone : EvolutionaryItem
+{
+    protected override int UseRarity => ModContent.RarityType<BlackApricornRarity>();
+
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<DuskStone>();
+    }
+
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.width = 28;
+        Item.height = 28;
+    }
+
+    public override ushort GetEvolvedSpecies(PokemonData data)
+    {
+        return data.ID switch
+        {
+            NationalDexID.Nidorina => NationalDexID.Nidoqueen,
+            NationalDexID.Nidorino => NationalDexID.Nidoking,
+            NationalDexID.Clefairy => NationalDexID.Clefable,
+            NationalDexID.Jigglypuff => NationalDexID.Wigglytuff,
+            _ => 0
+        };
+    }
+}

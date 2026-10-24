@@ -147,7 +147,7 @@ The language follows your game: Portuguese (Brasil) or English. Pokerraria: Love
 - **Terramon** is made by the [Terramon team](https://github.com/JamzOJamz/Terramon) and licensed under GPL-3.0. This fork keeps the same license.
 - **Pokémon sprites and portraits** come from the [PMD SpriteCollab](https://github.com/PMDCollab/SpriteCollab) project, licensed under CC BY-NC 4.0. The artists of each Pokémon are listed in [CREDITS.md](https://github.com/Welsete/Pokerraria_LoveStory/blob/feature/ginasios/Terramon/Assets/Pokemon/Anim/CREDITS.md).
 - **Battles** run on [Pokémon Showdown](https://github.com/smogon/pokemon-showdown).
-- **Pokerraria: LoveStory** art for Brock, the held items, Onix and Professor Oak by Isa.
+- **Pokerraria: LoveStory** original art for Brock, the held items, Onix and Professor Oak.
 
 Pokémon is © Nintendo, Game Freak and The Pokémon Company. This is a free, non-commercial fan project and is not affiliated with them.
 

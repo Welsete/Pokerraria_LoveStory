@@ -1,0 +1,1059 @@
+Buffs: {
+	PokemonCompanion: {
+		// DisplayName: Pokémon Companion
+		// Description: "{0} is following you around!"
+	}
+
+	PokeBannerBuff: {
+		// DisplayName: Pokémon Banner
+		// Description: Bonuses active for nearby companions:
+	}
+}
+
+Commands: {
+	// RequiresDebugMode: This command requires Allow Cheat Commands to be enabled in the mod config!
+
+	DexEdit: {
+		// Description: Forcefully sets Pokédex entry statuses
+		// Usage: /dexedit <id> <status>
+		// ParseErrorID: Failed to parse ID argument as integer
+		// ParseErrorStatus: Failed to parse status argument as integer
+		// StatusOutOfRange: Status argument is out of range (0-2)
+		// IDOutOfRange: Pokédex entry {0} is out of range (1-{1})
+		// Success: Successfully set Pokédex entry {0} to status {1}
+	}
+
+	Nickname: {
+		// Description: Sets the nickname of a Pokémon
+		// Usage: /nickname <set|clear> <nickname>
+
+		Set: {
+			// NoActivePokemon: No Pokémon is currently active
+			// NoNicknameProvided: No nickname provided
+			// NicknameTooLong: Nickname must be 12 characters or less (including spaces)
+			// SameNickname: Nickname is already set to that value
+			// SuccessNew: Set {0}'s nickname to {1}
+			// SuccessUpdate: Changed {0}'s nickname from {1} to {2}
+		}
+
+		Clear: {
+			// NoNicknameSet: No nickname is currently set for this Pokémon
+			// Success: Cleared {0}'s nickname
+		}
+
+		// InvalidSubcommand: Invalid subcommand. Use \"set\" or \"clear\"
+	}
+
+	Party: {
+		// ParseErrorSlot: Failed to parse slot argument as integer
+		// SlotOutOfRange: Slot argument is out of range (1-6)
+	}
+
+	PartyClear: {
+		// Description: Removes the specified Pokémon from your party
+		// Usage: /partyclear <slot|all>
+		// NoPokemonInSlot: No Pokémon found in slot {0}
+		// Success: Removed {0} from the party
+		// SuccessAll: Removed all Pokémon from the party
+	}
+
+	PartyData: {
+		// Description: Logs info for the specified Pokémon in your party
+		// Usage: /partydata <slot>
+		// NoPokemonInSlot: No Pokémon data available for slot {0}
+		// Success: Pokémon data for slot {0} written to client.log
+	}
+
+	PokeClear: {
+		// Description: Clears all active Pokémon NPCs in the world
+		// Usage: /pokeclear
+		// Success: Cleared {0} Pokémon NPC(s)
+		// SuccessByPlayer: "{0} cleared {1} Pokémon NPC(s)"
+	}
+
+	PC: {
+		// Description: Opens the Pokémon Storage System (PC) from anywhere
+		// Usage: /pc
+	}
+
+	Dex: {
+		// Description: Opens the Pokédex
+		// Usage: /dex
+	}
+
+	Upgrade: {
+		// Description: Transfer Pokémon from the pre-release version
+		// Usage: /upgrade
+		// TypeResolveError: One or more required legacy types were not found! Please report this issue to the Pokerraria developers
+		// NopUpgrade: No Pokémon were found in the inventory to upgrade
+		// Success: Successfully upgraded and transferred {0} Pokémon to {1}'s PC
+	}
+
+	BannerData: {
+		// Description: Change the tier of the currently held Pokémon banner
+		// Usage: /bannerset <tier>
+		// NotHoldingBanner: The currently held item is not a Pokémon banner
+		// ParseErrorBannerTier: Failed to parse tier argument as BannerTier
+		// Success: Successfully changed the banner tier for the held banner to {0}
+	}
+
+	Starter: {
+		// Description: Opens the starter selection menu (only usable if you haven't chosen a starter yet)
+		// Usage: /starter
+		// AlreadyChosen: You have already chosen your starter Pokémon!
+	}
+
+	Choose: {
+		// Description: Alias for /starter
+		// Usage: /choose
+	}
+}
+
+Configs: {
+	ClientConfig: {
+		// DisplayName: Personal Config
+
+		Headers: {
+			// Miscellaneous: Gameplay
+			// GUI: Interface (GUI)
+			// Accessibility: Accessibility & Personalization
+		}
+
+		FastEvolution: {
+			// Label: Fast Evolution
+			// Tooltip: Whether to automatically evolve Pokémon when using Rare Candy (otherwise speak with the {$NPCs.PokemartClerk.DisplayName})
+		}
+
+		ShowPokedexRegistrationMessages: {
+			// Label: Pokédex Registration Messages
+			// Tooltip: Whether to display a message in chat when a new Pokémon has been registered in the Pokédex
+		}
+
+		LegacyStarterSelectUI: {
+			// Label: (Starter Selection) Use Legacy UI
+			// Tooltip: Uses the older starter selection interface from earlier versions of the mod
+		}
+
+		ReducedAudio: {
+			// Label: (Party Sidebar) Reduced Audio
+			// Tooltip: Disables musical tones when rearranging Pokémon in the sidebar
+		}
+
+		HighlightSelectedPokemonName: {
+			// Label: (Party Sidebar) Highlight Selected Pokémon Name
+			// Tooltip: Highlights the name of the currently selected Pokémon in the party sidebar
+		}
+
+		ReducedMotion: {
+			// Label: (Inventory Slots) Reduced Motion
+			// Tooltip: Disables the sliding animation when toggling inventory party slots
+		}
+
+		ShowPetNameOnHover: {
+			// Label: Show Pokémon Companion Name on Hover
+			// Tooltip: Whether to show the Pokémon companion's name when hovering over it in the world
+		}
+
+		ModIconType: {
+			// Label: Mod Icon Type
+			// Tooltip: Changes the mod icon
+		}
+
+		AnimatedModIcon: {
+			// Label: Animated Mod Icon
+			// Tooltip: Animates the mod's icon in the Mods menu when the mod is enabled
+		}
+
+		RainbowBuffText: {
+			// Label: Rainbow Buff Text
+			// Tooltip: The Pokémon companion buff name will cycle through the colors of the rainbow
+		}
+
+		ThickHighlights: {
+			// Label: Thick Pokémon Highlight Outlines
+			// Tooltip: Whether to use thicker outlines when highlighting Pokémon you can interact or battle with
+		}
+
+		HighlightColor: {
+			// Label: Pokémon Highlight Color
+			// Tooltip: Customize the color of the outline shown when hovering over a Pokémon that you can interact or battle with
+		}
+	}
+
+	GameplayConfig: {
+		// DisplayName: Global Config
+
+		Headers: {
+			// Spawning: Spawning
+			// Visuals: Visuals
+			// Miscellaneous: Miscellaneous
+			// Advanced: Advanced
+		}
+
+		PokemonSpawnRateMultiplier: {
+			// Label: Pokémon Spawn Rate Multiplier
+			/* Tooltip:
+				'''
+				Multiplies the rate at which Pokémon spawn in the wild
+				[c/F2A754:If set to 0, Pokémon will not spawn at all]
+				''' */
+		}
+
+		NonPokemonSpawnRateMultiplier: {
+			// Label: Non-Pokémon Spawn Rate Multiplier
+			/* Tooltip:
+				'''
+				Multiplies the rate at which non-Pokémon NPCs spawn, including modded ones
+				[c/F2A754:If set to 0, regular Terraria enemies and other modded NPCs will not spawn at all]
+				''' */
+		}
+
+		SpawningStage: {
+			// Label: Spawning Stage
+			// Tooltip: The stage of Pokémon that can spawn in the wild (higher stages include all lower stages)
+		}
+
+		EncourageDespawning: {
+			// Label: Encourage Despawning
+			// Tooltip: Whether or not to encourage wild Pokémon to despawn when leaving an area to make room for new spawns
+		}
+
+		ShinySpawnRate: {
+			// Label: Shiny Spawn Rate
+			// Tooltip: The rarity of Shiny Pokémon spawning in the wild (1/x)
+		}
+
+		FastAnimations: {
+			// Label: Fast Animations
+			// Tooltip: Whether to skip animations for certain events (e.g. catching a Pokémon)
+		}
+
+		ShinyLockedStarters: {
+			// Label: Shiny-Locked First Partner Pokémon
+			// Tooltip: Prevents first partner (starter) Pokémon from being shiny
+		}
+
+		DebugMode: {
+			// Label: Allow Cheat Commands
+			/* Tooltip:
+				'''
+				Enables the use of cheat commands (e.g. /pokeclear) in the chat
+				[c/F2A754:May disrupt normal gameplay]
+				''' */
+		}
+	}
+
+	SpawningStage: {
+		// Tooltip: ""
+
+		Basic: {
+			// Label: Unevolved/Basic Pokémon
+			// Tooltip: ""
+		}
+
+		Stage1: {
+			// Label: First-Evolved/Stage 1 Pokémon
+			// Tooltip: ""
+		}
+
+		Stage2: {
+			// Label: Second-Evolved/Stage 2 Pokémon
+			// Tooltip: ""
+		}
+
+		Legendary: {
+			// Label: Legendary/Mythical Pokémon
+			// Tooltip: ""
+		}
+	}
+}
+
+GUI: {
+	Inventory: {
+		// ShowParty: Show Party
+		// HideParty: Hide Party
+		// OpenPokedex: Open Pokédex
+		SlotName: "{0} (N. {1})"
+		SlotTooltip:
+			'''
+			PV: {0}/{1}
+			EXP: 0/{2}
+			'''
+		SlotTooltipMaxLevel:
+			'''
+			PV: {0}/{1}
+			EXP: MAX
+			'''
+		// SlotTooltipPCMode: "[c/FFFFFF:In Party]"
+		// SlotTooltipPCModeActive: "[c/FFFFFF:In Party (Active)]"
+		// SlotTooltipUseItem: Left click to use {0}
+		// SlotTooltipGiveHeldItem: Right click to give {0}
+		// SlotTooltipSwapHeldItem: Right click to swap with held {0}
+		// SlotTooltipSwapHeldItemSpecify: Right click to swap {0} with held {1}
+		// CannotRemoveLastPokemon: Your party must have at least one Pokémon!
+		// CannotGiveItemStack: Cannot give a stack of items! Reduce stack to 1.
+	}
+
+	PC: {
+		// RenameLabel: Rename Box
+		// ChangeColor: Change Color
+		// SaveColor: Save Color
+		// SaveColorUnsavedChanges: Save Color (*)
+		// ResetToDefaultColor: Reset to Default Color
+		// DragToMove: Click and drag to move
+	}
+
+	Starter: {
+		// Title: Welcome to the world of Pokémon, {0}! Thank you for installing Pokerraria: LoveStory!
+		// Subtitle: Now, please choose your first partner Pokémon to begin your adventure!
+		// Hint: (Press Back to close)
+		ChosenMessage: Tu as choisi [c/{1}:{2}], le {0} comme Pokémon de départ !
+		// ComingSoon: Coming soon...
+
+		Banner: {
+			// PickThisOne: Pick this one!
+
+			SecretHoverText: {
+				// ReadyToStart: "{0} seems ready to get started!"
+				// GoodMood: "{0} looks like it's in a good mood!"
+				// FullOfExcitement: "{0} is full of excitement!"
+				// Curious: "{0} seems curious about you!"
+				// Waiting: "{0} looks like it's waiting for something!"
+				// SparkOfEnergy: "{0} seems to have a spark of energy!"
+				// BouncingWithExcitement: "{0} is bouncing with excitement!"
+				// ReadyToPlay: "{0} looks like it's ready to play!"
+				// EagerToShow: "{0} is eager to show you what it can do!"
+				// ReadyToImpress: "{0} looks ready to impress!"
+			}
+		}
+
+		Generations: {
+			// Gen1: Generation I (Kanto)
+			// Gen2: Generation II (Johto)
+			// Gen3: Generation III (Hoenn)
+			// Gen4: Generation IV (Sinnoh)
+			// Gen5: Generation V (Unova)
+			// Gen6: Generation VI (Kalos)
+			// Gen7: Generation VII (Alola)
+			// Gen8: Generation VIII (Galar)
+		}
+
+		Legacy: {
+			// Title: Welcome to the world of Pokémon! Thank you for installing Pokerraria: LoveStory!
+			// Subtitle: Now, please choose your starter Pokémon to begin your adventure!
+			// ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
+		}
+	}
+
+	NPCShop: {
+		// PremierBonus: You got a Premier Ball as an added bonus!
+		// PremierBonusPlural: You got {0} Premier Balls as an added bonus!
+	}
+
+	Party: {
+		LevelDisplay: N. {0}
+		// SlotHover: Left click to send out
+		// SlotHoverActive: Left click to recall
+		/* SlotHoverExtra:
+			'''
+
+			Click and drag to reorder
+			''' */
+	}
+
+	Pokedex: {
+		NumberPrefix: N°
+		// ShowingRange: Showing {$GUI.Pokedex.NumberPrefix} {0}-{1} ({2})
+		// Obtained: Obtained
+		// Seen: Seen
+		/* ObtainedBy:
+			'''
+
+			[c/FFE745:Obtained by {0}]
+			''' */
+		/* SeenBy:
+			'''
+
+			[c/FFE745:Seen by {0}]
+			''' */
+		// Completion: "{0}% Completion"
+		// PlayerDexFilter: Show {0}'s Pokédex
+		// PlayerShinyDexFilter: Show {0}'s Shiny Dex
+		// WorldDexFilter: Show World Dex
+		// ShinyWorldDexFilter: Show Shiny World Dex
+		Height: Taille
+		Weight: Poids
+		Entry: Entrée
+	}
+
+	TurnBased: {
+		ButtonLabels: {
+			// Fight: Fight
+			// Bag: Bag
+			// Pokemon: Pokémon
+			// Run: Run
+		}
+	}
+
+	ControllerHints: {
+		// Release: Release
+		// SwitchPage: Switch page
+	}
+}
+
+CommonTooltips: {
+	/* Apricorn:
+		'''
+		A special fruit seemingly related to berries
+		Can be used to craft assorted Poké Balls
+		''' */
+	// EvolutionaryItem: Evolutionary item
+	// HeldItem: Held item
+	// KeyItem: Key item
+	// RecoveryItem: Pokémon recovery item
+	// Potion: A spray-type medicine for wounds
+	// Revive: A medicine that revives a fainted Pokémon
+	// Vitamin: Vitamin
+	// RightClickPlace: Can be placed using right click
+	// PCItems: Accesses the Pokémon Storage System
+	/* PokeBallMinis:
+		'''
+		'For decorative purposes'
+		Can be placed on item frames
+		''' */
+	// MegaStone: Mega Stone - {0}
+	/* MegaStoneTip:
+		'''
+		One of a variety of mysterious Mega Stones
+		Any {0} holding this stone will be able to Mega Evolve during battle
+		''' */
+	// TerramonFishChance: "{0}% chance to catch Pokémon or treasure"
+	// ValuableItem: Valuable item
+	// Unobtainable: Unobtainable
+}
+
+Items: {
+	PokeBallItem: {
+		// DisplayName: Poké Ball
+		/* Tooltip:
+			'''
+			A device for catching wild Pokémon
+			It is thrown like a ball at the target
+			''' */
+		// CatchRate: 1x catch rate
+	}
+
+	PokeBallMiniItem: {
+		// DisplayName: "{$Items.PokeBallItem.DisplayName} (Mini)"
+		// Tooltip: ""
+	}
+
+	GreatBallItem: {
+		// DisplayName: Great Ball
+		/* Tooltip:
+			'''
+			A good, high-performance Poké Ball
+			Provides a higher Pokémon catch rate than a standard Poké Ball
+			''' */
+		// CatchRate: 1.5x catch rate
+	}
+
+	GreatBallMiniItem: {
+		// DisplayName: "{$Items.GreatBallItem.DisplayName} (Mini)"
+		// Tooltip: ""
+	}
+
+	UltraBallItem: {
+		// DisplayName: Ultra Ball
+		/* Tooltip:
+			'''
+			An ultra-high-performance Poké Ball
+			Provides a higher Pokémon catch rate than a Great Ball
+			''' */
+		// CatchRate: 2x catch rate
+	}
+
+	UltraBallMiniItem: {
+		// DisplayName: "{$Items.UltraBallItem.DisplayName} (Mini)"
+		// Tooltip: ""
+	}
+
+	MasterBallItem: {
+		// DisplayName: Master Ball
+		/* Tooltip:
+			'''
+			The best Poké Ball with the ultimate level of performance
+			It will catch any wild Pokémon without fail
+			''' */
+		// CatchRate: 100% catch rate
+	}
+
+	MasterBallMiniItem: {
+		// DisplayName: "{$Items.MasterBallItem.DisplayName} (Mini)"
+		// Tooltip: ""
+	}
+
+	PremierBallItem: {
+		// DisplayName: Premier Ball
+		/* Tooltip:
+			'''
+			A somewhat rare Poké Ball
+			It was made as a commemorative item used to celebrate an event of some sort
+			''' */
+		// CatchRate: 1x catch rate
+	}
+
+	PremierBallMiniItem: {
+		// DisplayName: "{$Items.PremierBallItem.DisplayName} (Mini)"
+		// Tooltip: ""
+	}
+
+	CherishBallItem: {
+		// DisplayName: Cherish Ball
+		/* Tooltip:
+			'''
+			A quite rare Poké Ball
+			It has been specially crafted to commemorate an occasion of some sort
+			''' */
+		// CatchRate: 1x catch rate
+	}
+
+	CherishBallMiniItem: {
+		// DisplayName: "{$Items.CherishBallItem.DisplayName} (Mini)"
+		// Tooltip: ""
+	}
+
+	AetherBallItem: {
+		// DisplayName: Aether Ball
+		/* Tooltip:
+			'''
+			An ethereal Poké Ball infused with shimmering energy
+			It is said to have a calming effect on wild Pokémon
+			''' */
+		// CatchRate: 1x catch rate
+	}
+
+	AetherBallMiniItem: {
+		// DisplayName: "{$Items.AetherBallItem.DisplayName} (Mini)"
+		// Tooltip: ""
+	}
+
+	Potion: {
+		// DisplayName: Potion
+		// Tooltip: Restores the HP of one Pokémon by just 20 points
+	}
+
+	SuperPotion: {
+		// DisplayName: Super Potion
+		// Tooltip: Restores the HP of one Pokémon by 50 points
+	}
+
+	HyperPotion: {
+		// DisplayName: Hyper Potion
+		// Tooltip: Restores the HP of one Pokémon by 200 points
+	}
+
+	MaxPotion: {
+		// DisplayName: Max Potion
+		// Tooltip: Completely restores the HP of a single Pokémon
+	}
+
+	Revive: {
+		// DisplayName: Revive
+		// Tooltip: Restores half the Pokémon's maximum HP
+	}
+
+	MaxRevive: {
+		// DisplayName: Max Revive
+		// Tooltip: Fully restores the Pokémon's HP
+	}
+
+	RareCandy: {
+		// DisplayName: Rare Candy
+		/* Tooltip:
+			'''
+			A candy that is packed with energy
+			If consumed, it raises a Pokémon's level by one
+			''' */
+	}
+
+	TrainerCap: {
+		// DisplayName: Pokémon Trainer Cap
+		// Tooltip: "'Gotta catch 'em all!'"
+	}
+
+	TrainerTorso: {
+		// DisplayName: Pokémon Trainer Jacket
+		// Tooltip: "'Gotta catch 'em all!'"
+	}
+
+	TrainerLegs: {
+		// DisplayName: Pokémon Trainer Jeans
+		// Tooltip: "'Gotta catch 'em all!'"
+	}
+
+	MusicItemCenter: {
+		// DisplayName: Music Box (Pokémon Center)
+		// Tooltip: ""
+	}
+
+	MusicItemWildBattle: {
+		// DisplayName: Music Box (Battle! Wild Pokémon)
+		// Tooltip: ""
+	}
+
+	ShinyCharm: {
+		// DisplayName: Shiny Charm
+		/* Tooltip:
+			'''
+			A shiny charm said to increase the chance of finding a Shiny Pokémon in the wild
+			Received as a reward for obtaining all Pokémon in the Pokédex
+			''' */
+	}
+
+	FireStone: {
+		// DisplayName: Fire Stone
+		/* Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It has a fiery orange heart'
+			''' */
+	}
+
+	WaterStone: {
+		// DisplayName: Water Stone
+		/* Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It is the blue of a pool of clear water'
+			''' */
+	}
+
+	ThunderStone: {
+		// DisplayName: Thunder Stone
+		/* Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It is inscribed with a thunderbolt pattern'
+			''' */
+	}
+
+	LeafStone: {
+		// DisplayName: Leaf Stone
+		/* Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It has an unmistakable leaf pattern'
+			''' */
+	}
+
+	MoonStone: {
+		// DisplayName: Moon Stone
+		/* Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It resembles the rocky texture of an asteroid'
+			''' */
+	}
+
+	DuskStone: {
+		// DisplayName: Dusk Stone
+		/* Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It holds shadows as dark as can be'
+			''' */
+	}
+
+	IceStone: {
+		// DisplayName: Ice Stone
+		/* Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It has an unmistakable snowflake pattern'
+			''' */
+	}
+
+	LinkingCord: {
+		// DisplayName: Linking Cord
+		/* Tooltip:
+			'''
+			A cord that makes you feel a strange sense of connection
+			'It's loved by certain Pokémon'
+			''' */
+	}
+
+	// BlackApricorn.DisplayName: Black Apricorn
+	// BlueApricorn.DisplayName: Blue Apricorn
+	// GreenApricorn.DisplayName: Green Apricorn
+	// PinkApricorn.DisplayName: Pink Apricorn
+	// RedApricorn.DisplayName: Red Apricorn
+	// WhiteApricorn.DisplayName: White Apricorn
+	// YellowApricorn.DisplayName: Yellow Apricorn
+
+	ExpCandyXS: {
+		// DisplayName: Exp. Candy XS
+		/* Tooltip:
+			'''
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a very small number of Exp. Points
+			''' */
+	}
+
+	ExpCandyS: {
+		// DisplayName: Exp. Candy S
+		/* Tooltip:
+			'''
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a small number of Exp. Points
+			''' */
+	}
+
+	ExpCandyM: {
+		// DisplayName: Exp. Candy M
+		/* Tooltip:
+			'''
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a moderate number of Exp. Points
+			''' */
+	}
+
+	ExpCandyL: {
+		// DisplayName: Exp. Candy L
+		/* Tooltip:
+			'''
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a large number of Exp. Points
+			''' */
+	}
+
+	ExpCandyXL: {
+		// DisplayName: Exp. Candy XL
+		/* Tooltip:
+			'''
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a very large number of Exp. Points
+			''' */
+	}
+
+	ShimmerStateDrive: {
+		// DisplayName: Shimmer-State Drive
+		/* Tooltip:
+			'''
+			Permanently unlocks a shared PC box in this world
+			This allows for easy transfer of Pokémon between players
+			'Property of the Aether Foundation'
+			''' */
+	}
+
+	PCItemRed: {
+		// DisplayName: PC (Red)
+		// Tooltip: ""
+	}
+
+	PCItemWhite: {
+		// DisplayName: PC (White)
+		// Tooltip: ""
+	}
+
+	ErikaPaintingItem: {
+		// DisplayName: Erika's Invitation
+		// Tooltip: "'L. Walter'"
+	}
+
+	PokeBannerItem: {
+		// DisplayName: "{0} Banner"
+		// ShinyDisplayName: Shiny {0} Banner
+		/* Tooltip:
+			'''
+			Nearby {0} companions grow quicker and unleash stronger attacks
+			Right click while holding to cycle through visual styles
+			''' */
+	}
+
+	LuckyEgg: {
+		// DisplayName: Lucky Egg
+		// Tooltip: An egg filled with happiness that earns the holder extra Exp. Points
+	}
+
+	ExpShare: {
+		// DisplayName: Exp. Share
+		// Tooltip: Turning on this special device will allow all the Pokémon on your team to receive Exp. Points from battles
+	}
+
+	ExpCharm: {
+		// DisplayName: Exp. Charm
+		/* Tooltip:
+			'''
+			Having one of these charms increases the Exp. Points your Pokémon get
+			It's a strange, stretchy charm that encourages growth
+			''' */
+	}
+
+	Nugget: {
+		// DisplayName: Nugget
+		/* Tooltip:
+			'''
+			A nugget of pure gold that gives off a lustrous gleam
+			It can be sold at a high price to shops
+			''' */
+	}
+
+	BigNugget: {
+		// DisplayName: Big Nugget
+		/* Tooltip:
+			'''
+			A big nugget of pure gold that gives off a lustrous gleam
+			It can be sold at a high price to shops
+			''' */
+	}
+
+	TinyMushroom: {
+		// DisplayName: Tiny Mushroom
+		/* Tooltip:
+			'''
+			A small and rare mushroom
+			It's quite popular with a certain class of collectors
+			''' */
+	}
+
+	BigMushroom: {
+		// DisplayName: Big Mushroom
+		/* Tooltip:
+			'''
+			A large and rare mushroom
+			It's extremely popular with a certain class of collectors
+			''' */
+	}
+
+	Pearl: {
+		// DisplayName: Pearl
+		/* Tooltip:
+			'''
+			A rather small pearl that has a nice silvery sheen to it
+			It can be sold at a low price to shops
+			''' */
+	}
+
+	BigPearl: {
+		// DisplayName: Big Pearl
+		/* Tooltip:
+			'''
+			A rather large pearl that has a nice silvery sheen to it
+			It can be sold at a high price to shops
+			''' */
+	}
+
+	SilverLeaf: {
+		// DisplayName: Silver Leaf
+		/* Tooltip:
+			'''
+			A mysterious silver leaf
+			No trees with this leaf have been found yet
+			''' */
+	}
+
+	GoldLeaf: {
+		// DisplayName: Gold Leaf
+		/* Tooltip:
+			'''
+			A mysterious gold leaf
+			No trees with this leaf have been found yet
+			''' */
+	}
+
+	RelicCopper: {
+		// DisplayName: Relic Copper
+		// Tooltip: A copper coin used by an ancient civilization about three thousand years ago
+	}
+
+	RelicSilver: {
+		// DisplayName: Relic Silver
+		// Tooltip: A silver coin used by an ancient civilization about three thousand years ago
+	}
+
+	RelicGold: {
+		// DisplayName: Relic Gold
+		// Tooltip: A gold coin used by an ancient civilization about three thousand years ago
+	}
+
+	RareSweetfish: {
+		// DisplayName: Rare Sweetfish
+		/* Tooltip:
+			'''
+			A fish that is packed with energy
+			If consumed, it raises a Pokémon's level by one
+			''' */
+	}
+
+	OldRod: {
+		// DisplayName: Old Rod
+		// Tooltip: An old and beat-up fishing rod
+	}
+
+	GoodRod: {
+		// DisplayName: Good Rod
+		// Tooltip: A new, good-quality fishing rod
+	}
+
+	SuperRod: {
+		// DisplayName: Super Rod
+		/* Tooltip:
+			'''
+			An awesome, high-spec fishing rod
+			Allows fishing in lava
+			''' */
+	}
+}
+
+MegaStoneNames: {
+	// Venusaur: Venusaurite
+	// CharizardX: Charizardite X
+	// CharizardY: Charizardite Y
+	// Blastoise: Blastoisinite
+	// Beedrill: Beedrillite
+	// Pidgeot: Pidgeotite
+	// RaichuX: Raichunite X
+	// RaichuY: Raichunite Y
+	// Clefable: Clefablite
+	// Alakazam: Alakazite
+	// Victreebel: Victreebelite
+	// Slowbro: Slowbronite
+	// Gengar: Gengarite
+	// Kangaskhan: Kangaskhanite
+	// Starmie: Starminite
+	// Pinsir: Pinsirite
+	// Gyarados: Gyaradosite
+	// Aerodactyl: Aerodactylite
+	// Dragonite: Dragoninite
+	// MewtwoX: Mewtwonite X
+	// MewtwoY: Mewtwonite Y
+}
+
+Keybinds: {
+	// ToggleParty.DisplayName: Party
+	// OpenPokedex.DisplayName: Pokédex
+	// OpenPokedexEntry.DisplayName: Open Pokédex Entry For Pokémon
+	// TogglePokemon.DisplayName: Toggle Active Pokémon
+	// NextPokemon.DisplayName: Summon Next Pokémon
+	// PrevPokemon.DisplayName: Summon Previous Pokémon
+}
+
+Tiles: {
+	// MusicBoxCenter.MapEntry: Music Box
+	// MusicBoxWildBattle.MapEntry: Music Box
+	// PCWhite.MapEntry: PC
+	// PCRed.MapEntry: PC
+}
+
+Types: {
+	// Normal: Normal
+	// Fire: Fire
+	// Fighting: Fighting
+	// Water: Water
+	// Flying: Flying
+	// Grass: Grass
+	// Poison: Poison
+	// Electric: Electric
+	// Ground: Ground
+	// Psychic: Psychic
+	// Rock: Rock
+	// Ice: Ice
+	// Bug: Bug
+	// Dragon: Dragon
+	// Ghost: Ghost
+	// Dark: Dark
+	// Steel: Steel
+	// Fairy: Fairy
+}
+
+NPCs: {
+	PokemartClerk: {
+		// DisplayName: Poké Mart Clerk
+		// BestiaryText: The Poké Mart Clerk is a dedicated salesman, stocking all kinds of items for your Pokémon training needs.
+		EvolveButton: Faire évoluer {0}
+
+		TownNPCMood: {
+			// Content: I rather enjoy my living space.
+			// NoHome: I wish I had somewhere to live.
+			// FarFromHome: I miss being back at my home.
+			// LoveSpace: I love how much space there is for wild Pokémon to appear!
+			// DislikeCrowded: Although there are plenty of people to talk to, it's a bit crowded.
+			// HateCrowded: There are way too many people living here!
+			// LikeBiome: There are so many Pokémon to see in {BiomeName}!
+			// DislikeBiome: I dislike {BiomeName}. It's so creepy and everything is out to get you!
+			// LikeNPC: I like {NPCName}. They've helped me out a ton.
+			// DislikeNPC: I find {NPCName} a bit too loud.
+			// HateNPC: I hate {NPCName}. He just doesn't respect Pokémon.
+			// LikeNPC_Princess: I like {NPCName}. Who doesn't?
+			// Princess_LovesNPC: I like {NPCName}.
+		}
+
+		Dialogue: {
+			// Catchem: There's a lot of Pokémon out there, but you'll need Poké Balls to catch them! Luckily for you, I have some in stock.
+			// Furret: In Johto they have a species of Pokémon called Furrets. They sure do love to walk!
+			// CheckBack: As your journey progresses, I'll offer new things. Check back here every so often.
+			// Biomes: Different Pokémon like living in different places. If you travel around, you may find new Pokémon!
+			// Regions: There are many different regions in the world. One day I hope to visit all of them!
+			// Crafting: I conveniently sell Poké Balls for you to buy, but if you're short of cash you can always make your own using apricorns and {0}!
+			// EvolutionStones: Some Pokémon only evolve when exposed to certain stones. They're quite rare.
+			// SickBurn: A remake of Mobile Creatures has been announced! Though I'm not sure how I feel about the art style...
+			// Dedication: Ever since Pokémon started appearing in {0}, I've dedicated my life to helping people learn more about them.
+			// NoBattleRip: The Pokémon around here seem very peaceful. It's unusual to see creatures getting along so well.
+			// BadName: Now, I know what you're thinking. "That's such a creative name!"
+			// Shimmer: Like my outfit? I look just like a real Pokémon Trainer!
+			// ShimmerQuery: Have you heard of Shimmer? Apparently it can give people their own shiny form!
+			// PokemonHello: Is that your {0}? Hi, {1}!
+			// PokemonGrass: Is that a Grass-type Pokémon? Those are my favourite!
+			// PokemonIce: An Ice-type Pokémon! I've always loved seeing those.
+			// PokemonShiny: Is that a shiny Pokémon? That's incredible! I wish I had one myself.
+			// PokemonShimmer: Interesting... Your Pokémon has the same colors as a shiny Pokémon, but none of the... well, shine.
+			// PokemonNicknameHowto: Did you know you can give your Pokémon a nickname? Type "/nickname" in the chat alongside the name of your choice.
+			// PokemonNickname: "{0}? That's a lovely name! I can tell you care about your Pokémon very much."
+			// MerchantComment: "{0} may be a bit greedy, but he has taught me everything I know about commerce."
+			// MechanicComment: "{0} knows a lot about Poké Balls. Maybe one day I could start selling more of them!"
+			// PirateComment: Have you tried speaking to {0}? I can never understand what he is saying.
+			// ArmsDealerComment: Can you tell {0} to stop shooting at the Pokémon??
+			// EvolutionCongrats: Congratulations! {$Misc.PokemonEvolved}
+		}
+
+		// Census.SpawnCondition: Conditions unknown
+	}
+}
+
+// WorldGen.ItemsPass: Scattering candies
+
+Misc: {
+	// CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
+	// CatchSuccessPC: Gotcha! [c/{0}:{1}] was caught and transferred to {2} in {3}'s PC!
+	// CatchSuccessPCCustomBoxName: Gotcha! [c/{0}:{1}] was caught and transferred to "{2}" ({3}) in {4}'s PC!
+	// CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
+	// CatchMilestone3: You've obtained your 3rd {0}!
+	// CatchMilestone6: You've obtained your 6th {0}!
+	// CatchMilestone9: You've obtained your 9th {0}!
+	// CatchMilestone12: You've obtained your 12th {0}!
+	// PokedexRegistered: "{0}'s data was added to the Pokédex."
+	PCBoxDefaultName: Boîte {0}
+	// RequireStarter: Choose a starter Pokémon first!
+	// NoActivePokemon: You need to have an active Pokémon to do that!
+	// ItemNoEffect: It won't have any effect on {0}.
+	// PokemonEvolved: "{0} evolved into {1}!"
+	// PokemonEvolutionReady: "{0} seems ready to evolve!"
+	// RareCandyUse: "{0} grew to Lv. {1}!"
+	// ExpCandyUse: Your Pokémon gained {0} Exp. Points!
+	// PotionUse: "{0}'s HP was restored by {1} {^1:point;points}!"
+	// ReviveUse: "{0} was revived with half its HP restored!"
+	// MaxReviveUse: "{0} was revived with full HP restored!"
+	// Trainer: Trainer
+	/* MOTD:
+		'''
+		Greetings, Trainer! Welcome to {0} v{1}! [i:{2}]
+
+		[c/C9C9E5:Make sure to customize the mod to your liking in the Mod Config menu and set up keybindings in the Controls menu.]
+		''' */
+}
+
+Projectiles: {
+	// PokeBallBobber.DisplayName: Poké Ball Bobber
+	// PokemonPetGenericAttackProjectile.DisplayName: Pokémon Companion Generic Attack Projectile
+}

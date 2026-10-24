@@ -1,0 +1,319 @@
+using Showdown.NET.Definitions;
+using Terramon.Content.NPCs;
+using Terramon.Content.NPCs.Trainers;
+using Terramon.Core.Battling.BattlePackets;
+using Terramon.ID;
+using Terraria.Localization;
+
+namespace Terramon.Core.Battling;
+
+public struct BattlePokemon()
+{
+    public BattleSide Side;
+    public byte Slot;
+    private ushort _heldItem;
+    public ushort HeldItem
+    {
+        readonly get => (ushort)(Data?.HeldItem.type ?? _heldItem);
+        set
+        {
+            if (Data != null)
+                Data.HeldItem = value == 0 ? new Item() : new Item(value);
+
+            _heldItem = value;
+        }
+    }
+    public readonly BattleSide OppositeSide => Side.Opposite;
+    public bool Participated;
+    public PokemonData Data;
+    public readonly string DisplayName => Data?.DisplayName ?? Terramon.DatabaseV2.GetPokemon(_species).Identifier;
+    public readonly string OwnerName
+        => Side.Provider switch
+        {
+            TerramonPlayer plr => plr.Player.name,
+            TrainerNPC trainer => trainer.BattleName,
+            _ => null,
+        };
+
+    public readonly string PokeMessage
+        => Side.Provider switch
+        {
+            TerramonPlayer plr => Language.GetTextValue("Mods.Terramon.Battle.OwnedPokemon", plr.Player.name, DisplayName),
+            PokemonNPC => Language.GetTextValue("Mods.Terramon.Battle.WildName", DisplayName),
+            TrainerNPC trainer => Language.GetTextValue("Mods.Terramon.Battle.OwnedPokemon", trainer.BattleName, DisplayName),
+            _ => null
+        };
+
+    public HashSet<VolatileEffect> Volatiles = [];
+
+    // The last move it used (and on which turn), and the move Disable blocks (see BattleField.DisabledTurnsLeft)
+    public ushort LastMove;
+    public int LastMoveTurn;
+    public ushort DisabledMove;
+    public int DisabledTurn;
+    public bool DisabledAfterMoving;
+
+    /// <summary>
+    ///     The species this Pokémon looks like after Transform or Imposter, or 0 if it isn't transformed.
+    ///     Only changes how it's drawn; its <see cref="Data" /> stays the same.
+    /// </summary>
+    public ushort TransformedInto;
+
+    /// <summary>
+    ///     Whether the Pokémon it transformed into is shiny, so the copy has the same colors.
+    /// </summary>
+    public bool TransformedShiny;
+    private ushort _hp;
+    private ushort _species;
+    private Gender _gender;
+    private bool _shiny;
+    private byte _level;
+    private PokemonType _terastallized;
+    private NonVolatileStatus _status;
+    private StatStages _statStages;
+    private AbilityID _ability;
+    public bool AbilitySuppressed;
+    public ushort HP
+    {
+        readonly get => Data?.HP ?? _hp;
+        set
+        {
+            if (Data != null)
+                Data.HP = value;
+            _hp = value;
+        }
+    }
+    public ushort Species
+    {
+        readonly get => Data?.ID ?? _species;
+        set
+        {
+            if (Data != null)
+                Data.ID = value;
+            _species = value;
+        }
+    }
+    public Gender Gender
+    {
+        readonly get => Data?.Gender ?? _gender;
+        set
+        {
+            if (Data != null)
+                Data.Gender = value;
+            _gender = value;
+        }
+    }
+    public bool IsShiny
+    {
+        readonly get => Data?.IsShiny ?? _shiny;
+        set
+        {
+            if (Data != null)
+                Data.IsShiny = value;
+            _shiny = value;
+        }
+    }
+    public byte Level
+    {
+        readonly get => Data?.Level ?? _level;
+        set
+        {
+            if (Data != null)
+                Data.Level = value;
+            _level = value;
+        }
+    }
+    public PokemonType Terastallized
+    {
+        readonly get => _terastallized;
+        set => _terastallized = value;
+    }
+    public AbilityID Ability
+    {
+        readonly get => Data?.Ability ?? _ability;
+        set
+        {
+            if (Data != null)
+                Data.Ability = value;
+            _ability = value;
+        }
+    }
+    public SimpleDetails Details
+    {
+        readonly get => new(Species, Gender, IsShiny, Level, Terastallized);
+        set
+        {
+            Species = value.Species;
+            Gender = value.Gender;
+            IsShiny = value.Shiny;
+            Level = value.Level;
+            Terastallized = value.Terastallized;
+        }
+    }
+    public SimpleHP HPData
+    {
+        set
+        {
+            // Multiplayer clients only get the public half of the battle, where HP is a percentage (x/100).
+            // Turn it back into real HP so the party isn't left with the percentage after the battle
+            if (Main.netMode == NetmodeID.MultiplayerClient && Data != null && value.MaxHP == 100 && Data.MaxHP != 100)
+            {
+                var hp = value.HP == 0 ? 0 : Math.Max(1, (int)Math.Round(value.HP * Data.MaxHP / 100f));
+                HP = (ushort)Math.Min(hp, Data.MaxHP);
+            }
+            else
+                HP = value.HP;
+            if (value.MaxHP == 0) // faint
+            {
+                Faint();
+            }
+            else if (Data != null)
+            {
+                if (Data.MaxHP != value.MaxHP)
+                    Terramon.Instance.Logger.Warn(
+                        $"Value of Max HP given by Pokémon Showdown and the value calculated by Terramon for {Terramon.DatabaseV2.GetPokemonName(Species)} differ:\n" +
+                        $"Terramon: {Data.MaxHP}\n" +
+                        $"Showdown: {value.MaxHP}");
+            }
+        }
+    }
+    public NonVolatileStatus Status
+    {
+        readonly get => Data?.Status ?? _status;
+        set
+        {
+            if (Data != null)
+                Data.Status = value;
+            _status = value;
+        }
+    }
+    public StatStages StatStages
+    {
+        readonly get => Data?.StatStages ?? _statStages;
+        set
+        {
+            if (Data != null)
+                Data.StatStages = value;
+            _statStages = value;
+        }
+    }
+    public void SetStat(byte stat, int value, bool setDirectly)
+        => SetStat((StatID)stat, value, setDirectly);
+    public void SetStat(StatID stat, int value, bool setDirectly)
+    {
+        int newValue = Math.Clamp(setDirectly ? value : (Data is null ? _statStages[stat] : Data.StatStages[stat]) + value, -7, 7);
+        if (Data != null)
+            Data.StatStages[stat] = newValue;
+        _statStages[stat] = newValue;
+    }
+    public uint PackedStats
+    {
+        readonly get => Data?.StatStages.Packed ?? _statStages.Packed;
+        set
+        {
+            if (Data != null)
+                Data.StatStages.Packed = value;
+            _statStages.Packed = value;
+        }
+    }
+    public readonly string PokeName => Data.DisplayName;
+    public readonly void PlayMoveAnimation(ushort move)
+    {
+        _ = _gender;
+    }
+    public void SetAsActive()
+    {
+        Side.SetActivePokemon(Slot);
+        Participated = true;
+    }
+    public void Faint()
+    {
+        var field = Side?.Field;
+        // A transformed Pokémon keeps its copied looks until it's shown fainting
+        if (!Main.dedServ && TransformedInto != 0 && field != null)
+            BattlePlayback.HoldLook(field, field.A == Side ? 1 : 2, Slot, TransformedInto, TransformedShiny);
+        TransformedInto = 0;
+        // It keeps looking healthy until its faint is shown (see BattlePlayback)
+        if (!Main.dedServ)
+            BattlePlayback.HoldStatus(field, Data);
+        var justFainted = Data?.Faint() ?? false;
+        _status = NonVolatileStatus.Fnt;
+
+        if (!justFainted || Main.dedServ)
+            return;
+
+        var local = TerramonPlayer.LocalPlayer;
+        var own = Side.Provider == local;
+        var text = Language.GetTextValue("Mods.Terramon.Battle.Fainted", BattleLog.HighlightMon(PokeMessage, own));
+
+        // Reward the local player's Pokémon for knocking out a foe (battles between players give no EXP). The EXP is
+        // given now, but its messages (and the new level and EXP bar) are shown with the faint
+        List<(string Text, Color Color)> yields = null;
+        PokemonData[] expHolders = null;
+        if (Side.Provider != local && Side.Provider is not TerramonPlayer && local.BattleClient?.Foe == Side.Provider)
+        {
+            expHolders = local.Party.ToArray();
+            BattlePlayback.HoldExp(field, expHolders);
+            yields = [];
+            local.DefeatedPokemon(Data, true, yields);
+        }
+
+        // Only the players in this battle get its messages
+        BattlePlayback.QueueFaint(field, Data, text, field != null && field.LocalSideIndex != 0, yields, expHolders);
+
+        // Not part of a battle being shown: say it right away, as before
+        if (field == null)
+        {
+            BattleLog.Say(text, new Color(255, 120, 110));
+            if (yields != null)
+            {
+                foreach (var (line, color) in yields)
+                    BattleLog.Say(line, color);
+            }
+        }
+    }
+    public void CureStatus()
+    {
+        Data?.CureStatus();
+        if (Status == NonVolatileStatus.Fnt)
+            return;
+        Status = NonVolatileStatus.None;
+        return;
+    }
+    public void ModifyBoosts(BoostModifierAction action)
+    {
+        uint? clear = null;
+        switch (action)
+        {
+            case BoostModifierAction.Invert:
+                PackedStats ^= 0b100010001000100010001000u;
+                break;
+            case BoostModifierAction.ClearAll:
+                for (int i = 0; i <= (int)StatID.Spe; i++)
+                {
+                    // normalizes position of the last bit so it's at 0b1, then masks the rest out.
+                    // clear = 0, then, leads to positive numbers being skipped, and 1 to negative numbers being skipped
+                    var shift = i * 4;
+                    if (clear.HasValue &&
+                        ((PackedStats >> (3 + shift)) & 1) == clear.Value)
+                            continue;
+                    PackedStats &= ~(0xFu << shift);
+                }
+                break;
+            case BoostModifierAction.ClearPositive:
+                clear = 1u;
+                goto case BoostModifierAction.ClearAll;
+            case BoostModifierAction.ClearNegative:
+                clear = 0u;
+                goto case BoostModifierAction.ClearAll;
+        }
+    }
+}
+
+public enum BoostModifierAction : byte
+{
+    Invert,
+    ClearAll,
+    ClearPositive,
+    ClearNegative
+}

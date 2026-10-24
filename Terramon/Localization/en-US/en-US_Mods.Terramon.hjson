@@ -1,0 +1,2366 @@
+Battle: {
+	WildName: Wild {0}
+	OwnedPokemon: "{0}'s {1}"
+	WhatWillDo: What will {0} do?
+	BagUnavailable: The Bag can't be used in battle yet.
+	ChallengeReceived: "{0} wants to battle!"
+	ChallengeAccepted: "{0} has accepted your challenge"
+	ChallengeDeclined: "{0} has declined your challenge"
+	TieAsked: "{0} asked to agree to a tie"
+	TieTakeback: "{0} doesn't want a tie anymore"
+	Started: "{0} started a battle against {1}!"
+	Forfeited: "{0} forfeited their battle against {1}!"
+	Defeated: "{0} defeated {1}!"
+	TieRegular: "{0} and {1}'s battle ended in a tie!"
+	TieAgreed: "{0} and {1} agreed to a tie!"
+	TieForced: "{0} and {1}'s battle was forcibly ended!"
+	Fainted: "{0} fainted!"
+	FledAfterCatch: "{0} came to and fled!"
+	StillKnockedOut: "{0} is still knocked out. Try again before it wakes up!"
+	MoveInfo: {
+		Physical: Physical
+		Special: Special
+		Status: Status
+		Dynamic: Dynamic
+		Stats: "Power {0}  ·  Acc. {1}  ·  PP {2}/{3}"
+	}
+
+	MissPopup: Miss!
+	MoveDisabled: Disabled
+	MoveDisabledTurns: "{0} turn(s) left"
+	MoveDisabledClick: "{0} is disabled and can't be used for {1} more turn(s)."
+	KnockedOutHint: "Throw a Poké Ball quickly to try to catch {0}!"
+	CantBattleFainted: "{0} has fainted and can't battle!"
+	GainedExp: "{0} gained {1} Exp. Points!"
+	LevelUp: "{0} grew to Lv. {1}!"
+	ChooseNext: Choose another Pokémon to send out.
+	SkipTurnHint: Click to skip
+	Back: "« Back"
+	ReturnedFainted: "{0} returned to its Poké Ball. Use a Revive to heal it."
+	Log: {
+		SwitchedIn: "{0} entered the battle!"
+		Damage: "{0} lost {1} HP! ({2})"
+		Healed: "{0} recovered {1} HP! ({2})"
+		MoveEffect: "  » {0}"
+		UsedMove: "{0} used {1}!"
+		SuperEffective: It's super effective!
+		Resisted: It's not very effective...
+		Immune: "It doesn't affect {0}..."
+		Crit: A critical hit!
+		Field: {
+			GrassyTerrain: "Grass grew to cover the battlefield!"
+			ElectricTerrain: "An electric current ran across the battlefield!"
+			PsychicTerrain: "The battlefield got weird!"
+			MistyTerrain: "Mist swirled around the battlefield!"
+			TrickRoom: "The dimensions were twisted!"
+			Gravity: "Gravity intensified!"
+		}
+		Weather: {
+			RainDance: "It started to rain!"
+			SunnyDay: "The sunlight turned harsh!"
+			Sandstorm: "A sandstorm kicked up!"
+			Hail: "It started to hail!"
+			Snow: "It started to snow!"
+			none: "The weather returned to normal."
+		}
+		Side: {
+			Reflect: "Reflect made {0}'s team stronger against physical moves!"
+			LightScreen: "Light Screen made {0}'s team stronger against special moves!"
+			Safeguard: "{0}'s team cloaked itself in a mystical veil!"
+			Mist: "{0}'s team became shrouded in mist!"
+			Tailwind: "The Tailwind blew from behind {0}'s team!"
+			Spikes: "Spikes were scattered around {0}'s team!"
+			StealthRock: "Pointed stones float in the air around {0}'s team!"
+			ToxicSpikes: "Poison spikes were scattered around {0}'s team!"
+		}
+		From: {
+			Recoil: "{0} is damaged by recoil!"
+			Poison: "{0} is hurt by poison!"
+			Burn: "{0} is hurt by its burn!"
+			Confusion: "{0} hurt itself in its confusion!"
+			Sandstorm: "{0} is buffeted by the sandstorm!"
+			Hail: "{0} is buffeted by the hail!"
+			LeechSeed: "{0}'s health is sapped by Leech Seed!"
+			LifeOrb: "{0} lost some of its HP!"
+		}
+		HitCount: "Hit {0} time(s)!"
+		Endured: "{0} endured the hit!"
+		EnduredSash: "{0} hung on using its Focus Sash!"
+		Missed: "{0}'s attack missed!"
+		Failed: But it failed!
+		StatRose: "{0}'s {1} rose!"
+		StatRoseSharply: "{0}'s {1} rose sharply!"
+		StatFell: "{0}'s {1} fell!"
+		StatFellHarshly: "{0}'s {1} harshly fell!"
+		Cured: "{0} was cured of its status condition!"
+		Transformed: "{0} transformed into {1}!"
+		Stats: {
+			Atk: Attack
+			Def: Defense
+			SpA: Sp. Atk
+			SpD: Sp. Def
+			Spe: Speed
+			Accuracy: accuracy
+			Evasion: evasiveness
+		}
+		Status: {
+			Brn: "{0} was burned!"
+			Par: "{0} is paralyzed! It may be unable to move!"
+			Psn: "{0} was poisoned!"
+			Tox: "{0} was badly poisoned!"
+			Slp: "{0} fell asleep!"
+			Frz: "{0} was frozen solid!"
+		}
+		Cant: {
+			slp: "{0} is fast asleep."
+			par: "{0} is paralyzed! It can't move!"
+			frz: "{0} is frozen solid!"
+			flinch: "{0} flinched and couldn't move!"
+			recharge: "{0} must recharge!"
+			disobey: "{0} won't obey!"
+			loaf: "{0} is loafing around!"
+			nap: "{0} took a nap instead!"
+			disobeymove: "{0} ignored orders and used another move!"
+		}
+	}
+}
+
+Buffs: {
+	PokemonCompanion: {
+		DisplayName: Pokémon Companion
+		Description: "{0} is following you around!"
+	}
+
+	PokeBannerBuff: {
+		DisplayName: Pokémon Banner
+		Description: Bonuses active for nearby companions:
+	}
+
+	PokemonPassiveBuff: {
+		DisplayName: Pokémon Passive
+		Description: Bonuses from your active Pokémon
+	}
+}
+
+Commands: {
+	Heal: {
+		Description: Fully heals your party, reviving fainted Pokémon (debug)
+		Usage: /heal [slot|all]
+		Success: Healed {0} Pokémon
+	}
+
+	Level: {
+		Description: Raises the level of a Pokémon in your party (debug)
+		Usage: /level <slot> [levels]
+	}
+
+	Trainer: {
+		Description: Spawns a trainer NPC (such as a Gym Leader) next to you
+		Usage: /trainer <name>
+		NotFound: "No trainer named '{0}' was found"
+	}
+
+	RequiresDebugMode: This command requires Allow Cheat Commands to be enabled in the mod config!
+
+	DexEdit: {
+		Description: Forcefully sets Pokédex entry statuses
+		Usage: /dexedit <id> <status>
+		ParseErrorID: Failed to parse ID argument as integer
+		ParseErrorStatus: Failed to parse status argument as integer
+		StatusOutOfRange: Status argument is out of range (0-2)
+		IDOutOfRange: Pokédex entry {0} is out of range (1-{1})
+		Success: Successfully set Pokédex entry {0} to status {1}
+	}
+
+	Nickname: {
+		Description: Sets the nickname of a Pokémon
+		Usage: /nickname <set|clear> <nickname>
+
+		Set: {
+			NoActivePokemon: No Pokémon is currently active
+			NoNicknameProvided: No nickname provided
+			NicknameTooLong: Nickname must be 12 characters or less (including spaces)
+			SameNickname: Nickname is already set to that value
+			SuccessNew: Set {0}'s nickname to {1}
+			SuccessUpdate: Changed {0}'s nickname from {1} to {2}
+		}
+
+		Clear: {
+			NoNicknameSet: No nickname is currently set for this Pokémon
+			Success: Cleared {0}'s nickname
+		}
+
+		InvalidSubcommand: Invalid subcommand. Use \"set\" or \"clear\"
+	}
+
+	Party: {
+		ParseErrorSlot: Failed to parse slot argument as integer
+		SlotOutOfRange: Slot argument is out of range (1-6)
+	}
+
+	PartyClear: {
+		Description: Removes the specified Pokémon from your party
+		Usage: /partyclear <slot|all>
+		NoPokemonInSlot: No Pokémon found in slot {0}
+		Success: Removed {0} from the party
+		SuccessAll: Removed all Pokémon from the party
+	}
+
+	PartyData: {
+		Description: Logs info for the specified Pokémon in your party
+		Usage: /partydata <slot>
+		NoPokemonInSlot: No Pokémon data available for slot {0}
+		Success: Pokémon data for slot {0} written to client.log
+	}
+
+	PokeClear: {
+		Description: Clears all active Pokémon NPCs in the world
+		Usage: /pokeclear
+		Success: Cleared {0} Pokémon NPC(s)
+		SuccessByPlayer: "{0} cleared {1} Pokémon NPC(s)"
+	}
+
+	PC: {
+		Description: Opens the Pokémon Storage System (PC) from anywhere
+		Usage: /pc
+	}
+
+	Dex: {
+		Description: Opens the Pokédex
+		Usage: /dex
+	}
+
+	Upgrade: {
+		Description: Transfer Pokémon from the pre-release version
+		Usage: /upgrade
+		TypeResolveError: One or more required legacy types were not found! Please report this issue to the Pokerraria developers
+		NopUpgrade: No Pokémon were found in the inventory to upgrade
+		Success: Successfully upgraded and transferred {0} Pokémon to {1}'s PC
+	}
+
+	BannerData: {
+		Description: Change the tier of the currently held Pokémon banner
+		Usage: /bannerset <tier>
+		NotHoldingBanner: The currently held item is not a Pokémon banner
+		ParseErrorBannerTier: Failed to parse tier argument as BannerTier
+		Success: Successfully changed the banner tier for the held banner to {0}
+	}
+
+	Starter: {
+		Description: Opens the starter selection menu (only usable if you haven't chosen a starter yet)
+		Usage: /starter
+		AlreadyChosen: You have already chosen your starter Pokémon!
+	}
+
+	Choose: {
+		Description: Alias for /starter
+		Usage: /choose
+	}
+}
+
+Configs: {
+	ClientConfig: {
+		DisplayName: Personal Config
+
+		Headers: {
+			Miscellaneous: Gameplay
+			GUI: Interface (GUI)
+			Accessibility: Accessibility & Personalization
+		}
+
+		FastEvolution: {
+			Label: Fast Evolution
+			Tooltip: Whether to automatically evolve Pokémon when using Rare Candy (otherwise speak with the {$NPCs.PokemartClerk.DisplayName})
+		}
+
+		ShowPokedexRegistrationMessages: {
+			Label: Pokédex Registration Messages
+			Tooltip: Whether to display a message in chat when a new Pokémon has been registered in the Pokédex
+		}
+
+		LegacyStarterSelectUI: {
+			Label: (Starter Selection) Use Legacy UI
+			Tooltip: Uses the older starter selection interface from earlier versions of the mod
+		}
+
+		ReducedAudio: {
+			Label: (Party Sidebar) Reduced Audio
+			Tooltip: Disables musical tones when rearranging Pokémon in the sidebar
+		}
+
+		HighlightSelectedPokemonName: {
+			Label: (Party Sidebar) Highlight Selected Pokémon Name
+			Tooltip: Highlights the name of the currently selected Pokémon in the party sidebar
+		}
+
+		ReducedMotion: {
+			Label: (Inventory Slots) Reduced Motion
+			Tooltip: Disables the sliding animation when toggling inventory party slots
+		}
+
+		ShowPetNameOnHover: {
+			Label: Show Pokémon Companion Name on Hover
+			Tooltip: Whether to show the Pokémon companion's name when hovering over it in the world
+		}
+
+		ModIconType: {
+			Label: Mod Icon Type
+			Tooltip: Changes the mod icon
+		}
+
+		AnimatedModIcon: {
+			Label: Animated Mod Icon
+			Tooltip: Animates the mod's icon in the Mods menu when the mod is enabled
+		}
+
+		RainbowBuffText: {
+			Label: Rainbow Buff Text
+			Tooltip: The Pokémon companion buff name will cycle through the colors of the rainbow
+		}
+
+		ThickHighlights: {
+			Label: Thick Pokémon Highlight Outlines
+			Tooltip: Whether to use thicker outlines when highlighting Pokémon you can interact or battle with
+		}
+
+		HighlightColor: {
+			Label: Pokémon Highlight Color
+			Tooltip: Customize the color of the outline shown when hovering over a Pokémon that you can interact or battle with
+		}
+	}
+
+	GameplayConfig: {
+		DisplayName: Global Config
+
+		Headers: {
+			Spawning: Spawning
+			Visuals: Visuals
+			Miscellaneous: Miscellaneous
+			Advanced: Advanced
+		}
+
+		PokemonSpawnRateMultiplier: {
+			Label: Pokémon Spawn Rate Multiplier
+			Tooltip:
+				'''
+				Multiplies the rate at which Pokémon spawn in the wild
+				[c/F2A754:If set to 0, Pokémon will not spawn at all]
+				'''
+		}
+
+		NonPokemonSpawnRateMultiplier: {
+			Label: Non-Pokémon Spawn Rate Multiplier
+			Tooltip:
+				'''
+				Multiplies the rate at which non-Pokémon NPCs spawn, including modded ones
+				[c/F2A754:If set to 0, regular Terraria enemies and other modded NPCs will not spawn at all]
+				'''
+		}
+
+		SpawningStage: {
+			Label: Spawning Stage
+			Tooltip: The stage of Pokémon that can spawn in the wild (higher stages include all lower stages)
+		}
+
+		EncourageDespawning: {
+			Label: Encourage Despawning
+			Tooltip: Whether or not to encourage wild Pokémon to despawn when leaving an area to make room for new spawns
+		}
+
+		ShinySpawnRate: {
+			Label: Shiny Spawn Rate
+			Tooltip: The rarity of Shiny Pokémon spawning in the wild (1/x)
+		}
+
+		FastAnimations: {
+			Label: Fast Animations
+			Tooltip: Whether to skip animations for certain events (e.g. catching a Pokémon)
+		}
+
+		ShinyLockedStarters: {
+			Label: Shiny-Locked First Partner Pokémon
+			Tooltip: Prevents first partner (starter) Pokémon from being shiny
+		}
+
+		PokemonPassives: {
+			Label: Pokémon Passives
+			Tooltip: "Your active (following) Pokémon gives small bonuses based on its species and types, like light from Fire types or Lucario sensing ores"
+		}
+
+		DebugMode: {
+			Label: Allow Cheat Commands
+			Tooltip:
+				'''
+				Enables the use of cheat commands (e.g. /pokeclear) in the chat
+				[c/F2A754:May disrupt normal gameplay]
+				'''
+		}
+	}
+
+	SpawningStage: {
+		Tooltip: ""
+
+		Basic: {
+			Label: Unevolved/Basic Pokémon
+			Tooltip: ""
+		}
+
+		Stage1: {
+			Label: First-Evolved/Stage 1 Pokémon
+			Tooltip: ""
+		}
+
+		Stage2: {
+			Label: Second-Evolved/Stage 2 Pokémon
+			Tooltip: ""
+		}
+
+		Legendary: {
+			Label: Legendary/Mythical Pokémon
+			Tooltip: ""
+		}
+	}
+}
+
+GUI: {
+	BattleLog: {
+		Title: Battle History
+		OpenButton: History (L)
+		YourPokemon: Your Pokémon
+		Opponent: Opponent
+		Empty: Nothing has happened in battle yet.
+		Turn: "— Turn {0} —"
+		Level: Lv. {0}
+		HP: HP: {0} / {1}
+		StatusLabel: "Status: {0}"
+		NoStatChanges: No stat changes
+		Status: {
+			None: Healthy
+			Brn: Burned
+			Par: Paralyzed
+			Psn: Poisoned
+			Tox: Badly poisoned
+			Slp: Asleep
+			Frz: Frozen
+			Fnt: Fainted
+		}
+		// Short tags shown under the HP bar in battle, like in the main games
+		StatusShort: {
+			Brn: BRN
+			Par: PAR
+			Psn: PSN
+			Tox: TOX
+			Slp: SLP
+			Frz: FRZ
+			Fnt: FNT
+		}
+		ShortStats: {
+			Atk: Atk
+			Def: Def
+			SpA: SpA
+			SpD: SpD
+			Spe: Spe
+		}
+	}
+	AdminPanel: {
+		Title: Test Panel (debug) - drag to move; right click the trainer button to switch trainer
+		HealParty: Heal party
+		LevelUp1: Active +1 level
+		LevelUp5: Active +5 levels
+		FaintActive: Faint active Pokémon
+		GiveItems: Give test items
+		SpawnWild: Spawn wild Pokémon
+		ClearWild: Remove wild Pokémon
+		SpawnTrainer: "Spawn: {0}"
+		NextBoss: Defeat next League boss
+		GiveBadges: Give all 8 badges
+		LeagueItems: Give challenge items
+		ResetBadges: Reset badges
+		ClearBattles: End stuck battles
+		TeleportBrockGym: Go to Brock's Gym
+		BuildBrockGym: Build Brock's Gym here
+		NoBrockGym: This world has no Brock's Gym. Create a new world or use "Build Brock's Gym here".
+		SingleplayerOnly: This only works in singleplayer.
+		BrockGymBuilt: Brock's Gym was built around you.
+		TeleportPokemonCenter: Go to the Pokémon Center
+		BuildPokemonCenter: Build Pokémon Center here
+		NoPokemonCenter: This world has no Pokémon Center. Create a new world or use "Build Pokémon Center here".
+		PokemonCenterBuilt: The Pokémon Center was built where you were standing.
+		SpawnOnix: Spawn wild Onix
+		CallOak: Call Professor Oak
+		OakCalled: Professor Oak is on his way (you can hear his story again).
+		SpawnLucario: Spawn wild Lucario
+		SpawnVulpix: Spawn wild Vulpix
+		GiveLucario: Get Lucario (Lv. 30)
+		LucarioGiven: A Lucario joined your party.
+		PartyFull: Your party is full.
+		TabPokemon: Pokémon
+		TabLeague: League
+		TabTerraria: Terraria
+		LevelUp10: Active +10 levels
+		EvolveActive: Evolve active Pokémon
+		PerfectIVs: Perfect IVs (active)
+		TeachSpriteMove: Teach move with sprite (active)
+		ToggleShiny: Toggle shiny (active)
+		GiveHeldItems: Give held items
+		GiveStones: Give evolution stones
+		ToggleTime: Day / night
+		ToggleRain: Rain on / off
+		GodMode: God mode
+		HealPlayer: Heal player
+		TeleportSpawn: Go to spawn
+		TeleportCursor: Teleport on next click
+		KillHostiles: Kill nearby monsters
+		GiveMoney: Give 10 platinum
+		GiveGear: Give gear
+		GiveBossItems: Give boss summons
+		RevealMap: Reveal map
+		NoEvolution: "{0} doesn't evolve by level."
+		PerfectIVsDone: "{0} now has 31 in every IV."
+		TeachSpriteMoveDone: "{0} learned {1} in the first slot."
+		ShinyOn: "{0} is now shiny."
+		ShinyOff: "{0} is no longer shiny."
+		HeldItemsGiven: You got one of each held item.
+		StonesGiven: You got 3 of each evolution item.
+		NowDay: It's day now.
+		NowNight: It's night now.
+		RainOn: It started raining.
+		RainOff: The rain stopped.
+		GodModeOn: God mode on: nothing can hurt you.
+		GodModeOff: God mode off.
+		PlayerHealed: Life and mana restored, debuffs removed.
+		ClickToTeleport: Click anywhere in the world to teleport there.
+		HostilesKilled: "{0} monsters defeated."
+		MoneyGiven: You got 10 platinum coins.
+		GearGiven: You got a Shellphone, Lunar Hook, Terraspark Boots, Fishron Wings, Laser Drill and torches.
+		BossItemsGiven: You got the summoning item of every boss.
+		MapRevealed: The whole map was revealed.
+		TabItems: Items
+		ItemsHint: Left click: 1 · Right click: full stack
+		Close: Close
+		ItemsGiven: Received Poké Balls, Potions, Revives and Rare Candies
+		BossDowned: "{0} now counts as defeated"
+		BossesReset: All League bosses now count as not defeated
+		BadgesGiven: Received all 8 Gym badges
+		LeagueItemsGiven: Received every challenge item and the League Invitation
+		Boss: {
+			EyeOfCthulhu: The Eye of Cthulhu
+			EvilBoss: The Eater of Worlds / Brain of Cthulhu
+			Skeletron: Skeletron
+			WallOfFlesh: The Wall of Flesh (Hardmode)
+			AnyMech: A mechanical boss
+			AllMechs: All three mechanical bosses
+			Plantera: Plantera
+			Golem: Golem
+			Cultist: The Lunatic Cultist
+			MoonLord: The Moon Lord
+		}
+		BadgesReset: All badges, the League run and the Hall of Fame were reset
+		BattlesCleared: All battles were ended
+	}
+
+	Inventory: {
+		ShowParty: Show Party
+		HideParty: Hide Party
+		OpenPokedex: Open Pokédex
+		SlotName: "{0} (Lv. {1})"
+		SlotTooltip:
+			'''
+			HP: {0}/{1}
+			EXP: {2}/{3}
+			'''
+		SlotTooltipMaxLevel:
+			'''
+			HP: {0}/{1}
+			EXP: MAX
+			'''
+		SlotTooltipPCMode: "[c/FFFFFF:In Party]"
+		SlotTooltipPCModeActive: "[c/FFFFFF:In Party (Active)]"
+		SlotTooltipUseItem: Left click to use {0}
+		SlotTooltipGiveHeldItem: Right click to give {0}
+		SlotHeldItem: "Holding: [c/FFDD6E:{0}]"
+		SlotTooltipSwapHeldItem: Right click to swap with held {0}
+		SlotTooltipSwapHeldItemSpecify: Right click to swap {0} with held {1}
+		CannotRemoveLastPokemon: Your party must have at least one Pokémon!
+		CannotGiveItemStack: Cannot give a stack of items! Reduce stack to 1.
+	}
+
+	PC: {
+		RenameLabel: Rename Box
+		ChangeColor: Change Color
+		SaveColor: Save Color
+		SaveColorUnsavedChanges: Save Color (*)
+		ResetToDefaultColor: Reset to Default Color
+		DragToMove: Click and drag to move
+	}
+
+	Starter: {
+		Title: Welcome to the world of Pokémon, {0}! Thank you for installing Pokerraria: LoveStory!
+		Subtitle: Now, please choose your first partner Pokémon to begin your adventure!
+		Hint: (Press Back to close)
+		ChosenMessage: You chose the {0} [c/{1}:{2}] as your first partner Pokémon!
+		ComingSoon: Coming soon...
+
+		Banner: {
+			PickThisOne: Pick this one!
+
+			SecretHoverText: {
+				ReadyToStart: "{0} seems ready to get started!"
+				GoodMood: "{0} looks like it's in a good mood!"
+				FullOfExcitement: "{0} is full of excitement!"
+				Curious: "{0} seems curious about you!"
+				Waiting: "{0} looks like it's waiting for something!"
+				SparkOfEnergy: "{0} seems to have a spark of energy!"
+				BouncingWithExcitement: "{0} is bouncing with excitement!"
+				ReadyToPlay: "{0} looks like it's ready to play!"
+				EagerToShow: "{0} is eager to show you what it can do!"
+				ReadyToImpress: "{0} looks ready to impress!"
+			}
+		}
+
+		Generations: {
+			Gen1: Generation I (Kanto)
+			Gen2: Generation II (Johto)
+			Gen3: Generation III (Hoenn)
+			Gen4: Generation IV (Sinnoh)
+			Gen5: Generation V (Unova)
+			Gen6: Generation VI (Kalos)
+			Gen7: Generation VII (Alola)
+			Gen8: Generation VIII (Galar)
+		}
+
+		Legacy: {
+			Title: Welcome to the world of Pokémon! Thank you for installing Pokerraria: LoveStory!
+			Subtitle: Now, please choose your starter Pokémon to begin your adventure!
+			ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
+		}
+	}
+
+	NPCShop: {
+		PremierBonus: You got a Premier Ball as an added bonus!
+		PremierBonusPlural: You got {0} Premier Balls as an added bonus!
+	}
+
+	Party: {
+		ToggleTab: "Hide or show the party (key {0})"
+		LevelDisplay: Lv. {0}
+		SlotHover: Left click to send out
+		SlotHoverActive: Left click to recall
+		SlotHoverExtra:
+			'''
+
+			Click and drag to reorder
+			'''
+	}
+
+	Summary: {
+		Title: Pokémon Summary
+		Hint: "[c/9FA2AD:Middle click or {0}: open summary]"
+		Close: Close (Esc)
+		Pokedex: Pokédex
+		PokedexHint: See this Pokémon in the Pokédex
+		Previous: Previous Pokémon (←)
+		Next: Next Pokémon (→)
+		CryHint: Click to hear its cry
+		AnimHint: Click to see another animation
+		Tabs: {
+			Stats: Stats
+			IVs: IVs
+			EVs: EVs
+			Moves: Moves
+			Other: Other
+		}
+		Stat: {
+			HP: HP
+			Atk: Atk
+			Def: Def
+			SpA: Sp. Atk
+			SpD: Sp. Def
+			Spe: Speed
+		}
+		StatLong: {
+			HP: HP
+			Atk: Attack
+			Def: Defense
+			SpA: Sp. Attack
+			SpD: Sp. Defense
+			Spe: Speed
+		}
+		Nature: Nature
+		NatureNeutral: Neutral: no stat changes
+		Ability: Ability
+		Item: Item
+		NoItem: None
+		Trainer: Trainer
+		Unknown: Unknown
+		HP: HP
+		EXP: EXP
+		ToNextLevel: "{0} EXP to Lv. {1}"
+		MaxLevel: Maximum level reached!
+		AboveCap: "Above your badge limit (Lv. {0}): it may disobey"
+		BaseStats: Base stats
+		BaseTotal: "Base total: {0}"
+		StatsHint: Red stat: raised by the nature. Blue: lowered.
+		Total: Total
+		Judge: {
+			Decent: Decent potential
+			AboveAverage: Above average potential
+			RelativelySuperior: Relatively superior potential
+			Outstanding: Outstanding potential
+			Perfect: Perfect potential!
+		}
+		PerfectLegend: Perfect (31)
+		MaxedLegend: Maxed (252)
+		IVsInfo: Your Pokémon's natural talent, from 0 to 31 in each stat, decided when it was found. 31 is perfect, and a Pokémon can have perfect IVs. Higher IVs mean higher stats at the same level. Training doesn't change them.
+		IVsWhat: What are IVs?
+		IVRating: {
+			Perfect: Perfect
+			Great: Great
+			Good: Good
+			Fair: Fair
+			None: No good
+		}
+		HiddenAbility: (hidden ability)
+		Relearn: {
+			Change: Change move
+			Learn: Learn a move
+			ButtonHint: Swap in a move it could have learned by leveling up (moves you skipped, too).
+			TitleEmpty: Learn a move
+			TitleReplace: "Replace {0} with..."
+			Hint: Moves it can already know at its level. Hover to read one, click to learn it.
+			NoMoves: There are no other moves it can learn by level right now.
+			Level: Lv. {0}
+			Evolution: Evo.
+			Cancel: Cancel
+		}
+		EVsInfo: EVs grow when this Pokémon defeats others. Up to 252 per stat and 510 in total; every 4 EVs add 1 point to a stat at level 100.
+		EVsLeft: "{0} EVs left to earn"
+		EVsFull: All 510 EVs earned!
+		PowerAccuracy: "Power {0}  ·  Acc. {1}"
+		PP: PP {0}/{1}
+		NoMoveSelected: Hover over a move to read about it.
+		MetSection: Met
+		CaughtIn: Caught in
+		OT: Original trainer
+		Met: Met
+		MetValue: Lv. {0}  ·  {1}
+		World: World
+		Friendship: Friendship
+		FriendshipLevel: {
+			0: It doesn't trust you yet.
+			1: It's getting used to you.
+			2: It's friendly toward you.
+			3: It's quite fond of you.
+			4: It trusts you a lot!
+			5: It loves you!
+		}
+		Characteristic: Characteristic
+		Characteristics: {
+			HP0: Loves to eat.
+			HP1: Takes plenty of siestas.
+			HP2: Nods off a lot.
+			HP3: Scatters things often.
+			HP4: Likes to relax.
+			Atk0: Proud of its power.
+			Atk1: Likes to thrash about.
+			Atk2: A little quick tempered.
+			Atk3: Likes to fight.
+			Atk4: Quick tempered.
+			Def0: Sturdy body.
+			Def1: Capable of taking hits.
+			Def2: Highly persistent.
+			Def3: Good endurance.
+			Def4: Good perseverance.
+			Spe0: Likes to run.
+			Spe1: Alert to sounds.
+			Spe2: Impetuous and silly.
+			Spe3: Somewhat of a clown.
+			Spe4: Quick to flee.
+			SpA0: Highly curious.
+			SpA1: Mischievous.
+			SpA2: Thoroughly cunning.
+			SpA3: Often lost in thought.
+			SpA4: Very finicky.
+			SpD0: Strong willed.
+			SpD1: Somewhat vain.
+			SpD2: Strongly defiant.
+			SpD3: Hates to lose.
+			SpD4: Somewhat stubborn.
+		}
+		FieldAbilities: Field abilities
+		Field: {
+			Ride: Ride
+			Fly: Fly
+			Surf: Surf
+			Dig: Dig
+		}
+		FieldSoon: Coming soon: ride, fly, surf and dig with your Pokémon out in the world.
+		FieldHint: Lit badges are things this Pokémon can do out in the world.
+		FieldNone: This Pokémon has no field abilities.
+		Anim: {
+			Idle: Idle
+			Walk: Walk
+			Attack: Attack
+			SpAttack: Sp. Attack
+			Status: Status move
+			Hurt: Hurt
+			Sleep: Sleep
+			Faint: Faint
+			Strike: Strike
+			QuickStrike: Quick strike
+			Swing: Swing
+			Double: Double hit
+			Hop: Hop
+			Sit: Sit
+			Laying: Lie down
+			Wake: Wake up
+			Trip: Trip
+			Eat: Eat
+			Pose: Pose
+		}
+	}
+
+	Pokedex: {
+		NumberPrefix: No.
+		ShowingRange: Showing {$GUI.Pokedex.NumberPrefix} {0}-{1} ({2})
+		ShowingFiltered: "Showing {0}-{1} of {2}"
+		FilterAll: All
+		FilterType: "Type: {0}"
+		FilterStatus: "Show: {0}"
+		FilterStatus0: All
+		FilterStatus1: Obtained
+		FilterStatus2: Seen only
+		FilterStatus3: Not seen
+		SortBy: "Order: {0}"
+		SortNumber: Number
+		SortName: Name
+		Obtained: Obtained
+		Seen: Seen
+		ObtainedBy:
+			'''
+
+			[c/FFE745:Obtained by {0}]
+			'''
+		SeenBy:
+			'''
+
+			[c/FFE745:Seen by {0}]
+			'''
+		Completion: "{0}% Completion"
+		PlayerDexFilter: Show {0}'s Pokédex
+		PlayerShinyDexFilter: Show {0}'s Shiny Dex
+		WorldDexFilter: Show World Dex
+		ShinyWorldDexFilter: Show Shiny World Dex
+		Height: Height
+		Weight: Weight
+		Entry: Entry
+		Type: Type
+		Info: Pokédex Data
+		BaseStats: Base Stats
+		Moves: Level-Up Moves
+		SeenHint: Catch this Pokémon to see its abilities, base stats and the moves it learns.
+		NoMoves: It doesn't learn any moves by leveling up.
+		MovesHint: Hover over a move to read what it does.
+		LevelShort: Lv. {0}
+		EvolutionMove: Evo.
+		MoveStats: "Power {0}  ·  Acc. {1}  ·  PP {2}"
+		Columns: {
+			Level: Lv.
+			Move: Move
+			Type: Type
+			Category: Cat.
+			Power: Pow.
+		}
+		CategoryShort: {
+			Physical: Phys.
+			Special: Spec.
+			Status: Status
+			Dynamic: Var.
+		}
+		Abilities: Abilities
+		HiddenAbility: "{0} (hidden)"
+		CatchRate: Catch rate
+		GrowthRate: Growth
+		Gender: Gender
+		Genderless: Genderless
+		GenderRatio: "Male {0}% · Female {1}%"
+		Habitat: Habitat
+		Evolution: Evolution
+		EvolvesInto: "Evolves into {0} at Lv. {1}"
+		EvolvesFrom: "Evolves from {0} at Lv. {1}"
+		NoEvolution: Doesn't evolve by leveling up
+		Total: Total
+		EVYield: EV yield
+		Stats: {
+			HP: HP
+			Attack: Attack
+			Defense: Defense
+			SpAtk: Sp. Atk
+			SpDef: Sp. Def
+			Speed: Speed
+		}
+		GrowthRates: {
+			Erratic: Erratic
+			Fast: Fast
+			MediumFast: Medium Fast
+			MediumSlow: Medium Slow
+			Slow: Slow
+			Fluctuating: Fluctuating
+		}
+		Biomes: {
+			Forest: Forest
+			Underworld: Underworld
+			Meteorite: Meteorite
+			Dungeon: Dungeon
+			Beach: Beach
+			Rain: Rain
+			Surface: Surface
+			Space: Space
+			Jungle: Jungle
+			Corruption: Corruption
+			Crimson: Crimson
+			Desert: Desert
+			Underground: Underground
+			Caverns: Caverns
+			GlowingMushroom: Glowing Mushroom
+			GemCave: Gem Caves
+			Marble: Marble Caves
+			Granite: Granite Caves
+			Snow: Snow
+			Hallow: Hallow
+			HallowRain: Hallow in the rain
+			Graveyard: Graveyard
+			Night: Night
+		}
+		AnimState: "< {0} >"
+		AnimHint: "Animation: {0}\nLeft click: next  ·  Right click: previous"
+		AnimStates: {
+			Idle: Idle
+			Walk: Walk
+			Attack: Attack
+			SpAttack: Special Attack
+			Status: Status Move
+			Hurt: Hurt
+			Sleep: Sleep
+			Faint: Faint
+			Strike: Strike
+			QuickStrike: Quick Strike
+			Swing: Swing
+			Double: Double Hit
+			Hop: Hop
+			Sit: Sit
+			Laying: Lying Down
+			Wake: Wake Up
+			Trip: Trip
+			Eat: Eat
+			Pose: Pose
+		}
+	}
+
+	TurnBased: {
+		ButtonLabels: {
+			Fight: Fight
+			Bag: Bag
+			Pokemon: Pokémon
+			Run: Run
+		}
+	}
+
+	ControllerHints: {
+		Release: Release
+		SwitchPage: Switch page
+	}
+}
+
+CommonTooltips: {
+	Apricorn:
+		'''
+		A special fruit seemingly related to berries
+		Can be used to craft assorted Poké Balls
+		'''
+	EvolutionaryItem: Evolutionary item
+	HeldItem: Held item
+	KeyItem: Key item
+	RecoveryItem: Pokémon recovery item
+	Potion: A spray-type medicine for wounds
+	Revive: A medicine that revives a fainted Pokémon
+	Vitamin: Vitamin
+	RightClickPlace: Can be placed using right click
+	PCItems: Accesses the Pokémon Storage System
+	PokeBallMinis:
+		'''
+		'For decorative purposes'
+		Can be placed on item frames
+		'''
+	MegaStone: Mega Stone - {0}
+	MegaStoneTip:
+		'''
+		One of a variety of mysterious Mega Stones
+		Any {0} holding this stone will be able to Mega Evolve during battle
+		'''
+	TerramonFishChance: "{0}% chance to catch Pokémon or treasure"
+	ValuableItem: Valuable item
+	Unobtainable: Unobtainable
+}
+
+Items: {
+	BoulderBadge: {
+		DisplayName: Boulder Badge
+		Tooltip: Proof of victory over Brock, the Pewter City Gym Leader
+	}
+
+	PokeBallItem: {
+		DisplayName: Poké Ball
+		Tooltip:
+			'''
+			A device for catching wild Pokémon
+			It is thrown like a ball at the target
+			'''
+		CatchRate: 1x catch rate
+	}
+
+	PokeBallMiniItem: {
+		DisplayName: "{$Items.PokeBallItem.DisplayName} (Mini)"
+		Tooltip: ""
+	}
+
+	GreatBallItem: {
+		DisplayName: Great Ball
+		Tooltip:
+			'''
+			A good, high-performance Poké Ball
+			Provides a higher Pokémon catch rate than a standard Poké Ball
+			'''
+		CatchRate: 1.5x catch rate
+	}
+
+	GreatBallMiniItem: {
+		DisplayName: "{$Items.GreatBallItem.DisplayName} (Mini)"
+		Tooltip: ""
+	}
+
+	UltraBallItem: {
+		DisplayName: Ultra Ball
+		Tooltip:
+			'''
+			An ultra-high-performance Poké Ball
+			Provides a higher Pokémon catch rate than a Great Ball
+			'''
+		CatchRate: 2x catch rate
+	}
+
+	UltraBallMiniItem: {
+		DisplayName: "{$Items.UltraBallItem.DisplayName} (Mini)"
+		Tooltip: ""
+	}
+
+	MasterBallItem: {
+		DisplayName: Master Ball
+		Tooltip:
+			'''
+			The best Poké Ball with the ultimate level of performance
+			It will catch any wild Pokémon without fail
+			'''
+		CatchRate: 100% catch rate
+	}
+
+	MasterBallMiniItem: {
+		DisplayName: "{$Items.MasterBallItem.DisplayName} (Mini)"
+		Tooltip: ""
+	}
+
+	PremierBallItem: {
+		DisplayName: Premier Ball
+		Tooltip:
+			'''
+			A somewhat rare Poké Ball
+			It was made as a commemorative item used to celebrate an event of some sort
+			'''
+		CatchRate: 1x catch rate
+	}
+
+	PremierBallMiniItem: {
+		DisplayName: "{$Items.PremierBallItem.DisplayName} (Mini)"
+		Tooltip: ""
+	}
+
+	CherishBallItem: {
+		DisplayName: Cherish Ball
+		Tooltip:
+			'''
+			A quite rare Poké Ball
+			It has been specially crafted to commemorate an occasion of some sort
+			'''
+		CatchRate: 1x catch rate
+	}
+
+	CherishBallMiniItem: {
+		DisplayName: "{$Items.CherishBallItem.DisplayName} (Mini)"
+		Tooltip: ""
+	}
+
+	AetherBallItem: {
+		DisplayName: Aether Ball
+		Tooltip:
+			'''
+			An ethereal Poké Ball infused with shimmering energy
+			It is said to have a calming effect on wild Pokémon
+			'''
+		CatchRate: 1x catch rate
+	}
+
+	AetherBallMiniItem: {
+		DisplayName: "{$Items.AetherBallItem.DisplayName} (Mini)"
+		Tooltip: ""
+	}
+
+	Potion: {
+		DisplayName: Potion
+		Tooltip: Restores the HP of one Pokémon by just 20 points
+	}
+
+	SuperPotion: {
+		DisplayName: Super Potion
+		Tooltip: Restores the HP of one Pokémon by 50 points
+	}
+
+	HyperPotion: {
+		DisplayName: Hyper Potion
+		Tooltip: Restores the HP of one Pokémon by 200 points
+	}
+
+	MaxPotion: {
+		DisplayName: Max Potion
+		Tooltip: Completely restores the HP of a single Pokémon
+	}
+
+	Revive: {
+		DisplayName: Revive
+		Tooltip: Restores half the Pokémon's maximum HP
+	}
+
+	MaxRevive: {
+		DisplayName: Max Revive
+		Tooltip: Fully restores the Pokémon's HP
+	}
+
+	RareCandy: {
+		DisplayName: Rare Candy
+		Tooltip:
+			'''
+			A candy that is packed with energy
+			If consumed, it raises a Pokémon's level by one
+			'''
+	}
+
+	TrainerCap: {
+		DisplayName: Pokémon Trainer Cap
+		Tooltip: "'Gotta catch 'em all!'"
+	}
+
+	TrainerTorso: {
+		DisplayName: Pokémon Trainer Jacket
+		Tooltip: "'Gotta catch 'em all!'"
+	}
+
+	TrainerLegs: {
+		DisplayName: Pokémon Trainer Jeans
+		Tooltip: "'Gotta catch 'em all!'"
+	}
+
+	MusicItemCenter: {
+		DisplayName: Music Box (Pokémon Center)
+		Tooltip: ""
+	}
+
+	MusicItemWildBattle: {
+		DisplayName: Music Box (Battle! Wild Pokémon)
+		Tooltip: ""
+	}
+
+	ShinyCharm: {
+		DisplayName: Shiny Charm
+		Tooltip:
+			'''
+			A shiny charm said to increase the chance of finding a Shiny Pokémon in the wild
+			Received as a reward for obtaining all Pokémon in the Pokédex
+			'''
+	}
+
+	FireStone: {
+		DisplayName: Fire Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It has a fiery orange heart'
+			'''
+	}
+
+	WaterStone: {
+		DisplayName: Water Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It is the blue of a pool of clear water'
+			'''
+	}
+
+	ThunderStone: {
+		DisplayName: Thunder Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It is inscribed with a thunderbolt pattern'
+			'''
+	}
+
+	LeafStone: {
+		DisplayName: Leaf Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It has an unmistakable leaf pattern'
+			'''
+	}
+
+	MoonStone: {
+		DisplayName: Moon Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It resembles the rocky texture of an asteroid'
+			'''
+	}
+
+	DuskStone: {
+		DisplayName: Dusk Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It holds shadows as dark as can be'
+			'''
+	}
+
+	IceStone: {
+		DisplayName: Ice Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve
+			'It has an unmistakable snowflake pattern'
+			'''
+	}
+
+	LinkingCord: {
+		DisplayName: Linking Cord
+		Tooltip:
+			'''
+			A cord that makes you feel a strange sense of connection
+			'It's loved by certain Pokémon'
+			'''
+	}
+
+	BlackApricorn.DisplayName: Black Apricorn
+	BlueApricorn.DisplayName: Blue Apricorn
+	GreenApricorn.DisplayName: Green Apricorn
+	PinkApricorn.DisplayName: Pink Apricorn
+	RedApricorn.DisplayName: Red Apricorn
+	WhiteApricorn.DisplayName: White Apricorn
+	YellowApricorn.DisplayName: Yellow Apricorn
+
+	ExpCandyXS: {
+		DisplayName: Exp. Candy XS
+		Tooltip:
+			'''
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a very small number of Exp. Points
+			'''
+	}
+
+	ExpCandyS: {
+		DisplayName: Exp. Candy S
+		Tooltip:
+			'''
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a small number of Exp. Points
+			'''
+	}
+
+	ExpCandyM: {
+		DisplayName: Exp. Candy M
+		Tooltip:
+			'''
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a moderate number of Exp. Points
+			'''
+	}
+
+	ExpCandyL: {
+		DisplayName: Exp. Candy L
+		Tooltip:
+			'''
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a large number of Exp. Points
+			'''
+	}
+
+	ExpCandyXL: {
+		DisplayName: Exp. Candy XL
+		Tooltip:
+			'''
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a very large number of Exp. Points
+			'''
+	}
+
+	ShimmerStateDrive: {
+		DisplayName: Shimmer-State Drive
+		Tooltip:
+			'''
+			Permanently unlocks a shared PC box in this world
+			This allows for easy transfer of Pokémon between players
+			'Property of the Aether Foundation'
+			'''
+	}
+
+	PCItemRed: {
+		DisplayName: PC (Red)
+		Tooltip: ""
+	}
+
+	PCItemWhite: {
+		DisplayName: PC (White)
+		Tooltip: ""
+	}
+
+	ErikaPaintingItem: {
+		DisplayName: Erika's Invitation
+		Tooltip: "'L. Walter'"
+	}
+
+	PokeBannerItem: {
+		DisplayName: "{0} Banner"
+		ShinyDisplayName: Shiny {0} Banner
+		Tooltip:
+			'''
+			Nearby {0} companions grow quicker and unleash stronger attacks
+			Right click while holding to cycle through visual styles
+			'''
+	}
+
+	Leftovers: {
+		DisplayName: Leftovers
+		Tooltip: Restores a little HP at the end of every turn in battle.
+	}
+
+	OranBerry: {
+		DisplayName: Oran Berry
+		Tooltip: Restores 10 HP once when HP gets low in battle.
+	}
+
+	SitrusBerry: {
+		DisplayName: Sitrus Berry
+		Tooltip: Restores 1/4 of max HP once when HP drops below half in battle.
+	}
+
+	Charcoal: {
+		DisplayName: Charcoal
+		Tooltip: Powers up Fire-type moves by 20%.
+	}
+
+	MysticWater: {
+		DisplayName: Mystic Water
+		Tooltip: Powers up Water-type moves by 20%.
+	}
+
+	MiracleSeed: {
+		DisplayName: Miracle Seed
+		Tooltip: Powers up Grass-type moves by 20%.
+	}
+
+	Magnet: {
+		DisplayName: Magnet
+		Tooltip: Powers up Electric-type moves by 20%.
+	}
+
+	NeverMeltIce: {
+		DisplayName: Never-Melt Ice
+		Tooltip: Powers up Ice-type moves by 20%.
+	}
+
+	HardStone: {
+		DisplayName: Hard Stone
+		Tooltip: Powers up Rock-type moves by 20%.
+	}
+
+	SoftSand: {
+		DisplayName: Soft Sand
+		Tooltip: Powers up Ground-type moves by 20%.
+	}
+
+	BlackBelt: {
+		DisplayName: Black Belt
+		Tooltip: Powers up Fighting-type moves by 20%.
+	}
+
+	PoisonBarb: {
+		DisplayName: Poison Barb
+		Tooltip: Powers up Poison-type moves by 20%.
+	}
+
+	SharpBeak: {
+		DisplayName: Sharp Beak
+		Tooltip: Powers up Flying-type moves by 20%.
+	}
+
+	SpellTag: {
+		DisplayName: Spell Tag
+		Tooltip: Powers up Ghost-type moves by 20%.
+	}
+
+	MetalCoat: {
+		DisplayName: Metal Coat
+		Tooltip: Powers up Steel-type moves by 20%.
+	}
+
+	BlackGlasses: {
+		DisplayName: Black Glasses
+		Tooltip: Powers up Dark-type moves by 20%.
+	}
+
+	SilkScarf: {
+		DisplayName: Silk Scarf
+		Tooltip: Powers up Normal-type moves by 20%.
+	}
+
+	QuickClaw: {
+		DisplayName: Quick Claw
+		Tooltip: Sometimes lets the holder move first.
+	}
+
+	FocusSash: {
+		DisplayName: Focus Sash
+		Tooltip: With full HP, survives one hit that would knock it out, with 1 HP left. Used up after.
+	}
+
+	LifeOrb: {
+		DisplayName: Life Orb
+		Tooltip: Powers up moves by 30%, but the holder loses a little HP after each attack.
+	}
+
+	KingsRock: {
+		DisplayName: King's Rock
+		Tooltip: Attacks may make the target flinch.
+	}
+
+	ShellBell: {
+		DisplayName: Shell Bell
+		Tooltip: Restores HP equal to 1/8 of the damage the holder deals.
+	}
+
+	LuckyEgg: {
+		DisplayName: Lucky Egg
+		Tooltip: An egg filled with happiness that earns the holder extra Exp. Points
+	}
+
+	ExpShare: {
+		DisplayName: Exp. Share
+		Tooltip: Turning on this special device will allow all the Pokémon on your team to receive Exp. Points from battles
+	}
+
+	ExpCharm: {
+		DisplayName: Exp. Charm
+		Tooltip:
+			'''
+			Having one of these charms increases the Exp. Points your Pokémon get
+			It's a strange, stretchy charm that encourages growth
+			'''
+	}
+
+	Nugget: {
+		DisplayName: Nugget
+		Tooltip:
+			'''
+			A nugget of pure gold that gives off a lustrous gleam
+			It can be sold at a high price to shops
+			'''
+	}
+
+	BigNugget: {
+		DisplayName: Big Nugget
+		Tooltip:
+			'''
+			A big nugget of pure gold that gives off a lustrous gleam
+			It can be sold at a high price to shops
+			'''
+	}
+
+	TinyMushroom: {
+		DisplayName: Tiny Mushroom
+		Tooltip:
+			'''
+			A small and rare mushroom
+			It's quite popular with a certain class of collectors
+			'''
+	}
+
+	BigMushroom: {
+		DisplayName: Big Mushroom
+		Tooltip:
+			'''
+			A large and rare mushroom
+			It's extremely popular with a certain class of collectors
+			'''
+	}
+
+	Pearl: {
+		DisplayName: Pearl
+		Tooltip:
+			'''
+			A rather small pearl that has a nice silvery sheen to it
+			It can be sold at a low price to shops
+			'''
+	}
+
+	BigPearl: {
+		DisplayName: Big Pearl
+		Tooltip:
+			'''
+			A rather large pearl that has a nice silvery sheen to it
+			It can be sold at a high price to shops
+			'''
+	}
+
+	SilverLeaf: {
+		DisplayName: Silver Leaf
+		Tooltip:
+			'''
+			A mysterious silver leaf
+			No trees with this leaf have been found yet
+			'''
+	}
+
+	GoldLeaf: {
+		DisplayName: Gold Leaf
+		Tooltip:
+			'''
+			A mysterious gold leaf
+			No trees with this leaf have been found yet
+			'''
+	}
+
+	RelicCopper: {
+		DisplayName: Relic Copper
+		Tooltip: A copper coin used by an ancient civilization about three thousand years ago
+	}
+
+	RelicSilver: {
+		DisplayName: Relic Silver
+		Tooltip: A silver coin used by an ancient civilization about three thousand years ago
+	}
+
+	RelicGold: {
+		DisplayName: Relic Gold
+		Tooltip: A gold coin used by an ancient civilization about three thousand years ago
+	}
+
+	RareSweetfish: {
+		DisplayName: Rare Sweetfish
+		Tooltip:
+			'''
+			A fish that is packed with energy
+			If consumed, it raises a Pokémon's level by one
+			'''
+	}
+
+	OldRod: {
+		DisplayName: Old Rod
+		Tooltip: An old and beat-up fishing rod
+	}
+
+	GoodRod: {
+		DisplayName: Good Rod
+		Tooltip: A new, good-quality fishing rod
+	}
+
+	SuperRod: {
+		DisplayName: Super Rod
+		Tooltip:
+			'''
+			An awesome, high-spec fishing rod
+			Allows fishing in lava
+			'''
+	}
+}
+
+MegaStoneNames: {
+	Venusaur: Venusaurite
+	CharizardX: Charizardite X
+	CharizardY: Charizardite Y
+	Blastoise: Blastoisinite
+	Beedrill: Beedrillite
+	Pidgeot: Pidgeotite
+	RaichuX: Raichunite X
+	RaichuY: Raichunite Y
+	Clefable: Clefablite
+	Alakazam: Alakazite
+	Victreebel: Victreebelite
+	Slowbro: Slowbronite
+	Gengar: Gengarite
+	Kangaskhan: Kangaskhanite
+	Starmie: Starminite
+	Pinsir: Pinsirite
+	Gyarados: Gyaradosite
+	Aerodactyl: Aerodactylite
+	Dragonite: Dragoninite
+	MewtwoX: Mewtwonite X
+	MewtwoY: Mewtwonite Y
+}
+
+Keybinds: {
+	OpenSummary.DisplayName: Open Pokémon Summary
+	BattleLog.DisplayName: Battle History
+	ToggleParty.DisplayName: Party
+	OpenPokedex.DisplayName: Pokédex
+	OpenPokedexEntry.DisplayName: Open Pokédex Entry For Pokémon
+	TogglePokemon.DisplayName: Toggle Active Pokémon
+	NextPokemon.DisplayName: Summon Next Pokémon
+	AdminPanel.DisplayName: Test Panel (debug)
+	PrevPokemon.DisplayName: Summon Previous Pokémon
+	SkipEvolution.DisplayName: Skip Evolution Animation
+}
+
+Tiles: {
+	MusicBoxCenter.MapEntry: Music Box
+	MusicBoxWildBattle.MapEntry: Music Box
+	PCWhite.MapEntry: PC
+	PCRed.MapEntry: PC
+}
+
+Types: {
+	Normal: Normal
+	Fire: Fire
+	Fighting: Fighting
+	Water: Water
+	Flying: Flying
+	Grass: Grass
+	Poison: Poison
+	Electric: Electric
+	Ground: Ground
+	Psychic: Psychic
+	Rock: Rock
+	Ice: Ice
+	Bug: Bug
+	Dragon: Dragon
+	Ghost: Ghost
+	Dark: Dark
+	Steel: Steel
+	Fairy: Fairy
+}
+
+NPCs: {
+	Trainers: {
+		BattleButton: Battle
+	}
+
+	Brock: {
+		DisplayName: Brock
+
+		Dialogue: {
+			Greeting: I'm Brock, Pewter City's Gym Leader! My rock-hard willpower is evident in my Pokémon. Think you can take me on?
+			Locked: You're not ready for a Gym battle yet. Come back once you've defeated the Eye of Cthulhu!
+			Rematch: Back for another round? My Pokémon are always ready to rock!
+			Defeated: I took you for granted. As proof of your victory, here's the Boulder Badge!
+		}
+	}
+
+	PokemartClerk: {
+		DisplayName: Poké Mart Clerk
+		BestiaryText: The Poké Mart Clerk is a dedicated salesman, stocking all kinds of items for your Pokémon training needs.
+		EvolveButton: Evolve {0}
+
+		TownNPCMood: {
+			Content: I rather enjoy my living space.
+			NoHome: I wish I had somewhere to live.
+			FarFromHome: I miss being back at my home.
+			LoveSpace: I love how much space there is for wild Pokémon to appear!
+			DislikeCrowded: Although there are plenty of people to talk to, it's a bit crowded.
+			HateCrowded: There are way too many people living here!
+			LikeBiome: There are so many Pokémon to see in {BiomeName}!
+			DislikeBiome: I dislike {BiomeName}. It's so creepy and everything is out to get you!
+			LikeNPC: I like {NPCName}. They've helped me out a ton.
+			DislikeNPC: I find {NPCName} a bit too loud.
+			HateNPC: I hate {NPCName}. He just doesn't respect Pokémon.
+			LikeNPC_Princess: I like {NPCName}. Who doesn't?
+			Princess_LovesNPC: I like {NPCName}.
+		}
+
+		Dialogue: {
+			Catchem: There's a lot of Pokémon out there, but you'll need Poké Balls to catch them! Luckily for you, I have some in stock.
+			Furret: In Johto they have a species of Pokémon called Furrets. They sure do love to walk!
+			CheckBack: As your journey progresses, I'll offer new things. Check back here every so often.
+			Biomes: Different Pokémon like living in different places. If you travel around, you may find new Pokémon!
+			Regions: There are many different regions in the world. One day I hope to visit all of them!
+			Crafting: I conveniently sell Poké Balls for you to buy, but if you're short of cash you can always make your own using apricorns and {0}!
+			EvolutionStones: Some Pokémon only evolve when exposed to certain stones. They're quite rare.
+			SickBurn: A remake of Mobile Creatures has been announced! Though I'm not sure how I feel about the art style...
+			Dedication: Ever since Pokémon started appearing in {0}, I've dedicated my life to helping people learn more about them.
+			NoBattleRip: The Pokémon around here seem very peaceful. It's unusual to see creatures getting along so well.
+			BadName: Now, I know what you're thinking. "That's such a creative name!"
+			Shimmer: Like my outfit? I look just like a real Pokémon Trainer!
+			ShimmerQuery: Have you heard of Shimmer? Apparently it can give people their own shiny form!
+			PokemonHello: Is that your {0}? Hi, {1}!
+			PokemonGrass: Is that a Grass-type Pokémon? Those are my favourite!
+			PokemonIce: An Ice-type Pokémon! I've always loved seeing those.
+			PokemonShiny: Is that a shiny Pokémon? That's incredible! I wish I had one myself.
+			PokemonShimmer: Interesting... Your Pokémon has the same colors as a shiny Pokémon, but none of the... well, shine.
+			PokemonNicknameHowto: Did you know you can give your Pokémon a nickname? Type "/nickname" in the chat alongside the name of your choice.
+			PokemonNickname: "{0}? That's a lovely name! I can tell you care about your Pokémon very much."
+			MerchantComment: "{0} may be a bit greedy, but he has taught me everything I know about commerce."
+			MechanicComment: "{0} knows a lot about Poké Balls. Maybe one day I could start selling more of them!"
+			PirateComment: Have you tried speaking to {0}? I can never understand what he is saying.
+			ArmsDealerComment: Can you tell {0} to stop shooting at the Pokémon??
+			EvolutionCongrats: Congratulations! {$Misc.PokemonEvolved}
+		}
+
+		Census.SpawnCondition: Conditions unknown
+	}
+}
+
+WorldGen.ItemsPass: Scattering candies
+
+Misc: {
+	CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
+	CatchSuccessPC: Gotcha! [c/{0}:{1}] was caught and transferred to {2} in {3}'s PC!
+	CatchSuccessPCCustomBoxName: Gotcha! [c/{0}:{1}] was caught and transferred to "{2}" ({3}) in {4}'s PC!
+	CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
+	CatchMilestone3: You've obtained your 3rd {0}!
+	CatchMilestone6: You've obtained your 6th {0}!
+	CatchMilestone9: You've obtained your 9th {0}!
+	CatchMilestone12: You've obtained your 12th {0}!
+	PokedexRegistered: "{0}'s data was added to the Pokédex."
+	PCBoxDefaultName: Box {0}
+	RequireStarter: Choose a starter Pokémon first!
+	NoActivePokemon: You need to have an active Pokémon to do that!
+	ItemNoEffect: It won't have any effect on {0}.
+	NoFaintedPokemon: None of your Pokémon has fainted.
+	UseBagInBattle: In battle, use Revives from the Bag.
+	PokemonEvolved: "{0} evolved into {1}!"
+	PokemonEvolutionReady: "{0} seems ready to evolve!"
+	RareCandyUse: "{0} grew to Lv. {1}!"
+	ExpCandyUse: Your Pokémon gained {0} Exp. Points!
+	PotionUse: "{0}'s HP was restored by {1} {^1:point;points}!"
+	ReviveUse: "{0} was revived with half its HP restored!"
+	MaxReviveUse: "{0} was revived with full HP restored!"
+	Trainer: Trainer
+	MOTD:
+		'''
+		Greetings, Trainer! Welcome to {0} v{1}! [i:{2}]
+
+		[c/C9C9E5:Make sure to customize the mod to your liking in the Mod Config menu and set up keybindings in the Controls menu.]
+		'''
+}
+
+Projectiles: {
+	PokeBallBobber.DisplayName: Poké Ball Bobber
+	PokemonPetGenericAttackProjectile.DisplayName: Pokémon Companion Generic Attack Projectile
+	OnixRockSpikes.DisplayName: Onix Rock Spikes
+	EvolutionAnimation.DisplayName: Evolution
+}
+
+// Pokémon League: Gym Leaders, Elite Four, Champion, badges and challenge items (league)
+CommonTooltips.BadgeCase: "Badge Case: {0}/{1}"
+CommonTooltips.HallOfFame: "Hall of Fame: Champion since {0}"
+CommonTooltips.LevelCap: "Your Pokémon obey up to Lv. {0}"
+CommonTooltips.NoLevelCap: Your Pokémon obey at any level
+
+NPCs.Trainers: {
+	Busy: "{0} is in the middle of a battle. Wait your turn!"
+	PrizeMoney: You received {0} in prize money!
+	Arrived: "{0} has arrived!"
+	AlreadyHere: "{0} is already here!"
+
+	League: {
+		NextOpponent: "{0} is on the way... Heal up and get ready for the next battle!"
+		ChampionNeedsMoonLord: "You've beaten the Elite Four! But {0}, the Champion, only faces trainers who have defeated the Moon Lord."
+		RunOver: Your Pokémon League challenge is over. Use the League Invitation to start again from Lorelei.
+		HallOfFame: "{0} defends the title of Champion! Team: {1}"
+		HallOfFameFirst: "Congratulations! {0} and their team ({1}) have entered the Pokémon League Hall of Fame!"
+	}
+}
+
+NPCs.Misty: {
+	DisplayName: Misty
+
+	Dialogue: {
+		Greeting: I'm Misty, the Cerulean City Gym Leader! My policy is an all-out offensive with Water-type Pokémon. Ready to get soaked?
+		Locked: Hold it! Come back after you've beaten the Eater of Worlds or the Brain of Cthulhu, and bring Brock's Boulder Badge with you!
+		Rematch: Back for another dip? The water's fine, but my Pokémon aren't going easy on you!
+		Defeated: Wow! You're too much! Fine, take the Cascade Badge... and this Water Stone. Don't drown in your own success!
+	}
+}
+
+NPCs.LtSurge: {
+	DisplayName: Lt. Surge
+
+	Dialogue: {
+		Greeting: Hey, kid! I'm Lt. Surge, the Lightning American! Electric Pokémon saved me during the war, and they'll zap you just the same!
+		Locked: You won't live long in combat, kid! Come back after you've beaten Skeletron in the Dungeon, and show me Misty's Cascade Badge!
+		Rematch: Back for another shock? Your hair's still standing up from last time!
+		Defeated: Whoa! You're the real deal, kid! Take the Thunder Badge, and this Exp. Share so your whole squad gets stronger!
+	}
+}
+
+NPCs.Erika: {
+	DisplayName: Erika
+
+	Dialogue: {
+		Greeting: Oh, hello... I'm Erika, the Celadon City Gym Leader. I was admiring the flowers the Dryad planted. Shall we have a match?
+		Locked: Oh dear, you've woken me from my nap... Please come back once the Wall of Flesh has fallen, with Lt. Surge's Thunder Badge.
+		Rematch: How lovely to see you again. My Grass-type Pokémon have been blooming since our last battle.
+		Defeated: Oh! I concede defeat... You are remarkably strong. Please take the Rainbow Badge, and this Leaf Stone.
+	}
+}
+
+NPCs.Koga: {
+	DisplayName: Koga
+
+	Dialogue: {
+		Greeting: Fwahahaha! A mere child dares to challenge me? I am Koga, Fuchsia's Gym Leader. Prepare to taste poison and despair!
+		Locked: Fwahaha! You lack the skill! Destroy one of the mechanical horrors that stalk the night, and bring me Erika's Rainbow Badge.
+		Rematch: You return to my dojo? Your resistance to poison must be growing. Let us test it!
+		Defeated: Humph! You have proven your worth! Take the Soul Badge... and this Lucky Egg. A ninja rewards a worthy foe.
+	}
+}
+
+NPCs.Sabrina: {
+	DisplayName: Sabrina
+
+	Dialogue: {
+		Greeting: I had a vision of your arrival. I am Sabrina, Saffron's Gym Leader. I already know how this battle ends... or do I?
+		Locked: I see your future... and it does not include beating me. Not until The Twins, The Destroyer and Skeletron Prime have all fallen, and you carry Koga's Soul Badge.
+		Rematch: I foresaw this rematch. My psychic powers have only grown stronger.
+		Defeated: This loss shocks me... but I did foresee it, in a way. Take the Marsh Badge, and these Ultra Balls.
+	}
+}
+
+NPCs.Blaine: {
+	DisplayName: Blaine
+
+	Dialogue: {
+		Greeting: Hah! I am Blaine, the red-hot Leader of Cinnabar Gym! My fiery Pokémon will incinerate all challengers! You'd better have Burn Heal!
+		Locked: Hah! You're not hot enough yet! Burn down Plantera in the jungle, then bring me Sabrina's Marsh Badge!
+		Rematch: Back to get scorched again? My Pokémon have been training in the Underworld's lava!
+		Defeated: I have burned down to nothing! Not even ashes remain! You've earned the Volcano Badge, and this Fire Stone!
+	}
+}
+
+NPCs.Giovanni: {
+	DisplayName: Giovanni
+
+	Dialogue: {
+		Greeting: So! You have come this far. I am Giovanni, Leader of the Viridian Gym... and much more. Let me show you true power!
+		Locked: You are not worth my time. Crush the Golem in the Lihzahrd Temple and return with Blaine's Volcano Badge... if you can.
+		Rematch: You again? Very well. Team Rocket does not forget, and neither do I.
+		Defeated: Ha! That was a truly intense fight. You have won! As proof, here is the Earth Badge. Take this Exp. Charm, too.
+	}
+}
+
+NPCs.Lorelei: {
+	DisplayName: Lorelei
+
+	Dialogue: {
+		Greeting: Welcome to the Pokémon League! I am Lorelei of the Elite Four. No one can best me when it comes to icy Pokémon!
+		Locked: Only trainers with all eight Gym badges who have defeated the Lunatic Cultist may enter the Pokémon League.
+		Rematch: Back to start the League again? Your Pokémon will be at my mercy when they are frozen solid!
+		Defeated: You're better than I thought! Go on ahead, Bruno awaits. You only got a taste of the League's power!
+	}
+}
+
+NPCs.Bruno: {
+	DisplayName: Bruno
+
+	Dialogue: {
+		Greeting: I am Bruno of the Elite Four! Through rigorous training, people and Pokémon can become stronger. Hoo hah!
+		Locked: Hoo hah! You must defeat Lorelei first, in this same League challenge, before you face my fists!
+		Rematch: Your muscles look stronger! Good! Let's test them, hoo hah!
+		Defeated: Why? How could I lose? My job is done... go face your next challenge!
+	}
+}
+
+NPCs.Agatha: {
+	DisplayName: Agatha
+
+	Dialogue: {
+		Greeting: I am Agatha of the Elite Four. Oak's taken a lot of interest in you, child. Let me show you what a real trainer is!
+		Locked: Hmph! Beat Bruno first, in this same League challenge, child. I don't waste my ghosts on the unworthy.
+		Rematch: Back again? My ghosts never rest... much like the dead in the Dungeon.
+		Defeated: Oh ho! You're something special, child! Fine, go on! Lance awaits.
+	}
+}
+
+NPCs.Lance: {
+	DisplayName: Lance
+
+	Dialogue: {
+		Greeting: I am Lance, the dragon master! Dragons are mystical Pokémon, hard to catch and raise, but their powers are superior!
+		Locked: You must defeat Agatha first, in this same League challenge. Only then will my dragons face you.
+		Rematch: Your journey continues... and so does my dragons' hunger for battle!
+		Defeated: I still can't believe my dragons lost to you! You are now the League Champion... or you would have been, if not for one more trainer!
+	}
+}
+
+NPCs.Blue: {
+	DisplayName: Blue
+
+	Dialogue: {
+		Greeting: Hey! I was looking forward to seeing you! While you were busy fighting bosses, I became the Champion! Smell ya later? Not today!
+		Locked: Heh! Only someone who defeated the Moon Lord AND the whole Elite Four in a single run gets to battle the Champion. That's me!
+		Rematch: Back to take my title again? I've been training ever since. This time I'm winning!
+		Defeated: NO! That can't be! You beat my best! After all that work to become the League Champion... Here, take this Master Ball. You've earned it.
+	}
+}
+
+Items.CascadeBadge: {
+	DisplayName: Cascade Badge
+	Tooltip: Proof of victory over Misty, the Cerulean City Gym Leader
+}
+
+Items.ThunderBadge: {
+	DisplayName: Thunder Badge
+	Tooltip: Proof of victory over Lt. Surge, the Vermilion City Gym Leader
+}
+
+Items.RainbowBadge: {
+	DisplayName: Rainbow Badge
+	Tooltip: Proof of victory over Erika, the Celadon City Gym Leader
+}
+
+Items.SoulBadge: {
+	DisplayName: Soul Badge
+	Tooltip: Proof of victory over Koga, the Fuchsia City Gym Leader
+}
+
+Items.MarshBadge: {
+	DisplayName: Marsh Badge
+	Tooltip: Proof of victory over Sabrina, the Saffron City Gym Leader
+}
+
+Items.VolcanoBadge: {
+	DisplayName: Volcano Badge
+	Tooltip: Proof of victory over Blaine, the Cinnabar Island Gym Leader
+}
+
+Items.EarthBadge: {
+	DisplayName: Earth Badge
+	Tooltip: Proof of victory over Giovanni, the Viridian City Gym Leader
+}
+
+Items.BrockChallenge: {
+	DisplayName: Pewter Gym Challenge
+	Tooltip:
+		'''
+		Calls Brock, the Pewter City Gym Leader
+		Brock accepts challengers who have defeated the Eye of Cthulhu
+		Not consumed
+		'''
+}
+
+Items.MistyChallenge: {
+	DisplayName: Cerulean Gym Challenge
+	Tooltip:
+		'''
+		Calls Misty, the Cerulean City Gym Leader
+		Requires the Boulder Badge and defeating the Eater of Worlds or the Brain of Cthulhu
+		Not consumed
+		'''
+}
+
+Items.LtSurgeChallenge: {
+	DisplayName: Vermilion Gym Challenge
+	Tooltip:
+		'''
+		Calls Lt. Surge, the Vermilion City Gym Leader
+		Requires the Cascade Badge and defeating Skeletron
+		Not consumed
+		'''
+}
+
+Items.ErikaChallenge: {
+	DisplayName: Celadon Gym Challenge
+	Tooltip:
+		'''
+		Calls Erika, the Celadon City Gym Leader
+		Requires the Thunder Badge and defeating the Wall of Flesh
+		Not consumed
+		'''
+}
+
+Items.KogaChallenge: {
+	DisplayName: Fuchsia Gym Challenge
+	Tooltip:
+		'''
+		Calls Koga, the Fuchsia City Gym Leader
+		Requires the Rainbow Badge and defeating any mechanical boss
+		Not consumed
+		'''
+}
+
+Items.SabrinaChallenge: {
+	DisplayName: Saffron Gym Challenge
+	Tooltip:
+		'''
+		Calls Sabrina, the Saffron City Gym Leader
+		Requires the Soul Badge and defeating all three mechanical bosses
+		Not consumed
+		'''
+}
+
+Items.BlaineChallenge: {
+	DisplayName: Cinnabar Gym Challenge
+	Tooltip:
+		'''
+		Calls Blaine, the Cinnabar Island Gym Leader
+		Requires the Marsh Badge and defeating Plantera
+		Not consumed
+		'''
+}
+
+Items.GiovanniChallenge: {
+	DisplayName: Viridian Gym Challenge
+	Tooltip:
+		'''
+		Calls Giovanni, the Viridian City Gym Leader
+		Requires the Volcano Badge and defeating Golem
+		Not consumed
+		'''
+}
+
+Items.LeagueInvitation: {
+	DisplayName: Pokémon League Invitation
+	Tooltip:
+		'''
+		Calls the next opponent of your Pokémon League challenge, starting with Lorelei
+		Requires all eight badges and defeating the Lunatic Cultist
+		Beat the Elite Four in a row, then the Champion if the Moon Lord has fallen
+		Losing a battle sends you back to the start
+		Not consumed
+		'''
+}
+
+MoveLearn: {
+	Wants: "{0} wants to learn {1}!"
+	Prompt: "{0} wants to learn {1}. Forget a move?"
+	ForgetWhich: Pick a move to forget (hover to read it):
+	DontLearn: Don't learn
+	Learned: "{0} learned {1}!"
+	Forgot: "1, 2 and... Poof! {0} forgot {1} and learned {2}!"
+	DidNotLearn: "{0} did not learn {1}."
+	EvolveHint: (Talk to the {$NPCs.PokemartClerk.DisplayName} or turn on Fast Evolution in the config.)
+}
+
+Loot: {
+	PreHardmode: Before Hardmode
+	AfterEvilBoss: After defeating the Eater of Worlds or Brain of Cthulhu, until Plantera
+	Hardmode: In Hardmode
+	AfterPlantera: After defeating Plantera
+	AfterMoonLord: After defeating the Moon Lord
+	InSnow: In the Snow biome
+	AtNightEvil: At night in the Corruption, Crimson or a Graveyard
+}
+
+Bag: {
+	Used: "{0} used {1} on {2}!"
+	Empty: You don't have any items that can be used in battle.
+	Count: x{0}
+	HP: HP {0}/{1}
+	Fainted: Fainted
+	Failed: That item couldn't be used right now.
+	MorePages: More items
+}
+
+Healing: {
+	Bed: You had a good rest. Your Pokémon are fully healed!
+	Nurse: "{0} also took care of your Pokémon. They're fully healed!"
+	Friendly: That was a friendly battle, so your Pokémon are fully healed.
+}
+Multiplayer: {
+	Challenge: {
+		Accept: Accept
+		Decline: Decline
+		Countdown: Declines by itself in {0}s
+		Sent: Challenge sent to {0}. Waiting for an answer...
+		TooFar: "{0} is too far away. Get closer to challenge them!"
+		Busy: "{0} can't battle right now."
+		Unavailable: "{0} can't battle right now."
+		NoAnswer: "{0} didn't answer your challenge."
+		TakenBack: "{0} took back their challenge."
+		TimedOut: You didn't answer {0}'s challenge in time, so it was declined.
+		AutoDeclined: "Declined {0}'s challenge: {1}"
+		ReasonBusy: you're already in a battle or deciding on another challenge.
+		ReasonNoPokemon: your active Pokémon can't battle (send out a healthy one first).
+		NeedPokemon: Send out a healthy Pokémon before challenging someone!
+		ReasonTooFar: they're too far away.
+	}
+}
+
+WorldGen.GymsPass: Building the Pokémon Gym and League
+
+Pedestals: {
+	Locked: "{0}: {1}"
+	AllBadges: You already have all eight badges! Your next stop is the Pokémon League pedestal.
+	GymBuilt: A Pokémon Gym was built {0} tiles to the {1} of the spawn point. Right-click its pedestal to challenge the Gym Leaders!
+	LeagueBuilt: The Pokémon League stands {0} tiles to the {1} of the spawn point. Its pedestal calls the Elite Four and the Champion.
+	East: east
+	West: west
+}
+
+Tiles.GymPedestal.MapEntry: Gym Pedestal
+Tiles.LeaguePedestal.MapEntry: League Pedestal
+
+Items.GymPedestalItem: {
+	DisplayName: Gym Pedestal
+	Tooltip:
+		'''
+		Right-click it to call the next Gym Leader you can challenge
+		Gym Leaders are faced in order, each one after a Terraria boss
+		'''
+}
+
+Items.LeaguePedestalItem: {
+	DisplayName: League Pedestal
+	Tooltip:
+		'''
+		Right-click it to call the next opponent of your Pokémon League challenge
+		Requires all eight badges and defeating the Lunatic Cultist
+		'''
+}
+
+BrockGym: {
+	Welcome: "{0} is waiting for you on the stage. Talk to him to challenge the Pewter City Gym!"
+	Sign: Pewter City Gym. Leader: Brock, the rock-solid Pokémon trainer! He uses Rock-type Pokémon: Water and Grass types have the edge. You can challenge him once the Eye of Cthulhu is defeated. Climb down the rope and watch out for traps on the way!
+	Announce: "Brock's Gym is in the caverns {0} tiles {1} of spawn. Look for a small stone shrine with a rope going down into the ground, or for the Boulder Badge on the map."
+	MapName: Brock's Gym (Pewter City)
+	MapEntrance: Entrance to Brock's Gym
+}
+
+ProtectedAreas.Blocked: Gyms and the Pokémon League are protected: nothing in them can be broken or built over.
+
+WorldGen.BrockGymPass: Digging out Brock's Gym
+
+Items.BrockPaintingItem: {
+	DisplayName: Pewter City Gym Painting
+	Tooltip: "'The first step of every great journey'"
+}
+
+Natures: {
+	Hardy: Hardy
+	Lonely: Lonely
+	Brave: Brave
+	Adamant: Adamant
+	Naughty: Naughty
+	Bold: Bold
+	Docile: Docile
+	Relaxed: Relaxed
+	Impish: Impish
+	Lax: Lax
+	Timid: Timid
+	Hasty: Hasty
+	Serious: Serious
+	Jolly: Jolly
+	Naive: Naive
+	Modest: Modest
+	Mild: Mild
+	Quiet: Quiet
+	Bashful: Bashful
+	Rash: Rash
+	Calm: Calm
+	Gentle: Gentle
+	Sassy: Sassy
+	Careful: Careful
+	Quirky: Quirky
+}
+
+EvolutionScene: {
+	Evolving: What? {0} is evolving!
+	Skip: Press {0} to skip the evolution animation.
+}
+
+Passives: {
+	From: "{0} is helping you:"
+	FieldAbilities: "Field abilities: {0}"
+
+	AuraResonance: {
+		Name: Aura Resonance
+		Description: "its aura resonates with ores and crystals: ores, gems and Life Crystals nearby glow blue"
+	}
+
+	Pickup: {
+		Name: Pickup
+		Description: "picks things up for you, increasing item pickup range"
+	}
+
+	FightingSpirit: {
+		Name: Fighting Spirit
+		Description: 5% increased melee damage
+	}
+
+	Featherfall: {
+		Name: Tailwind
+		Description: slow falling (hold down to fall faster)
+	}
+
+	Antidote: {
+		Name: Antidote
+		Description: immunity to Poisoned
+	}
+
+	Burrower: {
+		Name: Burrower
+		Description: 10% increased mining speed
+	}
+
+	Sturdy: {
+		Name: Sturdy
+		Description: increases defense by 3
+	}
+
+	Swarm: {
+		Name: Swarm
+		Description: 5% increased movement speed
+	}
+
+	SpiritSight: {
+		Name: Spirit Sight
+		Description: shows the location of enemies
+	}
+
+	SteelSkin: {
+		Name: Steel Skin
+		Description: 3% reduced damage taken
+	}
+
+	Flame: {
+		Name: Flame
+		Description: "glows warmly, lighting up the area"
+	}
+
+	DeepBreath: {
+		Name: Deep Breath
+		Description: increases breath underwater by 50%
+	}
+
+	Photosynthesis: {
+		Name: Photosynthesis
+		Description: faster life regeneration in sunlight
+	}
+
+	Static: {
+		Name: Static
+		Description: glows with electricity and gives 5% increased movement speed
+	}
+
+	Foresight: {
+		Name: Foresight
+		Description: senses nearby traps and danger
+	}
+
+	IceSkater: {
+		Name: Ice Skater
+		Description: walks on ice with ease and gives immunity to Chilled
+	}
+
+	DragonForce: {
+		Name: Dragon Force
+		Description: 4% increased damage
+	}
+
+	DarkVision: {
+		Name: Dark Vision
+		Description: improves vision in the dark
+	}
+
+	FairyLuck: {
+		Name: Fairy Luck
+		Description: slightly increases luck
+	}
+}
+
+FieldAbilities: {
+	Surf: Surf
+	Fly: Fly
+	Dig: Dig
+	Ride: Ride
+	Flash: Flash
+	Strength: Strength
+}
+
+// Professor Oak: greets new trainers and hands them over to the starter selection (art-fixes)
+NPCs.ProfessorOak: {
+	DisplayName: Professor Oak
+
+	Dialogue: {
+		Intro1: Hello there, {0}! Welcome to the world of Pokémon! My name is Oak. People call me the Pokémon Professor.
+		Intro2: This world is inhabited far and wide by creatures called Pokémon! They live in every biome: forests, deserts, snow, caves, the ocean... Explore, and you'll keep finding new ones.
+		Intro3: To catch a wild Pokémon, throw a Poké Ball at it. Some will put up a fight, so don't give up after one miss!
+		Intro4: The Gym Leaders are waiting for you too. Defeat the great bosses of this world and they'll accept your challenge, with a Gym Badge for whoever wins.
+		Intro5: Press {1} to see the Summary of your Pokémon, and {2} to open your Pokédex. Completing it is my dream... will you help me fill its pages?
+		Intro6: But first, every trainer needs a partner. I have some Pokémon here with me. Go on, choose one!
+		StillChoosing: Ah, {0}! Still deciding? Take your time. A first partner is a friend for life!
+		Tip1: Different Pokémon live in different biomes. If one is hard to find, try exploring somewhere new!
+		Tip2: Great Balls and Ultra Balls catch Pokémon more easily than a regular Poké Ball. Worth every coin!
+		Tip3: Your Pokémon can hold an item. Leftovers or an Oran Berry can keep them going in a tough battle.
+		Tip4: Brock, the Pewter City Gym Leader, accepts challengers once the Eye of Cthulhu has been defeated.
+		Tip5: Press {0} to check a Pokémon's Summary: its stats, moves, nature and more.
+		Tip6: Every Pokémon you see or catch is recorded in your Pokédex. Press {1} to open it.
+		Tip7: Pokémon grow stronger by battling, and many of them evolve. I can't wait to see yours!
+		NextButton: Next
+		SkipButton: Skip
+		ChooseButton: Choose my partner!
+		ThanksButton: Thanks, Professor!
+		TipButton: Any tips?
+		AgainButton: Tell me again
+		Unbound: (no key set)
+	}
+}
+
+WorldGen.PokemonCenterPass: Building the Pokémon Center
+
+PokemonCenter: {
+	Sign: Pokémon Center. Nurse Joy heals your Pokémon for free! Around here wild Pokémon are always weak, a good place to start. The PC works only inside houses (door, light, table and chair) and here at the Center.
+	Announce: "The Pokémon Center is {0} tiles {1} of the spawn point. Look for the white building with the red roof, or the Poké Ball on the map."
+	MapName: Pokémon Center
+	PCNeedsHouse: A PC can only be set up inside a valid house (door, light, table and chair) or at the Pokémon Center.
+}
+
+NPCs.NurseJoy: {
+	DisplayName: Nurse Joy
+
+	Dialogue: {
+		Greeting1: Welcome to the Pokémon Center, {0}! Shall I take your Pokémon for a while?
+		Greeting2: Hello, {0}! Chansey and Blissey are ready to help. Would you like your Pokémon healed?
+		Greeting3: Your Pokémon look tired, {0}. A little rest here will fix them right up!
+		Greeting4: Good to see you, {0}! We restore your Pokémon to full health, free of charge.
+		HealButton: Heal my Pokémon
+		AboutButton: About the Center
+		BackButton: Back
+		About: "Here we heal Pokémon for free, and wild Pokémon around the Center and the spawn point stay weak. With your badges, your Pokémon obey you up to Lv. {0}: above that they may ignore orders. Every Gym badge raises that limit."
+		NoPokemon: You don't have any Pokémon yet! Talk to Professor Oak first.
+		InBattle: Finish your battle first, then come back!
+		AlreadyHealthy: Your Pokémon are already in perfect health!
+		Healed: Thank you for waiting! Your Pokémon are fighting fit. We hope to see you again!
+	}
+}
+
+NPCs.CenterChansey: {
+	DisplayName: Chansey
+	Chat1: Chansey! ♪ (Chansey is carrying a tray of fresh eggs.)
+	Chat2: Chan-sey! (Chansey bows politely to {0}.)
+	Chat3: Chansey? (Chansey checks if your Pokémon are alright.)
+}
+
+NPCs.CenterBlissey: {
+	DisplayName: Blissey
+	Chat1: Blissey! ♪ (Blissey hums while tidying the counter.)
+	Chat2: Bliss-ey! (Blissey gives {0} a warm smile.)
+	Chat3: Blissey... (Blissey looks proud of its work at the Center.)
+}

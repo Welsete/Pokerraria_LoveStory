@@ -1,0 +1,47 @@
+{
+  // Drawn with the Mystery Dungeon-style animations in Assets/Pokemon/Anim (see PokemonAnimations)
+  Common:
+  {
+    Transform:
+    {
+      Width: 43
+      Height: 37
+    }
+  }
+  NPC:
+  {
+    BounceBehaviour:
+    {
+      BounceMinRange: -2.5
+      BounceMaxRange: -1.75
+      BounceFrequency: 18
+      HorizontalSpeedMin: 0.7
+      HorizontalSpeedMax: 0.7
+      ChangeDirectionChance: 0.5
+      MaxJumpClearance: 1
+      FrameCount: 10
+      FrameTime: 3
+    }
+    SpawnController:
+    {
+      Stage: 2
+      Conditions:
+      [
+        {
+          Overworld: true
+          DayTime: true
+          Chance: 0.1
+        }
+      ]
+    }
+  }
+  Projectile:
+  {
+    GenericPet:
+    {
+      FrameCount: 10
+      FrameTime: 3
+      IsClassic: false
+    }
+  }
+}

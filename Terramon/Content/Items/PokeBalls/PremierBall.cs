@@ -1,0 +1,33 @@
+﻿using Terramon.Helpers;
+
+namespace Terramon.Content.Items.PokeBalls;
+
+internal class PremierBallProjectile : BasePkballProjectile
+{
+    protected override int PokeballItem => ModContent.ItemType<PremierBallItem>();
+    protected override Color GlowColor { get; } = new(255, 240, 235); // White, with a hint of its red ring
+    protected override float CatchModifier => 1;
+}
+
+internal class PremierBallMiniItem : BasePkballMiniItem
+{
+    protected override int UseRarity => ModContent.RarityType<PremierBallRarity>();
+}
+
+internal class PremierBallItem : BasePkballItem
+{
+    protected override int UseRarity => ModContent.RarityType<PremierBallRarity>();
+    protected override int PokeballThrow => ModContent.ProjectileType<PremierBallProjectile>();
+    protected override int PokeballTile => ModContent.TileType<PremierBallTile>();
+    protected override int InGamePrice => 200;
+}
+
+public class PremierBallTile : BasePkballTile
+{
+    protected override int DropItem => ModContent.ItemType<PremierBallItem>();
+}
+
+public class PremierBallRarity : ModRarity
+{
+    public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0xC9C9E5);
+}
