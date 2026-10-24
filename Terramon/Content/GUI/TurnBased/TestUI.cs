@@ -893,7 +893,6 @@ public sealed class TestBattleUI : SmartUIState
         if (_opened && !_showingTurn && _pokemonPanel.Parent == null &&
             BattleClient.LocalClient.CurrentRequest == ShowdownRequest.ForcedSwitch)
         {
-            Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.ChooseNext"), Color.Orange);
             ChangePanel(_pokemonPanel);
         }
     }

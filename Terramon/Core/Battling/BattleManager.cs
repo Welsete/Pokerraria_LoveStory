@@ -776,6 +776,12 @@ public sealed class BattleManager
 
         var sr = forceSwitch ? ShowdownRequest.ForcedSwitch : wait ? ShowdownRequest.Wait : ShowdownRequest.Any;
 
+        // Locked into a move (Petal Dance, Outrage, Thrash, Rollout, recharging, a two-turn move...): like the main
+        // games, it goes on by itself instead of asking. Showdown then only offers that one move, as move 1
+        var locked = sr == ShowdownRequest.Any && IsLockedIntoMove(root) && client.Provider is TerramonPlayer;
+        if (locked)
+            sr = ShowdownRequest.Wait;
+
         // Nicknames are party slots plus one (see SimplePackedPokemon.Team), e.g. "p1: 3" is party slot 2
         if (side.TryGetProperty("pokemon", out var pokemon))
         {
@@ -795,6 +801,9 @@ public sealed class BattleManager
         if (sr != ShowdownRequest.Wait)
             client.LastRequest = sr;
 
+        if (locked)
+            source.SubmitChoice(sd, BattleChoice.Move, 1);
+
         if (Main.dedServ && client.Provider.SyncedEntity is Player plr)
         {
             var sendReq = new ShowdownRequestRpc(sr, client.SwitchOrder, ppSlot, pp);
@@ -808,6 +817,20 @@ public sealed class BattleManager
         }
     }
     
+    /// <summary>
+    ///     Whether the active Pokémon can only go on with the move it's locked into: Showdown then offers a single move
+    ///     without PP numbers.
+    /// </summary>
+    private static bool IsLockedIntoMove(JsonElement root)
+    {
+        if (!root.TryGetProperty("active", out var active) || active.ValueKind != JsonValueKind.Array ||
+            active.GetArrayLength() == 0 || !active[0].TryGetProperty("moves", out var moves) ||
+            moves.ValueKind != JsonValueKind.Array || moves.GetArrayLength() != 1)
+            return false;
+        var move = moves[0];
+        return !move.TryGetProperty("pp", out _) && !move.TryGetProperty("maxpp", out _);
+    }
+
     /// <summary>
     ///     Reads the PP left of each move of the active Pokémon from a Showdown request.
     ///     Returns its party slot, or -1 when the request doesn't say (waiting, or moves that don't match its own,

@@ -32,7 +32,7 @@ public sealed class BattlePlayback : ModSystem
     /// <summary>
     ///     How fast an HP bar goes down or up, in fractions of the bar per tick. The next message waits for it.
     /// </summary>
-    public const float HPDrainPerTick = 0.006f;
+    public const float HPDrainPerTick = 0.004f;
 
     // The time a hit's HP bar gets to go down before the next message
     private const int HPHold = 20;
@@ -718,6 +718,10 @@ public sealed class BattlePlayback : ModSystem
                     timeline.PendingHit = fast ? 0 : HitDelay(step);
                 }
             }
+
+            // Still moving along, so it isn't stuck
+            lock (Sync)
+                timeline.BusyTicks = 0;
 
             try
             {

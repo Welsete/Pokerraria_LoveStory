@@ -65,6 +65,11 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     private int _shinySparkleTimer;
     private bool _shinyAnnounced;
 
+    /// <summary>
+    ///     Whether the "throw a Poké Ball" hint was already shown at the end of the battle that knocked it out.
+    /// </summary>
+    public bool HintShown;
+
     // How close (in pixels) the local player has to be to hear a shiny Pokémon's twinkle
     private const float ShinyNoticeRange = 16f * 60f;
 
@@ -551,7 +556,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             return;
         }
 
-        if (_knockedOutTime++ == 0 && _lastFoe == Main.myPlayer && !Main.dedServ)
+        if (_knockedOutTime++ == 0 && _lastFoe == Main.myPlayer && !Main.dedServ && !HintShown)
             Main.NewText(Language.GetTextValue("Mods.Terramon.Battle.KnockedOutHint", Data.DisplayName),
                 new Color(255, 215, 94));
 

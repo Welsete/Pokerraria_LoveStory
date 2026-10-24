@@ -1179,11 +1179,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                     ? null
                     : Language.GetTextValue("Mods.Terramon.Battle.Forfeited", forfeiter.BattleName, winner.BattleName);
 
-                AfterLastTurn(forfeiter, winner, () =>
-                {
-                    if (text != null)
-                        Main.NewText(text, Color.Lime);
-                });
+                AfterLastTurn(forfeiter, winner, null, text != null ? [(text, Color.Lime)] : null);
                 break;
             }
             case WinStatement w:
@@ -1193,14 +1189,21 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 var loser = winner.Foe;
                 var text = Language.GetTextValue("Mods.Terramon.Battle.Defeated", winner.BattleName, loser.BattleName);
 
+                // Beaten wild Pokémon stay knocked out for a moment, the chance to catch them
+                var lines = new List<(string, Color)> { (text, Color.Lime) };
+                if (loser is PokemonNPC wild && winner == this && IsLocalProvider)
+                {
+                    lines.Add((Language.GetTextValue("Mods.Terramon.Battle.KnockedOutHint", wild.Data?.DisplayName),
+                        new Color(255, 215, 94)));
+                    wild.HintShown = true;
+                }
+
                 AfterLastTurn(winner, loser, () =>
                 {
-                    Main.NewText(text, Color.Lime);
-
                     // Reward the local player for beating a trainer
                     if (loser is TrainerNPC trainer && winner == this)
                         trainer.OnDefeatedBy(this);
-                });
+                }, lines);
                 break;
             }
             case TieQuestion:
@@ -1225,7 +1228,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                     _ => (Language.GetTextValue("Mods.Terramon.Battle.TieRegular", first, second), Color.Yellow)
                 };
 
-                AfterLastTurn(either, foe, () => Main.NewText(text, color));
+                AfterLastTurn(either, foe, null, [(text, color)]);
                 break;
             }
         }
@@ -1235,13 +1238,38 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     ///     Ends a battle for both participants after <paramref name="announce" />: right away, or once the battle's last
     ///     turn has been shown (see <see cref="BattlePlayback" />), so the result never shows up before the final hit.
     /// </summary>
-    private static void AfterLastTurn(IBattleProvider first, IBattleProvider second, Action announce)
+    /// <param name="lines">
+    ///     The result, shown as the last messages of the battle box for players in the battle (in chat for everyone
+    ///     else, or if the battle isn't shown).
+    /// </param>
+    private static void AfterLastTurn(IBattleProvider first, IBattleProvider second, Action announce,
+        List<(string Text, Color Color)> lines = null)
     {
         var field = first?.BattleClient?.Battle ?? second?.BattleClient?.Battle;
 
+        if (lines != null)
+        {
+            if (field != null && field.LocalSideIndex != 0 && !Main.dedServ)
+            {
+                foreach (var (text, color) in lines)
+                    BattlePlayback.QueueLine(field, text, color, null, true);
+            }
+            else
+            {
+                var said = lines;
+                var chat = announce;
+                announce = () =>
+                {
+                    foreach (var (text, color) in said)
+                        Main.NewText(text, color);
+                    chat?.Invoke();
+                };
+            }
+        }
+
         void End()
         {
-            announce();
+            announce?.Invoke();
             Stop(first);
             Stop(second);
         }
