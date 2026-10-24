@@ -1,0 +1,5 @@
+Frames 7
+Travel 0
+Ticks 5
+Face 1
+Scale 1

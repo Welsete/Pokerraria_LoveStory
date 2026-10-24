@@ -3,7 +3,7 @@ import sys
 import numpy as np
 from PIL import Image
 
-SRC, OUT = sys.argv[1], sys.argv[2]
+SRC, OUT = (sys.argv[1], sys.argv[2]) if len(sys.argv) > 2 else (None, None)
 
 # file, move, layout (cols, rows) or list of boxes, downscale, settings for the .txt
 SHEETS = [
@@ -70,18 +70,23 @@ def frames_of(a, layout):
     return [a[y0:y1, x0:x1] for x0, y0, x1, y1 in layout]
 
 
-for file, move, layout, k, settings in SHEETS:
-    a = load(f"{SRC}/{file}")
-    fr = [shrink(f, k) for f in frames_of(a, layout)]
-    w = max(f.shape[1] for f in fr)
-    h = max(f.shape[0] for f in fr)
-    w += w % 2
-    h += h % 2
-    strip = np.zeros((h, w * len(fr), 4), np.uint8)
-    for i, f in enumerate(fr):
-        y, x = (h - f.shape[0]) // 2, (w - f.shape[1]) // 2
-        strip[y:y + f.shape[0], i * w + x:i * w + x + f.shape[1]] = f.clip(0, 255).astype(np.uint8)
-    Image.fromarray(strip, "RGBA").save(f"{OUT}/{move}.png", optimize=True)
-    lines = [f"Frames {len(fr)}"] + [f"{key} {val}" for key, val in settings.items()] + ["Scale 1"]
-    open(f"{OUT}/{move}.txt", "w").write("\n".join(lines) + "\n")
-    print(move, len(fr), (w, h))
+def main():
+    for file, move, layout, k, settings in SHEETS:
+        a = load(f"{SRC}/{file}")
+        fr = [shrink(f, k) for f in frames_of(a, layout)]
+        w = max(f.shape[1] for f in fr)
+        h = max(f.shape[0] for f in fr)
+        w += w % 2
+        h += h % 2
+        strip = np.zeros((h, w * len(fr), 4), np.uint8)
+        for i, f in enumerate(fr):
+            y, x = (h - f.shape[0]) // 2, (w - f.shape[1]) // 2
+            strip[y:y + f.shape[0], i * w + x:i * w + x + f.shape[1]] = f.clip(0, 255).astype(np.uint8)
+        Image.fromarray(strip, "RGBA").save(f"{OUT}/{move}.png", optimize=True)
+        lines = [f"Frames {len(fr)}"] + [f"{key} {val}" for key, val in settings.items()] + ["Scale 1"]
+        open(f"{OUT}/{move}.txt", "w").write("\n".join(lines) + "\n")
+        print(move, len(fr), (w, h))
+
+
+if __name__ == "__main__":
+    main()
