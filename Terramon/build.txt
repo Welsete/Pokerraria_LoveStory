@@ -1,7 +1,7 @@
 displayName = Pokerraria: LoveStory
 homepage = https://github.com/Welsete/Pokerraria_LoveStory
 author = Welsete (based on Terramon by The Terramon Team)
-version = 0.2.0
+version = 0.3.0
 modReferences = TmonRuntimes@7.5.0
 dllReferences = EasyPacketsLib, Showdown.NET, SharpCompress, ZstdSharp
 buildIgnore = .gitignore, *.sln, *.csproj, *.user, obj*, bin*, .vs*, Properties*, .git*, Content\Scripts\*, Assets\Data\PokemonDB.json, */_Unused/*, *.fx, *.xml, *.pdb

@@ -2,6 +2,16 @@
 
 Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://github.com/JamzOJamz/Terramon) 0.1.3.1 (GPL-3.0).
 
+## 0.3.0
+
+- New logo and icon: a Poké Ball pocket watch with moving hands, in the menu, the mod list and on GitHub. Author shown as Welsete everywhere.
+- 18 moves now have drawn animations (Ember, Flamethrower, Solar Beam, Ice Beam, Blizzard, Sheer Cold, Aurora Beam, Icy Wind, Ice Punch, Ice Fang, Ice Shard, Icicle Crash, Icicle Spear, Freeze-Dry, Powder Snow, Haze, Bullet Punch, Fire Blast).
+- Beam moves travel from the attacker to the target, and charge moves (Solar Beam) show the charge before firing.
+- Multi-hit moves animate every hit, and HP only drops when each hit lands.
+- Rain in battle now really rains.
+- Pokédex type filter fixed.
+- README rewritten as a full guide with screenshots, story teaser and roadmap.
+
 ## 0.2.0
 
 First version with its own number. Everything added on top of Terramon so far:
