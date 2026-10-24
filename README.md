@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src=".github/assets/banner.gif" width="630" style="image-rendering: pixelated" alt="Pokerraria: LoveStory">
+<img src=".github/assets/logo-clock.gif" width="630" style="image-rendering: pixelated" alt="Pokerraria: LoveStory">
 
 ### Catch 'em all in Terraria. Beat the bosses. Earn the badges. Become the Champion.
 
