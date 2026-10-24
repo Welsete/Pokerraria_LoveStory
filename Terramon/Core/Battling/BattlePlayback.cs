@@ -89,6 +89,11 @@ public sealed class BattlePlayback : ModSystem
         public Color Color;
         public bool Print;
         public bool HistoryOnly;
+
+        /// <summary>
+        ///     Shown once its hit has landed (see <see cref="Append" />).
+        /// </summary>
+        public bool AfterHit;
         public List<(string Text, Color Color)> Extra;
         public PokemonData[] ReleaseExp;
 
@@ -196,6 +201,23 @@ public sealed class BattlePlayback : ModSystem
             }
         }
 
+        // Showdown says "super effective" or "critical hit" before the hit's damage, but the main games show the HP
+        // going down first, then what happened: the hit goes before those lines
+        if (step.Kind == Kind.HP)
+        {
+            LinkedListNode<Step> firstAfterHit = null;
+            for (var node = timeline.Steps.Last; node is { Value: { Kind: Kind.Line, AfterHit: true } };
+                 node = node.Previous)
+                firstAfterHit = node;
+            if (firstAfterHit != null)
+            {
+                for (var node = firstAfterHit; node != null; node = node.Next)
+                    node.Value.AfterHit = false; // Only before this hit, not a later one (recoil, items...)
+                timeline.Steps.AddBefore(firstAfterHit, step);
+                return;
+            }
+        }
+
         timeline.Steps.AddLast(step);
     }
 
@@ -222,7 +244,9 @@ public sealed class BattlePlayback : ModSystem
                 Value = new SimpleHPValue(hp, maxHP),
                 // The exact HP of a hit comes a moment later in the battle's secret half (see RefineHP). Faints
                 // ("0 fnt") have no max HP in either half, so they never take another hit's exact HP
-                Refinable = maxHP != 0
+                Refinable = maxHP != 0,
+                // A moment for the bar to go down before what comes next
+                Hold = HPHold
             });
         }
     }
@@ -345,7 +369,8 @@ public sealed class BattlePlayback : ModSystem
             Print = print,
             Intro = intro,
             HistoryOnly = historyOnly,
-            Hold = historyOnly ? HPHold : HoldFor(text)
+            AfterHit = name is "Crit" or "SuperEffective" or "Resisted",
+            Hold = historyOnly ? 0 : HoldFor(text)
         });
     }
 
