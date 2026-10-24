@@ -21,11 +21,9 @@ public sealed class BattlePlayback : ModSystem
     private const int SpecialHitDelay = 26;
     private const int StatusHitDelay = 24;
     private const int StillHitDelay = 10;
+    // Every message stays at least this long, and longer ones get more time to be read (see HoldFor)
     private const int LineHold = 80;
-
-    // "X used Y!" and the lines that come with a hit (critical, super effective) also stay a moment
-    private const int IntroHold = 40;
-    private const int WithHitHold = 55;
+    private const int LongestHold = 220;
     private const int FaintHold = 85;
     private const int SwitchHold = 14;
     private const int MoveGap = 110;
@@ -121,7 +119,7 @@ public sealed class BattlePlayback : ModSystem
         public int PendingHit;
         public int SinceMove = MoveGap;
         public int BusyTicks;
-        public readonly List<string> RecentText = [];
+        public string LastText;
 
         /// <summary>
         ///     Ticks this timeline is kept after it empties, so what it holds isn't dropped between a value being held
@@ -332,7 +330,6 @@ public sealed class BattlePlayback : ModSystem
     {
         var name = key?[(key.LastIndexOf('.') + 1)..];
         var intro = name is "UsedMove" or "MoveEffect";
-        var withHit = name is "Crit" or "SuperEffective" or "Resisted";
         Add(field, new Step
         {
             Kind = Kind.Line,
@@ -340,7 +337,7 @@ public sealed class BattlePlayback : ModSystem
             Color = color,
             Print = print,
             Intro = intro,
-            Hold = intro ? IntroHold : withHit ? WithHitHold : LineHold
+            Hold = HoldFor(text)
         });
     }
 
@@ -436,9 +433,7 @@ public sealed class BattlePlayback : ModSystem
         {
             var battle = BattleClient.LocalClient?.Battle;
             lock (Sync)
-                return Get(battle, false) is { RecentText.Count: > 0 } timeline
-                    ? string.Join("\n", timeline.RecentText)
-                    : null;
+                return Get(battle, false)?.LastText;
         }
     }
 
@@ -784,10 +779,18 @@ public sealed class BattlePlayback : ModSystem
                 }
 
                 Say(timeline, step.Text, step.Color, step.Print);
+                // The EXP and level up lines come next, each with its own moment
                 if (step.Extra != null)
                 {
-                    foreach (var (text, color) in step.Extra)
-                        Say(timeline, text, color, step.Print);
+                    lock (Sync)
+                    {
+                        for (var i = step.Extra.Count - 1; i >= 0; i--)
+                        {
+                            var (text, color) = step.Extra[i];
+                            timeline.Steps.AddFirst(new Step
+                                { Kind = Kind.Line, Text = text, Color = color, Print = step.Print, Hold = HoldFor(text) });
+                        }
+                    }
                 }
 
                 break;
@@ -803,18 +806,20 @@ public sealed class BattlePlayback : ModSystem
         }
     }
 
+    /// <summary>
+    ///     How long a message stays on screen: long enough to read it, more for longer ones.
+    /// </summary>
+    private static int HoldFor(string text)
+        => Math.Clamp(40 + (int)((StripTags(text)?.Length ?? 0) * 1.5f), LineHold, LongestHold);
+
     private static void Say(Timeline timeline, string text, Color color, bool print)
     {
         if (!print || string.IsNullOrEmpty(text))
             return;
-        Main.NewText(text, color);
+        // Shown in the battle box and kept in the battle history (L), not in chat, so it isn't said twice
         BattleLog.Record(text, color, timeline.Field);
         lock (Sync)
-        {
-            timeline.RecentText.Add(StripTags(text));
-            if (timeline.RecentText.Count > 2)
-                timeline.RecentText.RemoveAt(0);
-        }
+            timeline.LastText = StripTags(text).Trim(' ', '»');
     }
 
     /// <summary>
