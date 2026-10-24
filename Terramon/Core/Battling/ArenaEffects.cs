@@ -171,20 +171,29 @@ public sealed class ArenaEffects : ModSystem
                 break;
 
             case BattleWeather.Hail or BattleWeather.Snowscape:
-                for (var i = 0; i < 4; i++)
+                // All over the battle's height, so it shows right away; a cold light so it's seen at night too
+                for (var i = 0; i < 5; i++)
                 {
-                    var d = Dust.NewDustPerfect(new Vector2(RandomX(arena), top + Main.rand.NextFloat(0f, 80f)),
-                        DustID.Snow, new Vector2(Main.rand.NextFloat(-1f, 1f), Main.rand.NextFloat(2f, 3.5f)), 0, default,
-                        Main.rand.NextFloat(0.8f, 1.2f));
+                    var d = Dust.NewDustPerfect(new Vector2(RandomX(arena), Main.rand.NextFloat(top, arena.Bottom)),
+                        DustID.Snow, new Vector2(Main.rand.NextFloat(-1f, 1f), Main.rand.NextFloat(1.5f, 3f)), 0,
+                        Color.White, Main.rand.NextFloat(0.9f, 1.3f));
                     d.noGravity = true;
                 }
 
                 if (weather == BattleWeather.Hail && Main.rand.NextBool(2))
                 {
-                    var d = Dust.NewDustPerfect(new Vector2(RandomX(arena), top), DustID.Ice,
-                        new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), Main.rand.NextFloat(8f, 11f)), 0, default, 1.1f);
+                    var d = Dust.NewDustPerfect(new Vector2(RandomX(arena), Main.rand.NextFloat(top, arena.Bottom - 60f)),
+                        DustID.Ice, new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), Main.rand.NextFloat(7f, 10f)), 0,
+                        default, 1.1f);
                     d.noGravity = true;
                 }
+
+                for (var x = arena.Left; x < arena.Right; x += 48f)
+                {
+                    Lighting.AddLight(new Vector2(x, arena.Bottom - 32f), 0.3f, 0.38f, 0.5f);
+                    Lighting.AddLight(new Vector2(x, arena.Bottom - 160f), 0.3f, 0.38f, 0.5f);
+                }
+
                 break;
         }
     }

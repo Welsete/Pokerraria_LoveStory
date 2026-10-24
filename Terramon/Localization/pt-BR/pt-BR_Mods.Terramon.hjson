@@ -26,14 +26,14 @@ Battle: {
 	}
 
 	MissPopup: Errou!
-	KnockedOutHint: "{0} está desmaiado! Jogue uma Poké Bola rápido para tentar capturar."
+	KnockedOutHint: "Jogue uma Poké Bola rápido para tentar capturar {0}!"
 	CantBattleFainted: "{0} está desmaiado e não pode batalhar!"
 	GainedExp: "{0} ganhou {1} pontos de Exp.!"
 	LevelUp: "{0} subiu para o Nv. {1}!"
 	ChooseNext: Escolha outro Pokémon para mandar à batalha.
 	SkipTurnHint: Clique para pular
 	Back: "« Voltar"
-	ReturnedFainted: "{0} desmaiou e voltou para a Poké Bola. Use um Reviver para curá-lo."
+	ReturnedFainted: "{0} voltou para a Poké Bola. Use um Reviver para curá-lo."
 	Log: {
 		SwitchedIn: "{0} entrou na batalha!"
 		Damage: "{0} perdeu {1} PS! ({2})"

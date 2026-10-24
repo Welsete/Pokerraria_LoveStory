@@ -40,6 +40,7 @@ public sealed class BattlePlayback : ModSystem
     private const int SwitchHold = 14;
     private const int MoveGap = 110;
     private const int EndPause = 60;
+    private const int StartDelay = 30;
 
     // The last message of a turn stays a moment before the menu comes back
     private const int TurnHold = 75;
@@ -183,7 +184,8 @@ public sealed class BattlePlayback : ModSystem
 
         if (!create)
             return null;
-        var made = new Timeline(field);
+        // A short breath after the moves are picked, before the turn starts being shown
+        var made = new Timeline(field) { Wait = StartDelay };
         Timelines.Add(made);
         return made;
     }
