@@ -33,8 +33,16 @@ jobs:
               env:
                   GH_TOKEN: ${{ github.token }}
               run: |
-                  tag="build-${GITHUB_REF_NAME//\//-}"
                   files=("$RUNNER_TEMP"/tmlsave/Mods/*.tmod)
+                  # A version tag (v0.2.0) gets a real release, with its CHANGELOG.md section as notes
+                  if [[ "$GITHUB_REF_TYPE" == "tag" && "$GITHUB_REF_NAME" == v* ]]; then
+                      version="${GITHUB_REF_NAME#v}"
+                      awk -v v="## $version" '$0 == v {on=1; next} /^## / {on=0} on' CHANGELOG.md > notes.md
+                      gh release create "$GITHUB_REF_NAME" "${files[@]}" --target "$GITHUB_SHA" \
+                          --title "Pokerraria: LoveStory $GITHUB_REF_NAME" --notes-file notes.md -R "$GITHUB_REPOSITORY"
+                      exit 0
+                  fi
+                  tag="build-${GITHUB_REF_NAME//\//-}"
                   # Reuse one release per branch: replace its files instead of recreating it
                   if gh release view "$tag" -R "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
                       gh release upload "$tag" "${files[@]}" --clobber -R "$GITHUB_REPOSITORY"
