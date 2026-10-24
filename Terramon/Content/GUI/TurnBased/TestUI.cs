@@ -880,6 +880,10 @@ public sealed class TestBattleUI : SmartUIState
     // Whether the options are hidden because a turn is being shown
     private static bool _showingTurn;
 
+    // The message being written out in the battle box, and since when
+    private static string _typedLine = string.Empty;
+    private static uint _typedSince;
+
     public override void SafeUpdate(GameTime gameTime)
     {
         FitLabels();
@@ -930,10 +934,19 @@ public sealed class TestBattleUI : SmartUIState
         if (!busy)
             return;
 
+        // Written out letter by letter, like the main games
         var line = BattlePlayback.LocalLine ?? string.Empty;
-        if (_promptText.Text != line)
+        if (line != _typedLine)
         {
-            _promptText.SetText(line);
+            _typedLine = line;
+            _typedSince = Main.GameUpdateCount;
+        }
+
+        var letters = (int)((Main.GameUpdateCount - _typedSince) * BattlePlayback.LettersPerTick) + 1;
+        var typed = letters >= line.Length ? line : line[..letters];
+        if (_promptText.Text != typed)
+        {
+            _promptText.SetText(typed);
             _promptText.Recalculate();
         }
 

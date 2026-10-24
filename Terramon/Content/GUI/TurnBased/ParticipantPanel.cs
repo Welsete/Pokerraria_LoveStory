@@ -24,7 +24,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
             if (_currentMon == value)
                 return;
             _currentMon = value;
-            _hpVisual = 0f;
+            _hpVisual = -1f; // Shown right away, not filled up
         }
     }
     public bool DrawBallSlots;
@@ -156,7 +156,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         if (shownMon != _drawnMon)
         {
             _drawnMon = shownMon;
-            _hpVisual = 0f;
+            _hpVisual = -1f; // Shown right away, not filled up
             // Shiny Pokémon twinkle when they come into the battle, like in the main games
             if (shownMon is { IsShiny: true })
                 SoundEngine.PlaySound(in TerramonSoundID.ShinySparkle);
@@ -220,10 +220,11 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         // Remove floating points from draw position
         drawHpPosition = drawHpPosition.Floor();
         
-        if (monHpFactor < _hpVisual)
-            Step(ref _hpVisual, monHpFactor, 0.01f);
-        else
+        // Like the main games, the bar (and the number) goes down or up little by little when HP changes
+        if (_hpVisual < 0f)
             _hpVisual = monHpFactor;
+        else
+            Step(ref _hpVisual, monHpFactor, BattlePlayback.HPDrainPerTick);
 
         var colorShader = ShaderAssets.FadeToColor.Shader;
         var colorParam = colorShader.Parameters["uColor"];
@@ -233,16 +234,13 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
 
         DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth, BackColor,
             zoom, colorShader);
-        if (_hpVisual != monHpFactor)
-        {
-            colorParam.SetValue(Color.Red.ToVector3());
-            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * _hpVisual,
-                Color.Red, zoom, colorShader);
-        }
-        DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * monHpFactor,
+        DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * _hpVisual,
             Color.White, zoom);
 
-        string hpDisplay = shownMon is null ? "??? / ???" : $"HP: {shownHP} / {shownMon.MaxHP}";
+        var hpNumber = shownMon is null || _hpVisual == monHpFactor
+            ? shownHP
+            : (int)Math.Round(_hpVisual * shownMon.MaxHP);
+        string hpDisplay = shownMon is null ? "??? / ???" : $"HP: {hpNumber} / {shownMon.MaxHP}";
         Vector2 hpDisplaySize = smallFont.MeasureString(hpDisplay);
         Vector2 hpDisplayPosition = drawHpPosition + new Vector2(hpWidth * 0.5f, (hpBarHeight + 8) * 0.5f * zoom) -
                                     hpDisplaySize * 0.5f;

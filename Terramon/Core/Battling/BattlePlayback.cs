@@ -17,16 +17,25 @@ namespace Terramon.Core.Battling;
 public sealed class BattlePlayback : ModSystem
 {
     // How long each kind of moment lasts (ticks, 60 per second)
-    private const int PhysicalHitDelay = 20;
-    private const int SpecialHitDelay = 26;
-    private const int StatusHitDelay = 24;
-    private const int StillHitDelay = 10;
-    // Every message stays at least this long, and longer ones get more time to be read (see HoldFor)
-    private const int LineHold = 80;
-    private const int LongestHold = 220;
+    // From "X used Y!" being written out to its hit, while the move's animation plays
+    private const int PhysicalHitDelay = 40;
+    private const int SpecialHitDelay = 50;
+    private const int StatusHitDelay = 45;
+    private const int StillHitDelay = 25;
+
+    // Messages are written out letter by letter (this many per tick, see TypedLine), then stay a moment to be read
+    public const float LettersPerTick = 1.2f;
+    private const int ReadHold = 70;
+    private const int LineHold = 90;
+    private const int LongestHold = 260;
+
+    /// <summary>
+    ///     How fast an HP bar goes down or up, in fractions of the bar per tick. The next message waits for it.
+    /// </summary>
+    public const float HPDrainPerTick = 0.006f;
 
     // The time a hit's HP bar gets to go down before the next message
-    private const int HPHold = 40;
+    private const int HPHold = 20;
     private const int FaintHold = 85;
     private const int SwitchHold = 14;
     private const int MoveGap = 110;
@@ -370,7 +379,8 @@ public sealed class BattlePlayback : ModSystem
             Intro = intro,
             HistoryOnly = historyOnly,
             AfterHit = name is "Crit" or "SuperEffective" or "Resisted",
-            Hold = historyOnly ? 0 : HoldFor(text)
+            // "X used Y!" stays while its move plays out: its hit and HP bar wait for it to be written out
+            Hold = historyOnly ? 0 : intro ? TypingTicks(text) + 10 : HoldFor(text)
         });
     }
 
@@ -762,6 +772,15 @@ public sealed class BattlePlayback : ModSystem
 
                 if (fast)
                     break;
+
+                // The next message waits for the HP bar to finish going down (or up)
+                if (mon.MaxHP > 0 && after != before)
+                {
+                    var drain = (int)MathF.Ceiling(Math.Abs(after - before) / (float)mon.MaxHP / HPDrainPerTick) + 12;
+                    lock (Sync)
+                        timeline.Wait = Math.Max(timeline.Wait, drain);
+                }
+
                 if (after < before && after > 0)
                     PokemonAnimations.Play(step.Side?.Provider, PokemonAnimState.Hurt);
                 else if (after > before && before > 0)
@@ -843,7 +862,10 @@ public sealed class BattlePlayback : ModSystem
     ///     How long a message stays on screen: long enough to read it, more for longer ones.
     /// </summary>
     private static int HoldFor(string text)
-        => Math.Clamp(40 + (int)((StripTags(text)?.Length ?? 0) * 1.5f), LineHold, LongestHold);
+        => Math.Clamp(TypingTicks(text) + ReadHold, LineHold, LongestHold);
+
+    private static int TypingTicks(string text)
+        => (int)MathF.Ceiling((StripTags(text)?.Length ?? 0) / LettersPerTick);
 
     private static void Say(Timeline timeline, string text, Color color, bool print, bool historyOnly = false)
     {
