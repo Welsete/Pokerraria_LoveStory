@@ -24,6 +24,9 @@ public sealed class BattlePlayback : ModSystem
     // Every message stays at least this long, and longer ones get more time to be read (see HoldFor)
     private const int LineHold = 80;
     private const int LongestHold = 220;
+
+    // The time a hit's HP bar gets to go down before the next message
+    private const int HPHold = 40;
     private const int FaintHold = 85;
     private const int SwitchHold = 14;
     private const int MoveGap = 110;
@@ -85,6 +88,7 @@ public sealed class BattlePlayback : ModSystem
         public string Text;
         public Color Color;
         public bool Print;
+        public bool HistoryOnly;
         public List<(string Text, Color Color)> Extra;
         public PokemonData[] ReleaseExp;
 
@@ -330,6 +334,9 @@ public sealed class BattlePlayback : ModSystem
     {
         var name = key?[(key.LastIndexOf('.') + 1)..];
         var intro = name is "UsedMove" or "MoveEffect";
+        // How much HP went down or up is already shown by the HP bar: it's only kept in the battle history (L), with
+        // a short moment for the bar to move
+        var historyOnly = name is "Damage" or "Healed";
         Add(field, new Step
         {
             Kind = Kind.Line,
@@ -337,7 +344,8 @@ public sealed class BattlePlayback : ModSystem
             Color = color,
             Print = print,
             Intro = intro,
-            Hold = HoldFor(text)
+            HistoryOnly = historyOnly,
+            Hold = historyOnly ? HPHold : HoldFor(text)
         });
     }
 
@@ -756,7 +764,7 @@ public sealed class BattlePlayback : ModSystem
                 break;
 
             case Kind.Line:
-                Say(timeline, step.Text, step.Color, step.Print);
+                Say(timeline, step.Text, step.Color, step.Print, step.HistoryOnly);
                 break;
 
             case Kind.Faint:
@@ -812,12 +820,14 @@ public sealed class BattlePlayback : ModSystem
     private static int HoldFor(string text)
         => Math.Clamp(40 + (int)((StripTags(text)?.Length ?? 0) * 1.5f), LineHold, LongestHold);
 
-    private static void Say(Timeline timeline, string text, Color color, bool print)
+    private static void Say(Timeline timeline, string text, Color color, bool print, bool historyOnly = false)
     {
         if (!print || string.IsNullOrEmpty(text))
             return;
         // Shown in the battle box and kept in the battle history (L), not in chat, so it isn't said twice
         BattleLog.Record(text, color, timeline.Field);
+        if (historyOnly)
+            return;
         lock (Sync)
             timeline.LastText = StripTags(text).Trim(' ', '»');
     }
