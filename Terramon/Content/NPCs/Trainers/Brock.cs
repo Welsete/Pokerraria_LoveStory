@@ -24,7 +24,7 @@ public class Brock : GymLeader
 
     protected override int LookAlike => NPCID.Guide;
 
-    // Isa's walk cycle: 8 frames of her 20x32 pixel art (facing left), stored at 1.5x (30x48 per frame) so he is
+    // Custom walk cycle: 8 frames of 20x32 pixel art (facing left), stored at 1.5x (30x48 per frame) so he is
     // about 45 pixels tall, a little taller than the player (42). Frame 0 doubles as the standing pose.
     protected override string CustomTexture => "Terramon/Assets/NPCs/Trainers/Brock";
 

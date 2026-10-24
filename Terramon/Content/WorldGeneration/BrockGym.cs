@@ -831,7 +831,7 @@ public static class BrockGymBuilder
     }
 
     /// <summary>
-    ///     A small stone shrine over the rope at the surface, after Isa's picture: a stone slab floor on a mound of stone,
+    ///     A small stone shrine over the rope at the surface, after the concept picture: a stone slab floor on a mound of stone,
     ///     light pillars with dark trim around a dark stone back wall, a lintel with dark caps, a wide eave with its tips
     ///     turned up, and a pointed gable with dark window slits and a little spire. The rope goes down through the floor.
     /// </summary>

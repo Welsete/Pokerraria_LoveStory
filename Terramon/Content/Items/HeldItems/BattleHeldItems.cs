@@ -4,7 +4,7 @@ namespace Terramon.Content.Items;
 
 /// <summary>
 ///     A held item with an effect in battle. The class name is the item's name in Pokémon Showdown, which applies the
-///     effect. Its sprite is Assets/Items/HeldItems/&lt;class name&gt;.png (Isa's 32x32 art), and it's crafted from the
+///     effect. Its sprite is Assets/Items/HeldItems/&lt;class name&gt;.png (custom 32x32 art), and it's crafted from the
 ///     Terraria item in <see cref="LooksLike" />.
 /// </summary>
 public abstract class BattleHeldItem : HeldItem

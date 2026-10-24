@@ -68,7 +68,7 @@ public class ProfessorOak : ModNPC
 
     public override void SetStaticDefaults()
     {
-        // 8 walking frames of Isa's art (facing left), frame 0 is the standing pose
+        // 8 walking frames of the custom art (facing left), frame 0 is the standing pose
         Main.npcFrameCount[Type] = 8;
         NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers { Hide = true });
     }

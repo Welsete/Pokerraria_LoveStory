@@ -1362,7 +1362,7 @@ internal sealed class PokedexOverviewPanel : UIPanel
         weightPanel.Append(_weightText);
         _heightWeightContainer.Append(weightPanel);
         //_list.Add(heightWeightContainer);
-        // Data boxes in the style of Isa's Pokédex concept (registered Pokémon only)
+        // Data boxes in the style of the Pokédex concept art (registered Pokémon only)
         _infoSection = new PokedexInfoSection();
         _statsSection = new PokedexStatsSection();
         _learnsetSection = new PokedexLearnsetSection { MarginBottom = 18 };

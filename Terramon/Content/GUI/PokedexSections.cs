@@ -9,7 +9,7 @@ using Terraria.UI;
 namespace Terramon.Content.GUI;
 
 /// <summary>
-///     A box in the Pokédex overview in the style of Isa's Pokédex concept: a navy panel with a gold frame and rivets
+///     A box in the Pokédex overview in the style of the Pokédex concept art: a navy panel with a gold frame and rivets
 ///     and a red title bar. Subclasses draw what goes inside.
 /// </summary>
 internal abstract class PokedexSection : UIElement
