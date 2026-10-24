@@ -1,41 +1,16 @@
-[img]https://i.imgur.com/Bwg0Chn.gif[/img] [i]"Hey there, fellow adventurer! Are you ready to start your Pokémon journey?"[/i]
+[h1]Pokerraria: LoveStory[/h1]
 
-[h1]Check out the website for the Terramon Mod!
-[url=https://terramon.tmod.page/links]Website[/url][/h1]
-The website is where you can find links associated with the mod, all in one place!
+Pokerraria: LoveStory is a Terraria and Pokémon crossover with turn-based battles, Gyms tied to Terraria's bosses and a story of its own.
 
-[url=https://discord.gg/qDn5eW27c4]Discord Server[/url] | [url=https://terramon.wiki]Terramon Wiki[/url] | [url=https://github.com/JamzOJamz/Terramon]GitHub (Source Code)[/url]
+Features:
+- Catch, train and evolve the Kanto Pokémon, including their Shiny forms.
+- Turn-based battles against wild Pokémon, trainers and Gym Leaders.
+- Gym badges set how high a level your Pokémon obey, like in the main games.
+- A Pokémon Center next to spawn, where Nurse Joy heals your Pokémon for free.
+- Animated Pokémon, Pokédex, Summary screen, held items and much more.
 
-[h1]ABOUT[/h1]
+The source code is available at
+[url=https://github.com/Welsete/Pokerraria_LoveStory]GitHub (Source Code)[/url]
 
-If you enjoy both Terraria and Pokémon, the [b]Terramon Mod[/b] is the perfect crossover! Catch, train, and explore alongside your favorite Pokémon in an experience that blends the best of both worlds.
-
-[h2]FEATURES[/h2]
-
-• [b]150+ Pokémon[/b] to find and catch, [b]including their ✨Shiny✨ forms[/b]
-
-• Several different [b]Poké Balls[/b] with [b]interactive mechanics[/b]
-
-• A [b]brand new Town NPC[/b], the [b]Poké Mart Clerk[/b]
-
-• [b]Custom user interface (UI)[/b] elements designed to match Terraria’s vanilla style
-
-• [b]Vanity[/b] and other [b]decorative items[/b]
-
-• Limited [b]multiplayer compatibility[/b]
-
-...and more!
-
-[i]Don't forget to leave a like—or maybe even a favorite—if you love this mod and want to show your support![/i]
-
-[img]https://i.imgur.com/ki1CPZe.gif[/img]
-
-[hr][/hr]
-[b][Note][/b]
-This mod is in an early beta stage. Some features, such as Pokemon battling, are not yet implemented, and bugs may be present. Please report any issues and share your feedback on Discord: https://discord.gg/qDn5eW27c4
-
-[b][Disclaimer][/b]
-This is an unofficial, fan-made mod and is not affiliated with, endorsed, sponsored, or approved by Nintendo, Game Freak, or The Pokémon Company. Pokémon and all related trademarks, characters, names, and images are the property of their respective owners. This project is for non-commercial use only, and no copyright or trademark infringement is intended.
-
-[quote=tModLoader Terramon]
-Developed By The Terramon Team[/quote]
+Based on the Terramon mod by The Terramon Team (GPL-3.0).
+Disclaimer: This fan-made mod acknowledges all rights to Nintendo and Game Freak.

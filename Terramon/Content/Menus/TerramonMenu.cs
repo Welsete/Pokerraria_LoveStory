@@ -1,19 +1,25 @@
-﻿using ReLogic.Content;
+using ReLogic.Content;
 
 namespace Terramon.Content.Menus;
 
 [Autoload(Side = ModSide.Client)]
 public class TerramonMenu : ModMenu
 {
-    private static readonly Asset<Texture2D> LogoPurity;
-    private static readonly Asset<Texture2D> LogoCorruption;
+    // The animated Pokerraria: LoveStory logo (the same animation as the README banner): 114 frames of 418x150 in
+    // rows of 6, 70 ms each. It cycles through green, pink and purple, with the heart beating and "LoveStory" waving.
+    private const int FrameWidth = 418;
+    private const int FrameHeight = 150;
+    private const int Columns = 6;
+    private const int FrameCount = 114;
+    private const double FrameSeconds = 0.07;
+
+    private static readonly Asset<Texture2D> LogoAnimation;
 
     static TerramonMenu()
     {
         if (Main.dedServ) return;
 
-        LogoPurity = ModContent.Request<Texture2D>("Terramon/Assets/Misc/MenuLogo_0");
-        LogoCorruption = ModContent.Request<Texture2D>("Terramon/Assets/Misc/MenuLogo_1");
+        LogoAnimation = ModContent.Request<Texture2D>("Terramon/Assets/Misc/MenuLogoAnim");
     }
 
     public override string DisplayName => "Pokerraria: LoveStory";
@@ -27,19 +33,14 @@ public class TerramonMenu : ModMenu
         // Offsets the logo draw position a bit for alignment purposes
         logoDrawCenter.Y += 16;
 
-        // Get the logo textures to draw
-        var logoPurity = LogoPurity.Value;
-        var logoCorruption = LogoCorruption.Value;
+        // Real seconds, so the animation plays at the same speed at any frame rate
+        var frame = (int)(Main.GlobalTimeWrappedHourly / FrameSeconds) % FrameCount;
+        var source = new Rectangle(frame % Columns * FrameWidth, frame / Columns * FrameHeight, FrameWidth,
+            FrameHeight);
+        var origin = new Vector2(FrameWidth * 0.5f, FrameHeight * 0.5f);
 
-        // Calculate rectangle and origin for the logo drawing for reuse
-        var logoRect = new Rectangle(0, 0, logoPurity.Width, logoPurity.Height);
-        var logoOrigin = new Vector2(logoPurity.Width * 0.5f, logoPurity.Height * 0.5f);
-
-        // Draws the logo textures depending on the current logo alpha values
-        spriteBatch.Draw(logoPurity, logoDrawCenter, logoRect, drawColor * (Main.LogoA / 255f), logoRotation,
-            logoOrigin, logoScale, SpriteEffects.None, 0f);
-        spriteBatch.Draw(logoCorruption, logoDrawCenter, logoRect, drawColor * (Main.LogoB / 255f), logoRotation,
-            logoOrigin, logoScale, SpriteEffects.None, 0f);
+        spriteBatch.Draw(LogoAnimation.Value, logoDrawCenter, source, drawColor, logoRotation, origin, logoScale,
+            SpriteEffects.None, 0f);
 
         return false;
     }

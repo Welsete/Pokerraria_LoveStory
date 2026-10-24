@@ -1,17 +1,14 @@
-Immerse yourself in the captivating crossover of Terraria and Pokémon with the Terramon Mod. Now remastered for 1.4!
+Pokerraria: LoveStory is a Terraria and Pokémon crossover with turn-based battles, Gyms tied to Terraria's bosses and a story of its own.
 
 Features:
-- Over 145 Pokémon to find and catch, including their Shiny forms.
-- 5 different Poké Balls with interactive mechanics.
-- A brand new Town NPC, the Poké Mart Clerk.
-- Custom user interface (UI) elements.
-- Vanity and other decorative items.
+- Catch, train and evolve the Kanto Pokémon, including their Shiny forms.
+- Turn-based battles against wild Pokémon, trainers and Gym Leaders.
+- Gym badges set how high a level your Pokémon obey, like in the main games.
+- A Pokémon Center next to spawn, where Nurse Joy heals your Pokémon for free.
+- Animated Pokémon, Pokédex, Summary screen, held items and much more.
 
-Make sure to check out the mod's homepage for additional information.
+The source code is available at
+https://github.com/Welsete/Pokerraria_LoveStory
 
-Note: Pokémon battling is coming in a future update. Stay tuned!
-
-The source code of the mod is available at
-https://github.com/JamzOJamz/Terramon
-
+Based on the Terramon mod by The Terramon Team (GPL-3.0).
 Disclaimer: This fan-made mod acknowledges all rights to Nintendo and Game Freak.

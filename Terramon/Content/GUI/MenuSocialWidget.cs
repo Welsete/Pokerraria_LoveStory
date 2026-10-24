@@ -8,17 +8,7 @@ namespace Terramon.Content.GUI;
 
 internal static class MenuSocialWidget
 {
-    private const string DiscordURL = "https://discord.gg/qDn5eW27c4"; // Terramon Mod, #rules-and-info
-    private const string DiscordInviteCode = "qDn5eW27c4";
-    private const string WikiURL = "https://terrariamods.wiki.gg/wiki/Terramon_Mod";
-    private const string YouTubeURL = "https://www.youtube.com/@TerramonMod";
-    private const string GitHubURL = "https://github.com/JamzOJamz/Terramon";
-    private const double DiscordClientCheckInterval = 2.5;
-
-    private static readonly Item FakeItem = new();
-    private static readonly bool[] LastHoveringInteractableText = new bool[6];
-    private static DateTime _lastDiscordClientCheck = DateTime.MinValue;
-    private static bool _isDiscordClientRunning;
+    private static readonly bool[] LastHoveringInteractableText = new bool[5];
 
     public static void Setup()
     {
@@ -32,13 +22,6 @@ internal static class MenuSocialWidget
         // Wait until the mod is loaded by TML
         var mod = Terramon.Instance;
         if (mod == null) return;
-
-        // Check if Discord client is open on the player's system every X seconds
-        if (DateTime.UtcNow - _lastDiscordClientCheck > TimeSpan.FromSeconds(DiscordClientCheckInterval))
-        {
-            _lastDiscordClientCheck = DateTime.UtcNow;
-            _isDiscordClientRunning = DiscordInviteBeamer.IsClientRunning();
-        }
 
         var drawPos = new Vector2(15, 15);
         if (Main.showFrameRate)
@@ -81,148 +64,6 @@ internal static class MenuSocialWidget
         DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value, configText, drawPos,
             hoveredConfig ? new Color(237, 246, 255) : new Color(173, 173, 198), 0f, Vector2.Zero, 1.02f,
             SpriteEffects.None, 0f, alphaMult: 0.76f);
-
-        // Draw Discord Server link text
-        const string discordText = "Discord Server";
-        var discordTextSize = FontAssets.MouseText.Value.MeasureString(discordText);
-        discordTextSize.Y *= 0.9f;
-        drawPos.Y += 30;
-        var hoveredDiscord = Main.MouseScreen.Between(drawPos, drawPos + discordTextSize);
-        if (hoveredDiscord)
-        {
-            Main.LocalPlayer.mouseInterface = true;
-            if (!LastHoveringInteractableText[0])
-                SoundEngine.PlaySound(in SoundID.MenuTick);
-            /*if (_isDiscordClientRunning)
-            {
-                FakeItem.SetDefaults(0, true);
-                const string textValue = "[c/FFFFFF:Discord client detected \u2713]\n[c/BABAC6:Click to go directly to the server!]";
-                FakeItem.SetNameOverride(textValue);
-                FakeItem.type = ItemID.IronPickaxe;
-                FakeItem.scale = 0f;
-                FakeItem.value = -1;
-                Main.HoverItem = FakeItem;
-                Main.instance.MouseText("");
-                Main.mouseText = true;
-            }*/
-
-            if (Main.mouseLeft && Main.mouseLeftRelease)
-            {
-                SoundEngine.PlaySound(in SoundID.MenuOpen);
-                Main.mouseLeftRelease = false;
-
-                if (_isDiscordClientRunning)
-                    Task.Run(() => DiscordInviteBeamer.Send(DiscordInviteCode));
-                else
-                    Utils.OpenToURL(DiscordURL);
-            }
-
-            LastHoveringInteractableText[0] = true;
-        }
-        else
-        {
-            LastHoveringInteractableText[0] = false;
-        }
-
-        DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value, discordText, drawPos,
-            hoveredDiscord ? new Color(237, 246, 255) : new Color(173, 173, 198), 0f, Vector2.Zero, 1.02f, SpriteEffects.None,
-            0f, alphaMult: 0.76f);
-
-        // Draw Terramon Wiki link text
-        const string wikiText = "Terramon Wiki";
-        var wikiTextSize = FontAssets.MouseText.Value.MeasureString(wikiText);
-        wikiTextSize.Y *= 0.9f;
-        drawPos.Y += 28;
-        var hoveredWiki = Main.MouseScreen.Between(drawPos, drawPos + wikiTextSize);
-        if (hoveredWiki)
-        {
-            Main.LocalPlayer.mouseInterface = true;
-            if (!LastHoveringInteractableText[1])
-                SoundEngine.PlaySound(in SoundID.MenuTick);
-
-            if (Main.mouseLeft && Main.mouseLeftRelease)
-            {
-                SoundEngine.PlaySound(in SoundID.MenuOpen);
-                Main.mouseLeftRelease = false;
-
-                Utils.OpenToURL(WikiURL);
-            }
-
-            LastHoveringInteractableText[1] = true;
-        }
-        else
-        {
-            LastHoveringInteractableText[1] = false;
-        }
-
-        DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value, wikiText, drawPos,
-            hoveredWiki ? new Color(237, 246, 255) : new Color(173, 173, 198), 0f, Vector2.Zero, 1.02f,
-            SpriteEffects.None,
-            0f, alphaMult: 0.76f);
-
-        // Draw YouTube link text
-        const string youtubeText = "YouTube";
-        var youtubeTextSize = FontAssets.MouseText.Value.MeasureString(youtubeText);
-        youtubeTextSize.Y *= 0.9f;
-        drawPos.Y += 28;
-        var hoveredYoutube = Main.MouseScreen.Between(drawPos, drawPos + youtubeTextSize);
-        if (hoveredYoutube)
-        {
-            Main.LocalPlayer.mouseInterface = true;
-            if (!LastHoveringInteractableText[2])
-                SoundEngine.PlaySound(in SoundID.MenuTick);
-
-            if (Main.mouseLeft && Main.mouseLeftRelease)
-            {
-                SoundEngine.PlaySound(in SoundID.MenuOpen);
-                Main.mouseLeftRelease = false;
-
-                Utils.OpenToURL(YouTubeURL);
-            }
-
-            LastHoveringInteractableText[2] = true;
-        }
-        else
-        {
-            LastHoveringInteractableText[2] = false;
-        }
-
-        DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value, youtubeText, drawPos,
-            hoveredYoutube ? new Color(237, 246, 255) : new Color(173, 173, 198), 0f, Vector2.Zero, 1.02f,
-            SpriteEffects.None,
-            0f, alphaMult: 0.76f);
-
-        // Draw GitHub link text
-        const string githubText = "GitHub";
-        var githubTextSize = FontAssets.MouseText.Value.MeasureString(githubText);
-        githubTextSize.Y *= 0.9f;
-        drawPos.Y += 28;
-        var hoveredGithub = Main.MouseScreen.Between(drawPos, drawPos + githubTextSize);
-        if (hoveredGithub)
-        {
-            Main.LocalPlayer.mouseInterface = true;
-            if (!LastHoveringInteractableText[3])
-                SoundEngine.PlaySound(in SoundID.MenuTick);
-
-            if (Main.mouseLeft && Main.mouseLeftRelease)
-            {
-                SoundEngine.PlaySound(in SoundID.MenuOpen);
-                Main.mouseLeftRelease = false;
-
-                Utils.OpenToURL(GitHubURL);
-            }
-
-            LastHoveringInteractableText[3] = true;
-        }
-        else
-        {
-            LastHoveringInteractableText[3] = false;
-        }
-
-        DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value, githubText, drawPos,
-            hoveredGithub ? new Color(237, 246, 255) : new Color(173, 173, 198), 0f, Vector2.Zero, 1.02f,
-            SpriteEffects.None,
-            0f, alphaMult: 0.76f);
     }
 
     private static void DrawOutlinedStringOnMenu(SpriteBatch spriteBatch, DynamicSpriteFont font, string text,

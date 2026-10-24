@@ -339,7 +339,7 @@ GUI: {
 		}
 
 		Legacy: {
-			// Title: Welcome to the world of Pokémon! Thank you for installing the Terramon mod!
+			// Title: Welcome to the world of Pokémon! Thank you for installing Pokerraria: LoveStory!
 			// Subtitle: Now, please choose your starter Pokémon to begin your adventure!
 			// ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
 		}

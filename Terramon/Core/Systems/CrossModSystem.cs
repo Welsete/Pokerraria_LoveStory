@@ -9,10 +9,7 @@ public sealed class CrossModSystem : ModSystem
         if (Main.dedServ)
             return;
 
-        // Wikithis compatibility
-        if (!ModLoader.TryGetMod("Wikithis", out var wikithis)) return;
-        Wikithis = wikithis;
-        wikithis.Call(0, Mod, "https://terrariamods.wiki.gg/wiki/Terramon_Mod/{}");
-        wikithis.Call(3, Mod, ModContent.Request<Texture2D>("Terramon/icon_small"));
+        // Wikithis compatibility is off: the only wiki is the original Terramon's, which doesn't match this mod.
+        // Wikithis stays null until Pokerraria has a wiki of its own.
     }
 }

@@ -233,7 +233,7 @@ Commands: {
 	Upgrade: {
 		Description: Transfere Pokémon da versão de pré-lançamento
 		Usage: /upgrade
-		TypeResolveError: Um ou mais tipos antigos necessários não foram encontrados! Informe este problema aos desenvolvedores do Terramon
+		TypeResolveError: Um ou mais tipos antigos necessários não foram encontrados! Informe este problema aos desenvolvedores do Pokerraria
 		NopUpgrade: Nenhum Pokémon foi encontrado no inventário para atualizar
 		Success: "{0} Pokémon atualizado(s) e transferido(s) para o PC de {1}"
 	}
@@ -595,7 +595,7 @@ GUI: {
 	}
 
 	Starter: {
-		Title: Bem-vindo ao mundo Pokémon, {0}! Obrigado por instalar o mod Terramon!
+		Title: Bem-vindo ao mundo Pokémon, {0}! Obrigado por instalar o Pokerraria: LoveStory!
 		Subtitle: Agora, escolha seu primeiro parceiro Pokémon para começar sua aventura!
 		Hint: (Pressione Voltar para fechar)
 		ChosenMessage: Você escolheu o {0} [c/{1}:{2}] como seu primeiro parceiro Pokémon!
@@ -630,7 +630,7 @@ GUI: {
 		}
 
 		Legacy: {
-			Title: Bem-vindo ao mundo Pokémon! Obrigado por instalar o mod Terramon!
+			Title: Bem-vindo ao mundo Pokémon! Obrigado por instalar o Pokerraria: LoveStory!
 			Subtitle: Agora, escolha seu Pokémon inicial para começar sua aventura!
 			ChosenMessage: Você escolheu o {0} [c/{1}:{2}] como seu Pokémon inicial!
 		}
