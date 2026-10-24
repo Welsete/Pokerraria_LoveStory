@@ -21,14 +21,18 @@ public sealed class BattlePlayback : ModSystem
     private const int SpecialHitDelay = 26;
     private const int StatusHitDelay = 24;
     private const int StillHitDelay = 10;
-    private const int LineHold = 45;
-    private const int FaintHold = 50;
+    private const int LineHold = 80;
+
+    // "X used Y!" and the lines that come with a hit (critical, super effective) also stay a moment
+    private const int IntroHold = 40;
+    private const int WithHitHold = 55;
+    private const int FaintHold = 85;
     private const int SwitchHold = 14;
-    private const int MoveGap = 90;
-    private const int EndPause = 45;
+    private const int MoveGap = 110;
+    private const int EndPause = 60;
 
     // The last message of a turn stays a moment before the menu comes back
-    private const int TurnHold = 50;
+    private const int TurnHold = 75;
 
     // A timeline that never empties (it shouldn't happen) is played out at once after this long, so nobody gets stuck
     private const int MaxBusyTicks = 60 * 30;
@@ -336,7 +340,7 @@ public sealed class BattlePlayback : ModSystem
             Color = color,
             Print = print,
             Intro = intro,
-            Hold = intro || withHit ? 0 : LineHold
+            Hold = intro ? IntroHold : withHit ? WithHitHold : LineHold
         });
     }
 
