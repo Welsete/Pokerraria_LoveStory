@@ -500,7 +500,6 @@ GUI: {
 		LevelUp10: Ativo +10 níveis
 		EvolveActive: Evoluir Pokémon ativo
 		PerfectIVs: IVs perfeitos (ativo)
-		TeachSpriteMove: Ensinar golpe com sprite (ativo)
 		ToggleShiny: Alternar shiny (ativo)
 		GiveHeldItems: Dar itens de segurar
 		GiveStones: Dar pedras de evolução
@@ -535,6 +534,13 @@ GUI: {
 		GearGiven: Você recebeu Concha-celular, Gancho Lunar, Botas Terrafaísca, Asas de Peixe-dragão, Broca Laser e tochas.
 		BossItemsGiven: Você recebeu o item de invocar de cada chefe.
 		MapRevealed: O mapa inteiro foi revelado.
+		TabMoves: Golpes
+		MovesHint: "Clique esquerdo: tocar agora na batalha · Direito: ensinar no 1º espaço"
+		PlayAllMoves: Tocar todos ({0})
+		StopMoves: Parar
+		MovesFromYou: "Quem usa: seu Pokémon"
+		MovesFromFoe: "Quem usa: o inimigo"
+		MovesNeedBattle: "Comece uma batalha antes: as animações tocam entre os dois Pokémon."
 		TabItems: Itens
 		ItemsHint: Clique esquerdo: 1 · Clique direito: pilha cheia
 		Close: Fechar

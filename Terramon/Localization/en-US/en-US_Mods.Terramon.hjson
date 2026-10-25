@@ -500,7 +500,6 @@ GUI: {
 		LevelUp10: Active +10 levels
 		EvolveActive: Evolve active Pokémon
 		PerfectIVs: Perfect IVs (active)
-		TeachSpriteMove: Teach move with sprite (active)
 		ToggleShiny: Toggle shiny (active)
 		GiveHeldItems: Give held items
 		GiveStones: Give evolution stones
@@ -535,6 +534,13 @@ GUI: {
 		GearGiven: You got a Shellphone, Lunar Hook, Terraspark Boots, Fishron Wings, Laser Drill and torches.
 		BossItemsGiven: You got the summoning item of every boss.
 		MapRevealed: The whole map was revealed.
+		TabMoves: Moves
+		MovesHint: "Left click: play now in battle · Right click: teach in slot 1"
+		PlayAllMoves: Play all ({0})
+		StopMoves: Stop
+		MovesFromYou: "Used by: your Pokémon"
+		MovesFromFoe: "Used by: the foe"
+		MovesNeedBattle: "Start a battle first: the animations play between the two Pokémon."
 		TabItems: Items
 		ItemsHint: Left click: 1 · Right click: full stack
 		Close: Close

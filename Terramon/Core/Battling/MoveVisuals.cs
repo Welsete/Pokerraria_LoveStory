@@ -171,6 +171,27 @@ public sealed class MoveVisuals : ModSystem
         Effects.Add(effect);
     }
 
+    private static readonly Queue<(ushort Move, string Label)> Showcase = [];
+    private static BattleSide _showcaseSide;
+    private static int _showcaseWait;
+
+    /// <summary>
+    ///     Plays the animations of these moves one after the other from <paramref name="side" />, without touching the
+    ///     battle, so they can all be checked at once (test panel). Each one's label is written in the chat as it starts.
+    /// </summary>
+    public static void PlayShowcase(BattleSide side, IEnumerable<(ushort Move, string Label)> moves)
+    {
+        Showcase.Clear();
+        foreach (var move in moves)
+            Showcase.Enqueue(move);
+        _showcaseSide = side;
+        _showcaseWait = ShowcaseGap;
+    }
+
+    public static void StopShowcase() => Showcase.Clear();
+
+    private const int ShowcaseGap = 30;
+
     public override void PostUpdateEverything()
     {
         if (Main.dedServ)
@@ -182,9 +203,27 @@ public sealed class MoveVisuals : ModSystem
             if (!Step(effect) || ++effect.Time > effect.Duration)
                 Effects.RemoveAt(i);
         }
+
+        // The next move of the showcase starts a little after the last one is over
+        if (Showcase.Count == 0 || Effects.Count > 0 || ++_showcaseWait < ShowcaseGap)
+            return;
+        _showcaseWait = 0;
+        if (_showcaseSide?.Provider == null)
+        {
+            Showcase.Clear();
+            return;
+        }
+
+        var (move, label) = Showcase.Dequeue();
+        Main.NewText(label, Color.Gold);
+        Play(_showcaseSide, move, false, false);
     }
 
-    public override void ClearWorld() => Effects.Clear();
+    public override void ClearWorld()
+    {
+        Effects.Clear();
+        Showcase.Clear();
+    }
 
     /// <summary>
     ///     Draws one tick of an effect. Returns false if it can't go on (e.g. the target left).

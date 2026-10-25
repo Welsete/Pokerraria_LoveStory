@@ -5,6 +5,7 @@ using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.NPCs;
 using Terramon.Content.NPCs.Trainers;
 using Terramon.Content.WorldGeneration;
+using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
@@ -84,7 +85,6 @@ public sealed class AdminPanelUI : SmartUIState
             ("FaintActive", FaintActive),
             ("PerfectIVs", PerfectIVs),
             ("ToggleShiny", ToggleShiny),
-            ("TeachSpriteMove", TeachSpriteMove),
             ("GiveItems", GiveItems),
             ("GiveHeldItems", GiveHeldItems),
             ("GiveStones", GiveEvolutionStones),
@@ -121,6 +121,7 @@ public sealed class AdminPanelUI : SmartUIState
             ("GiveBossItems", GiveBossItems),
             ("RevealMap", RevealMap)
         ]),
+        ("TabMoves", []), // Every move with a drawn animation, see BuildMoveGrid
         ("TabItems", []) // A grid of every item of the mod, see BuildItemGrid
     ];
 
@@ -177,6 +178,13 @@ public sealed class AdminPanelUI : SmartUIState
         if (Tabs[_tab].Tab == "TabItems")
         {
             BuildItemGrid();
+            _panel.Recalculate();
+            return;
+        }
+
+        if (Tabs[_tab].Tab == "TabMoves")
+        {
+            BuildMoveGrid();
             _panel.Recalculate();
             return;
         }
@@ -431,26 +439,133 @@ public sealed class AdminPanelUI : SmartUIState
         Say("PerfectIVsDone", data.DisplayName);
     }
 
-    private static int _spriteMoveIndex;
+    /// <summary>
+    ///     Every move that has its own drawn animation (Assets/Moves), by name.
+    /// </summary>
+    private static MoveID[] SpriteMoves => Enum.GetValues<MoveID>()
+        .Where(m => m != MoveID.None && ModContent.HasAsset($"Terramon/Assets/Moves/{m}"))
+        .Distinct()
+        .OrderBy(m => MoveLearnUI.MoveName(m))
+        .ToArray();
+
+    private static bool _showcaseFromFoe;
 
     /// <summary>
-    ///     Puts a move that has its own drawn animation (Assets/Moves) in the active Pokémon's first slot, one after the
-    ///     other on each click, so the animations can be tried without leveling up.
+    ///     The side the test animations are played from: yours, or the foe's to see them going the other way.
     /// </summary>
-    private static void TeachSpriteMove()
+    private static BattleSide ShowcaseSideOrWarn()
+    {
+        var side = TerramonPlayer.LocalPlayer.BattleClient?.Side;
+        if (side?.Provider == null || side.Opposite?.Provider == null)
+        {
+            Main.NewText(Text("MovesNeedBattle"), TerramonCommand.ChatColorRed);
+            return null;
+        }
+
+        return _showcaseFromFoe ? side.Opposite : side;
+    }
+
+    private static void PlaySpriteMoves(IReadOnlyList<MoveID> moves)
+    {
+        if (ShowcaseSideOrWarn() is not { } side)
+            return;
+        MoveVisuals.PlayShowcase(side, moves.Select((m, i) =>
+            ((ushort)m, moves.Count == 1 ? MoveLearnUI.MoveName(m) : $"{MoveLearnUI.MoveName(m)} ({i + 1}/{moves.Count})")));
+    }
+
+    private static void TeachSpriteMove(MoveID move)
     {
         var data = GetActiveOrWarn();
         if (data == null)
             return;
-        var moves = Enum.GetValues<MoveID>()
-            .Where(m => m != MoveID.None && ModContent.HasAsset($"Terramon/Assets/Moves/{m}"))
-            .Distinct()
-            .ToArray();
-        if (moves.Length == 0)
-            return;
-        var move = moves[_spriteMoveIndex++ % moves.Length];
         data.SetMove(0, move);
         Say("TeachSpriteMoveDone", data.DisplayName, MoveLearnUI.MoveName(move));
+    }
+
+    /// <summary>
+    ///     A button for each move with a drawn animation: left click plays it right away in the current battle, right click
+    ///     teaches it in the first slot. The buttons on top play all of them in a row, stop, or switch who uses them.
+    /// </summary>
+    private void BuildMoveGrid()
+    {
+        var hint = new UIText(Label("MovesHint"), 0.75f) { HAlign = 0.5f };
+        hint.Top.Pixels = GridTop - 4f;
+        _buttons.Add(hint);
+        _panel.Append(hint);
+
+        var moves = SpriteMoves;
+        UITextPanel<LocalizedText> sideButton = null;
+        (LocalizedText Text, Action Action)[] top =
+        [
+            (Label("PlayAllMoves").WithFormatArgs(moves.Length), () => PlaySpriteMoves(moves)),
+            (Label("StopMoves"), MoveVisuals.StopShowcase),
+            (Label(_showcaseFromFoe ? "MovesFromFoe" : "MovesFromYou"), () =>
+            {
+                _showcaseFromFoe = !_showcaseFromFoe;
+                sideButton?.SetText(Label(_showcaseFromFoe ? "MovesFromFoe" : "MovesFromYou"));
+            })
+        ];
+        for (var i = 0; i < top.Length; i++)
+        {
+            var (text, action) = top[i];
+            var button = MakeButton(text, action);
+            button.Left.Pixels = Gap + i * (ButtonWidth + Gap);
+            button.Top.Pixels = GridTop + 20f;
+            button.BackgroundColor = new Color(120, 90, 40) * 0.8f;
+            if (i == 2)
+                sideButton = button;
+            _buttons.Add(button);
+            _panel.Append(button);
+        }
+
+        var gridTop = GridTop + 20f + ButtonHeight + Gap;
+        var grid = new UIGrid { ListPadding = 4f };
+        grid.Left.Pixels = Gap;
+        grid.Top.Pixels = gridTop;
+        grid.Width.Pixels = Columns * (ButtonWidth + Gap) - Gap - 24f;
+        grid.Height.Set(-gridTop, 1f);
+
+        var scrollbar = new UIScrollbar();
+        scrollbar.Left.Pixels = Gap + grid.Width.Pixels + 6f;
+        scrollbar.Top.Pixels = gridTop + 6f;
+        scrollbar.Height.Set(-(gridTop + 12f), 1f);
+        grid.SetScrollbar(scrollbar);
+
+        var cellWidth = (grid.Width.Pixels - 2 * grid.ListPadding) / Columns - 1f;
+        foreach (var move in moves)
+        {
+            var button = MakeButton(Language.GetText($"Mods.Terramon.Moves.{move}.DisplayName"), () => PlaySpriteMoves([move]));
+            button.OnRightClick += (_, _) =>
+            {
+                SoundEngine.PlaySound(SoundID.MenuTick);
+                TeachSpriteMove(move);
+            };
+            button.Width.Pixels = cellWidth;
+            button.Height.Pixels = ButtonHeight - 6f;
+            grid.Add(button);
+        }
+
+        _itemGrid = grid;
+        _buttons.Add(grid);
+        _buttons.Add(scrollbar);
+        _panel.Append(grid);
+        _panel.Append(scrollbar);
+    }
+
+    private static UITextPanel<LocalizedText> MakeButton(LocalizedText text, Action action)
+    {
+        var button = new UITextPanel<LocalizedText>(text, 0.8f);
+        button.Width.Pixels = ButtonWidth;
+        button.Height.Pixels = ButtonHeight;
+        button.BackgroundColor = new Color(63, 82, 151) * 0.7f;
+        button.OnMouseOver += (_, el) => ((UIPanel)el).BackgroundColor = new Color(73, 94, 171);
+        button.OnMouseOut += (_, el) => ((UIPanel)el).BackgroundColor = new Color(63, 82, 151) * 0.7f;
+        button.OnLeftClick += (_, _) =>
+        {
+            SoundEngine.PlaySound(SoundID.MenuTick);
+            action();
+        };
+        return button;
     }
 
     private static void ToggleShiny()
