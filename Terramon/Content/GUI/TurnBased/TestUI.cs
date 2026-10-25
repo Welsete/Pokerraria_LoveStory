@@ -286,11 +286,14 @@ public sealed class TestBattleUI : SmartUIState
         {
             var battleUILayerName = UILoader.GetLayerName(UILoader.GetUIState<BattleUI>());
             var battleLogLayerName = UILoader.GetLayerName(UILoader.GetUIState<BattleLogUI>());
+            // The test panel (F8) stays usable in battle, to try move animations
+            var adminPanelLayerName = UILoader.GetLayerName(UILoader.GetUIState<AdminPanelUI>());
 
             foreach (var layer in CollectionsMarshal.AsSpan(layers))
             {
                 var name = layer.Name;
-                if (PreservedInterfaceLayers.Contains(name) || name == battleUILayerName || name == battleLogLayerName)
+                if (PreservedInterfaceLayers.Contains(name) || name == battleUILayerName || name == battleLogLayerName ||
+                    name == adminPanelLayerName)
                     continue;
 
                 layer.Active = false;
