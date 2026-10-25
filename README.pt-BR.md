@@ -70,7 +70,7 @@ Existe uma história esperando por você no caminho até a Liga, contada pelo qu
 
 - **As regras de verdade:** tipos, habilidades, naturezas, IVs e EVs, golpes críticos, condições de status, mudanças de atributos, clima (chuva, sol, tempestade de areia, neve), terrenos e telas, tudo mostrado na batalha.
 - **No ritmo dos jogos:** texto escrito letra por letra, barras de HP que descem, "É super efetivo!" depois do golpe. Clique para acelerar, ou aperte <kbd>L</kbd> para ver o **histórico** da luta inteira.
-- **Animações desenhadas** para Fire Blast, Ember, Flamethrower, Solar Beam, Ice Beam, Aurora Beam, Blizzard, Sheer Cold, Bullet Punch, Ice Punch, Ice Fang, Ice Shard, Icicle Spear, Icicle Crash, Icy Wind, Powder Snow, Freeze-Dry e Haze. Os raios saem de um Pokémon até o outro e os golpes de vários acertos mostram cada acerto. Os outros golpes têm um efeito pelo tipo, e mais animações desenhadas chegam a cada versão.
+- **Animações desenhadas** para Fire Blast, Ember, Flamethrower, Solar Beam, Ice Beam, Aurora Beam, Blizzard, Sheer Cold, Bullet Punch, Ice Punch, Ice Fang, Ice Shard, Icicle Spear, Icicle Crash, Icy Wind, Powder Snow, Freeze-Dry, Haze, Blaze Kick, Eruption, Fire Fang, Fire Punch, Fire Spin, Flame Charge, Flame Wheel, Flare Blitz, Heat Crash, Heat Wave, Incinerate, Inferno, Lava Plume, Overheat, Sunny Day, Mist e Snowscape. Os raios saem de um Pokémon até o outro e os golpes de vários acertos mostram cada acerto. Os outros golpes têm um efeito pelo tipo, e mais animações desenhadas chegam a cada versão.
 - **Treinadores espertos** que pensam em vantagem de tipo, STAB, golpes de preparo e de cura, e trocam de Pokémon quando vale a pena.
 - **Mochila na batalha:** Poções, Reanimar e Poké Bolas no seu turno.
 - **22 itens para segurar** desenhados para o mod: Leftovers, Oran e Sitrus Berry, itens de tipo, Focus Sash, Life Orb, King's Rock, Shell Bell e mais.
@@ -205,7 +205,7 @@ Já pronto:
 - [x] Limite de nível pelas insígnias, Centro Pokémon com a Enfermeira Joy, zona segura ao redor da base
 - [x] Sprites do Mystery Dungeon, retratos, tela de Resumo e Pokédex com filtros
 - [x] Professor Carvalho e a jornada inicial
-- [x] Animações desenhadas para os primeiros 18 golpes
+- [x] Animações desenhadas para os primeiros 35 golpes
 
 A caminho:
 

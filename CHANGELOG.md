@@ -2,6 +2,10 @@
 
 Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://github.com/JamzOJamz/Terramon) 0.1.3.1 (GPL-3.0).
 
+## Next
+
+- 17 more drawn move animations: Blaze Kick, Eruption, Fire Fang, Fire Punch, Fire Spin, Flame Charge, Flame Wheel, Flare Blitz, Heat Crash, Heat Wave, Incinerate, Inferno, Lava Plume, Overheat, Sunny Day, Mist and Snowscape (35 in total).
+
 ## 0.3.0
 
 - New logo and icon: a Poké Ball pocket watch with moving hands, in the menu, the mod list and on GitHub. Author shown as Welsete everywhere.

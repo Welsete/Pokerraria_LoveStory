@@ -1,0 +1,5 @@
+Frames 16
+Travel 2
+Ticks 4
+Face 1
+Scale 1

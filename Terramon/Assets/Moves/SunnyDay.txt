@@ -1,0 +1,5 @@
+Frames 8
+Travel 0
+Ticks 6
+At middle
+Scale 1

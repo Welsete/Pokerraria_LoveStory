@@ -70,7 +70,7 @@ There is a story waiting for you along the road to the League, told through what
 
 - **The real rules:** types, abilities, natures, IVs and EVs, critical hits, status conditions, stat changes, weather (rain, sun, sandstorm, snow), terrains and screens, all shown around the battle.
 - **Paced like the games:** text written letter by letter, HP bars that drain, "It's super effective!" after the hit. Click to speed it up, or press <kbd>L</kbd> for the **battle history** of the whole fight.
-- **Drawn move animations** for Fire Blast, Ember, Flamethrower, Solar Beam, Ice Beam, Aurora Beam, Blizzard, Sheer Cold, Bullet Punch, Ice Punch, Ice Fang, Ice Shard, Icicle Spear, Icicle Crash, Icy Wind, Powder Snow, Freeze-Dry and Haze. Beams travel from one Pokémon to the other and multi-hit moves play every hit. Every other move gets an effect by type, and more drawn animations arrive with each version.
+- **Drawn move animations** for Fire Blast, Ember, Flamethrower, Solar Beam, Ice Beam, Aurora Beam, Blizzard, Sheer Cold, Bullet Punch, Ice Punch, Ice Fang, Ice Shard, Icicle Spear, Icicle Crash, Icy Wind, Powder Snow, Freeze-Dry, Haze, Blaze Kick, Eruption, Fire Fang, Fire Punch, Fire Spin, Flame Charge, Flame Wheel, Flare Blitz, Heat Crash, Heat Wave, Incinerate, Inferno, Lava Plume, Overheat, Sunny Day, Mist and Snowscape. Beams travel from one Pokémon to the other and multi-hit moves play every hit. Every other move gets an effect by type, and more drawn animations arrive with each version.
 - **Smart trainers** that play type matchups, STAB, setup and healing moves, and switch out when it pays off.
 - **Bag in battle:** Potions, Revives and Poké Balls on your turn.
 - **22 held items** drawn for the mod: Leftovers, Oran and Sitrus Berries, type boosters, Focus Sash, Life Orb, King's Rock, Shell Bell and more.
@@ -205,7 +205,7 @@ Done so far:
 - [x] Level cap by badges, Pokémon Center with Nurse Joy, safe zone around your base
 - [x] Mystery Dungeon sprites, portraits, Summary screen and Pokédex with filters
 - [x] Professor Oak and the starter journey
-- [x] Drawn animations for the first 18 moves
+- [x] Drawn animations for the first 35 moves
 
 On the way:
 

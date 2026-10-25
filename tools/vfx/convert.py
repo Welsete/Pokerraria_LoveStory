@@ -28,6 +28,23 @@ SHEETS = [
     ("icy_wind_vfx_spritesheet_1792876366324.jpg", "IcyWind", (4, 2), 3, dict(Travel=0, Ticks=5, Face=1)),
     ("powder_snow_vfx_spritesheet_v2_1792876584939.jpg", "PowderSnow", (4, 2), 3, dict(Travel=0, Ticks=5)),
     ("sheer_cold_vfx_spritesheet_1792876713818.jpg", "SheerCold", (4, 4), 2, dict(Travel=0, Ticks=4)),
+    ("blaze_kick_vfx_spritesheet_1792889557537.jpg", "BlazeKick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("eruption_vfx_spritesheet_1792890820208.jpg", "Eruption", (4, 2), 3, dict(Travel=0, Ticks=5)),
+    ("fire_fang_vfx_spritesheet_1792889724669.jpg", "FireFang", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("fire_punch_vfx_spritesheet_1792889883740.jpg", "FirePunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("fire_spin_vfx_spritesheet_1792891043474.jpg", "FireSpin", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("flame_charge_vfx_spritesheet_1792890050797.jpg", "FlameCharge", (4, 2), 3, dict(Travel=7, Ticks=3, Face=1)),
+    ("flame_wheel_vfx_spritesheet_1792890223837.jpg", "FlameWheel", (4, 2), 3, dict(Travel=7, Ticks=3)),
+    ("flare_blitz_vfx_spritesheet_1792890417382.jpg", "FlareBlitz", (4, 4), 2, dict(Travel=2, Ticks=4, Face=1)),
+    ("heat_crash_vfx_spritesheet_1792890615052.jpg", "HeatCrash", (4, 2), 3, dict(Travel=0, Ticks=5)),
+    ("heat_wave_vfx_spritesheet_1792891266492.jpg", "HeatWave", (4, 2), 3, dict(Travel=0, Ticks=5, Face=1)),
+    ("incinerate_vfx_spritesheet_1792891503107.jpg", "Incinerate", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("inferno_vfx_spritesheet_1792907291854.jpg", "Inferno", (4, 2), 3, dict(Travel=0, Ticks=5)),
+    ("lava_plume_vfx_spritesheet_1792907545465.jpg", "LavaPlume", (4, 2), 3, dict(Travel=0, Ticks=5)),
+    ("mist_vfx_spritesheet_1792889252934.jpg", "Mist", (4, 2), 3, dict(Travel=0, Ticks=6)),
+    ("overheat_vfx_spritesheet_1792907801494.jpg", "Overheat", (4, 4), 2, dict(Travel=0, Ticks=4)),
+    ("snowscape_vfx_spritesheet_1792889390727.jpg", "Snowscape", (4, 2), 3, dict(Travel=0, Ticks=6, At="middle")),
+    ("sunny_day_vfx_spritesheet_1792908068245.jpg", "SunnyDay", (4, 2), 3, dict(Travel=0, Ticks=6, At="middle")),
 ]
 
 
@@ -71,7 +88,10 @@ def frames_of(a, layout):
 
 
 def main():
+    only = set(sys.argv[3].split(",")) if len(sys.argv) > 3 else None
     for file, move, layout, k, settings in SHEETS:
+        if only and move not in only:
+            continue
         a = load(f"{SRC}/{file}")
         fr = [shrink(f, k) for f in frames_of(a, layout)]
         w = max(f.shape[1] for f in fr)
