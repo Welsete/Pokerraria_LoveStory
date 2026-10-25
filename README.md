@@ -2,6 +2,8 @@
 
 <img src=".github/assets/logo-clock.gif" width="630" style="image-rendering: pixelated" alt="Pokerraria: LoveStory">
 
+**English** · [Português (BR)](README.pt-BR.md)
+
 ### Catch 'em all in Terraria. Beat the bosses. Earn the badges. Become the Champion.
 
 <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main"><img src="https://img.shields.io/badge/Download-latest%20build-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Download"></a>
