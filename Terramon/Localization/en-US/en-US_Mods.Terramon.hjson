@@ -2364,6 +2364,7 @@ NPCs.NurseJoy: {
 		NoPokemon: You don't have any Pokémon yet! Talk to Professor Oak first.
 		InBattle: Finish your battle first, then come back!
 		AlreadyHealthy: Your Pokémon are already in perfect health!
+		Healing: Okay, I'll take your Pokémon for a few seconds...
 		Healed: Thank you for waiting! Your Pokémon are fighting fit. We hope to see you again!
 	}
 }

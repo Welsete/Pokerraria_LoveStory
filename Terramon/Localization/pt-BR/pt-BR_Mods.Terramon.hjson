@@ -2364,6 +2364,7 @@ NPCs.NurseJoy: {
 		NoPokemon: Você ainda não tem Pokémon! Fale primeiro com o Professor Carvalho.
 		InBattle: Termine a sua batalha primeiro e depois volte aqui!
 		AlreadyHealthy: Seus Pokémon já estão com a saúde perfeita!
+		Healing: Certo, vou cuidar dos seus Pokémon por alguns segundos...
 		Healed: Obrigada por esperar! Seus Pokémon estão totalmente recuperados. Volte sempre!
 	}
 }

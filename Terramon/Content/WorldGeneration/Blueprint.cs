@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using Terramon.Content.Tiles.Interactive;
 using Terraria.ObjectData;
 
 namespace Terramon.Content.WorldGeneration;
@@ -76,7 +77,12 @@ public sealed class Blueprint
     {
         if (string.IsNullOrEmpty(name))
             return null;
-        if (ItemID.Search.TryGetId(name, out var id))
+        if (name.Contains('/'))
+        {
+            if (ModContent.TryFind<ModItem>(name, out var modItem))
+                return modItem.Item;
+        }
+        else if (ItemID.Search.TryGetId(name, out var id))
             return ContentSamples.ItemsByType[id];
         missing.Add(name);
         return null;
@@ -131,11 +137,22 @@ public sealed class Blueprint
             var data = TileObjectData.GetTileData(o.Tile, o.Style);
             var origin = data?.Origin ?? Terraria.DataStructures.Point16.Zero;
             var direction = o.FacingRight ? 1 : -1;
-            if (WorldGen.PlaceObject(x + origin.X, y + origin.Y, o.Tile, true, o.Style, 0, -1, direction))
+            var placed = WorldGen.PlaceObject(x + origin.X, y + origin.Y, o.Tile, true, o.Style, 0, -1, direction);
+            if (!placed)
+            {
+                WorldGen.PlaceTile(x + origin.X, y + origin.Y, o.Tile, true, true, -1, o.Style);
+                placed = Main.tile[x + origin.X, y + origin.Y].HasTile &&
+                         Main.tile[x + origin.X, y + origin.Y].TileType == o.Tile;
+            }
+
+            if (placed)
+            {
+                // World generation skips placement hooks, so PCs get their storage here
+                if (TileLoader.GetTile(o.Tile) is PCTile)
+                    ModContent.GetInstance<PCTileEntity>().Place(x, y);
                 continue;
-            WorldGen.PlaceTile(x + origin.X, y + origin.Y, o.Tile, true, true, -1, o.Style);
-            if (Main.tile[x + origin.X, y + origin.Y].HasTile && Main.tile[x + origin.X, y + origin.Y].TileType == o.Tile)
-                continue;
+            }
+
             failed++;
             Terramon.Instance.Logger.Debug($"Blueprint: couldn't place {o.Name} at ({o.X}, {o.Y})");
         }

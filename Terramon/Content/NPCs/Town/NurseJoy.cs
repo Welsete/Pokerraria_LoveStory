@@ -114,6 +114,12 @@ public class NurseJoy : ModNPC
             return;
         }
 
+        if (HealingMachine.Busy)
+        {
+            Main.npcChatText = Dialogue("Healing");
+            return;
+        }
+
         var healing = player.GetModPlayer<PartyHealingPlayer>();
         if (!healing.CanHealParty)
         {
@@ -121,7 +127,8 @@ public class NurseJoy : ModNPC
             return;
         }
 
-        healing.HealParty();
-        Main.npcChatText = Dialogue("Healed");
+        // The balls go on the machine and the party heals when they light up; she says "Healed" when it's done
+        HealingMachine.Start(NPC);
+        Main.npcChatText = Dialogue("Healing");
     }
 }
