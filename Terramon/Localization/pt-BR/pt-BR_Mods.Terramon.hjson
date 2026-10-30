@@ -479,7 +479,11 @@ GUI: {
 		ClearBattles: Encerrar batalhas travadas
 		TeleportBrockGym: Ir ao Ginásio do Brock
 		BuildBrockGym: Construir Ginásio do Brock aqui
+		TeleportMistyGym: Ir ao Ginásio da Misty
+		BuildMistyGym: Construir Ginásio da Misty aqui
 		NoBrockGym: Este mundo não tem Ginásio do Brock. Crie um mundo novo ou use "Construir Ginásio do Brock aqui".
+		NoMistyGym: "Este mundo não tem Ginásio da Misty. Crie um mundo novo ou use \"Construir Ginásio da Misty aqui\"."
+		MistyGymBuilt: O Ginásio da Misty foi construído onde você estava.
 		SingleplayerOnly: Isso só funciona no modo de um jogador.
 		BrockGymBuilt: O Ginásio do Brock foi construído ao seu redor.
 		TeleportPokemonCenter: Ir ao Centro Pokémon
@@ -2149,9 +2153,16 @@ BrockGym: {
 	MapEntrance: Entrada do Ginásio do Brock
 }
 
+MistyGym: {
+	Welcome: "{0} está te esperando no ginásio. Fale com ela para desafiar o Ginásio de Cerulean!"
+	Announce: "O Ginásio da Misty fica na praia, a {0} blocos a {1} do ponto de nascimento. Procure o salão de vidro com um aquário embaixo do chão, ou a Insígnia Cascata no mapa."
+	MapName: Ginásio da Misty (Cerulean)
+}
+
 ProtectedAreas.Blocked: Os ginásios e a Liga Pokémon são protegidos: nada neles pode ser quebrado nem construído por cima.
 
 WorldGen.BrockGymPass: Escavando o Ginásio do Brock
+WorldGen.MistyGymPass: Construindo o Ginásio da Misty na praia
 
 Items.BrockPaintingItem: {
 	DisplayName: Quadro do Ginásio de Pewter

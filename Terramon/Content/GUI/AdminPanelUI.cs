@@ -104,6 +104,8 @@ public sealed class AdminPanelUI : SmartUIState
             ("ResetBadges", ResetBadges),
             ("TeleportBrockGym", TeleportToBrockGym),
             ("BuildBrockGym", BuildBrockGymHere),
+            ("TeleportMistyGym", TeleportToMistyGym),
+            ("BuildMistyGym", BuildMistyGymHere),
             ("TeleportPokemonCenter", TeleportToPokemonCenter),
             ("BuildPokemonCenter", BuildPokemonCenterHere),
             ("CallOak", CallProfessorOak)
@@ -952,6 +954,41 @@ public sealed class AdminPanelUI : SmartUIState
         BrockGymBuilder.Build(left, top);
         TeleportToBrockGym();
         Say("BrockGymBuilt");
+    }
+
+    private static void TeleportToMistyGym()
+    {
+        if (!MistyGymSystem.Exists)
+        {
+            Main.NewText(Text("NoMistyGym"), TerramonCommand.ChatColorRed);
+            return;
+        }
+
+        var player = Main.LocalPlayer;
+        var position = MistyGymSystem.EntranceSpot - new Vector2(player.width / 2f, player.height);
+        player.Teleport(position, TeleportationStyleID.RodOfDiscord);
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, player.whoAmI, position.X, position.Y,
+                TeleportationStyleID.RodOfDiscord);
+    }
+
+    /// <summary>
+    ///     Builds Misty's Gym with its floor where the player stands. Singleplayer only, like Brock's.
+    /// </summary>
+    private static void BuildMistyGymHere()
+    {
+        if (Main.netMode != NetmodeID.SinglePlayer)
+        {
+            Main.NewText(Text("SingleplayerOnly"), TerramonCommand.ChatColorRed);
+            return;
+        }
+
+        var feet = Main.LocalPlayer.Bottom.ToTileCoordinates();
+        var left = Math.Clamp(feet.X - MistyGymBuilder.Width / 2, 60, Main.maxTilesX - MistyGymBuilder.Width - 60);
+        var top = Math.Clamp(feet.Y - 29, 60, Main.maxTilesY - MistyGymBuilder.Height - 60);
+        MistyGymBuilder.Build(left, top);
+        TeleportToMistyGym();
+        Say("MistyGymBuilt");
     }
 
     private static void TeleportToPokemonCenter()

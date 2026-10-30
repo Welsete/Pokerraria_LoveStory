@@ -479,7 +479,11 @@ GUI: {
 		ClearBattles: End stuck battles
 		TeleportBrockGym: Go to Brock's Gym
 		BuildBrockGym: Build Brock's Gym here
+		TeleportMistyGym: Go to Misty's Gym
+		BuildMistyGym: Build Misty's Gym here
 		NoBrockGym: This world has no Brock's Gym. Create a new world or use "Build Brock's Gym here".
+		NoMistyGym: "This world has no Misty's Gym. Create a new world or use \"Build Misty's Gym here\"."
+		MistyGymBuilt: Misty's Gym was built where you were standing.
 		SingleplayerOnly: This only works in singleplayer.
 		BrockGymBuilt: Brock's Gym was built around you.
 		TeleportPokemonCenter: Go to the Pokémon Center
@@ -2149,9 +2153,16 @@ BrockGym: {
 	MapEntrance: Entrance to Brock's Gym
 }
 
+MistyGym: {
+	Welcome: "{0} is waiting for you in the Gym. Talk to her to challenge the Cerulean Gym!"
+	Announce: "Misty's Gym is on the beach, {0} tiles {1} of spawn. Look for the glass hall with an aquarium under its floor, or the Cascade Badge on the map."
+	MapName: Misty's Gym (Cerulean)
+}
+
 ProtectedAreas.Blocked: Gyms and the Pokémon League are protected: nothing in them can be broken or built over.
 
 WorldGen.BrockGymPass: Digging out Brock's Gym
+WorldGen.MistyGymPass: Building Misty's Gym on the beach
 
 Items.BrockPaintingItem: {
 	DisplayName: Pewter City Gym Painting
