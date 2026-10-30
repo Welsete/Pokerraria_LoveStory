@@ -228,17 +228,17 @@ public static class PokemonCenterBuilder
     private static readonly Rectangle Inside = new(15, 29, 66, 21); // Both floors, between the outer walls
 
     /// <summary>
-    ///     Tries flat ground close to spawn first, then farther.
+    ///     Tries flat ground close to spawn first, then farther, then rougher ground (it gets leveled).
     /// </summary>
     public static bool TryPlaceNearSpawn()
     {
-        foreach (var (min, max) in new[] { (15, 90), (90, 250), (250, 500) })
+        foreach (var (min, max, bumps) in new[] { (15, 120, 6), (15, 250, 12), (15, 500, 20), (15, 800, 30) })
         {
             for (var attempt = 0; attempt < 300; attempt++)
             {
                 var offset = WorldGen.genRand.Next(min, max);
                 var left = Main.spawnTileX + (WorldGen.genRand.NextBool() ? offset : -offset - Width);
-                if (!GymBuildingsPass.TryFindFloor(left, Width, out var groundY))
+                if (!TryFindGround(left, bumps, out var groundY))
                     continue;
 
                 Build(left, groundY);
@@ -250,6 +250,69 @@ public static class PokemonCenterBuilder
         }
 
         return false;
+    }
+
+    /// <summary>
+    ///     Whether the Center fits with its left edge here: surface ground (not ocean, Dungeon or water) that goes up
+    ///     and down by at most <paramref name="bumps" /> tiles, with nothing built in the way. The Center is too wide to
+    ///     wait for flat ground, so the ground is leveled when it's built.
+    /// </summary>
+    private static bool TryFindGround(int left, int bumps, out int groundY)
+    {
+        groundY = 0;
+        var right = left + Width - 1;
+        if (left < 350 || right > Main.maxTilesX - 350 || Math.Abs(left + Width / 2 - Main.dungeonX) < 150)
+            return false;
+
+        var surface = new List<int>();
+        for (var x = left; x <= right; x++)
+        {
+            var y = Surface(x);
+            if (y < 0)
+                return false;
+            surface.Add(y);
+        }
+
+        if (surface.Max() - surface.Min() > bumps)
+            return false;
+        surface.Sort();
+        groundY = surface[surface.Count / 2];
+
+        var area = new Rectangle(left - 2, groundY - Height, Width + 4, Height + 6);
+        if (GenVars.structures != null && !GenVars.structures.CanPlace(area))
+            return false;
+
+        for (var x = left - 2; x <= right + 2; x++)
+        {
+            for (var y = groundY - Height; y <= groundY + 4; y++)
+            {
+                var tile = Main.tile[x, y];
+                if (tile.LiquidAmount > 0 && y <= groundY)
+                    return false;
+                if (tile.HasTile && !GymBuildingsPass.IsNaturalGround(tile.TileType) && !IsPlant(tile.TileType))
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static bool IsPlant(ushort type) =>
+        type is TileID.Trees or TileID.PalmTree or TileID.Cactus or TileID.Sunflower or TileID.Vines
+            or TileID.Plants or TileID.Plants2 or TileID.JunglePlants or TileID.Saplings;
+
+    // The first solid ground from the top of the world, or -1 if there's none or it's a floating island
+    private static int Surface(int x)
+    {
+        for (var y = 20; y < Main.worldSurface; y++)
+        {
+            var tile = Main.tile[x, y];
+            if (!tile.HasTile || !Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType])
+                continue;
+            return GymBuildingsPass.IsNaturalGround(tile.TileType) && y >= GenVars.worldSurfaceLow - 5 ? y : -1;
+        }
+
+        return -1;
     }
 
     /// <summary>
@@ -310,7 +373,34 @@ public static class PokemonCenterBuilder
             }
         }
 
-        WorldGen.RangeFrame(left - 2, top - 20, left + Width + 2, deepest + 1);
+        // Ground beside it eases into the Center's level instead of leaving a cliff or a pit
+        var groundY = top + GroundRow;
+        for (var d = 1; d <= 14; d++)
+        {
+            foreach (var x in new[] { left - d, left + Width - 1 + d })
+            {
+                for (var y = groundY - 40; y < groundY - d; y++)
+                {
+                    var tile = Main.tile[x, y];
+                    if (tile.HasTile && (GymBuildingsPass.IsNaturalGround(tile.TileType) || IsPlant(tile.TileType)))
+                        tile.ClearTile();
+                }
+
+                for (var y = groundY + d - 1; y < groundY + 40; y++)
+                {
+                    var tile = Main.tile[x, y];
+                    if (tile.HasTile && Main.tileSolid[tile.TileType])
+                        break;
+                    tile.ClearTile();
+                    tile.HasTile = true;
+                    tile.TileType = TileID.Dirt;
+                    tile.LiquidAmount = 0;
+                    deepest = Math.Max(deepest, y);
+                }
+            }
+        }
+
+        WorldGen.RangeFrame(left - 16, top - 40, left + Width + 16, deepest + 1);
         ProtectedAreas.Add(new Rectangle(left, top, Width, Height));
     }
 }
