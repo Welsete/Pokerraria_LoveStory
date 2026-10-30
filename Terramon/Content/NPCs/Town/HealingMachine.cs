@@ -39,12 +39,6 @@ public class HealingMachine : ModSystem
     private static int GlowStart => FirstBallTime + (Balls.Count - 1) * BallInterval + PopTime + 14;
     private static int EndTime => GlowStart + GlowTime + HoldTime + FadeTime;
 
-    public override void Load()
-    {
-        if (!Main.dedServ)
-            _glow = Mod.Assets.Request<Texture2D>("Assets/Misc/Evolution/Glow");
-    }
-
     public override void Unload() => _glow = null;
 
     public override void OnWorldUnload() => Stop();
@@ -159,25 +153,43 @@ public class HealingMachine : ModSystem
     }
 
     // Where a ball sits, from the machine's bottom middle: three slots in the back row, three in the front
-    private static Vector2 Slot(int index) => new((-17f + index % 3 * 11f) * Scale, (index < 3 ? -19f : -12f) * Scale);
+    private static Vector2 Slot(int index) => new(-24f + index % 3 * 16f, index < 3 ? -28f : -18f);
 
-    // The machine and the balls are drawn this much bigger than their 2-pixel design
+    // The machine is drawn this much bigger than its design, with every edge on the 2-pixel grid tiles use
     private const float Scale = 1.5f;
-    private const float BallScale = 0.75f * Scale;
 
-    public override void PostDrawTiles()
+    private static float Snap(float value) => 2f * MathF.Round(value / 2f);
+
+    public override void Load()
     {
-        var joy = Busy ? Main.npc[_joy] : null;
-        if (joy == null)
-        {
-            var type = ModContent.NPCType<NurseJoy>();
-            var index = NPC.FindFirstNPC(type);
-            if (index < 0)
-                return;
-            joy = Main.npc[index];
-        }
+        if (Main.dedServ)
+            return;
+        _glow = Mod.Assets.Request<Texture2D>("Assets/Misc/Evolution/Glow");
 
-        if (!joy.active)
+        // Drawn with the NPCs, just before them, so Chansey and Blissey walk in front of it
+        On_Main.DrawNPCs += (orig, self, behindTiles) =>
+        {
+            if (!behindTiles)
+                DrawWithBalls(Main.spriteBatch);
+            orig(self, behindTiles);
+        };
+    }
+
+    private static NPC FindJoy()
+    {
+        if (Busy)
+            return Main.npc[_joy].active ? Main.npc[_joy] : null;
+        var index = NPC.FindFirstNPC(ModContent.NPCType<NurseJoy>());
+        return index >= 0 ? Main.npc[index] : null;
+    }
+
+    private static Vector2 Bottom(NPC joy) =>
+        // A little lower, so its dark base overlaps the counter's top edge instead of floating over it
+        (Machine(joy) - Main.screenPosition).Floor() + new Vector2(0f, 4f);
+
+    private static void DrawWithBalls(SpriteBatch spriteBatch)
+    {
+        if (FindJoy() is not { } joy)
             return;
 
         var origin = Machine(joy);
@@ -185,41 +197,39 @@ public class HealingMachine : ModSystem
                 Main.screenHeight + 128).Contains(origin.ToPoint()))
             return;
 
-        var spriteBatch = Main.spriteBatch;
-        var transform = Main.GameViewMatrix.TransformationMatrix;
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
-            DepthStencilState.None, Main.Rasterizer, null, transform);
-
-        // A little lower, so its dark base overlaps the counter's top edge instead of floating over it
-        var bottom = (origin - Main.screenPosition).Floor() + new Vector2(0f, 6f);
+        var bottom = Bottom(joy);
         var shade = Lighting.GetColor(origin.ToTileCoordinates() - new Point(0, 1));
         var glowing = Busy && _age >= GlowStart && _age < GlowStart + GlowTime + HoldTime;
         DrawMachine(spriteBatch, bottom, shade, glowing ? Glow(Math.Min(_age - GlowStart, GlowTime - 1)) : 0f);
 
-        if (Busy)
-        {
-            var fade = 1f - MathHelper.Clamp((_age - (EndTime - FadeTime)) / (float)FadeTime, 0f, 1f);
-            var ballShade = Color.Lerp(shade, Color.White, 0.35f) * fade;
-            for (var i = 0; i < Balls.Count; i++)
-            {
-                var since = _age - (FirstBallTime + i * BallInterval);
-                if (since < 0)
-                    continue;
-
-                var pop = MathHelper.Clamp(since / (float)PopTime, 0f, 1f);
-                var position = bottom + Slot(i) + new Vector2(0f, (1f - pop) * -8f * Scale);
-                spriteBatch.Draw(BallTexture(Balls[i]), position.Floor(), null, ballShade * pop, 0f,
-                    new Vector2(8f, 16f), BallScale, SpriteEffects.None, 0f);
-            }
-        }
-
-        spriteBatch.End();
-
-        if (!glowing)
+        if (!Busy)
             return;
 
+        var fade = 1f - MathHelper.Clamp((_age - (EndTime - FadeTime)) / (float)FadeTime, 0f, 1f);
+        var ballShade = Color.Lerp(shade, Color.White, 0.35f) * fade;
+        for (var i = 0; i < Balls.Count; i++)
+        {
+            var since = _age - (FirstBallTime + i * BallInterval);
+            if (since < 0)
+                continue;
+
+            var pop = MathHelper.Clamp(since / (float)PopTime, 0f, 1f);
+            var position = bottom + Slot(i) + new Vector2(0f, Snap((1f - pop) * -12f));
+            spriteBatch.Draw(BallTexture(Balls[i]), position, null, ballShade * pop, 0f, new Vector2(8f, 16f), 1f,
+                SpriteEffects.None, 0f);
+        }
+    }
+
+    // The heal's glow, over everything
+    public override void PostDrawTiles()
+    {
+        if (!Busy || _age < GlowStart || _age >= GlowStart + GlowTime + HoldTime || FindJoy() is not { } joy)
+            return;
+
+        var spriteBatch = Main.spriteBatch;
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState,
-            DepthStencilState.None, Main.Rasterizer, null, transform);
+            DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        var bottom = Bottom(joy);
         var t = _age - GlowStart;
         var glow = t < GlowTime ? Glow(t) : 0.15f * (1f - (t - GlowTime) / (float)HoldTime);
         for (var i = 0; i < Balls.Count; i++)
@@ -227,10 +237,10 @@ public class HealingMachine : ModSystem
             // Each ball lights a little after the one before it, so the light runs along the slots
             var wave = 0.75f + 0.25f * MathF.Sin(t * 0.3f - i * 0.9f);
             var position = bottom + Slot(i);
-            spriteBatch.Draw(_glow.Value, position - new Vector2(0f, 6f * Scale), null, HealPink * (0.55f * glow * wave), 0f,
-                _glow.Size() / 2f, 0.22f * Scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(BallTexture(Balls[i]), position.Floor(), null, Color.White * (0.6f * glow * wave), 0f,
-                new Vector2(8f, 16f), BallScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(_glow.Value, position - new Vector2(0f, 8f), null, HealPink * (0.55f * glow * wave), 0f,
+                _glow.Size() / 2f, 0.33f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(BallTexture(Balls[i]), position, null, Color.White * (0.6f * glow * wave), 0f,
+                new Vector2(8f, 16f), 1f, SpriteEffects.None, 0f);
         }
 
         spriteBatch.End();
@@ -242,9 +252,12 @@ public class HealingMachine : ModSystem
     {
         var pixel = TextureAssets.MagicPixel.Value;
         var outline = new Color(58, 62, 74).MultiplyRGB(shade);
-        void Box(int x, int y, int w, int h, Color color) => spriteBatch.Draw(pixel,
-            new Rectangle((int)(bottom.X + x * Scale), (int)(bottom.Y + y * Scale), (int)(w * Scale),
-                (int)(h * Scale)), color);
+        void Box(float x, float y, float w, float h, Color color)
+        {
+            int left = (int)Snap(x * Scale), top = (int)Snap(y * Scale);
+            spriteBatch.Draw(pixel, new Rectangle((int)bottom.X + left, (int)bottom.Y + top,
+                Math.Max(2, (int)Snap((x + w) * Scale) - left), Math.Max(2, (int)Snap((y + h) * Scale) - top)), color);
+        }
 
         // Monitor on its stand
         Box(13, -40, 16, 14, outline);
@@ -267,7 +280,7 @@ public class HealingMachine : ModSystem
         for (var i = 0; i < 6; i++)
         {
             var slot = Slot(i);
-            Box((int)(slot.X / Scale) - 5, (int)(slot.Y / Scale) - 1, 10, 3, hole);
+            Box(slot.X / Scale - 5, slot.Y / Scale - 1, 10, 3, hole);
         }
 
         // A green light on the front that blinks while it heals
