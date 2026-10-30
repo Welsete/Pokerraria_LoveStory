@@ -53,13 +53,14 @@ public abstract class CenterPokemon : ModNPC
             if (--WanderTimer <= 0f)
             {
                 WanderTimer = Main.rand.Next(180, 420);
-                TargetX = Main.rand.Next(inside.X + 2, inside.Right - 2) * 16f;
+                // Right of the stairs, so they stay downstairs
+                TargetX = Main.rand.Next(inside.X + Math.Min(22, inside.Width / 3), inside.Right - 2) * 16f;
                 NPC.netUpdate = true;
             }
 
-            if (!inside.Contains(NPC.Center.ToTileCoordinates()))
+            if (!inside.Contains(NPC.Center.ToTileCoordinates()) || NPC.Bottom.Y < (inside.Bottom - 6) * 16f)
             {
-                NPC.Bottom = new Vector2(inside.Center.X * 16f, inside.Bottom * 16f);
+                NPC.Bottom = new Vector2((inside.Right - 10) * 16f, inside.Bottom * 16f);
                 NPC.velocity = Vector2.Zero;
                 NPC.netUpdate = true;
             }

@@ -190,8 +190,8 @@ public class HealingMachine : ModSystem
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
             DepthStencilState.None, Main.Rasterizer, null, transform);
 
-        // A pixel lower, so its dark base overlaps the counter's top edge instead of floating over it
-        var bottom = (origin - Main.screenPosition).Floor() + new Vector2(0f, 2f);
+        // A little lower, so its dark base overlaps the counter's top edge instead of floating over it
+        var bottom = (origin - Main.screenPosition).Floor() + new Vector2(0f, 6f);
         var shade = Lighting.GetColor(origin.ToTileCoordinates() - new Point(0, 1));
         var glowing = Busy && _age >= GlowStart && _age < GlowStart + GlowTime + HoldTime;
         DrawMachine(spriteBatch, bottom, shade, glowing ? Glow(Math.Min(_age - GlowStart, GlowTime - 1)) : 0f);

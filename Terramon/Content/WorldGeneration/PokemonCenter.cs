@@ -31,6 +31,12 @@ public class PokemonCenterSystem : ModSystem
 
     private static int _checkTimer;
 
+    public override void Load()
+    {
+        // Town NPCs don't move into the Center: it's a public building, and they'd crowd the PC room
+        On_WorldGen.StartRoomCheck += (orig, x, y) => !Contains(x, y) && orig(x, y);
+    }
+
     public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
     {
         // Once trees, plants, liquids and the other structures are done, so nothing grows through it or digs into it
@@ -260,6 +266,9 @@ public static class PokemonCenterBuilder
         for (var left = Main.spawnTileX - 600 - Width; left <= Main.spawnTileX + 600; left += 3)
         {
             if (left < 350 || left + Width > Main.maxTilesX - 350 || Math.Abs(left + Width / 2 - Main.dungeonX) < 150)
+                continue;
+            // Not on the spawn point, where players and the first town NPCs appear
+            if (left < Main.spawnTileX + 12 && left + Width > Main.spawnTileX - 12)
                 continue;
             var surface = new List<int>();
             for (var x = left; x < left + Width; x++)
