@@ -188,6 +188,7 @@ stand(66, "MarbleSofa")
 stand(70, "MarbleBookcase")
 stand(74, "CrystalLamp")
 stand(78, "PottedForestPalm")
+stand(76, "Terramon/PCItemRed")  # a PC downstairs too, like in the games
 
 # --- Second floor: the PC room ---
 stand(40, "Terramon/PCItemRed", MID)
