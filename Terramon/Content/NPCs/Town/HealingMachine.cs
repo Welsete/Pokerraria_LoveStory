@@ -9,15 +9,16 @@ using Terraria.Localization;
 namespace Terramon.Content.NPCs.Town;
 
 /// <summary>
-///     The healing machine on Nurse Joy's counter, like in the games: the party's Poké Balls go onto a tray one by one,
-///     glow while they heal, and then Joy hands them back. Only the local player sees their own heal.
+///     The healing machine on Nurse Joy's counter, to her right, like in the games: it's always there, and when she heals
+///     the party its Poké Balls go into the slots one by one, glow while the healing jingle plays, and then she hands
+///     them back. Only the local player sees their own heal.
 /// </summary>
 public class HealingMachine : ModSystem
 {
     private const int FirstBallTime = 12;
     private const int BallInterval = 14;
     private const int PopTime = 10;
-    private const int GlowTime = 100;
+    private const int GlowTime = 152; // The length of the jingle
     private const int HoldTime = 30;
     private const int FadeTime = 12;
 
@@ -27,7 +28,6 @@ public class HealingMachine : ModSystem
 
     private static readonly List<BallID> Balls = [];
     private static int _joy = -1;
-    private static int _side = 1;
     private static int _age;
     private static bool _healed;
 
@@ -56,8 +56,7 @@ public class HealingMachine : ModSystem
     }
 
     /// <summary>
-    ///     Puts the local player's party on Joy's counter, on the side the player is standing, and heals it when the
-    ///     balls light up.
+    ///     Puts the local player's party in Joy's machine, and heals it when the balls light up.
     /// </summary>
     public static void Start(NPC joy)
     {
@@ -73,7 +72,6 @@ public class HealingMachine : ModSystem
             return;
 
         _joy = joy.whoAmI;
-        _side = player.Center.X >= joy.Center.X ? 1 : -1;
         _age = 0;
         _healed = false;
     }
@@ -96,20 +94,20 @@ public class HealingMachine : ModSystem
         {
             if (_age == FirstBallTime + i * BallInterval)
                 SoundEngine.PlaySound(TerramonSoundID.CatchClick with { Volume = 0.45f, Pitch = -0.2f + i * 0.08f },
-                    Tray(joy));
+                    Machine(joy));
         }
 
         if (_age == GlowStart)
+        {
+            SoundEngine.PlaySound(TerramonSoundID.PokeCenterHeal);
             Heal();
+        }
 
         if (_age >= GlowStart && _age < GlowStart + GlowTime)
         {
             var light = Glow(_age - GlowStart);
-            Lighting.AddLight(Tray(joy) - new Vector2(0f, 8f), 0.9f * light, 0.35f * light, 0.6f * light);
+            Lighting.AddLight(Machine(joy) - new Vector2(0f, 14f), 0.9f * light, 0.35f * light, 0.6f * light);
         }
-
-        if (_age == GlowStart + GlowTime)
-            SoundEngine.PlaySound(TerramonSoundID.ShinySparkle with { Volume = 0.45f }, Tray(joy));
 
         if (_age < EndTime)
             return;
@@ -125,13 +123,13 @@ public class HealingMachine : ModSystem
         if (_healed)
             return;
         _healed = true;
-        Main.LocalPlayer.GetModPlayer<PartyHealingPlayer>().HealParty();
+        Main.LocalPlayer.GetModPlayer<PartyHealingPlayer>().HealParty(false);
     }
 
-    // Middle of the tray's bottom edge, on the counter or table beside Joy: the top of whatever stands there
-    private static Vector2 Tray(NPC joy)
+    // Middle of the machine's bottom edge: on the counter (or table) to Joy's right, on top of whatever stands there
+    private static Vector2 Machine(NPC joy)
     {
-        var x = joy.Bottom.X + _side * 56f;
+        var x = joy.Bottom.X + 48f;
         var column = (int)(x / 16f);
         var row = (int)(joy.Bottom.Y / 16f) - 1;
         var surface = joy.Bottom.Y - 32f;
@@ -160,80 +158,115 @@ public class HealingMachine : ModSystem
         return pulse * (1f - progress * 0.4f);
     }
 
-    private static Vector2 Slot(int index)
-    {
-        // Two rows of three, like the machine's tray
-        var column = index % 3;
-        var row = index / 3;
-        return new Vector2((column - 1) * 12f, -10f - row * 9f);
-    }
+    // Where a ball sits, from the machine's bottom middle: three slots in the back row, three in the front
+    private static Vector2 Slot(int index) => new(-17f + index % 3 * 11f, index < 3 ? -19f : -12f);
 
     public override void PostDrawTiles()
     {
-        if (!Busy)
-            return;
+        var joy = Busy ? Main.npc[_joy] : null;
+        if (joy == null)
+        {
+            var type = ModContent.NPCType<NurseJoy>();
+            var index = NPC.FindFirstNPC(type);
+            if (index < 0)
+                return;
+            joy = Main.npc[index];
+        }
 
-        var joy = Main.npc[_joy];
         if (!joy.active)
             return;
 
-        var fade = 1f - MathHelper.Clamp((_age - (EndTime - FadeTime)) / (float)FadeTime, 0f, 1f);
-        var tray = Tray(joy) - Main.screenPosition;
+        var origin = Machine(joy);
+        if (!new Rectangle((int)Main.screenPosition.X - 64, (int)Main.screenPosition.Y - 64, Main.screenWidth + 128,
+                Main.screenHeight + 128).Contains(origin.ToPoint()))
+            return;
+
         var spriteBatch = Main.spriteBatch;
         var transform = Main.GameViewMatrix.TransformationMatrix;
-        var pixel = TextureAssets.MagicPixel.Value;
-        var light = Lighting.GetColor(joy.Bottom.ToTileCoordinates());
-        var shade = Color.Lerp(light, Color.White, 0.35f) * fade;
-
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
             DepthStencilState.None, Main.Rasterizer, null, transform);
 
-        // The machine: a grey base with a pink top where the balls sit
-        var width = 40;
-        var height = Balls.Count > 3 ? 22 : 13;
-        var left = (int)(tray.X - width / 2f);
-        var top = (int)tray.Y - height;
-        spriteBatch.Draw(pixel, new Rectangle(left, top, width, height), new Color(70, 74, 86).MultiplyRGB(shade));
-        spriteBatch.Draw(pixel, new Rectangle(left + 1, top + 1, width - 2, height - 4),
-            new Color(232, 236, 242).MultiplyRGB(shade));
-        spriteBatch.Draw(pixel, new Rectangle(left + 1, top + height - 4, width - 2, 2),
-            new Color(236, 96, 140).MultiplyRGB(shade));
+        var bottom = (origin - Main.screenPosition).Floor();
+        var shade = Lighting.GetColor(origin.ToTileCoordinates() - new Point(0, 1));
+        var glowing = Busy && _age >= GlowStart && _age < GlowStart + GlowTime + HoldTime;
+        DrawMachine(spriteBatch, bottom, shade, glowing ? Glow(Math.Min(_age - GlowStart, GlowTime - 1)) : 0f);
 
-        for (var i = 0; i < Balls.Count; i++)
+        if (Busy)
         {
-            var since = _age - (FirstBallTime + i * BallInterval);
-            if (since < 0)
-                continue;
+            var fade = 1f - MathHelper.Clamp((_age - (EndTime - FadeTime)) / (float)FadeTime, 0f, 1f);
+            var ballShade = Color.Lerp(shade, Color.White, 0.35f) * fade;
+            for (var i = 0; i < Balls.Count; i++)
+            {
+                var since = _age - (FirstBallTime + i * BallInterval);
+                if (since < 0)
+                    continue;
 
-            var pop = MathHelper.Clamp(since / (float)PopTime, 0f, 1f);
-            var drop = (1f - pop) * -6f;
-            var texture = BallTexture(Balls[i]);
-            var position = tray + Slot(i) + new Vector2(0f, drop);
-            spriteBatch.Draw(texture, position.Floor(), null, shade * pop, 0f, texture.Size() / 2f, 0.75f,
-                SpriteEffects.None, 0f);
+                var pop = MathHelper.Clamp(since / (float)PopTime, 0f, 1f);
+                var position = bottom + Slot(i) + new Vector2(0f, (1f - pop) * -8f);
+                spriteBatch.Draw(BallTexture(Balls[i]), position.Floor(), null, ballShade * pop, 0f,
+                    new Vector2(8f, 16f), 0.75f, SpriteEffects.None, 0f);
+            }
         }
 
         spriteBatch.End();
 
-        if (_age >= GlowStart && _age < GlowStart + GlowTime + HoldTime)
-        {
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState,
-                DepthStencilState.None, Main.Rasterizer, null, transform);
-            var t = _age - GlowStart;
-            var glow = t < GlowTime ? Glow(t) : 0.15f * (1f - (t - GlowTime) / (float)HoldTime);
-            for (var i = 0; i < Balls.Count; i++)
-            {
-                // Each ball lights a little after the one before it, so the light runs along the tray
-                var wave = 0.75f + 0.25f * MathF.Sin(t * 0.3f - i * 0.9f);
-                var position = tray + Slot(i);
-                spriteBatch.Draw(_glow.Value, position, null, HealPink * (0.55f * glow * wave), 0f,
-                    _glow.Size() / 2f, 0.22f, SpriteEffects.None, 0f);
-                spriteBatch.Draw(BallTexture(Balls[i]), position.Floor(), null, Color.White * (0.6f * glow * wave),
-                    0f, new Vector2(8f), 0.75f, SpriteEffects.None, 0f);
-            }
+        if (!glowing)
+            return;
 
-            spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState,
+            DepthStencilState.None, Main.Rasterizer, null, transform);
+        var t = _age - GlowStart;
+        var glow = t < GlowTime ? Glow(t) : 0.15f * (1f - (t - GlowTime) / (float)HoldTime);
+        for (var i = 0; i < Balls.Count; i++)
+        {
+            // Each ball lights a little after the one before it, so the light runs along the slots
+            var wave = 0.75f + 0.25f * MathF.Sin(t * 0.3f - i * 0.9f);
+            var position = bottom + Slot(i);
+            spriteBatch.Draw(_glow.Value, position - new Vector2(0f, 6f), null, HealPink * (0.55f * glow * wave), 0f,
+                _glow.Size() / 2f, 0.22f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(BallTexture(Balls[i]), position.Floor(), null, Color.White * (0.6f * glow * wave), 0f,
+                new Vector2(8f, 16f), 0.75f, SpriteEffects.None, 0f);
         }
+
+        spriteBatch.End();
+    }
+
+    // The machine, drawn in 2-pixel blocks like the tiles: a white body with two rows of ball slots, a pink stripe and
+    // a dark base, and a small monitor on the right that lights up green while it heals
+    private static void DrawMachine(SpriteBatch spriteBatch, Vector2 bottom, Color shade, float glow)
+    {
+        var pixel = TextureAssets.MagicPixel.Value;
+        var outline = new Color(58, 62, 74).MultiplyRGB(shade);
+        void Box(int x, int y, int w, int h, Color color) => spriteBatch.Draw(pixel,
+            new Rectangle((int)bottom.X + x, (int)bottom.Y + y, w, h), color);
+
+        // Monitor on its stand
+        Box(13, -40, 16, 14, outline);
+        var screen = Color.Lerp(new Color(40, 70, 80), new Color(120, 255, 170), glow);
+        Box(15, -38, 12, 10, screen.MultiplyRGB(Color.Lerp(shade, Color.White, glow)));
+        Box(17, -34, 2, 2, new Color(255, 140, 180).MultiplyRGB(shade)); // a little heart on the screen
+        Box(19, -34, 2, 2, new Color(255, 140, 180).MultiplyRGB(shade));
+        Box(18, -32, 2, 2, new Color(255, 140, 180).MultiplyRGB(shade));
+        Box(20, -26, 2, 4, outline);
+
+        // Body
+        Box(-26, -22, 52, 22, outline);
+        Box(-24, -20, 48, 18, new Color(236, 238, 244).MultiplyRGB(shade));
+        Box(-24, -20, 48, 2, new Color(255, 255, 255).MultiplyRGB(shade));
+        Box(-24, -8, 48, 3, new Color(232, 90, 140).MultiplyRGB(shade));
+        Box(-26, -2, 52, 2, new Color(40, 42, 52).MultiplyRGB(shade));
+
+        // Slots, darker where a ball isn't sitting
+        var hole = new Color(110, 116, 130).MultiplyRGB(shade);
+        for (var i = 0; i < 6; i++)
+        {
+            var slot = Slot(i);
+            Box((int)slot.X - 5, (int)slot.Y - 1, 10, 3, hole);
+        }
+
+        // A green light on the front that blinks while it heals
+        Box(16, -16, 4, 4, outline);
+        Box(17, -15, 2, 2, (glow > 0.5f ? new Color(120, 255, 140) : new Color(60, 120, 70)).MultiplyRGB(shade));
     }
 
     private static Texture2D BallTexture(BallID ball)

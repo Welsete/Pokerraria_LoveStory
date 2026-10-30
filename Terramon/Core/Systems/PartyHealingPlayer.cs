@@ -68,8 +68,9 @@ public class PartyHealingPlayer : ModPlayer
 
     /// <summary>
     ///     Restores every party Pokémon's HP and PP and cures its status. Returns false if nobody needed it.
+    ///     <paramref name="sound" /> is off when something else plays its own (Nurse Joy's healing jingle).
     /// </summary>
-    public bool HealParty()
+    public bool HealParty(bool sound = true)
     {
         if (!PartyNeedsHealing())
             return false;
@@ -83,7 +84,8 @@ public class PartyHealingPlayer : ModPlayer
             data.RestorePP();
         }
 
-        SoundEngine.PlaySound(in SoundID.Item4);
+        if (sound)
+            SoundEngine.PlaySound(in SoundID.Item4);
         return true;
     }
 }

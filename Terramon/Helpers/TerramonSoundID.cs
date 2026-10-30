@@ -23,6 +23,8 @@ public static class TerramonSoundID
     public static readonly SoundStyle CatchClick = new("Terramon/Sounds/ls_catch_click");
     public static readonly SoundStyle CatchFail = new("Terramon/Sounds/ls_catch_fail");
     public static readonly SnVariants CatchWobble = new("Terramon/Sounds/ls_catch_wobble", numVariants: 3);
+    // Nurse Joy's healing jingle (about 2.5 s); the healing machine's glow is timed to it
+    public static readonly SoundStyle PokeCenterHeal = new("Terramon/Sounds/pokecenter_heal") { Volume = 0.6f };
     public static readonly SoundStyle PCOn = new("Terramon/Sounds/ls_pc_on") { Volume = 0.54f };
     public static readonly SoundStyle PCOff = new("Terramon/Sounds/ls_pc_off") { Volume = 0.54f };
     public static readonly SoundStyle DexOpen = new("Terramon/Sounds/dex_open") { Volume = 0.48f };

@@ -60,6 +60,10 @@ public class NurseJoy : ModNPC
             }
         }
 
+        // A warm light over her spot, so the counter isn't lit only by the red glow of the wall behind it
+        if (!Main.dedServ)
+            Lighting.AddLight(NPC.Top + new Vector2(0f, -8f), 0.95f, 0.88f, 0.86f);
+
         // Looks at whoever is closest
         var player = Main.player[Player.FindClosest(NPC.position, NPC.width, NPC.height)];
         if (player.active)

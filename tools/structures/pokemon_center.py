@@ -10,7 +10,7 @@ FLOOR = 50               # first floor
 MID = 38                 # second floor (mezzanine)
 CEIL = 28                # white fascia under the roof
 L, R = 14, 81            # outer walls
-COUNTER = 47             # counter top (half bricks)
+COUNTER = 48             # counter top (platforms, so players walk past it)
 cells, objects = {}, []
 BLACK, WHITE = 25, 26
 SIZES = {"GlassDoor": (1, 3), "HeartStatue": (2, 3), "HeartLantern": (1, 2), "CrystalChandelier": (3, 3),
@@ -119,15 +119,13 @@ for x in (36, 37, 58, 59):
     for y in range(MID + 1, FLOOR):
         tile(x, y, "MarbleColumn")
 
-# --- Counter: white top, glowing red front; Nurse Joy stands at column 47 ---
-for x in range(39, 57):
-    if not 46 <= x <= 48:  # gap where Joy stands, with the healing machine on the counter beside her
-        tile(x, COUNTER, "MarbleBlock", halfBrick=True)
+# --- Counter: low and walk-through (a platform top over a red front), with a gap where Nurse Joy stands at column 47
+# and her healing machine on the counter to her right (drawn by the mod) ---
+for x in range(41, 55):
+    if not 46 <= x <= 48:
+        tile(x, COUNTER, "MarblePlatform")
+    wall(x, COUNTER, "SnowBrickWall")
     wall(x, COUNTER + 1, "RubyGemsparkWall")
-    wall(x, COUNTER + 2, "SnowBrickWall")
-for x in (39, 56):
-    for y in (COUNTER + 1, COUNTER + 2):
-        tile(x, y, "SnowBrick")
 
 # --- Heart mural behind the counter ---
 heart = [".RR...RR.",
