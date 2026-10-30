@@ -129,7 +129,7 @@ public class HealingMachine : ModSystem
     // Middle of the machine's bottom edge: on the counter (or table) to Joy's right, on top of whatever stands there
     private static Vector2 Machine(NPC joy)
     {
-        var x = joy.Bottom.X + 48f;
+        var x = joy.Bottom.X + 64f;
         var column = (int)(x / 16f);
         var row = (int)(joy.Bottom.Y / 16f) - 1;
         var surface = joy.Bottom.Y - 32f;
@@ -159,7 +159,11 @@ public class HealingMachine : ModSystem
     }
 
     // Where a ball sits, from the machine's bottom middle: three slots in the back row, three in the front
-    private static Vector2 Slot(int index) => new(-17f + index % 3 * 11f, index < 3 ? -19f : -12f);
+    private static Vector2 Slot(int index) => new((-17f + index % 3 * 11f) * Scale, (index < 3 ? -19f : -12f) * Scale);
+
+    // The machine and the balls are drawn this much bigger than their 2-pixel design
+    private const float Scale = 1.5f;
+    private const float BallScale = 0.75f * Scale;
 
     public override void PostDrawTiles()
     {
@@ -186,7 +190,8 @@ public class HealingMachine : ModSystem
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
             DepthStencilState.None, Main.Rasterizer, null, transform);
 
-        var bottom = (origin - Main.screenPosition).Floor();
+        // A pixel lower, so its dark base overlaps the counter's top edge instead of floating over it
+        var bottom = (origin - Main.screenPosition).Floor() + new Vector2(0f, 2f);
         var shade = Lighting.GetColor(origin.ToTileCoordinates() - new Point(0, 1));
         var glowing = Busy && _age >= GlowStart && _age < GlowStart + GlowTime + HoldTime;
         DrawMachine(spriteBatch, bottom, shade, glowing ? Glow(Math.Min(_age - GlowStart, GlowTime - 1)) : 0f);
@@ -202,9 +207,9 @@ public class HealingMachine : ModSystem
                     continue;
 
                 var pop = MathHelper.Clamp(since / (float)PopTime, 0f, 1f);
-                var position = bottom + Slot(i) + new Vector2(0f, (1f - pop) * -8f);
+                var position = bottom + Slot(i) + new Vector2(0f, (1f - pop) * -8f * Scale);
                 spriteBatch.Draw(BallTexture(Balls[i]), position.Floor(), null, ballShade * pop, 0f,
-                    new Vector2(8f, 16f), 0.75f, SpriteEffects.None, 0f);
+                    new Vector2(8f, 16f), BallScale, SpriteEffects.None, 0f);
             }
         }
 
@@ -222,10 +227,10 @@ public class HealingMachine : ModSystem
             // Each ball lights a little after the one before it, so the light runs along the slots
             var wave = 0.75f + 0.25f * MathF.Sin(t * 0.3f - i * 0.9f);
             var position = bottom + Slot(i);
-            spriteBatch.Draw(_glow.Value, position - new Vector2(0f, 6f), null, HealPink * (0.55f * glow * wave), 0f,
-                _glow.Size() / 2f, 0.22f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(_glow.Value, position - new Vector2(0f, 6f * Scale), null, HealPink * (0.55f * glow * wave), 0f,
+                _glow.Size() / 2f, 0.22f * Scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(BallTexture(Balls[i]), position.Floor(), null, Color.White * (0.6f * glow * wave), 0f,
-                new Vector2(8f, 16f), 0.75f, SpriteEffects.None, 0f);
+                new Vector2(8f, 16f), BallScale, SpriteEffects.None, 0f);
         }
 
         spriteBatch.End();
@@ -238,7 +243,8 @@ public class HealingMachine : ModSystem
         var pixel = TextureAssets.MagicPixel.Value;
         var outline = new Color(58, 62, 74).MultiplyRGB(shade);
         void Box(int x, int y, int w, int h, Color color) => spriteBatch.Draw(pixel,
-            new Rectangle((int)bottom.X + x, (int)bottom.Y + y, w, h), color);
+            new Rectangle((int)(bottom.X + x * Scale), (int)(bottom.Y + y * Scale), (int)(w * Scale),
+                (int)(h * Scale)), color);
 
         // Monitor on its stand
         Box(13, -40, 16, 14, outline);
@@ -261,7 +267,7 @@ public class HealingMachine : ModSystem
         for (var i = 0; i < 6; i++)
         {
             var slot = Slot(i);
-            Box((int)slot.X - 5, (int)slot.Y - 1, 10, 3, hole);
+            Box((int)(slot.X / Scale) - 5, (int)(slot.Y / Scale) - 1, 10, 3, hole);
         }
 
         // A green light on the front that blinks while it heals

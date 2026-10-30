@@ -123,7 +123,7 @@ for x in (36, 37, 58, 59):
 # and her healing machine on the counter to her right (drawn by the mod) ---
 for x in range(41, 55):
     if not 46 <= x <= 48:
-        tile(x, COUNTER, "MarblePlatform")
+        tile(x, COUNTER, "MarblePlatform", WHITE)
     wall(x, COUNTER, "SnowBrickWall")
     wall(x, COUNTER + 1, "RubyGemsparkWall")
 

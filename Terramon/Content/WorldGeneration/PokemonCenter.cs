@@ -33,11 +33,10 @@ public class PokemonCenterSystem : ModSystem
 
     public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
     {
-        // Right after the Gym and League, so it doesn't overlap them, before trees and grass decorate the surface
-        var index = tasks.FindIndex(pass => pass.Name.Equals("Terramon Gyms"));
-        if (index < 0)
-            index = tasks.FindIndex(pass => pass.Name.Equals("Spawn Point"));
-        if (index < 0)
+        // Once trees, plants, liquids and the other structures are done, so nothing grows through it or digs into it
+        // afterwards; before the final cleanup
+        var index = tasks.FindIndex(pass => pass.Name.Equals("Final Cleanup")) - 1;
+        if (index < -1)
             index = tasks.Count - 1;
         tasks.Insert(index + 1, new PokemonCenterPass("Terramon Pokemon Center", 5f));
         totalWeight += 5f;
