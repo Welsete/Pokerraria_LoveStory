@@ -2,6 +2,9 @@ name: Dump IDs
 
 on: [push]
 
+permissions:
+    contents: write
+
 jobs:
     dump:
         runs-on: ubuntu-latest
@@ -19,4 +22,5 @@ jobs:
                   echo "dll=$dll"
                   dotnet run --project tools/dumpids -- "$dll" > ids.txt
                   wc -l ids.txt
-                  cat ids.txt
+                  git config user.name ci && git config user.email ci@example.com
+                  git add ids.txt && git commit -m "ids [skip ci]" && git push
