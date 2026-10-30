@@ -1,5 +1,4 @@
 using Terramon.Content.NPCs.Town;
-using Terramon.Content.Tiles.Interactive;
 using Terraria.DataStructures;
 using Terraria.IO;
 using Terraria.Localization;
@@ -11,8 +10,9 @@ using Terraria.WorldBuilding;
 namespace Terramon.Content.WorldGeneration;
 
 /// <summary>
-///     The Pokémon Center next to spawn: a white building with a red roof where Nurse Joy heals Pokémon for free, with
-///     Chansey and Blissey helping out and a PC. Its surroundings are a safe zone where wild Pokémon stay weak (see
+///     The Pokémon Center next to spawn, built from a Blueprint Builder design: two floors under a red roof with a giant
+///     Poké Ball, Nurse Joy healing Pokémon for free at the counter downstairs, Chansey and Blissey helping out, and a
+///     room of PCs upstairs. Its surroundings are a safe zone where wild Pokémon stay weak (see
 ///     <see cref="Core.Systems.WildPokemonLevels" />).
 /// </summary>
 public class PokemonCenterSystem : ModSystem
@@ -216,30 +216,35 @@ public class PokemonCenterPass(string name, float loadWeight) : GenPass(name, lo
 
 public static class PokemonCenterBuilder
 {
-    public const int Width = 33;
-    public const int Height = 12; // From the floor to the roof, both included
+    private const string Path = "Assets/Structures/PokemonCenter.json";
 
-    // Columns from the left wall
-    private const int JoyColumn = 16;
+    public const int Width = 96;
+    public const int Height = 52; // The whole design, from the Poké Ball on the roof down to the grass
+
+    // Rows and columns in the design (tools/structures/pokemon_center.py)
+    private const int GroundRow = 51; // The grass outside, level with the ground around it
+    private const int FloorRow = 50;  // First floor
+    private const int JoyColumn = 47; // The gap in the counter
+    private static readonly Rectangle Inside = new(15, 29, 66, 21); // Both floors, between the outer walls
 
     /// <summary>
-    ///     Tries flat ground close to spawn first, then a little farther.
+    ///     Tries flat ground close to spawn first, then farther.
     /// </summary>
     public static bool TryPlaceNearSpawn()
     {
-        foreach (var (min, max) in new[] { (15, 90), (90, 250) })
+        foreach (var (min, max) in new[] { (15, 90), (90, 250), (250, 500) })
         {
             for (var attempt = 0; attempt < 300; attempt++)
             {
                 var offset = WorldGen.genRand.Next(min, max);
                 var left = Main.spawnTileX + (WorldGen.genRand.NextBool() ? offset : -offset - Width);
-                if (!GymBuildingsPass.TryFindFloor(left, Width, out var floorY))
+                if (!GymBuildingsPass.TryFindFloor(left, Width, out var groundY))
                     continue;
 
-                Build(left, floorY);
+                Build(left, groundY);
                 GenVars.structures?.AddProtectedStructure(
-                    new Rectangle(left - 2, floorY - Height - 3, Width + 4, Height + 10), 4);
-                Terramon.Instance.Logger.Info($"Built the Pokémon Center at ({left}, {floorY}).");
+                    new Rectangle(left - 2, groundY - Height, Width + 4, Height + 6), 4);
+                Terramon.Instance.Logger.Info($"Built the Pokémon Center at ({left}, {groundY}).");
                 return true;
             }
         }
@@ -248,16 +253,16 @@ public static class PokemonCenterBuilder
     }
 
     /// <summary>
-    ///     Builds the Center with its left wall at <paramref name="left" /> and its floor on row
-    ///     <paramref name="floorY" />, and remembers it. The ground under it is filled in so it never floats.
+    ///     Builds the Center with the left edge of its design at <paramref name="left" /> and its grass on row
+    ///     <paramref name="groundY" />, and remembers it. The ground under it is filled in so it never floats.
     /// </summary>
-    public static void Build(int left, int floorY)
+    public static void Build(int left, int groundY)
     {
         var bypass = ProtectedAreas.Bypass;
         ProtectedAreas.Bypass = true;
         try
         {
-            BuildShell(left, floorY);
+            BuildFromBlueprint(left, groundY - GroundRow);
         }
         finally
         {
@@ -265,108 +270,47 @@ public static class PokemonCenterBuilder
         }
     }
 
-    private static void BuildShell(int left, int floorY)
+    private static void BuildFromBlueprint(int left, int top)
     {
-        var right = left + Width - 1;
-        var top = floorY - Height + 1;
+        var blueprint = Blueprint.Load(Path);
 
-        // Clear the inside and a little room around the roof
-        for (var x = left - 2; x <= right + 2; x++)
+        // Trees over it
+        for (var x = left - 2; x < left + Width + 2; x++)
         {
-            for (var y = top - 4; y < floorY; y++)
-                Main.tile[x, y].ClearEverything();
+            for (var y = Math.Max(10, top - 20); y < top; y++)
+            {
+                var tile = Main.tile[x, y];
+                tile.ClearTile();
+                tile.LiquidAmount = 0;
+            }
         }
 
-        // Floor, with a foundation down to the ground
-        var deepest = floorY;
-        for (var x = left - 1; x <= right + 1; x++)
+        // Known before the PCs go in, since a PC can always be placed inside the Center
+        PokemonCenterSystem.Interior = new Rectangle(left + Inside.X, top + Inside.Y, Inside.Width, Inside.Height);
+        PokemonCenterSystem.JoySpot = new Point(left + JoyColumn, top + FloorRow);
+
+        var failed = blueprint.Build(left, top);
+        if (failed > 0)
+            Terramon.Instance.Logger.Warn($"Pokémon Center: {failed} pieces of furniture didn't fit.");
+
+        // No floating Center: dirt down to the ground under it
+        var deepest = top + Height;
+        for (var x = left; x < left + Width; x++)
         {
-            for (var y = floorY; y <= floorY + 25; y++)
+            for (var y = top + Height; y < top + Height + 40 && y < Main.maxTilesY - 10; y++)
             {
-                var below = Main.tile[x, y];
-                if (y > floorY && below.HasTile && Main.tileSolid[below.TileType])
+                var tile = Main.tile[x, y];
+                if (tile.HasTile && Main.tileSolid[tile.TileType])
                     break;
-                Block(x, y, y == floorY ? TileID.MarbleBlock : TileID.Stone);
+                tile.ClearTile();
+                tile.HasTile = true;
+                tile.TileType = TileID.Dirt;
+                tile.LiquidAmount = 0;
                 deepest = Math.Max(deepest, y);
             }
         }
 
-        // White walls, a red stripe and windows on the back wall
-        for (var y = top + 1; y < floorY; y++)
-        {
-            Block(left, y, TileID.MarbleBlock);
-            Block(right, y, TileID.MarbleBlock);
-            for (var x = left + 1; x < right; x++)
-            {
-                var window = y >= top + 2 && y <= top + 4 &&
-                             (x >= left + 3 && x <= left + 7 || x >= right - 7 && x <= right - 3);
-                var wall = window ? WallID.Glass : y == floorY - 5 ? WallID.RedBrick : WallID.MarbleBlock;
-                Main.tile[x, y].WallType = wall;
-            }
-        }
-
-        // A red stepped roof
-        for (var x = left - 1; x <= right + 1; x++)
-            Block(x, top, TileID.RedBrick);
-        for (var x = left + 1; x <= right - 1; x++)
-            Block(x, top - 1, TileID.RedBrick);
-        for (var x = left + 4; x <= right - 4; x++)
-            Block(x, top - 2, TileID.RedBrick);
-        // A white band with the Center's sign color in the middle of the roof
-        for (var x = left + 12; x <= right - 12; x++)
-            Block(x, top - 1, TileID.MarbleBlock);
-
-        // Doors on both sides
-        foreach (var x in new[] { left, right })
-        {
-            for (var y = floorY - 3; y < floorY; y++)
-                Main.tile[x, y].ClearTile();
-            WorldGen.PlaceTile(x, floorY - 1, TileID.ClosedDoor, true, true);
-        }
-
-        // Joy's counter: a table on each side of her
-        WorldGen.PlaceObject(left + JoyColumn - 3, floorY - 1, TileID.Tables, true);
-        WorldGen.PlaceObject(left + JoyColumn + 3, floorY - 1, TileID.Tables, true);
-
-        // Waiting area: chairs and a bench by the left door, the PC by the right one
-        WorldGen.PlaceObject(left + 5, floorY - 1, TileID.Chairs, true, 0, 0, -1, 1);
-        WorldGen.PlaceObject(left + 7, floorY - 1, TileID.Benches, true);
-        WorldGen.PlaceObject(left + 9, floorY - 1, TileID.Chairs, true, 0, 0, -1, -1);
-
-        // Known before the PC goes in, since a PC can always be placed inside the Center
-        PokemonCenterSystem.Interior = new Rectangle(left + 1, top + 1, Width - 2, Height - 2);
-        PokemonCenterSystem.JoySpot = new Point(left + JoyColumn, floorY);
-
-        var pcX = right - 6;
-        if (WorldGen.PlaceObject(pcX, floorY - 1, ModContent.TileType<PCRed>(), true))
-            ModContent.GetInstance<PCTileEntity>().Place(pcX, floorY - 3);
-
-        // Light: torches on the back wall and a chandelier over the counter
-        foreach (var x in new[] { left + 2, left + 11, right - 11, right - 2 })
-            WorldGen.PlaceTile(x, floorY - 4, TileID.Torches, true, false, -1, 0);
-        WorldGen.PlaceObject(left + JoyColumn, top + 1, TileID.Chandeliers, true);
-
-        // The sign by the left door
-        if (WorldGen.PlaceObject(left + 2, floorY - 1, TileID.Signs, true))
-        {
-            var sign = Sign.ReadSign(left + 2, floorY - 2, true);
-            if (sign >= 0)
-                Sign.TextSign(sign, Language.GetTextValue("Mods.Terramon.PokemonCenter.Sign"));
-        }
-
-        WorldGen.RangeFrame(left - 2, top - 4, right + 2, deepest + 1);
-
-        ProtectedAreas.Add(new Rectangle(left - 1, top - 3, Width + 2, Height + 4));
-    }
-
-    private static void Block(int x, int y, ushort type)
-    {
-        var tile = Main.tile[x, y];
-        tile.ClearTile();
-        tile.HasTile = true;
-        tile.TileType = type;
-        tile.Slope = SlopeType.Solid;
-        tile.IsHalfBlock = false;
-        tile.LiquidAmount = 0;
+        WorldGen.RangeFrame(left - 2, top - 20, left + Width + 2, deepest + 1);
+        ProtectedAreas.Add(new Rectangle(left, top, Width, Height));
     }
 }

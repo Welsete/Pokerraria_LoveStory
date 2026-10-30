@@ -128,8 +128,29 @@ public class HealingMachine : ModSystem
         Main.LocalPlayer.GetModPlayer<PartyHealingPlayer>().HealParty();
     }
 
-    // Middle of the tray's bottom edge, on the table beside Joy (tables are 2 tiles tall)
-    private static Vector2 Tray(NPC joy) => joy.Bottom + new Vector2(_side * 56f, -32f);
+    // Middle of the tray's bottom edge, on the counter or table beside Joy: the top of whatever stands there
+    private static Vector2 Tray(NPC joy)
+    {
+        var x = joy.Bottom.X + _side * 56f;
+        var column = (int)(x / 16f);
+        var row = (int)(joy.Bottom.Y / 16f) - 1;
+        var surface = joy.Bottom.Y - 32f;
+        for (var y = row; y > row - 4 && WorldGen.InWorld(column, y); y--)
+        {
+            var tile = Main.tile[column, y];
+            if (!tile.HasTile)
+            {
+                // Empty right next to the floor: keep looking up for a counter top
+                if (y >= row - 1)
+                    continue;
+                break;
+            }
+
+            surface = y * 16f + (tile.IsHalfBlock ? 8f : 0f);
+        }
+
+        return new Vector2(x, surface);
+    }
 
     // How bright the balls are during the glow: three pulses that fade out
     private static float Glow(int t)
