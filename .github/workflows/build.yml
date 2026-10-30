@@ -1,58 +1,22 @@
-name: Build mod
+name: Dump IDs
 
-on: [push, pull_request, workflow_dispatch]
-
-permissions:
-    contents: write
+on: [push]
 
 jobs:
-    build:
+    dump:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v7
-            - uses: JamzOJamz/build-tmodloader-mod@v1
-              with:
-                  project: Terramon/Terramon.csproj
-                  dotnet-version: |
-                      8.0.x
-                      10.0.x
-            # On a tModLoader cache miss the first build leaves tModLoader unzipped here, and the second
-            # download then stops at unzip's "replace?" prompt, so clear it first
-            - name: Clear tModLoader download
-              run: rm -rf "$RUNNER_TEMP/tml"
-            # Terramon needs this dependency mod for turn-based battles, so build it too
             - uses: JamzOJamz/build-tmodloader-mod@v1
               with:
                   project: TmonRuntimes/TmonRuntimes.csproj
                   dotnet-version: |
                       8.0.x
                       10.0.x
-            # Publish the .tmod files as a release so they can be downloaded without signing in
-            - name: Publish test build
-              if: github.event_name != 'pull_request'
-              env:
-                  GH_TOKEN: ${{ github.token }}
+            - name: Dump
               run: |
-                  files=("$RUNNER_TEMP"/tmlsave/Mods/*.tmod)
-                  # A version tag (v0.2.0) gets a real release with the .tmod files and its CHANGELOG.md section.
-                  # The tag can come from "Draft a new release" on GitHub: that release just gets the files.
-                  if [[ "$GITHUB_REF_TYPE" == "tag" && "$GITHUB_REF_NAME" == v* ]]; then
-                      version="${GITHUB_REF_NAME#v}"
-                      awk -v v="## $version" '$0 == v {on=1; next} /^## / {on=0} on' CHANGELOG.md > notes.md
-                      if gh release view "$GITHUB_REF_NAME" -R "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
-                          gh release upload "$GITHUB_REF_NAME" "${files[@]}" --clobber -R "$GITHUB_REPOSITORY"
-                      else
-                          gh release create "$GITHUB_REF_NAME" "${files[@]}" --target "$GITHUB_SHA" \
-                              --title "Pokerraria: LoveStory $GITHUB_REF_NAME" --notes-file notes.md -R "$GITHUB_REPOSITORY"
-                      fi
-                      exit 0
-                  fi
-                  tag="build-${GITHUB_REF_NAME//\//-}"
-                  # Reuse one release per branch: replace its files instead of recreating it
-                  if gh release view "$tag" -R "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
-                      gh release upload "$tag" "${files[@]}" --clobber -R "$GITHUB_REPOSITORY"
-                  else
-                      gh release create "$tag" "${files[@]}" --prerelease --target "$GITHUB_SHA" \
-                          --title "Teste $GITHUB_REF_NAME" -R "$GITHUB_REPOSITORY"
-                  fi
-                  gh release edit "$tag" --draft=false --prerelease --notes "Build automático de $GITHUB_SHA" -R "$GITHUB_REPOSITORY"
+                  dll=$(find "$RUNNER_TEMP" / -name tModLoader.dll -not -path '*/proc/*' 2>/dev/null | head -1)
+                  echo "dll=$dll"
+                  dotnet run --project tools/dumpids -- "$dll" > ids.txt
+                  wc -l ids.txt
+                  cat ids.txt
