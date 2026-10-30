@@ -232,6 +232,7 @@ public static class PokemonCenterBuilder
     /// </summary>
     public static bool TryPlaceNearSpawn()
     {
+        Rejections.Clear();
         foreach (var (min, max, bumps) in new[] { (15, 120, 6), (15, 250, 12), (15, 500, 20), (15, 800, 30) })
         {
             for (var attempt = 0; attempt < 300; attempt++)
@@ -249,6 +250,49 @@ public static class PokemonCenterBuilder
             }
         }
 
+        // Nothing passed every check: take the least bumpy stretch of surface near spawn anyway, since a world
+        // without a Center is worse than one with a few leveled hills
+        Terramon.Instance.Logger.Info("Pokémon Center: no ideal place (" +
+                                      string.Join(", ", Rejections.Select(r => $"{r.Key} {r.Value}")) +
+                                      "), using the flattest ground near spawn.");
+        var best = -1;
+        var bestBumps = int.MaxValue;
+        var bestGround = 0;
+        for (var left = Main.spawnTileX - 600 - Width; left <= Main.spawnTileX + 600; left += 3)
+        {
+            if (left < 350 || left + Width > Main.maxTilesX - 350 || Math.Abs(left + Width / 2 - Main.dungeonX) < 150)
+                continue;
+            var surface = new List<int>();
+            for (var x = left; x < left + Width; x++)
+                surface.Add(Surface(x, true));
+            if (surface.Contains(-1))
+                continue;
+            var bumps = surface.Max() - surface.Min() + Math.Abs(left + Width / 2 - Main.spawnTileX) / 100;
+            if (bumps >= bestBumps)
+                continue;
+            surface.Sort();
+            // Never on top of the Gyms or anything else another pass protected
+            var area = new Rectangle(left - 2, surface[surface.Count / 2] - Height, Width + 4, Height + 6);
+            if (GenVars.structures != null && !GenVars.structures.CanPlace(area))
+                continue;
+            best = left;
+            bestBumps = bumps;
+            bestGround = surface[surface.Count / 2];
+        }
+
+        if (best < 0)
+            return false;
+        Build(best, bestGround);
+        GenVars.structures?.AddProtectedStructure(new Rectangle(best - 2, bestGround - Height, Width + 4, Height + 6), 4);
+        Terramon.Instance.Logger.Info($"Built the Pokémon Center at ({best}, {bestGround}).");
+        return true;
+    }
+
+    private static readonly Dictionary<string, int> Rejections = [];
+
+    private static bool Reject(string reason)
+    {
+        Rejections[reason] = Rejections.GetValueOrDefault(reason) + 1;
         return false;
     }
 
@@ -262,25 +306,25 @@ public static class PokemonCenterBuilder
         groundY = 0;
         var right = left + Width - 1;
         if (left < 350 || right > Main.maxTilesX - 350 || Math.Abs(left + Width / 2 - Main.dungeonX) < 150)
-            return false;
+            return Reject("edge or Dungeon");
 
         var surface = new List<int>();
         for (var x = left; x <= right; x++)
         {
             var y = Surface(x);
             if (y < 0)
-                return false;
+                return Reject("no surface");
             surface.Add(y);
         }
 
         if (surface.Max() - surface.Min() > bumps)
-            return false;
+            return Reject("bumpy");
         surface.Sort();
         groundY = surface[surface.Count / 2];
 
         var area = new Rectangle(left - 2, groundY - Height, Width + 4, Height + 6);
         if (GenVars.structures != null && !GenVars.structures.CanPlace(area))
-            return false;
+            return Reject("structure");
 
         for (var x = left - 2; x <= right + 2; x++)
         {
@@ -288,9 +332,9 @@ public static class PokemonCenterBuilder
             {
                 var tile = Main.tile[x, y];
                 if (tile.LiquidAmount > 0 && y <= groundY)
-                    return false;
+                    return Reject("water");
                 if (tile.HasTile && !GymBuildingsPass.IsNaturalGround(tile.TileType) && !IsPlant(tile.TileType))
-                    return false;
+                    return Reject("tile " + TileID.Search.GetName(tile.TileType));
             }
         }
 
@@ -301,14 +345,22 @@ public static class PokemonCenterBuilder
         type is TileID.Trees or TileID.PalmTree or TileID.Cactus or TileID.Sunflower or TileID.Vines
             or TileID.Plants or TileID.Plants2 or TileID.JunglePlants or TileID.Saplings;
 
-    // The first solid ground from the top of the world, or -1 if there's none or it's a floating island
-    private static int Surface(int x)
+    // The first solid ground from the top of the world, or -1 if there's none or it's a floating island.
+    // With anyBlock, floating islands are looked past and any block counts as ground.
+    private static int Surface(int x, bool anyBlock = false)
     {
         for (var y = 20; y < Main.worldSurface; y++)
         {
             var tile = Main.tile[x, y];
             if (!tile.HasTile || !Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType])
                 continue;
+            if (anyBlock)
+            {
+                if (y < GenVars.worldSurfaceLow - 5)
+                    continue;
+                return y;
+            }
+
             return GymBuildingsPass.IsNaturalGround(tile.TileType) && y >= GenVars.worldSurfaceLow - 5 ? y : -1;
         }
 
