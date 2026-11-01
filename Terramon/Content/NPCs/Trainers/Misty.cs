@@ -32,8 +32,7 @@ public class Misty : GymLeader
 
     protected override bool CustomTextureFacesRight => true;
 
-    // Strolls around her spot in the Gym at Brock's pace
-    protected override int WanderRange => 4;
+    // She stands at her spot in the Gym (no WanderRange): her walk frames are kept for later
 
     protected override bool GateBossDefeated => Terraria.NPC.downedBoss2;
 
