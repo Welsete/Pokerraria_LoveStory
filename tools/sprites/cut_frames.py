@@ -3,7 +3,7 @@ vertical sheet for the mod: same scale for every frame, feet on the bottom row, 
 Run: python3 tools/sprites/cut_frames.py [--dark-pupils] [--wide=1.15] <folder> <prefix> <out.png> <height> <pose> [<pose> ...]
 --dark-pupils darkens the iris next to the eye's white and the lid above it, for art whose thin black eye lines are smaller
 than a pixel of the sheet and get lost. --own-scale=<pose prefix> scales the poses starting with it on their own (for
-example walk frames drawn bigger than the rest), so they come out just as tall as the others. --wide stretches the frames sideways by that much, since the art is a bit
+example walk frames drawn bigger than the rest), so they come out just as tall as the others, and lines them up by the torso instead of the bounding box. --wide stretches the frames sideways by that much, since the art is a bit
 slimmer than Terraria's characters.
 e.g. python3 tools/sprites/cut_frames.py nurse_joy_frames nurse_joy Terramon/Assets/NPCs/NurseJoy.png 54 parada \
          cumprimento segurando_pokebola andando_1 andando_2 andando_3 andando_4 sentada"""
@@ -49,7 +49,13 @@ scales = [group_scale(o) for o in own]  # source pixels per output row, per fram
 W = max(int(np.ceil((f[5] - f[4] + 1) / (sc / WIDE))) for f, sc in zip(frames, scales)) + 2
 sheet = Image.new("RGBA", (W, H * len(frames)), (0, 0, 0, 0))
 # Every frame centered on the same column (the middle of the standing pose's body), feet on the bottom row
-cx_all = [(f[4] + f[5]) / 2 for f in frames]
+def torso_x(f):
+    # The middle of the torso (40-60% down the figure): steady while the legs, arms and hair swing, so walk frames
+    # don't jitter sideways the way their bounding boxes would
+    a, fg, ya, yb = f[0], f[1], f[2], f[3]
+    rows = fg[ya + int((yb - ya) * 0.4):ya + int((yb - ya) * 0.6)]
+    return float(np.nonzero(rows)[1].mean())
+cx_all = [torso_x(f) if o else (f[4] + f[5]) / 2 for f, o in zip(frames, own)]
 for i, (a, fg, ya, yb, xa, xb) in enumerate(frames):
     cx = cx_all[i]
     s = scales[i]
