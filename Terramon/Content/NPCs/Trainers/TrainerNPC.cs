@@ -106,6 +106,19 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
     protected virtual (int First, int Count) CustomWalkFrames => (0, CustomFrameCount);
 
     /// <summary>
+    ///     The frame of <see cref="CustomTexture" /> shown for a moment when this trainer sends out a Pokémon, or -1.
+    /// </summary>
+    protected virtual int CustomThrowFrame => -1;
+
+    /// <summary>
+    ///     The frame of <see cref="CustomTexture" /> shown for a few seconds after this trainer wins a battle, or -1.
+    /// </summary>
+    protected virtual int CustomVictoryFrame => -1;
+
+    private const int ThrowPoseTicks = 30;
+    private const int VictoryPoseTicks = 4 * 60;
+
+    /// <summary>
     ///     Whether <see cref="CustomTexture" /> is drawn facing right (vanilla sprites face left).
     /// </summary>
     protected virtual bool CustomTextureFacesRight => false;
@@ -155,6 +168,7 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
     private int _shownSlot = -1;
     private ushort _shownSpecies;
     private uint _sendOutStart;
+    private uint _victoryUntil;
 
     /// <summary>
     ///     Whether the player is allowed to challenge this trainer, e.g. only after a certain boss is defeated.
@@ -319,6 +333,19 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
     {
         if (CustomTexture == null || CustomFrameCount <= 1)
             return;
+
+        // Throwing the ball when a Pokémon comes out, then the victory pose after beating the challenger
+        if (CustomThrowFrame >= 0 && _sendOutStart > 0 && Main.GameUpdateCount - _sendOutStart < ThrowPoseTicks)
+        {
+            NPC.frame.Y = CustomThrowFrame * frameHeight;
+            return;
+        }
+
+        if (CustomVictoryFrame >= 0 && Main.GameUpdateCount < _victoryUntil)
+        {
+            NPC.frame.Y = CustomVictoryFrame * frameHeight;
+            return;
+        }
 
         // Frame 0 while standing, the walk cycle while moving
         if (NPC.velocity.X == 0f || NPC.velocity.Y != 0f)
@@ -720,7 +747,10 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
             foe.Player.whoAmI == Main.myPlayer)
         {
             if (!_defeatedByLocalPlayer)
+            {
+                _victoryUntil = Main.GameUpdateCount + VictoryPoseTicks;
                 OnLoss(foe.Player);
+            }
             _defeatedByLocalPlayer = false;
         }
     }
