@@ -1,6 +1,8 @@
 """Cuts a character's frames (one pose per PNG on a flat magenta background, named <prefix>_<pose>.png) into a
 vertical sheet for the mod: same scale for every frame, feet on the bottom row, background and its fringe removed.
-Run: python3 tools/sprites/cut_frames.py <folder> <prefix> <out.png> <height> <pose> [<pose> ...]
+Run: python3 tools/sprites/cut_frames.py [--dark-pupils] <folder> <prefix> <out.png> <height> <pose> [<pose> ...]
+--dark-pupils darkens the eye's colored column and the lid above it, for art whose thin black eye lines are smaller
+than a pixel of the sheet and get lost.
 e.g. python3 tools/sprites/cut_frames.py nurse_joy_frames nurse_joy Terramon/Assets/NPCs/NurseJoy.png 54 parada \
          cumprimento segurando_pokebola andando_1 andando_2 andando_3 andando_4 sentada"""
 import sys
@@ -9,8 +11,12 @@ import numpy as np
 from PIL import Image
 from scipy import ndimage
 
-src, prefix, out_path, H = sys.argv[1], sys.argv[2], sys.argv[3], int(sys.argv[4])
-ORDER = sys.argv[5:]
+args = sys.argv[1:]
+DARK_PUPILS = "--dark-pupils" in args
+if DARK_PUPILS:
+    args.remove("--dark-pupils")
+src, prefix, out_path, H = args[0], args[1], args[2], int(args[3])
+ORDER = args[4:]
 
 frames = []
 for name in ORDER:
@@ -40,9 +46,15 @@ for i, (a, fg, ya, yb, xa, xb) in enumerate(frames):
             blk = fg[Y0:Y1, X0:X1]
             if blk.size == 0 or blk.mean() < 0.5:
                 continue
-            colors = a[Y0:Y1, X0:X1][blk] // 8 * 8 + 4
-            cols = [tuple(c) for c in colors]
-            c = Counter(cols).most_common(1)[0][0]
+            # The color at the middle of the block: the source's own pixels are bigger than a block, so this keeps
+            # every one of them (eyes, outlines), where the block's most common color could drop thin details
+            cy, cx2 = min(int((Y0 + Y1) / 2), a.shape[0] - 1), min(int((X0 + X1) / 2), a.shape[1] - 1)
+            if not fg[cy, cx2]:
+                colors = a[Y0:Y1, X0:X1][blk]
+                cy_c = colors[len(colors) // 2]
+            else:
+                cy_c = a[cy, cx2]
+            c = tuple(int(v) for v in cy_c)
             sheet.putpixel((ox, i * H + oy), (int(c[0]), int(c[1]), int(c[2]), 255))
 
 # Leftover background tint at the edges, and specks
@@ -58,5 +70,14 @@ for i in range(len(frames)):
     for j, size in enumerate(sizes):
         if size < 6:
             sl[lab == j + 1] = 0
+if DARK_PUPILS:
+    for i in range(len(frames)):
+        sl = px[i * H:i * H + H * 2 // 5]
+        r, g, b = (sl[..., k].astype(int) for k in range(3))
+        eye = (sl[..., 3] > 0) & (b > r + 15) & (b < 170)
+        for y, x in zip(*np.where(eye)):
+            sl[y, x, :3] = (24, 26, 40) if eye[min(y + 1, len(sl) - 1), x] else (60, 80, 120)
+            if y > 0 and not eye[y - 1, x]:
+                sl[y - 1, x - 1:x + 1, :3] = (24, 26, 40)
 Image.fromarray(px).save(out_path)
 print("scale", round(s, 2), "frame", W, "x", H)

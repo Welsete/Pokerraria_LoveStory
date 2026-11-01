@@ -17,7 +17,7 @@ public class Misty : GymLeader
     protected override int LookAlike => NPCID.Stylist;
 
     // Her own sheet, facing right, 34x54 per frame: standing, four walking frames, then throwing, victory and sitting
-    // (not used yet), cut with tools/sprites/cut_frames.py
+    // (not used yet), cut with tools/sprites/cut_frames.py --dark-pupils
     protected override string CustomTexture => "Terramon/Assets/NPCs/Trainers/Misty";
 
     protected override int CustomFrameCount => 8;
