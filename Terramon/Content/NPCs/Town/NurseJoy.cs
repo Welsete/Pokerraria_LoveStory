@@ -16,7 +16,7 @@ public class NurseJoy : ModNPC
     // Whether the local player's chat with her is on the "about the Center" page
     private static bool _aboutPage;
 
-    // Her own sheet, facing right, 30x44 per frame: standing, greeting, holding a Poké Ball, four walking frames and
+    // Her own sheet, facing right, 36x54 per frame (about as tall as the player with hair): standing, greeting, holding a Poké Ball, four walking frames and
     // sitting (tools/sprites/nurse_joy.py)
     private const int FrameStanding = 0;
     private const int FrameGreeting = 1;
