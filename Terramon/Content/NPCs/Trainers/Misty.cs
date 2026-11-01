@@ -16,11 +16,13 @@ public class Misty : GymLeader
 
     protected override int LookAlike => NPCID.Stylist;
 
-    // Her own walk cycle, cut from an AI-made sprite sheet: standing (with a Poké Ball) and three walking frames,
-    // facing right, 26x44 each, so she's about as tall as the player
+    // Her own sheet, facing right, 34x54 per frame: standing, four walking frames, then throwing, victory and sitting
+    // (not used yet), cut with tools/sprites/cut_frames.py
     protected override string CustomTexture => "Terramon/Assets/NPCs/Trainers/Misty";
 
-    protected override int CustomFrameCount => 4;
+    protected override int CustomFrameCount => 8;
+
+    protected override (int First, int Count) CustomWalkFrames => (1, 4);
 
     protected override bool CustomTextureFacesRight => true;
 

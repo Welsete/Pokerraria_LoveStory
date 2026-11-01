@@ -100,6 +100,12 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
     protected virtual int CustomFrameCount => 1;
 
     /// <summary>
+    ///     The frames of <see cref="CustomTexture" /> that make up the walk cycle: the first one and how many. By
+    ///     default the whole sheet, standing frame included.
+    /// </summary>
+    protected virtual (int First, int Count) CustomWalkFrames => (0, CustomFrameCount);
+
+    /// <summary>
     ///     Whether <see cref="CustomTexture" /> is drawn facing right (vanilla sprites face left).
     /// </summary>
     protected virtual bool CustomTextureFacesRight => false;
@@ -314,7 +320,7 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
         if (CustomTexture == null || CustomFrameCount <= 1)
             return;
 
-        // Frame 0 while standing, the whole sheet as a walk cycle while moving
+        // Frame 0 while standing, the walk cycle while moving
         if (NPC.velocity.X == 0f || NPC.velocity.Y != 0f)
         {
             NPC.frameCounter = 0;
@@ -324,7 +330,8 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
 
         NPC.frameCounter += Math.Abs(NPC.velocity.X);
         const double pixelsPerFrame = 5.0;
-        var frame = (int)(NPC.frameCounter / pixelsPerFrame) % CustomFrameCount;
+        var (first, count) = CustomWalkFrames;
+        var frame = first + (int)(NPC.frameCounter / pixelsPerFrame) % Math.Max(1, count);
         NPC.frame.Y = frame * frameHeight;
     }
 

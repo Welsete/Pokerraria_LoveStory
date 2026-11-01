@@ -1,18 +1,20 @@
-"""Cuts Nurse Joy's frames (one pose per PNG, magenta background) into a vertical sheet for the mod.
-Run: python3 tools/sprites/nurse_joy.py <folder with the PNGs> Terramon/Assets/NPCs/NurseJoy.png [height]"""
+"""Cuts a character's frames (one pose per PNG on a flat magenta background, named <prefix>_<pose>.png) into a
+vertical sheet for the mod: same scale for every frame, feet on the bottom row, background and its fringe removed.
+Run: python3 tools/sprites/cut_frames.py <folder> <prefix> <out.png> <height> <pose> [<pose> ...]
+e.g. python3 tools/sprites/cut_frames.py nurse_joy_frames nurse_joy Terramon/Assets/NPCs/NurseJoy.png 54 parada \
+         cumprimento segurando_pokebola andando_1 andando_2 andando_3 andando_4 sentada"""
 import sys
 from collections import Counter
 import numpy as np
 from PIL import Image
 from scipy import ndimage
 
-ORDER = ["parada", "cumprimento", "segurando_pokebola", "andando_1", "andando_2", "andando_3", "andando_4", "sentada"]
-src, out_path = sys.argv[1], sys.argv[2]
-H = int(sys.argv[3]) if len(sys.argv) > 3 else 44
+src, prefix, out_path, H = sys.argv[1], sys.argv[2], sys.argv[3], int(sys.argv[4])
+ORDER = sys.argv[5:]
 
 frames = []
 for name in ORDER:
-    a = np.array(Image.open(f"{src}/nurse_joy_{name}.png").convert("RGB")).astype(int)
+    a = np.array(Image.open(f"{src}/{prefix}_{name}.png").convert("RGB")).astype(int)
     r, g, b = a[..., 0], a[..., 1], a[..., 2]
     fg = ~((r > 170) & (b > 170) & (g < 120))
     lab, n = ndimage.label(fg, structure=np.ones((3, 3)))

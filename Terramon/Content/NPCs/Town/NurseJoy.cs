@@ -17,7 +17,7 @@ public class NurseJoy : ModNPC
     private static bool _aboutPage;
 
     // Her own sheet, facing right, 36x54 per frame (about as tall as the player with hair): standing, greeting, holding a Poké Ball, four walking frames and
-    // sitting (tools/sprites/nurse_joy.py)
+    // sitting (tools/sprites/cut_frames.py)
     private const int FrameStanding = 0;
     private const int FrameGreeting = 1;
     private const int FrameHoldingBall = 2;
