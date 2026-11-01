@@ -16,6 +16,14 @@ public class Misty : GymLeader
 
     protected override int LookAlike => NPCID.Stylist;
 
+    // Her own walk cycle, cut from an AI-made sprite sheet: standing (with a Poké Ball) and three walking frames,
+    // facing right, 28x44 each, so she's about as tall as the player
+    protected override string CustomTexture => "Terramon/Assets/NPCs/Trainers/Misty";
+
+    protected override int CustomFrameCount => 4;
+
+    protected override bool CustomTextureFacesRight => true;
+
     protected override bool GateBossDefeated => Terraria.NPC.downedBoss2;
 
     protected override int RewardItemType => ModContent.ItemType<CascadeBadge>();
