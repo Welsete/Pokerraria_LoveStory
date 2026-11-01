@@ -145,6 +145,12 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
     protected virtual double WalkPixelsPerFrame => 5.0;
 
     /// <summary>
+    ///     The frames of the walk cycle in the order they're shown, when it isn't simply <see cref="CustomWalkFrames" />
+    ///     in a row (for example a stride, the legs passing, the other stride, the legs passing again).
+    /// </summary>
+    protected virtual int[] CustomWalkSequence => null;
+
+    /// <summary>
     ///     A player closer than this (in pixels) makes a strolling trainer stop and look at them, so it's easy to talk
     ///     to. 6 tiles.
     /// </summary>
@@ -361,8 +367,15 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
         }
 
         NPC.frameCounter += Math.Abs(NPC.velocity.X);
-        var (first, count) = CustomWalkFrames;
-        var frame = first + (int)(NPC.frameCounter / WalkPixelsPerFrame) % Math.Max(1, count);
+        var step = (int)(NPC.frameCounter / WalkPixelsPerFrame);
+        int frame;
+        if (CustomWalkSequence is { Length: > 0 } sequence)
+            frame = sequence[step % sequence.Length];
+        else
+        {
+            var (first, count) = CustomWalkFrames;
+            frame = first + step % Math.Max(1, count);
+        }
         NPC.frame.Y = frame * frameHeight;
     }
 

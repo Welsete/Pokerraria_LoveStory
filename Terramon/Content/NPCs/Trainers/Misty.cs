@@ -33,10 +33,14 @@ public class Misty : GymLeader
     // Strolls around her spot in the Gym, like Brock
     protected override int WanderRange => 4;
 
-    // Her steps are long, so she walks a bit faster than Brock, one frame every 6 pixels, or her feet slide
+    // Her frames 1-3 are all strides with the front foot in the same spot, so playing them in a row made her foot slide
+    // forward. Instead: stride, legs passing, stride, legs passing. The planted foot goes about 20 pixels back over two
+    // frames, so she moves 10 pixels per frame and her feet stay put on the ground
+    protected override int[] CustomWalkSequence { get; } = [1, 4, 2, 4];
+
     protected override float WanderSpeed => 1.4f;
 
-    protected override double WalkPixelsPerFrame => 6.0;
+    protected override double WalkPixelsPerFrame => 10.0;
 
     protected override bool GateBossDefeated => Terraria.NPC.downedBoss2;
 
