@@ -2,7 +2,8 @@
 vertical sheet for the mod: same scale for every frame, feet on the bottom row, background and its fringe removed.
 Run: python3 tools/sprites/cut_frames.py [--dark-pupils] [--wide=1.15] <folder> <prefix> <out.png> <height> <pose> [<pose> ...]
 --dark-pupils darkens the iris next to the eye's white and the lid above it, for art whose thin black eye lines are smaller
-than a pixel of the sheet and get lost. --wide stretches the frames sideways by that much, since the art is a bit
+than a pixel of the sheet and get lost. --own-scale=<pose prefix> scales the poses starting with it on their own (for
+example walk frames drawn bigger than the rest), so they come out just as tall as the others. --wide stretches the frames sideways by that much, since the art is a bit
 slimmer than Terraria's characters.
 e.g. python3 tools/sprites/cut_frames.py nurse_joy_frames nurse_joy Terramon/Assets/NPCs/NurseJoy.png 54 parada \
          cumprimento segurando_pokebola andando_1 andando_2 andando_3 andando_4 sentada"""
@@ -21,6 +22,11 @@ for arg in list(args):
     if arg.startswith("--wide="):
         WIDE = float(arg.split("=", 1)[1])
         args.remove(arg)
+OWN = None
+for arg in list(args):
+    if arg.startswith("--own-scale="):
+        OWN = arg.split("=", 1)[1]
+        args.remove(arg)
 src, prefix, out_path, H = args[0], args[1], args[2], int(args[3])
 ORDER = args[4:]
 
@@ -35,14 +41,19 @@ for name in ORDER:
     ys, xs = np.where(fg)
     frames.append((a, fg, ys.min(), ys.max(), xs.min(), xs.max()))
 
-s = max(f[3] - f[2] + 1 for f in frames if True) / H
-sx = s / WIDE  # source pixels per output column
-W = max(int(np.ceil((f[5] - f[4] + 1) / sx)) for f in frames) + 2
+own = [OWN is not None and name.startswith(OWN) for name in ORDER]
+def group_scale(flag):
+    heights = [f[3] - f[2] + 1 for f, o in zip(frames, own) if o == flag]
+    return max(heights) / H if heights else None
+scales = [group_scale(o) for o in own]  # source pixels per output row, per frame
+W = max(int(np.ceil((f[5] - f[4] + 1) / (sc / WIDE))) for f, sc in zip(frames, scales)) + 2
 sheet = Image.new("RGBA", (W, H * len(frames)), (0, 0, 0, 0))
 # Every frame centered on the same column (the middle of the standing pose's body), feet on the bottom row
 cx_all = [(f[4] + f[5]) / 2 for f in frames]
 for i, (a, fg, ya, yb, xa, xb) in enumerate(frames):
     cx = cx_all[i]
+    s = scales[i]
+    sx = s / WIDE  # source pixels per output column
     for oy in range(H):
         for ox in range(W):
             Y0 = int(round(yb + 1 - (H - oy) * s)); Y1 = int(round(yb + 1 - (H - oy - 1) * s))
@@ -75,7 +86,7 @@ for i in range(len(frames)):
     lab, n = ndimage.label(fg, structure=np.ones((3, 3)))
     sizes = ndimage.sum(fg, lab, range(1, n + 1))
     for j, size in enumerate(sizes):
-        if size < 6:
+        if size < 12:
             sl[lab == j + 1] = 0
 if DARK_PUPILS:
     # The eye is a white pixel with the iris (bluish or purplish, unlike skin) on the side the art faces: the iris
