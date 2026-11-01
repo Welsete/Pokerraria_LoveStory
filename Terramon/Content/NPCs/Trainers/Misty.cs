@@ -30,6 +30,9 @@ public class Misty : GymLeader
 
     protected override bool CustomTextureFacesRight => true;
 
+    // Strolls around her spot in the Gym, like Brock
+    protected override int WanderRange => 4;
+
     protected override bool GateBossDefeated => Terraria.NPC.downedBoss2;
 
     protected override int RewardItemType => ModContent.ItemType<CascadeBadge>();
