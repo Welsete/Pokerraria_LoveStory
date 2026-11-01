@@ -1,8 +1,9 @@
 """Cuts a character's frames (one pose per PNG on a flat magenta background, named <prefix>_<pose>.png) into a
 vertical sheet for the mod: same scale for every frame, feet on the bottom row, background and its fringe removed.
-Run: python3 tools/sprites/cut_frames.py [--dark-pupils] <folder> <prefix> <out.png> <height> <pose> [<pose> ...]
---dark-pupils darkens the eye's colored column and the lid above it, for art whose thin black eye lines are smaller
-than a pixel of the sheet and get lost.
+Run: python3 tools/sprites/cut_frames.py [--dark-pupils] [--wide=1.15] <folder> <prefix> <out.png> <height> <pose> [<pose> ...]
+--dark-pupils darkens the iris next to the eye's white and the lid above it, for art whose thin black eye lines are smaller
+than a pixel of the sheet and get lost. --wide stretches the frames sideways by that much, since the art is a bit
+slimmer than Terraria's characters.
 e.g. python3 tools/sprites/cut_frames.py nurse_joy_frames nurse_joy Terramon/Assets/NPCs/NurseJoy.png 54 parada \
          cumprimento segurando_pokebola andando_1 andando_2 andando_3 andando_4 sentada"""
 import sys
@@ -15,6 +16,11 @@ args = sys.argv[1:]
 DARK_PUPILS = "--dark-pupils" in args
 if DARK_PUPILS:
     args.remove("--dark-pupils")
+WIDE = 1.0
+for arg in list(args):
+    if arg.startswith("--wide="):
+        WIDE = float(arg.split("=", 1)[1])
+        args.remove(arg)
 src, prefix, out_path, H = args[0], args[1], args[2], int(args[3])
 ORDER = args[4:]
 
@@ -30,7 +36,8 @@ for name in ORDER:
     frames.append((a, fg, ys.min(), ys.max(), xs.min(), xs.max()))
 
 s = max(f[3] - f[2] + 1 for f in frames if True) / H
-W = max(int(np.ceil((f[5] - f[4] + 1) / s)) for f in frames) + 2
+sx = s / WIDE  # source pixels per output column
+W = max(int(np.ceil((f[5] - f[4] + 1) / sx)) for f in frames) + 2
 sheet = Image.new("RGBA", (W, H * len(frames)), (0, 0, 0, 0))
 # Every frame centered on the same column (the middle of the standing pose's body), feet on the bottom row
 cx_all = [(f[4] + f[5]) / 2 for f in frames]
@@ -39,7 +46,7 @@ for i, (a, fg, ya, yb, xa, xb) in enumerate(frames):
     for oy in range(H):
         for ox in range(W):
             Y0 = int(round(yb + 1 - (H - oy) * s)); Y1 = int(round(yb + 1 - (H - oy - 1) * s))
-            X0 = int(round(cx + (ox - W / 2) * s)); X1 = int(round(cx + (ox + 1 - W / 2) * s))
+            X0 = int(round(cx + (ox - W / 2) * sx)); X1 = int(round(cx + (ox + 1 - W / 2) * sx))
             if Y1 <= 0 or X1 <= 0:
                 continue
             Y0, X0 = max(Y0, 0), max(X0, 0)
@@ -71,13 +78,21 @@ for i in range(len(frames)):
         if size < 6:
             sl[lab == j + 1] = 0
 if DARK_PUPILS:
+    # The eye is a white pixel with the iris (bluish or purplish, unlike skin) on the side the art faces: the iris
+    # becomes a dark pupil and the lid above both is darkened
     for i in range(len(frames)):
         sl = px[i * H:i * H + H * 2 // 5]
-        r, g, b = (sl[..., k].astype(int) for k in range(3))
-        eye = (sl[..., 3] > 0) & (b > r + 15) & (b < 170)
-        for y, x in zip(*np.where(eye)):
-            sl[y, x, :3] = (24, 26, 40) if eye[min(y + 1, len(sl) - 1), x] else (60, 80, 120)
-            if y > 0 and not eye[y - 1, x]:
-                sl[y - 1, x - 1:x + 1, :3] = (24, 26, 40)
+        rgb = sl[..., :3].astype(int)
+        solid = sl[..., 3] > 0
+        white = solid & (rgb.min(2) > 215)
+        iris = solid & (rgb[..., 2] >= rgb[..., 1]) & (rgb.min(2) <= 235) & (rgb.max(2) - rgb.min(2) >= 25) & (rgb[..., 2] >= rgb[..., 0] - 40)
+        for y, x in zip(*np.where(white)):
+            if x + 1 >= sl.shape[1] or not iris[y, x + 1]:
+                continue
+            for yy in (y, y + 1):
+                if yy < len(sl) and iris[yy, x + 1]:
+                    sl[yy, x + 1, :3] = (28, 22, 44)
+            if y > 0:
+                sl[y - 1, x:x + 2, :3] = (28, 22, 44)
 Image.fromarray(px).save(out_path)
 print("scale", round(s, 2), "frame", W, "x", H)
