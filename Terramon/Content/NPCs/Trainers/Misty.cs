@@ -33,6 +33,11 @@ public class Misty : GymLeader
     // Strolls around her spot in the Gym, like Brock
     protected override int WanderRange => 4;
 
+    // Her steps are long, so she walks a bit faster than Brock, one frame every 6 pixels, or her feet slide
+    protected override float WanderSpeed => 1.4f;
+
+    protected override double WalkPixelsPerFrame => 6.0;
+
     protected override bool GateBossDefeated => Terraria.NPC.downedBoss2;
 
     protected override int RewardItemType => ModContent.ItemType<CascadeBadge>();

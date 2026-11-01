@@ -140,6 +140,11 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
     protected virtual float WanderSpeed => 0.75f;
 
     /// <summary>
+    ///     How many pixels the trainer moves for each frame of the walk cycle, so the feet keep up with the ground.
+    /// </summary>
+    protected virtual double WalkPixelsPerFrame => 5.0;
+
+    /// <summary>
     ///     A player closer than this (in pixels) makes a strolling trainer stop and look at them, so it's easy to talk
     ///     to. 6 tiles.
     /// </summary>
@@ -356,9 +361,8 @@ public abstract class TrainerNPC : ModNPC, IBattleProvider
         }
 
         NPC.frameCounter += Math.Abs(NPC.velocity.X);
-        const double pixelsPerFrame = 5.0;
         var (first, count) = CustomWalkFrames;
-        var frame = first + (int)(NPC.frameCounter / pixelsPerFrame) % Math.Max(1, count);
+        var frame = first + (int)(NPC.frameCounter / WalkPixelsPerFrame) % Math.Max(1, count);
         NPC.frame.Y = frame * frameHeight;
     }
 
