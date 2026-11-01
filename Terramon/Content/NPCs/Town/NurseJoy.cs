@@ -7,8 +7,7 @@ using Terraria.Localization;
 namespace Terramon.Content.NPCs.Town;
 
 /// <summary>
-///     Nurse Joy, who stays at the Pokémon Center and heals the party for free. She looks like the Nurse until she
-///     gets art of her own.
+///     Nurse Joy, who stays at the Pokémon Center and heals the party for free.
 /// </summary>
 public class NurseJoy : ModNPC
 {
@@ -17,11 +16,18 @@ public class NurseJoy : ModNPC
     // Whether the local player's chat with her is on the "about the Center" page
     private static bool _aboutPage;
 
-    public override string Texture => "Terraria/Images/NPC_" + NPCID.Nurse;
+    // Her own sheet, facing right, 30x44 per frame: standing, greeting, holding a Poké Ball, four walking frames and
+    // sitting (tools/sprites/nurse_joy.py)
+    private const int FrameStanding = 0;
+    private const int FrameGreeting = 1;
+    private const int FrameHoldingBall = 2;
+    private const int FrameCount = 8;
+
+    public override string Texture => "Terramon/Assets/NPCs/NurseJoy";
 
     public override void SetStaticDefaults()
     {
-        Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.Nurse];
+        Main.npcFrameCount[Type] = FrameCount;
         NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers { Hide = true });
     }
 
@@ -70,16 +76,25 @@ public class NurseJoy : ModNPC
             NPC.direction = NPC.spriteDirection = player.Center.X > NPC.Center.X ? 1 : -1;
     }
 
-    public override void FindFrame(int frameHeight) => NPC.frame.Y = 0;
+    // Bows while someone talks to her, and holds a Poké Ball while the machine heals
+    public override void FindFrame(int frameHeight)
+    {
+        var frame = FrameStanding;
+        if (HealingMachine.Busy)
+            frame = FrameHoldingBall;
+        else if (Main.LocalPlayer.talkNPC == NPC.whoAmI)
+            frame = FrameGreeting;
+        NPC.frame.Y = frame * frameHeight;
+    }
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        // Town NPC sheets are drawn 4 pixels below the feet, like vanilla does
+        // Feet on the bottom row of each frame; the art faces right
         var texture = TextureAssets.Npc[Type].Value;
         var frameHeight = texture.Height / Main.npcFrameCount[Type];
         var source = new Rectangle(0, NPC.frame.Y, texture.Width, frameHeight);
-        var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-        var feet = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY + 4f);
+        var effects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+        var feet = NPC.Bottom - screenPos + new Vector2(0f, NPC.gfxOffY);
         spriteBatch.Draw(texture, feet.Floor(), source, NPC.GetAlpha(drawColor), 0f,
             new Vector2(texture.Width / 2f, frameHeight), 1f, effects, 0f);
         return false;
