@@ -1,0 +1,5 @@
+Frames 11
+Travel 4
+Ticks 4
+At target
+Scale 1

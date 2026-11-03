@@ -16,8 +16,9 @@ onda gigante ou um meteoro.
 | Buffs, curas e debuffs simples | Qualquer básico que, no jogo, ficou genérico demais e merece arte própria |
 
 Meio-termo: **raios, feixes e golpes de pura luz** são desenhados à mão em código, com carga, raio e impacto próprios
-(Solar Beam, Hyper Beam, Psybeam, Charge Beam, Flash Cannon, Thunder, Dazzling Gleam). Estão em
-`tools/vfx/draw_solar_beam.py` e `tools/vfx/draw_light_moves.py`; um raio novo é uma linha em `MOVES` com o estilo
+(Solar Beam, Hyper Beam, Psybeam, Charge Beam, Flash Cannon, Thunder, Dazzling Gleam), e alguns golpes com forma
+simples de desenhar (Will-O-Wisp, Twister, Rock Slide). Estão em `tools/vfx/draw_solar_beam.py`,
+`tools/vfx/draw_light_moves.py` e `tools/vfx/draw_shape_moves.py`; um raio novo é uma linha em `MOVES` com o estilo
 de carga, de raio e de impacto.
 
 Na dúvida, começa no código: é de graça e na hora. Se ficar fraco no jogo, o golpe sobe para o gerador.
@@ -37,22 +38,21 @@ Quando um golpe do gerador fica pronto, a animação dele substitui a versão de
 
 ## Situação
 
-416 golpes no catálogo: **51** com arte própria, **232** desenhados por código, **133** esperando o gerador.
+416 golpes no catálogo: **54** com arte própria, **232** desenhados por código, **130** esperando o gerador.
 
 ## Faltam: para o gerador de imagem
 
 Em ordem de tipo. Entre parênteses, o arquivo de prompts.
 
-- **Fogo** (1, `fogo.md`): Will-O-Wisp
 - **Água** (8, `agua.md`): Aqua Tail, Dive, Waterfall, Wave Crash, Muddy Water, Surf, Whirlpool, Rain Dance
 - **Planta** (11, `planta.md`): Petal Blizzard, Power Whip, Vine Whip, Absorb, Giga Drain, Leaf Storm, Mega Drain, Petal Dance, Grassy Terrain, Ingrain, Leech Seed
 - **Elétrico** (4, `eletrico.md`): Thunder Fang, Zap Cannon, Electric Terrain, Magnetic Flux
-- **Dragão** (4, `dragao.md`): Dragon Tail, Outrage, Dragon Breath, Twister
+- **Dragão** (3, `dragao.md`): Dragon Tail, Outrage, Dragon Breath
 - **Fantasma** (4, `fantasma.md` · fundo verde): Lick, Shadow Sneak, Curse, Destiny Bond
 - **Sombrio** (5, `sombrio.md` · fundo verde): Bite, Crunch, Fling, Memento, Switcheroo
 - **Aço** (2, `aco.md`): Gyro Ball, Iron Tail
 - **Terrestre** (9, `terrestre.md`): Bone Rush, Bonemerang, Bulldoze, Dig, Drill Run, Earthquake, Fissure, Sand Tomb, Spikes
-- **Pedra** (8, `pedra.md`): Head Smash, Rock Slide, Rollout, Stone Edge, Ancient Power, Sandstorm, Stealth Rock, Wide Guard
+- **Pedra** (7, `pedra.md`): Head Smash, Rollout, Stone Edge, Ancient Power, Sandstorm, Stealth Rock, Wide Guard
 - **Venenoso** (6, `venenoso.md` · fundo verde): Gunk Shot, Poison Fang, Acid Spray, Belch, Sludge Wave, Toxic Spikes
 - **Inseto** (4, `inseto.md`): Bug Bite, Leech Life, U-turn, String Shot
 - **Voador** (7, `voador.md`): Bounce, Brave Bird, Sky Attack, Gust, Hurricane, Mirror Move, Tailwind
@@ -84,14 +84,16 @@ Os prompts de todos esses, prontos para copiar, estão em [art/vfx/FILA_GERADOR.
 
 ## Com arte própria (gerador ou desenho à mão)
 
-- **Fogo** (18): Blaze Kick, Fire Fang, Fire Punch, Flame Charge, Flame Wheel, Flare Blitz, Heat Crash, Ember, Eruption, Fire Blast, Fire Spin, Flamethrower, Heat Wave, Incinerate, Inferno, Lava Plume, Overheat, Sunny Day
+- **Fogo** (19): Blaze Kick, Fire Fang, Fire Punch, Flame Charge, Flame Wheel, Flare Blitz, Heat Crash, Ember, Eruption, Fire Blast, Fire Spin, Flamethrower, Heat Wave, Incinerate, Inferno, Lava Plume, Overheat, Sunny Day, Will-O-Wisp
 - **Água** (4): Aqua Jet, Bubble Beam, Hydro Pump, Water Gun
 - **Planta** (2): Razor Leaf, Solar Beam
 - **Elétrico** (5): Thunder Punch, Charge Beam, Thunder, Thunder Shock, Thunderbolt
 - **Gelo** (15): Ice Fang, Ice Punch, Ice Shard, Icicle Crash, Icicle Spear, Aurora Beam, Blizzard, Freeze Dry, Ice Beam, Icy Wind, Powder Snow, Sheer Cold, Haze, Mist, Snowscape
+- **Dragão** (1): Twister
 - **Fantasma** (1): Shadow Ball
 - **Sombrio** (1): Night Slash
 - **Aço** (2): Bullet Punch, Flash Cannon
+- **Pedra** (1): Rock Slide
 - **Fada** (1): Dazzling Gleam
 - **Psíquico** (1): Psybeam
 - **Normal** (1): Hyper Beam

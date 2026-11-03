@@ -39,8 +39,9 @@ onda gigante ou um meteoro.
 | Buffs, curas e debuffs simples | Qualquer básico que, no jogo, ficou genérico demais e merece arte própria |
 
 Meio-termo: **raios, feixes e golpes de pura luz** são desenhados à mão em código, com carga, raio e impacto próprios
-(Solar Beam, Hyper Beam, Psybeam, Charge Beam, Flash Cannon, Thunder, Dazzling Gleam). Estão em
-`tools/vfx/draw_solar_beam.py` e `tools/vfx/draw_light_moves.py`; um raio novo é uma linha em `MOVES` com o estilo
+(Solar Beam, Hyper Beam, Psybeam, Charge Beam, Flash Cannon, Thunder, Dazzling Gleam), e alguns golpes com forma
+simples de desenhar (Will-O-Wisp, Twister, Rock Slide). Estão em `tools/vfx/draw_solar_beam.py`,
+`tools/vfx/draw_light_moves.py` e `tools/vfx/draw_shape_moves.py`; um raio novo é uma linha em `MOVES` com o estilo
 de carga, de raio e de impacto.
 
 Na dúvida, começa no código: é de graça e na hora. Se ficar fraco no jogo, o golpe sobe para o gerador.

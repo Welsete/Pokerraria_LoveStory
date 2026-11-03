@@ -3,43 +3,6 @@
 Prompts dos golpes que ainda esperam o gerador (regra em [VFX.md](../../VFX.md)). Gere, salve a imagem em
 `Desktop/Pokerraria/vfx_spritesheets/` e avise o Claude. Este arquivo é refeito por `tools/vfx/vfx_md.py`.
 
-## Fogo
-
-### Will-O-Wisp
-
-```text
-Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
-
-ATTACK: Will-O-Wisp | TYPE: Fire / Ghost / Status
-SUBJECT: three ghostly blue-tinged eerie flames orbiting in a hypnotic triangular dance.
-
-DURATION & FRAME RULES:
-- Projéteis elementais: 8–12 frames em loop, se necessário.
-
-SHEET TYPE: PROJECTILE LOOP, 8 frames
-
-CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
-effect centered on the frame center, same scale in every frame.
-
-PALETTE:
-#FFF6C8 #FFD84A #FF9A1F #E8480F #A3200E #4A1010
-Background: flat solid #FF00FF, nothing else in it.
-
-STYLE: Terraria Wisp in a Bottle / Shadowflame look: floating teardrop spirits, eerie tails.
-
-FRAME BY FRAME:
-1: 3 teardrop wisps arranged in an equilateral triangle, tails swirling counter-clockwise.
-2: Wisps rotate 45 degrees, tails stretching outward into graceful curved arcs.
-3: Wisps pull slightly closer to center, cores pulsing brightly (#FFF6C8).
-4: Wisps rotate 90 degrees; each wisp leaves 1 detached floating spirit ember behind.
-5: Wisps expand back out to wide orbit, rotating 135 degrees.
-6: Wisps bob up and down undulating while continuing circular rotation (180 degrees).
-7: Wisps spiral smoothly, tails aligning along the circular path.
-8: Wisps complete full orbital cycle, seamlessly connecting back to Frame 1 positions.
-
-Do not include characters, text, UI, borders or shadows.
-```
-
 ## Água
 
 ### Aqua Tail
@@ -776,41 +739,6 @@ FRAME BY FRAME:
 6: Stream cuts off at source; breath cone separates into 3 drifting rolling flame balls.
 7: Flame balls break down into mystical smoke puffs with crackling cores.
 8: Last frame: only 4 small fading static sparks (1px each, #130D3E).
-
-Do not include characters, text, UI, borders or shadows.
-```
-
-### Twister
-
-```text
-Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
-
-ATTACK: Twister | TYPE: Dragon
-SUBJECT: a miniature ferocious dragon tornado spinning with mystical debris and lifting targets.
-
-DURATION & FRAME RULES:
-- Projéteis elementais: 8–12 frames em loop.
-
-SHEET TYPE: PROJECTILE LOOP, 8 frames
-
-CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
-effect centered on the frame center, same scale in every frame.
-
-PALETTE:
-#FFFFFF #A5B4FC #6366F1 #4338CA #251F72 #130D3E
-Background: flat solid #FF00FF, nothing else in it.
-
-STYLE: Terraria sandstorm / vortex funnel look: interlocking indigo helix ribbons.
-
-FRAME BY FRAME:
-1: Slender twisting energy cyclone, 2 spiraling indigo bands crossing at center, white core.
-2: Left band rotates forward becoming wider, right band curves behind.
-3: Bands cross in reverse helix, top vortex flaring out wider with 2 detached sparks.
-4: Central constriction tightens; vortex eye pulses with a sharp white spark.
-5: Symmetrical hourglass shape restored, outer wind teeth flaring.
-6: Ribbons spin another 90 degrees with serrated aerodynamic edges.
-7: Ribbons align vertically with turbulent waves traveling upward.
-8: Funnel completes 360-degree rotation, aligning back seamlessly to Frame 1.
 
 Do not include characters, text, UI, borders or shadows.
 ```
@@ -1567,41 +1495,6 @@ FRAME BY FRAME:
 6: Flying rock boulders tumble outward, shedding clouds of gray stone dust.
 7: Boulders crash to floor baseline; stone dust billows upward.
 8: Last frame: only 3 small fading stone dust motes (1px each, #1E293B).
-
-Do not include characters, text, UI, borders or shadows.
-```
-
-### Rock Slide
-
-```text
-Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
-
-ATTACK: Rock Slide | TYPE: Rock
-SUBJECT: an avalanche of colossal jagged boulders cascading down like a mountain landslide.
-
-DURATION & FRAME RULES:
-- Explosões: 8–14 frames.
-
-SHEET TYPE: EXPLOSION ONE-SHOT, 8 frames
-
-CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
-effect centered on the frame center, same scale in every frame.
-
-PALETTE:
-#F8FAFC #E2E8F0 #94A3B8 #64748B #475569 #1E293B
-Background: flat solid #FF00FF, nothing else in it.
-
-STYLE: Terraria falling boulder trap look: heavy polygonal granite blocks, crushing ground impacts.
-
-FRAME BY FRAME:
-1: Cluster of 4 massive faceted boulders plummeting diagonally from top-left (45 degrees).
-2: Boulders accelerate, trailing gray kinetic speed streaks and tumbling gravel.
-3: Crushing avalanche: lead boulders crash onto target center with blinding white impact stars (#F8FAFC).
-4: Peak landslide: colossal V-shaped shockwave geysers erupt outward (80px wide); boulders shatter.
-5: Mountain of shattered rock rubble heaps upon the ground baseline, burying target area.
-6: Flying rock shards reach apex and rain down into the rubble heap.
-7: Heavy clouds of gray quarry dust billow upward from the collapsed boulders.
-8: Last frame: only 4 small fading rock dust pixels (1px each, #1E293B).
 
 Do not include characters, text, UI, borders or shadows.
 ```
