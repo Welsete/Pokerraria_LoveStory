@@ -72,7 +72,7 @@ FRAME BY FRAME:
 
 ---
 
-## 4. Thunder Punch
+## 4. Thunder Punch *(Já Gerado)*
 ```text
 Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
 ATTACK: Thunder Punch | TYPE: Electric
@@ -215,7 +215,7 @@ FRAME BY FRAME:
 
 ---
 
-## 10. Thunder Shock
+## 10. Thunder Shock *(Já Gerado)*
 ```text
 Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
 ATTACK: Thunder Shock | TYPE: Electric
@@ -237,7 +237,7 @@ FRAME BY FRAME:
 
 ---
 
-## 11. Thunderbolt
+## 11. Thunderbolt *(Já Gerado)*
 ```text
 Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
 ATTACK: Thunderbolt | TYPE: Electric

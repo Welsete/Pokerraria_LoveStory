@@ -138,7 +138,7 @@ FRAME BY FRAME:
 
 ---
 
-## 7. Razor Leaf
+## 7. Razor Leaf *(Já Gerado)*
 ```text
 Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
 ATTACK: Razor Leaf | TYPE: Grass

@@ -24,6 +24,8 @@ O que está em `## Next` do CHANGELOG, testado e publicado.
 
 - [ ] Gerar no Gemini as sheets dos golpes mais usados de Água, Elétrico e Planta (prompts prontos em
       `art/vfx/prompts/`) (?) quais golpes primeiro [Welsete/Isa + animador-vfx]
+- [x] Primeiro lote animado: Water Gun, Hydro Pump, Bubble Beam, Aqua Jet, Thunder Shock, Thunderbolt,
+      Thunder Punch e Razor Leaf [animador-vfx]
 - [ ] Recortar, animar e testar cada um no painel F8 [animador-vfx]
 - [ ] Golpes de dois turnos com animação de carga (Solar Beam já serve de modelo: Fly, Dig, Skull Bash...)
       [programador-batalha + animador-vfx]

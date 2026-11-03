@@ -45,6 +45,19 @@ SHEETS = [
     ("overheat_vfx_spritesheet_1792907801494.jpg", "Overheat", (4, 4), 2, dict(Travel=0, Ticks=4)),
     ("snowscape_vfx_spritesheet_1792889390727.jpg", "Snowscape", (4, 2), 3, dict(Travel=0, Ticks=6, At="middle")),
     ("sunny_day_vfx_spritesheet_1792908068245.jpg", "SunnyDay", (4, 2), 3, dict(Travel=0, Ticks=6, At="middle")),
+    # Water, Electric and Grass, first batch (2026-11-03)
+    ("water_gun_vfx_spritesheet_1793721582639.jpg", "WaterGun", (4, 2), 3, dict(Travel=3, Ticks=4, Face=1)),
+    ("hydro_pump_vfx_spritesheet_v3_1793721764064.jpg", "HydroPump", (4, 2), 3, dict(Travel=2, Ticks=4, Face=1)),
+    ("bubble_beam_spritesheet_clean_1793722444414.jpg", "BubbleBeam", (4, 2), 3, dict(Travel=3, Ticks=4, Face=1)),
+    ("aqua_jet_spritesheet_clean_1793722489127.jpg", "AquaJet", (4, 2), 3, dict(Travel=7, Ticks=3, Face=1)),
+    # Darker cells with magenta grid lines and a bar at the bottom: cut inside the lines
+    ("thunder_shock_vfx_spritesheet_1793722431954.jpg", "ThunderShock",
+     [(2, 2, 341, 380), (347, 2, 686, 380), (692, 2, 1030, 380), (1036, 2, 1374, 380), (2, 388, 341, 726), (347, 388, 686, 726), (692, 388, 1030, 726), (1036, 388, 1374, 726)], 3, dict(Travel=2, Ticks=4, Face=1)),
+    # Leaves out frame 6 (a brown scorch shaped like the bolt) and the near-empty last frame
+    ("thunderbolt_vfx_spritesheet_1793721667921.jpg", "Thunderbolt",
+     [(0, 0, 344, 384), (344, 0, 688, 384), (688, 0, 1032, 384), (1032, 0, 1376, 384), (0, 384, 344, 768), (688, 384, 1032, 768)], 3, dict(Travel=1, Ticks=4, Face=1)),
+    ("thunder_punch_vfx_spritesheet_1793722488169.jpg", "ThunderPunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("razor_leaf_vfx_spritesheet_1793721701699.jpg", "RazorLeaf", (4, 2), 3, dict(Travel=7, Ticks=3, Face=1)),
 ]
 
 

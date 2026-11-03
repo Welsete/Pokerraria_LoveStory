@@ -42,7 +42,7 @@ Do not include characters, text, UI, borders or shadows.
 
 ---
 
-## 2. Aqua Jet
+## 2. Aqua Jet *(Já Gerado)*
 ```text
 Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
 
@@ -375,7 +375,7 @@ Do not include characters, text, UI, borders or shadows.
 
 ---
 
-## 11. Bubble Beam
+## 11. Bubble Beam *(Já Gerado)*
 ```text
 Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
 
@@ -411,7 +411,7 @@ Do not include characters, text, UI, borders or shadows.
 
 ---
 
-## 12. Hydro Pump
+## 12. Hydro Pump *(Já Gerado)*
 ```text
 Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
 
@@ -524,7 +524,7 @@ Do not include characters, text, UI, borders or shadows.
 
 ---
 
-## 15. Water Gun
+## 15. Water Gun *(Já Gerado)*
 ```text
 Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
 
