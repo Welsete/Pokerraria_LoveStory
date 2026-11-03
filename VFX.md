@@ -18,7 +18,8 @@ onda gigante ou um meteoro.
 Meio-termo: **raios, feixes e golpes de pura luz** são desenhados à mão em código, com carga, raio e impacto próprios
 (Solar Beam, Hyper Beam, Psybeam, Charge Beam, Flash Cannon, Thunder, Dazzling Gleam), e alguns golpes com forma
 simples de desenhar (Will-O-Wisp, Twister, Rock Slide). Estão em `tools/vfx/draw_solar_beam.py`,
-`tools/vfx/draw_light_moves.py` e `tools/vfx/draw_shape_moves.py`; um raio novo é uma linha em `MOVES` com o estilo
+`tools/vfx/draw_light_moves.py` e `tools/vfx/draw_shape_moves.py`. Golpes que pedem um símbolo (socos com punho, chutes com
+bota, Swords Dance com espadas, golpes de dragão com cabeça de dragão) ficam em `tools/vfx/draw_themed_moves.py`; um raio novo é uma linha em `MOVES` com o estilo
 de carga, de raio e de impacto.
 
 Na dúvida, começa no código: é de graça e na hora. Se ficar fraco no jogo, o golpe sobe para o gerador.
@@ -38,7 +39,7 @@ Quando um golpe do gerador fica pronto, a animação dele substitui a versão de
 
 ## Situação
 
-416 golpes no catálogo: **54** com arte própria, **232** desenhados por código, **130** esperando o gerador.
+416 golpes no catálogo: **82** com arte própria, **204** desenhados por código, **130** esperando o gerador.
 
 ## Faltam: para o gerador de imagem
 
@@ -68,19 +69,19 @@ Os prompts de todos esses, prontos para copiar, estão em [art/vfx/FILA_GERADOR.
 - **Água** (10): Aqua Cutter (corte), Crabhammer (impacto_forte), Liquidation (impacto_forte), Razor Shell (corte), Brine (pulso), Water Pulse (pulso), Aqua Ring (cura), Life Dew (cura), Soak (debuff), Withdraw (aura)
 - **Planta** (14): Branch Poke (impacto), Bullet Seed (projetil), Leaf Blade (corte), Leafage (projetil), Seed Bomb (projetil), Wood Hammer (impacto_forte), Energy Ball (projetil), Magical Leaf (projetil), Aromatherapy (cura), Sleep Powder (nuvem), Spore (nuvem), Stun Spore (nuvem), Synthesis (cura), Worry Seed (debuff)
 - **Elétrico** (9): Nuzzle (impacto), Spark (impacto), Discharge (pulso), Electro Ball (projetil), Shock Wave (pulso), Charge (aura), Eerie Impulse (debuff), Magnet Rise (aura), Thunder Wave (debuff)
-- **Dragão** (5): Dragon Claw (garra), Dragon Rush (impacto_forte), Dual Chop (cruz), Dragon Pulse (pulso), Dragon Dance (aura)
-- **Fantasma** (7): Astonish (impacto), Rage Fist (impacto_forte), Shadow Punch (impacto), Hex (pulso), Night Shade (pulso), Confuse Ray (debuff), Spite (debuff)
-- **Sombrio** (13): Assurance (impacto), Knock Off (impacto), Payback (impacto_forte), Pursuit (impacto), Sucker Punch (impacto), Dark Pulse (pulso), Snarl (pulso), Fake Tears (debuff), Flatter (debuff), Hone Claws (aura), Nasty Plot (aura), Taunt (debuff), Torment (debuff)
-- **Aço** (7): Heavy Slam (impacto_forte), Iron Head (impacto), Metal Claw (garra), Meteor Mash (impacto_forte), Smart Strike (impacto), Iron Defense (aura), Metal Sound (pulso)
-- **Terrestre** (6): High Horsepower (impacto_forte), Stomping Tantrum (impacto_forte), Earth Power (pulso), Mud Shot (projetil), Mud Slap (nuvem), Sand Attack (nuvem)
+- **Dragão** (1): Dual Chop (cruz)
+- **Fantasma** (5): Astonish (impacto), Hex (pulso), Night Shade (pulso), Confuse Ray (debuff), Spite (debuff)
+- **Sombrio** (12): Assurance (impacto), Knock Off (impacto), Payback (impacto_forte), Pursuit (impacto), Dark Pulse (pulso), Snarl (pulso), Fake Tears (debuff), Flatter (debuff), Hone Claws (aura), Nasty Plot (aura), Taunt (debuff), Torment (debuff)
+- **Aço** (6): Heavy Slam (impacto_forte), Iron Head (impacto), Metal Claw (garra), Smart Strike (impacto), Iron Defense (aura), Metal Sound (pulso)
+- **Terrestre** (5): High Horsepower (impacto_forte), Earth Power (pulso), Mud Shot (projetil), Mud Slap (nuvem), Sand Attack (nuvem)
 - **Pedra** (5): Rock Blast (projetil), Rock Throw (projetil), Smack Down (projetil), Power Gem (projetil), Rock Polish (aura)
 - **Venenoso** (15): Cross Poison (cruz), Poison Jab (impacto), Poison Sting (projetil), Acid (projetil), Clear Smog (nuvem), Sludge (projetil), Sludge Bomb (projetil), Smog (nuvem), Venoshock (projetil), Acid Armor (aura), Coil (aura), Gastro Acid (debuff), Poison Gas (nuvem), Poison Powder (nuvem), Toxic (debuff)
 - **Inseto** (9): Fell Stinger (projetil), Fury Cutter (corte), Megahorn (impacto_forte), Pin Missile (projetil), Twineedle (projetil), X-Scissor (cruz), Bug Buzz (pulso), Quiver Dance (aura), Rage Powder (nuvem)
 - **Voador** (10): Acrobatics (impacto), Aerial Ace (corte), Drill Peck (impacto), Peck (impacto), Pluck (impacto), Wing Attack (corte), Air Cutter (corte), Air Slash (corte), Feather Dance (debuff), Roost (cura)
-- **Lutador** (23): Axe Kick (impacto_forte), Brick Break (impacto), Close Combat (impacto_forte), Cross Chop (cruz), Double Kick (impacto), Drain Punch (impacto), Dynamic Punch (impacto_forte), Focus Punch (impacto_forte), Force Palm (impacto), Hammer Arm (impacto_forte), High Jump Kick (impacto_forte), Low Kick (impacto), Low Sweep (impacto), Mach Punch (impacto), Revenge (impacto), Reversal (impacto), Rock Smash (impacto), Submission (impacto_forte), Superpower (impacto_forte), Aura Sphere (projetil), Vacuum Wave (pulso), Bulk Up (aura), Detect (aura)
+- **Lutador** (8): Cross Chop (cruz), Revenge (impacto), Reversal (impacto), Submission (impacto_forte), Aura Sphere (projetil), Vacuum Wave (pulso), Bulk Up (aura), Detect (aura)
 - **Fada** (6): Disarming Voice (pulso), Moonblast (projetil), Baby-Doll Eyes (debuff), Charm (debuff), Moonlight (cura), Sweet Kiss (debuff)
 - **Psíquico** (15): Psycho Cut (corte), Zen Headbutt (impacto), Confusion (pulso), Extrasensory (pulso), Psychic (pulso), Psyshock (pulso), Stored Power (pulso), Agility (aura), Amnesia (aura), Calm Mind (aura), Cosmic Power (aura), Heal Pulse (cura), Hypnosis (debuff), Kinesis (debuff), Rest (cura)
-- **Normal** (78): Body Slam (impacto_forte), Covet (impacto), Crush Claw (garra), Cut (corte), Double-Edge (impacto_forte), Double Hit (impacto), Endeavor (impacto), Extreme Speed (impacto), Facade (impacto), Fake Out (impacto), False Swipe (corte), Feint (impacto), Flail (impacto), Fury Attack (impacto), Fury Swipes (garra), Headbutt (impacto), Horn Attack (impacto), Last Resort (impacto_forte), Mega Kick (impacto_forte), Mega Punch (impacto_forte), Pound (impacto), Quick Attack (impacto), Rage (impacto), Retaliate (impacto), Scratch (garra), Slam (impacto), Slash (corte), Stomp (impacto), Strength (impacto_forte), Tackle (impacto), Take Down (impacto_forte), Echoed Voice (pulso), Hyper Voice (pulso), Round (pulso), Snore (pulso), Spit Up (projetil), Swift (projetil), Uproar (pulso), Acupressure (aura), Belly Drum (aura), Defense Curl (aura), Disable (debuff), Double Team (aura), Encore (debuff), Endure (aura), Focus Energy (aura), Glare (debuff), Growl (debuff), Growth (aura), Harden (aura), Howl (aura), Leer (debuff), Lock-On (debuff), Lovely Kiss (debuff), Mean Look (debuff), Minimize (aura), Play Nice (debuff), Protect (aura), Psych Up (aura), Recover (cura), Scary Face (debuff), Screech (pulso), Shell Smash (aura), Sing (debuff), Slack Off (cura), Smokescreen (nuvem), Soft-Boiled (cura), Stockpile (aura), Supersonic (pulso), Swagger (debuff), Swallow (cura), Sweet Scent (nuvem), Swords Dance (aura), Tail Whip (debuff), Tearful Look (debuff), Tickle (debuff), Work Up (aura), Yawn (debuff)
+- **Normal** (74): Body Slam (impacto_forte), Covet (impacto), Crush Claw (garra), Cut (corte), Double-Edge (impacto_forte), Double Hit (impacto), Endeavor (impacto), Extreme Speed (impacto), Facade (impacto), Fake Out (impacto), False Swipe (corte), Feint (impacto), Flail (impacto), Fury Attack (impacto), Fury Swipes (garra), Headbutt (impacto), Horn Attack (impacto), Last Resort (impacto_forte), Pound (impacto), Quick Attack (impacto), Rage (impacto), Retaliate (impacto), Scratch (garra), Slam (impacto), Slash (corte), Strength (impacto_forte), Tackle (impacto), Take Down (impacto_forte), Echoed Voice (pulso), Hyper Voice (pulso), Round (pulso), Snore (pulso), Spit Up (projetil), Swift (projetil), Uproar (pulso), Acupressure (aura), Belly Drum (aura), Defense Curl (aura), Disable (debuff), Double Team (aura), Encore (debuff), Endure (aura), Focus Energy (aura), Glare (debuff), Growl (debuff), Growth (aura), Harden (aura), Howl (aura), Leer (debuff), Lock-On (debuff), Lovely Kiss (debuff), Mean Look (debuff), Minimize (aura), Play Nice (debuff), Protect (aura), Psych Up (aura), Recover (cura), Scary Face (debuff), Screech (pulso), Shell Smash (aura), Sing (debuff), Slack Off (cura), Smokescreen (nuvem), Soft-Boiled (cura), Stockpile (aura), Supersonic (pulso), Swagger (debuff), Swallow (cura), Sweet Scent (nuvem), Tail Whip (debuff), Tearful Look (debuff), Tickle (debuff), Work Up (aura), Yawn (debuff)
 
 ## Com arte própria (gerador ou desenho à mão)
 
@@ -89,11 +90,13 @@ Os prompts de todos esses, prontos para copiar, estão em [art/vfx/FILA_GERADOR.
 - **Planta** (2): Razor Leaf, Solar Beam
 - **Elétrico** (5): Thunder Punch, Charge Beam, Thunder, Thunder Shock, Thunderbolt
 - **Gelo** (15): Ice Fang, Ice Punch, Ice Shard, Icicle Crash, Icicle Spear, Aurora Beam, Blizzard, Freeze Dry, Ice Beam, Icy Wind, Powder Snow, Sheer Cold, Haze, Mist, Snowscape
-- **Dragão** (1): Twister
-- **Fantasma** (1): Shadow Ball
-- **Sombrio** (1): Night Slash
-- **Aço** (2): Bullet Punch, Flash Cannon
+- **Dragão** (5): Dragon Claw, Dragon Rush, Dragon Pulse, Twister, Dragon Dance
+- **Fantasma** (3): Rage Fist, Shadow Punch, Shadow Ball
+- **Sombrio** (2): Night Slash, Sucker Punch
+- **Aço** (3): Bullet Punch, Meteor Mash, Flash Cannon
+- **Terrestre** (1): Stomping Tantrum
 - **Pedra** (1): Rock Slide
+- **Lutador** (15): Axe Kick, Brick Break, Close Combat, Double Kick, Drain Punch, Dynamic Punch, Focus Punch, Force Palm, Hammer Arm, High Jump Kick, Low Kick, Low Sweep, Mach Punch, Rock Smash, Superpower
 - **Fada** (1): Dazzling Gleam
 - **Psíquico** (1): Psybeam
-- **Normal** (1): Hyper Beam
+- **Normal** (5): Mega Kick, Mega Punch, Stomp, Hyper Beam, Swords Dance

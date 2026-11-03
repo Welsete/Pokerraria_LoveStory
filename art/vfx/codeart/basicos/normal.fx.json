@@ -21,10 +21,10 @@
  ],
  "effects": [
   {
-   "id": "smokescreen",
-   "durationMs": 520,
+   "id": "pound",
+   "durationMs": 350,
    "impactMs": 0,
-   "seed": 2040566,
+   "seed": 3436598,
    "outline": "contorno",
    "ramps": {
     "brilho": [
@@ -52,101 +52,48 @@
    },
    "primitives": [
     {
-     "type": "dust",
-     "ramp": "nevoa",
+     "type": "flash",
+     "ramp": "brilho",
      "origin": [
       28,
-      38
+      28
      ],
-     "count": 10,
-     "spread": 18,
-     "rise": 20,
-     "drift": 10,
+     "radius": 5,
+     "rays": 4,
+     "rayLength": 13,
+     "rotation": 0,
+     "lifeMs": 220
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
      "radius": [
-      2.5,
-      5
+      3,
+      16
      ],
-     "lifeMs": 480
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 260
     },
     {
      "type": "sparks",
      "ramp": "brilho",
      "origin": [
       28,
-      30
+      28
      ],
-     "count": 6,
-     "angle": -90,
-     "spread": 160,
-     "speed": 26,
-     "lifeMs": 380,
-     "length": 3,
-     "atMs": 80
-    }
-   ]
-  },
-  {
-   "id": "sweetscent",
-   "durationMs": 520,
-   "impactMs": 0,
-   "seed": 9315712,
-   "outline": "contorno",
-   "ramps": {
-    "brilho": [
-     "nucleo",
-     "alto",
-     "medio",
-     "base"
-    ],
-    "lamina": [
-     "nucleo",
-     "alto",
-     "medio",
-     "base"
-    ],
-    "fumaca": [
-     "medio",
-     "base",
-     "escuro"
-    ],
-    "nevoa": [
-     "alto",
-     "medio",
-     "base"
-    ]
-   },
-   "primitives": [
-    {
-     "type": "dust",
-     "ramp": "nevoa",
-     "origin": [
-      28,
-      38
-     ],
-     "count": 10,
-     "spread": 18,
-     "rise": 20,
-     "drift": 10,
-     "radius": [
-      2.5,
-      5
-     ],
-     "lifeMs": 480
-    },
-    {
-     "type": "sparks",
-     "ramp": "brilho",
-     "origin": [
-      28,
-      30
-     ],
-     "count": 6,
-     "angle": -90,
-     "spread": 160,
-     "speed": 26,
-     "lifeMs": 380,
-     "length": 3,
-     "atMs": 80
+     "count": 8,
+     "spread": 360,
+     "speed": 50,
+     "lifeMs": 260,
+     "length": 6,
+     "width": 2
     }
    ]
   }

@@ -65,21 +65,19 @@ ARQUIVOS = {"fogo": "Fogo", "agua": "Água", "planta": "Planta", "eletrico": "El
 #   aura           buff no próprio usuário: anel e faíscas subindo
 #   cura           cura no próprio usuário: brilhos subindo
 #   debuff         efeito de status no alvo: anel que fecha e faíscas caindo
+# Socos, chutes, Swords Dance e golpes de dragão têm desenho próprio em draw_themed_moves.py
 BASICOS = {
     # Normal
     "Body Slam": "impacto_forte", "Covet": "impacto", "Crush Claw": "garra", "Cut": "corte", "Double-Edge": "impacto_forte",
     "Double Hit": "impacto", "Endeavor": "impacto", "Extreme Speed": "impacto", "Facade": "impacto", "Fake Out": "impacto",
     "False Swipe": "corte", "Feint": "impacto", "Flail": "impacto", "Fury Attack": "impacto", "Fury Swipes": "garra",
-    "Headbutt": "impacto", "Horn Attack": "impacto", "Last Resort": "impacto_forte", "Mega Kick": "impacto_forte",
-    "Mega Punch": "impacto_forte", "Pound": "impacto", "Quick Attack": "impacto", "Rage": "impacto",
-    "Retaliate": "impacto", "Scratch": "garra", "Slam": "impacto", "Slash": "corte", "Stomp": "impacto",
-    "Strength": "impacto_forte", "Tackle": "impacto", "Take Down": "impacto_forte",
+    "Headbutt": "impacto", "Horn Attack": "impacto", "Last Resort": "impacto_forte",     "Pound": "impacto", "Quick Attack": "impacto", "Rage": "impacto",
+    "Retaliate": "impacto", "Scratch": "garra", "Slam": "impacto", "Slash": "corte",     "Strength": "impacto_forte", "Tackle": "impacto", "Take Down": "impacto_forte",
     "Echoed Voice": "pulso", "Hyper Voice": "pulso", "Round": "pulso", "Snore": "pulso", "Uproar": "pulso",
     "Spit Up": "projetil", "Swift": "projetil",
     "Acupressure": "aura", "Belly Drum": "aura", "Defense Curl": "aura", "Double Team": "aura", "Endure": "aura",
     "Focus Energy": "aura", "Growth": "aura", "Harden": "aura", "Howl": "aura", "Minimize": "aura",
-    "Protect": "aura", "Psych Up": "aura", "Shell Smash": "aura", "Stockpile": "aura", "Swords Dance": "aura",
-    "Work Up": "aura", "Recover": "cura", "Slack Off": "cura", "Soft-Boiled": "cura", "Swallow": "cura",
+    "Protect": "aura", "Psych Up": "aura", "Shell Smash": "aura", "Stockpile": "aura",     "Work Up": "aura", "Recover": "cura", "Slack Off": "cura", "Soft-Boiled": "cura", "Swallow": "cura",
     "Disable": "debuff", "Encore": "debuff", "Glare": "debuff", "Growl": "debuff", "Leer": "debuff",
     "Lock-On": "debuff", "Mean Look": "debuff", "Play Nice": "debuff", "Scary Face": "debuff", "Screech": "pulso",
     "Sing": "debuff", "Supersonic": "pulso", "Swagger": "debuff", "Tail Whip": "debuff", "Tearful Look": "debuff",
@@ -97,20 +95,17 @@ BASICOS = {
     "Nuzzle": "impacto", "Spark": "impacto", "Discharge": "pulso", "Electro Ball": "projetil", "Shock Wave": "pulso",
     "Charge": "aura", "Magnet Rise": "aura", "Eerie Impulse": "debuff", "Thunder Wave": "debuff",
     # Dragão
-    "Dragon Claw": "garra", "Dual Chop": "cruz", "Dragon Rush": "impacto_forte", "Dragon Pulse": "pulso",
-    "Dragon Dance": "aura",
-    # Fantasma
-    "Astonish": "impacto", "Rage Fist": "impacto_forte", "Shadow Punch": "impacto", "Hex": "pulso",
+    "Dual Chop": "cruz",         # Fantasma
+    "Astonish": "impacto", "Hex": "pulso",
     "Night Shade": "pulso", "Confuse Ray": "debuff", "Spite": "debuff",
     # Sombrio
     "Assurance": "impacto", "Knock Off": "impacto", "Payback": "impacto_forte", "Pursuit": "impacto",
-    "Sucker Punch": "impacto", "Dark Pulse": "pulso", "Snarl": "pulso", "Hone Claws": "aura", "Nasty Plot": "aura",
+    "Dark Pulse": "pulso", "Snarl": "pulso", "Hone Claws": "aura", "Nasty Plot": "aura",
     "Fake Tears": "debuff", "Flatter": "debuff", "Taunt": "debuff", "Torment": "debuff",
     # Aço
-    "Heavy Slam": "impacto_forte", "Iron Head": "impacto", "Metal Claw": "garra", "Meteor Mash": "impacto_forte",
-    "Smart Strike": "impacto", "Iron Defense": "aura", "Metal Sound": "pulso",
+    "Heavy Slam": "impacto_forte", "Iron Head": "impacto", "Metal Claw": "garra",     "Smart Strike": "impacto", "Iron Defense": "aura", "Metal Sound": "pulso",
     # Terrestre
-    "High Horsepower": "impacto_forte", "Stomping Tantrum": "impacto_forte", "Earth Power": "pulso",
+    "High Horsepower": "impacto_forte", "Earth Power": "pulso",
     "Mud Shot": "projetil", "Mud Slap": "nuvem", "Sand Attack": "nuvem",
     # Pedra
     "Rock Blast": "projetil", "Rock Throw": "projetil", "Smack Down": "projetil", "Power Gem": "projetil",
@@ -127,11 +122,8 @@ BASICOS = {
     "Aerial Ace": "corte", "Drill Peck": "impacto", "Peck": "impacto", "Pluck": "impacto", "Wing Attack": "corte",
     "Acrobatics": "impacto", "Air Cutter": "corte", "Air Slash": "corte", "Roost": "cura", "Feather Dance": "debuff",
     # Lutador
-    "Axe Kick": "impacto_forte", "Brick Break": "impacto", "Close Combat": "impacto_forte", "Cross Chop": "cruz",
-    "Double Kick": "impacto", "Drain Punch": "impacto", "Dynamic Punch": "impacto_forte", "Focus Punch": "impacto_forte",
-    "Force Palm": "impacto", "Hammer Arm": "impacto_forte", "High Jump Kick": "impacto_forte", "Low Kick": "impacto",
-    "Low Sweep": "impacto", "Mach Punch": "impacto", "Revenge": "impacto", "Reversal": "impacto", "Rock Smash": "impacto",
-    "Submission": "impacto_forte", "Superpower": "impacto_forte", "Aura Sphere": "projetil", "Vacuum Wave": "pulso",
+    "Cross Chop": "cruz",
+            "Revenge": "impacto", "Reversal": "impacto",     "Submission": "impacto_forte", "Aura Sphere": "projetil", "Vacuum Wave": "pulso",
     "Bulk Up": "aura", "Detect": "aura",
     # Fada
     "Disarming Voice": "pulso", "Moonblast": "projetil", "Moonlight": "cura", "Baby-Doll Eyes": "debuff",

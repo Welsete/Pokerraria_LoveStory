@@ -546,6 +546,7 @@ GUI: {
 		DebugLeaguePedestal: Pokémon League pedestal
 		TabMoves: Moves
 		MovesHint: "Left click: play now in battle · Right click: teach in slot 1"
+		SearchMoves: Search move (click and type, right click clears):
 		PlayAllMoves: Play all ({0})
 		StopMoves: Stop
 		MovesFromYou: "Used by: your Pokémon"

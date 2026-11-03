@@ -72,8 +72,10 @@ def will_o_wisp():
 
 # ------------------------------------------------------------------ Twister
 def twister():
-    w, h = 72, 88
-    cx, base = w // 2, h - 8
+    # O jogo desenha o frame com o centro no centro do alvo: o chão (pés do alvo) fica um pouco abaixo do centro,
+    # e o tornado sobe de lá, envolvendo o alvo
+    w, h = 72, 152
+    cx, base = w // 2, h // 2 + 8
     frames = []
     heights = [20, 40, 62, 70, 70, 70, 70, 55, 30]
     for k, H in enumerate(heights):
@@ -129,8 +131,9 @@ def rock(cv, x, y, r, seed):
 
 
 def rock_slide():
-    w, h = 80, 88
-    ground = h - 14
+    # Centro do frame = centro do alvo; o chão fica um pouco abaixo, e as pedras caem do topo do frame
+    w, h = 80, 136
+    ground = h // 2 + 8
     frames = []
     rocks = [(-16, 11, 0), (8, 14, 2), (24, 9, 4), (-4, 8, 5)]  # (deslocamento x, raio, frame em que cai)
     for k in range(11):
@@ -142,7 +145,7 @@ def rock_slide():
                 continue
             x = w / 2 + dx
             if t < 3:  # caindo, com rastro
-                y = 6 + r + t * (ground - r - 6) / 3
+                y = 2 + r + t * (ground - r - 2) / 3
                 for j in range(1, 4):
                     cv.put(x + rnd.uniform(-r / 2, r / 2), y - r - j * 3, LIGHT if j == 1 else MID)
                 rock(cv, x, y, r, i)

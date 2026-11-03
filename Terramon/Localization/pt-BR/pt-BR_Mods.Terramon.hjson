@@ -546,6 +546,7 @@ GUI: {
 		DebugLeaguePedestal: Pedestal da Liga Pokémon
 		TabMoves: Golpes
 		MovesHint: "Clique esquerdo: tocar agora na batalha · Direito: ensinar no 1º espaço"
+		SearchMoves: Buscar golpe (clique e digite, direito limpa):
 		PlayAllMoves: Tocar todos ({0})
 		StopMoves: Parar
 		MovesFromYou: "Quem usa: seu Pokémon"

@@ -11,7 +11,11 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 - 232 basic moves get code-drawn animations in their type's colors: punches, kicks, slashes, claws, simple projectiles, sound and psychic waves, powders and gases, buffs, heals and status effects (277 in total).
 - New Solar Beam, drawn in code: sunlight gathers on the user with orbiting leaves, the beam has a white core with vines of light spiralling around it, and it bursts into light and scattered leaves on the target.
 - Hyper Beam, Psybeam, Charge Beam, Flash Cannon, Thunder and Dazzling Gleam drawn in code in the same style: a charge on the user, a beam with its own texture (shock rings, psychic rings, crackling bolts, light chevrons), a bolt falling from the sky, a ring of starlight (283 in total).
-- Will-O-Wisp (three ghost flames that fly over, circle the target and sink in), Twister (a dragon-colored tornado with spinning debris) and Rock Slide (boulders crashing down in dust) drawn in code (286 in total). The rest of the moves are listed in VFX.md for the image generator.
+- Will-O-Wisp (three ghost flames that fly over, circle the target and sink in), Twister (a dragon-colored tornado with spinning debris) and Rock Slide (boulders crashing down in dust) drawn in code (286 in total).
+- Punches now show a fist, kicks a boot, Swords Dance six swords spinning around the user, and Dragon Dance, Dragon Rush, Dragon Pulse and Dragon Claw a dragon head of energy.
+- Ice Beam redrawn in code: ice crystals growing out of the beam's edges.
+- Twister and Rock Slide now sit on the target instead of below it.
+- Test panel, Moves tab: search moves by name (click the box and type; right click clears). The rest of the moves are listed in VFX.md for the image generator.
 - Every drawn move animation is cut out again with a cleaner background keyer: outlines and small sparks that were lost now show.
 - 17 more drawn move animations: Blaze Kick, Eruption, Fire Fang, Fire Punch, Fire Spin, Flame Charge, Flame Wheel, Flare Blitz, Heat Crash, Heat Wave, Incinerate, Inferno, Lava Plume, Overheat, Sunny Day, Mist and Snowscape (35 in total).
 - Nurse Joy's healing machine on the counter beside her: your Poké Balls go into its slots one by one and glow while the healing jingle plays.

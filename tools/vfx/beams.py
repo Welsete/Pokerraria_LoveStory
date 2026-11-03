@@ -12,15 +12,7 @@ REACH = 150
 
 SHEETS = [
     # Solar Beam is drawn in code now (tools/vfx/draw_solar_beam.py); its old Gemini cut is kept below, unused
-    ("ice_beam_vfx_spritesheet_1792855768122.jpg", "IceBeam", 4, [
-        ((70, 80, 275, 300), "burst"),     # crystal forming
-        ((385, 80, 670, 300), "burst"),    # spiral point, flying
-        ((1025, 70, 1376, 310), "beam"),   # beam with rings
-        ((0, 450, 485, 680), "beam"),      # beam with chevrons, breaking
-        ((485, 490, 785, 640), "beam"),    # ice blocks
-        ((785, 430, 1030, 700), "burst"),  # rings
-        ((1160, 510, 1260, 620), "burst"), # sparkles
-    ], dict(Charge=1, Travel=1, Beam="2 4", Ticks=5, Face=1)),
+    # Ice Beam is drawn in code now (tools/vfx/draw_light_moves.py); its old cut is in OLD_ICE_BEAM below
     ("flamethrower_vfx_spritesheet_final_1792855053226.jpg", "Flamethrower", 3, [
         ((40, 70, 280, 280), "beam"),
         ((350, 70, 640, 280), "beam"),
@@ -36,6 +28,18 @@ SHEETS = [
         ((910, 570, 1110, 750), "burst"),
         ((1190, 600, 1345, 720), "burst"),
     ], dict(Travel=0, Beam="0 5", Ticks=4, Face=1)),
+]
+
+OLD_ICE_BEAM = [
+    ("ice_beam_vfx_spritesheet_1792855768122.jpg", "IceBeam", 4, [
+        ((70, 80, 275, 300), "burst"),     # crystal forming
+        ((385, 80, 670, 300), "burst"),    # spiral point, flying
+        ((1025, 70, 1376, 310), "beam"),   # beam with rings
+        ((0, 450, 485, 680), "beam"),      # beam with chevrons, breaking
+        ((485, 490, 785, 640), "beam"),    # ice blocks
+        ((785, 430, 1030, 700), "burst"),  # rings
+        ((1160, 510, 1260, 620), "burst"), # sparkles
+    ], dict(Charge=1, Travel=1, Beam="2 4", Ticks=5, Face=1)),
 ]
 
 OLD_SOLAR_BEAM = [

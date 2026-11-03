@@ -1,3 +1,4 @@
+using Terramon.Content.GUI.Common;
 using Terramon.Content.Commands;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
@@ -167,6 +168,8 @@ public sealed class AdminPanelUI : SmartUIState
 
     private void ShowTab()
     {
+        if (_moveSearchField?.IsTyping == true)
+            _moveSearchField.SetNotTyping();
         foreach (var button in _buttons)
             button.Remove();
         _buttons.Clear();
@@ -321,6 +324,18 @@ public sealed class AdminPanelUI : SmartUIState
             _panel.Left.Pixels = position.X;
             _panel.Top.Pixels = position.Y;
             _panel.Recalculate();
+        }
+
+        // Move search: follow what's typed
+        if (_moveSearchField?.Parent != null)
+        {
+            if (_moveSearchField.CurrentValue != _moveFilter)
+            {
+                _moveFilter = _moveSearchField.CurrentValue;
+                FilterMoveGrid();
+            }
+
+            _moveSearchBox.SetText(SearchLabel());
         }
 
         // The grid only moves its items when it's laid out again, so scrolling needs this every frame
@@ -521,7 +536,38 @@ public sealed class AdminPanelUI : SmartUIState
             _panel.Append(button);
         }
 
-        var gridTop = GridTop + 20f + ButtonHeight + Gap;
+        // Search by name: click the box and type; Esc or a click on the box again stops typing
+        _moveSearchField = new UITextField(30);
+        _moveSearchField.Width.Pixels = 0f;
+        _moveSearchField.Height.Pixels = 0f;
+        _moveSearchField.SetCurrentText(_moveFilter);
+        _moveSearchBox = new UITextPanel<string>(SearchLabel(), 0.8f);
+        _moveSearchBox.Left.Pixels = Gap;
+        _moveSearchBox.Top.Pixels = GridTop + 20f + ButtonHeight + Gap;
+        _moveSearchBox.Width.Pixels = Columns * (ButtonWidth + Gap) - Gap;
+        _moveSearchBox.Height.Pixels = ButtonHeight;
+        _moveSearchBox.TextHAlign = 0f;
+        _moveSearchBox.BackgroundColor = new Color(30, 40, 80) * 0.95f;
+        _moveSearchBox.OnLeftClick += (_, _) =>
+        {
+            SoundEngine.PlaySound(SoundID.MenuTick);
+            if (_moveSearchField.IsTyping)
+                _moveSearchField.SetNotTyping();
+            else
+                _moveSearchField.SetTyping();
+        };
+        _moveSearchBox.OnRightClick += (_, _) =>
+        {
+            _moveSearchField.SetCurrentText("");
+            _moveFilter = "";
+            FilterMoveGrid();
+        };
+        _buttons.Add(_moveSearchBox);
+        _buttons.Add(_moveSearchField);
+        _panel.Append(_moveSearchBox);
+        _panel.Append(_moveSearchField);
+
+        var gridTop = GridTop + 20f + 2 * (ButtonHeight + Gap);
         var grid = new UIGrid { ListPadding = 4f };
         grid.Left.Pixels = Gap;
         grid.Top.Pixels = gridTop;
@@ -535,6 +581,7 @@ public sealed class AdminPanelUI : SmartUIState
         grid.SetScrollbar(scrollbar);
 
         var cellWidth = (grid.Width.Pixels - 2 * grid.ListPadding) / Columns - 1f;
+        _moveButtons.Clear();
         foreach (var move in moves)
         {
             var button = MakeButton(Language.GetText($"Mods.Terramon.Moves.{move}.DisplayName"), () => PlaySpriteMoves([move]));
@@ -545,14 +592,53 @@ public sealed class AdminPanelUI : SmartUIState
             };
             button.Width.Pixels = cellWidth;
             button.Height.Pixels = ButtonHeight - 6f;
-            grid.Add(button);
+            _moveButtons.Add((Plain(MoveLearnUI.MoveName(move) + " " + move), button));
         }
 
         _itemGrid = grid;
+        FilterMoveGrid();
         _buttons.Add(grid);
         _buttons.Add(scrollbar);
         _panel.Append(grid);
         _panel.Append(scrollbar);
+    }
+
+    private UITextField _moveSearchField;
+    private UITextPanel<string> _moveSearchBox;
+    private static string _moveFilter = "";
+    private readonly List<(string Name, UIElement Button)> _moveButtons = [];
+
+    private string SearchLabel()
+    {
+        var typing = _moveSearchField?.IsTyping == true && Main.GameUpdateCount % 40 < 20 ? "|" : "";
+        return Text("SearchMoves") + " " + _moveFilter + typing;
+    }
+
+    /// <summary>
+    ///     Shows only the moves whose name (in the game's language or in English) has the typed text, ignoring case and
+    ///     accents.
+    /// </summary>
+    private void FilterMoveGrid()
+    {
+        if (_itemGrid == null)
+            return;
+        var filter = Plain(_moveFilter);
+        _itemGrid.Clear();
+        foreach (var (name, button) in _moveButtons)
+        {
+            if (filter.Length == 0 || name.Contains(filter))
+                _itemGrid.Add(button);
+        }
+
+        _itemGrid.Recalculate();
+    }
+
+    private static string Plain(string text)
+    {
+        var decomposed = (text ?? "").ToLowerInvariant().Normalize(System.Text.NormalizationForm.FormD);
+        return new string(decomposed.Where(c =>
+            System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c) != System.Globalization.UnicodeCategory.NonSpacingMark &&
+            c != '-' && c != ' ').ToArray());
     }
 
     private static UITextPanel<LocalizedText> MakeButton(LocalizedText text, Action action)

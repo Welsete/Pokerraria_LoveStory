@@ -92,7 +92,7 @@
  {
   "tipo": "Fogo",
   "golpe": "Will-O-Wisp",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Água",
@@ -388,7 +388,7 @@
  {
   "tipo": "Elétrico",
   "golpe": "Charge Beam",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Elétrico",
@@ -411,7 +411,7 @@
  {
   "tipo": "Elétrico",
   "golpe": "Thunder",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Elétrico",
@@ -540,14 +540,12 @@
  {
   "tipo": "Dragão",
   "golpe": "Dragon Claw",
-  "situacao": "codigo",
-  "molde": "garra"
+  "situacao": "animado"
  },
  {
   "tipo": "Dragão",
   "golpe": "Dragon Rush",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Dragão",
@@ -573,19 +571,17 @@
  {
   "tipo": "Dragão",
   "golpe": "Dragon Pulse",
-  "situacao": "codigo",
-  "molde": "pulso"
+  "situacao": "animado"
  },
  {
   "tipo": "Dragão",
   "golpe": "Twister",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Dragão",
   "golpe": "Dragon Dance",
-  "situacao": "codigo",
-  "molde": "aura"
+  "situacao": "animado"
  },
  {
   "tipo": "Fantasma",
@@ -601,14 +597,12 @@
  {
   "tipo": "Fantasma",
   "golpe": "Rage Fist",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Fantasma",
   "golpe": "Shadow Punch",
-  "situacao": "codigo",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Fantasma",
@@ -701,8 +695,7 @@
  {
   "tipo": "Sombrio",
   "golpe": "Sucker Punch",
-  "situacao": "codigo",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Sombrio",
@@ -798,8 +791,7 @@
  {
   "tipo": "Aço",
   "golpe": "Meteor Mash",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Aço",
@@ -810,7 +802,7 @@
  {
   "tipo": "Aço",
   "golpe": "Flash Cannon",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Aço",
@@ -873,8 +865,7 @@
  {
   "tipo": "Terrestre",
   "golpe": "Stomping Tantrum",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Terrestre",
@@ -919,7 +910,7 @@
  {
   "tipo": "Pedra",
   "golpe": "Rock Slide",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Pedra",
@@ -1267,20 +1258,17 @@
  {
   "tipo": "Lutador",
   "golpe": "Axe Kick",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Brick Break",
-  "situacao": "codigo",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Close Combat",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1296,62 +1284,52 @@
  {
   "tipo": "Lutador",
   "golpe": "Double Kick",
-  "situacao": "codigo",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Drain Punch",
-  "situacao": "codigo",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Dynamic Punch",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Focus Punch",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Force Palm",
-  "situacao": "codigo",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Hammer Arm",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "High Jump Kick",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Low Kick",
-  "situacao": "codigo",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Low Sweep",
-  "situacao": "codigo",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Mach Punch",
-  "situacao": "codigo",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1368,8 +1346,7 @@
  {
   "tipo": "Lutador",
   "golpe": "Rock Smash",
-  "situacao": "codigo",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1390,8 +1367,7 @@
  {
   "tipo": "Lutador",
   "golpe": "Superpower",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1440,7 +1416,7 @@
  {
   "tipo": "Fada",
   "golpe": "Dazzling Gleam",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Fada",
@@ -1525,7 +1501,7 @@
  {
   "tipo": "Psíquico",
   "golpe": "Psybeam",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Psíquico",
@@ -1794,14 +1770,12 @@
  {
   "tipo": "Normal",
   "golpe": "Mega Kick",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Normal",
   "golpe": "Mega Punch",
-  "situacao": "codigo",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Normal",
@@ -1868,8 +1842,7 @@
  {
   "tipo": "Normal",
   "golpe": "Stomp",
-  "situacao": "codigo",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Normal",
@@ -1918,7 +1891,7 @@
  {
   "tipo": "Normal",
   "golpe": "Hyper Beam",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Normal",
@@ -2263,8 +2236,7 @@
  {
   "tipo": "Normal",
   "golpe": "Swords Dance",
-  "situacao": "codigo",
-  "molde": "aura"
+  "situacao": "animado"
  },
  {
   "tipo": "Normal",

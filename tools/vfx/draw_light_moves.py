@@ -18,6 +18,7 @@ PAL = {
     "Elétrico": ["#FFFFFF", "#FFFF7A", "#FFD700", "#FFA500", "#D97706", "#592700"],
     "Aço": ["#FFFFFF", "#F1F5F9", "#CBD5E1", "#64748B", "#334155", "#0F172A"],
     "Fada": ["#FFFFFF", "#FDF2F8", "#F472B6", "#EC4899", "#9D174D", "#500724"],
+    "Gelo": ["#FFFFFF", "#E0F7FA", "#80DEEA", "#26C6DA", "#00838F", "#004D40"],
 }
 WHITE, LIGHT, MID, BASE, DARK, OUTLINE = range(1, 7)
 SCALE = 2
@@ -180,6 +181,20 @@ def beam(style, k, thick, seed):
                 cv.put(x0 + abs(d) * 0.6, CY + d, WHITE if abs(d) < thick * 0.4 else LIGHT, only_empty=False)
         edge = on & (np.abs(dy - half) < 0.8) & (half > 2)
         cv.img[edge] = DARK
+    elif style == "ice":  # Ice Beam: cristais de gelo brotando das bordas do raio, brilhos de geada
+        hm = float(half.max())
+        for x0 in range((k * 3) % 9 + 4, CX - 6, 9):
+            L = 4 + (x0 * 7 + k * 3) % 5
+            for side in (-1, 1):
+                for d in range(L):
+                    wdt = (L - d) * 0.45
+                    y = CY + side * (hm - 1 + d)
+                    for dx in np.arange(-wdt, wdt + 0.01, 0.5):
+                        cv.put(x0 + dx + side * d * 0.35, y, WHITE if abs(dx) < 0.6 else LIGHT if d < L - 1 else MID,
+                               only_empty=True)
+        for x0 in range((k * 5) % 13, CX - 4, 13):
+            cv.put(x0, CY - 1, WHITE)
+            cv.put(x0 + 1, CY, WHITE)
     elif style == "pulse":  # Hyper Beam: ondas de choque em anel ao longo do raio
         for x0 in range((k * 6) % 16, CX - 4, 16):
             cv.ellipse_ring(x0, CY, 2.5, thick + 6, LIGHT, 1.5)
@@ -319,6 +334,7 @@ MOVES = {
     "Psybeam": ("Psíquico", lambda: beam_move("rings", "rings", "rings", 6, 5)),
     "ChargeBeam": ("Elétrico", lambda: beam_move("sparks", "zigzag", "sparks", 5, 7)),
     "FlashCannon": ("Aço", lambda: beam_move("shards", "segments", "shards", 8, 9)),
+    "IceBeam": ("Gelo", lambda: beam_move("shards", "ice", "shards", 6, 11)),
     "Thunder": ("Elétrico", thunder),
     "DazzlingGleam": ("Fada", dazzling_gleam),
 }
