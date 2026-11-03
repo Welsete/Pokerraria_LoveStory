@@ -17,7 +17,7 @@ Este repositório contém a especificação técnica e os prompts padronizados p
 * **Silhuetas Legíveis:** Formas robustas, sem ruído excessivo de partículas. O núcleo do efeito tem prioridade sobre partículas soltas.
 * **Contorno:** 1px em tom mais escuro na forma principal para garantir destaque contra qualquer fundo.
 * **Sem Gradientes Suaves:** Apenas preenchimentos sólidos (flat fills) em 3 a 4 tons por volume. Sem borrão (blur) e sem luz difusa automática (glow artificial).
-* **Fundo Chroma Key:** Sempre sólido `#FF00FF` (Magenta puro), permitindo recorte instantâneo no motor do jogo.
+* **Fundo Chroma Key:** Sólido `#FF00FF` (Magenta puro), permitindo recorte instantâneo no motor do jogo. **Exceção:** Fantasma, Psíquico, Venenoso, Sombrio e Fada usam fundo **verde `#00FF00`**, porque o recorte do magenta apagaria os roxos e rosas desses tipos.
 * **Escala de Pixel:** Proporção 1:1 estrita (sem mix de tamanhos de pixel).
 
 ---

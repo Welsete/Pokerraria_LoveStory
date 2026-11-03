@@ -2,7 +2,7 @@
 
 Paleta Oficial Fantasma:
 `#FFFFFF` (Brilho Espectral) | `#E9D5FF` (Lavanda Fantasmagórico) | `#A855F7` (Púrpura Ectoplasma) | `#7E22CE` (Roxo Sombra) | `#4C1D95` (Púrpura Escuro) | `#240046` (Contorno)
-Fundo: `#FF00FF`
+Fundo: `#00FF00`
 
 ---
 
@@ -24,7 +24,7 @@ Every art pixel is exactly 1 pixel (no mixed pixel sizes).
 
 PALETTE (use only these colors, flat fills, no gradients, no glow):
 #FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Poltergeist / Dungeon Spirit look: gaping spectral face, sharp 1px darker outline.
 
@@ -60,7 +60,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Gastropod / Wall of Flesh tongue aesthetic: segmented fleshy tongue, dripping saliva.
 
@@ -96,7 +96,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Golem fist / Shadowflame punch look: massive ethereal knuckles, spiteful energy fissures.
 
@@ -132,7 +132,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Shadowflame Apparition look: dimensional rift, crisp fist silhouette.
 
@@ -168,7 +168,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Shadow Armor shadow dash look: ground-hugging tendril, sudden upward spike.
 
@@ -204,7 +204,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Cursed Flames / Witch Doctor hex look: geometric occult sigil, eerie eye runes.
 
@@ -240,7 +240,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria True Eye of Cthulhu / Phantasm illusion aesthetic: towering specter silhouette, glaring eyes.
 
@@ -276,7 +276,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Shadow Orb / Spirit Flame look: turbulent swirling plasma core, explosive radial burst.
 
@@ -312,7 +312,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Confusion debuff look: spinning dizzy duck / spiral star aura.
 
@@ -348,7 +348,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Cursed debuff look: jagged nail silhouette, ominous purple impact sparks.
 
@@ -384,7 +384,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Soul Reaper / chain link aesthetic: jagged ectoplasmic chains, glowing soul padlock.
 
@@ -420,7 +420,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Shadowflame Hex doll look: mocking grimace, spectral siphon trails.
 

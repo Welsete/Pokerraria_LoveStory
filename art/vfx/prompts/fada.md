@@ -2,7 +2,7 @@
 
 Paleta Oficial Fada:
 `#FFFFFF` (Brilho Estelar) | `#FDF2F8` (Rosa Pastel) | `#F472B6` (Rosa Fada Vivo) | `#EC4899` (Magenta Encantado Base) | `#9D174D` (Rosa Profundo) | `#500724` (Contorno)
-Fundo: `#FF00FF`
+Fundo: `#00FF00`
 
 ---
 
@@ -24,7 +24,7 @@ Every art pixel is exactly 1 pixel (no mixed pixel sizes).
 
 PALETTE (use only these colors, flat fills, no gradients, no glow):
 #FFFFFF #FDF2F8 #F472B6 #EC4899 #9D174D #500724
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria cartoon brawl dust cloud aesthetic: tumbling comic fight cloud, hearts and stars.
 
@@ -60,7 +60,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FDF2F8 #F472B6 #EC4899 #9D174D #500724
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Prismatic Punch / Fairy bell flash look: blinding 8-point diamond star, dazzling starlight.
 
@@ -96,7 +96,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FDF2F8 #F472B6 #EC4899 #9D174D #500724
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Bell / musical note weapon look: buoyant musical notes, concentric heart acoustic rings.
 
@@ -133,7 +133,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FDF2F8 #F472B6 #EC4899 #9D174D #500724
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Moon Lord / Lunar portal look: glowing celestial moon disc, colossal fairy nova.
 
@@ -177,7 +177,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FDF2F8 #F472B6 #EC4899 #9D174D #500724
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria cute pet / charm debuff look: oversized shimmering eyes, floating sparkle hearts.
 
@@ -213,7 +213,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FDF2F8 #F472B6 #EC4899 #9D174D #500724
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria heart potion / charm look: oversized fluttering hearts, heavy downward debuff chevrons.
 
@@ -249,7 +249,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FDF2F8 #F472B6 #EC4899 #9D174D #500724
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria fairy forest / enchanted fog look: swirling ground mist, protective star runes.
 
@@ -285,7 +285,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FDF2F8 #F472B6 #EC4899 #9D174D #500724
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Moon charm / celestial healing shaft look: vertical pillar of moonlight, rising cross sparkles.
 
@@ -321,7 +321,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FDF2F8 #F472B6 #EC4899 #9D174D #500724
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria flying kiss / confusion charm look: plump pink lips, floating kiss mark, dizzy spiral stars.
 

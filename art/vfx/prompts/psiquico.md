@@ -2,7 +2,7 @@
 
 Paleta Oficial Psíquico:
 `#FFFFFF` (Luz Psíquica Pura) | `#FFE4F2` (Rosa Brilho) | `#F472B6` (Magenta Telecinese) | `#DB2777` (Rosa Choque Base) | `#831843` (Aura Profunda) | `#4A044E` (Contorno)
-Fundo: `#FF00FF`
+Fundo: `#00FF00`
 
 ---
 
@@ -24,7 +24,7 @@ Every art pixel is exactly 1 pixel (no mixed pixel sizes).
 
 PALETTE (use only these colors, flat fills, no gradients, no glow):
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria psychic dagger / sword beam look: sharp crescent blade, psychic stardust motes.
 
@@ -60,7 +60,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria psychic ram / headbutt look: focused third-eye mandala, concentric psychic shock rings.
 
@@ -96,7 +96,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria confusion debuff visual: swirling telekinetic vortex, dizzy star motes.
 
@@ -132,7 +132,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria dream siphon / Baku phantom look: gaping ethereal dream jaw, flowing vitality orbs.
 
@@ -168,7 +168,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria cosmic distortion look: inverted space ripple, jagged supernatural shock rings.
 
@@ -205,7 +205,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Lunar Flare / Nebula Pillar endgame strike aesthetic: cosmic rift, colossal starlight pillar.
 
@@ -249,7 +249,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria prismatic mirror barrier look: faceted diamond shield, doubled beam rebound.
 
@@ -285,7 +285,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Nebula laser / Space Gun look: psychedelic concentric beam bands, floating sparkle dust.
 
@@ -326,7 +326,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Nebula Arcanum / supreme telekinesis look: massive crushing aura rings, gravity warp.
 
@@ -362,7 +362,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria solid psychic projectiles look: faceted crystal force needles, physical impact stars.
 
@@ -399,7 +399,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Last Prism / Nebula Blaze ultimate look: solid psychic wave crests, apocalyptic nova.
 
@@ -443,7 +443,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria scaling laser blast look: multi-tiered energy core, expanding power rings.
 
@@ -479,7 +479,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Hermes / ninja dash look: triple after-image silhouettes, surging speed chevrons.
 
@@ -515,7 +515,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria teleportation portal look: twin swirling vortex portals, position crossing arcs.
 
@@ -551,7 +551,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria oblivious buff look: floating question mark glyph (?), ascending defense chevrons.
 
@@ -587,7 +587,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria lotus meditation / dual buff look: glowing circular lotus mandala, dual rising chevrons.
 
@@ -623,7 +623,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria celestial stardust buff look: constellation star lines, orbiting planets.
 
@@ -659,7 +659,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria gravity globe / heavy field look: downward gravity grid lines, crushing planar force.
 
@@ -695,7 +695,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria stat swap link look: twin opposing defense shields crossing in mid-air.
 
@@ -731,7 +731,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria healing wave / heart pulse look: expanding concentric heart-shaped shockwaves.
 
@@ -767,7 +767,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria self-sacrifice / shooting star burst look: fading silhouette, torrential stardust shower.
 
@@ -803,7 +803,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria hypnosis spiral look: rotating hypnotic Archimedean spiral rings, sleep Z-motes.
 
@@ -839,7 +839,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria seal rune / lock chains look: glowing padlock seal, crossed chain barrier.
 
@@ -875,7 +875,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Kadabra spoon bend look: silver psychic spoon, bending neck, distraction flash.
 
@@ -911,7 +911,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria crystal screen / forcefield look: interlocking hexagonal light panes, defensive sheen.
 
@@ -947,7 +947,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria sword swap link look: twin crossed sword icons exchanging positions.
 
@@ -983,7 +983,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria physical barrier look: diamond prism shield, physical deflect glints.
 
@@ -1019,7 +1019,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria sleep restoration look: resting silhouette, bubble pillow, rising Zzz glyphs.
 
@@ -1055,7 +1055,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria theater mask / mimic look: comedy/tragedy mask glyph, copying mirror aura.
 
@@ -1091,7 +1091,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Rod of Discord / Teleportation Potion look: collapsing silhouette, vertical warp flash.
 
@@ -1127,7 +1127,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #FFE4F2 #F472B6 #DB2777 #831843 #4A044E
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria dimensional cube room look: 3D wireframe isometric cube, stat inversion runes.
 

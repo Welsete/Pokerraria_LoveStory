@@ -2,7 +2,7 @@
 
 Paleta Oficial Venenoso:
 `#FFFFFF` (Bolha Ácida) | `#F5D0FE` (Lavanda Tóxico) | `#D946EF` (Magenta Veneno) | `#9333EA` (Roxo Corrosivo Base) | `#581C87` (Toxina Escura) | `#2E0854` (Contorno)
-Fundo: `#FF00FF`
+Fundo: `#00FF00`
 
 ---
 
@@ -24,7 +24,7 @@ Every art pixel is exactly 1 pixel (no mixed pixel sizes).
 
 PALETTE (use only these colors, flat fills, no gradients, no glow):
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria poison scythe / toxin slash aesthetic: vibrant purple venom trails, sharp X-intersection.
 
@@ -60,7 +60,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria toxic sludge bomb look: irregular lumpy sludge ball, explosive splatter star.
 
@@ -96,7 +96,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria venom fang / spider bite look: translucent purple fangs, dripping venom beads.
 
@@ -132,7 +132,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria stinger jab / poison spear look: sharp stinger fist, caustic splash rings.
 
@@ -168,7 +168,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria stinger dart projectile look: small barbed needle, tiny toxic droplet burst.
 
@@ -204,7 +204,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Corrupt / caustic acid stream look: fizzing chemical bubbles, sizzling spray.
 
@@ -240,7 +240,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria shotgun spray / caustic melt look: wide conical fluid blast, harsh debuff arrows.
 
@@ -276,7 +276,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria toxic breath / gas belch look: expanding foul gas cloud, acoustic shock rings.
 
@@ -312,7 +312,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria cleansing powder / neutralizing fog look: expanding billows of dense neutralizing fog.
 
@@ -348,7 +348,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria toxic slime ball look: viscous lumpy droplet, slimy purple splat.
 
@@ -384,7 +384,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria toxic grenade / cursed flask look: spherical chemical bomb, violent sludge nova.
 
@@ -421,7 +421,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Duke Fishron tsunami / Corrupt wave visual: colossal rolling purple tidal wave, acidic froth.
 
@@ -465,7 +465,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria chimney smoke / smog breath look: billows of dirty industrial purple smoke.
 
@@ -501,7 +501,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria chemical lightning / bio-shock look: jagged purple electric arcs, caustic pop.
 
@@ -537,7 +537,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria slime potion / liquefaction look: melting silhouette into gelatinous puddle, rising buff chevrons.
 
@@ -573,7 +573,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria coiled serpent / triple buff look: concentric coiling snake rings, triple chevron flare.
 
@@ -609,7 +609,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria ability nullification / digestive acid look: caustic yellow-purple spray, null sign.
 
@@ -645,7 +645,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria toxic cloud / stink gas look: expanding cloud of sickly purple gas, skull gas glyphs.
 
@@ -681,7 +681,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria spore cloud / toxic dust look: glittering shower of fine purple spore particles.
 
@@ -717,7 +717,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria virulent venom debuff look: dripping toxic skull sigil, pulsing purple veins.
 
@@ -753,7 +753,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #FFFFFF #F5D0FE #D946EF #9333EA #581C87 #2E0854
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria toxic caltrop / floor hazard look: venom-dripping barbed spikes, corrosive floor puddles.
 

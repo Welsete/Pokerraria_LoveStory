@@ -61,8 +61,20 @@ SHEETS = [
 ]
 
 
-def load(path):
+# Sheets drawn on a green background instead of magenta. Purple and pink types (Ghost, Psychic, Poison, Dark, Fairy)
+# must use green: the magenta key would erase their own colors (72% of a Ghost-palette sheet was lost in a test).
+GREEN_KEY = set()
+
+
+def load(path, key="magenta"):
     im = Image.open(path)
+    if key == "green":
+        a = np.array(im.convert("RGB")).astype(float)
+        r, g, b = a[..., 0], a[..., 1], a[..., 2]
+        bg = g - np.maximum(r, b) > 60
+        from scipy import ndimage
+        bg = ndimage.binary_dilation(bg, iterations=1)
+        return np.dstack([a, np.where(bg, 0, 255.0)])
     if path.endswith(".png"):
         a = np.array(im.convert("RGBA")).astype(float)
         r, g, b = a[..., 0], a[..., 1], a[..., 2]
@@ -105,7 +117,7 @@ def main():
     for file, move, layout, k, settings in SHEETS:
         if only and move not in only:
             continue
-        a = load(f"{SRC}/{file}")
+        a = load(f"{SRC}/{file}", "green" if file in GREEN_KEY else "magenta")
         fr = [shrink(f, k) for f in frames_of(a, layout)]
         w = max(f.shape[1] for f in fr)
         h = max(f.shape[0] for f in fr)

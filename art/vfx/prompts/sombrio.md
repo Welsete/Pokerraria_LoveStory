@@ -2,7 +2,7 @@
 
 Paleta Oficial Sombrio:
 `#F3E8FF` (Brilho Obscuro) | `#9333EA` (Violeta Malévolo) | `#4B1058` (Vinho Sombrio) | `#2D0036` (Sombra Base) | `#18001E` (Vazio) | `#0A000D` (Contorno Abissal)
-Fundo: `#FF00FF`
+Fundo: `#00FF00`
 
 ---
 
@@ -24,7 +24,7 @@ Every art pixel is exactly 1 pixel (no mixed pixel sizes).
 
 PALETTE (use only these colors, flat fills, no gradients, no glow):
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria spiked knuckleduster strike look: heavy dark purple impact arc, brutal kinetic lines.
 
@@ -60,7 +60,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Corruptor jaws look: jagged shadowy silhouette, razor dark purple teeth.
 
@@ -96,7 +96,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Eater of Worlds / heavy armor shred look: colossal serrated jaws, armor fracture sparks.
 
@@ -132,7 +132,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria throwing projectile impact: rotating dark orb, explosive kinetic shatter.
 
@@ -168,7 +168,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria disarm strike look: horizontal slap swipe, tumbling detached item silhouette.
 
@@ -204,7 +204,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Night's Edge slash look: sharp crescent blade trail, critical flash point.
 
@@ -240,7 +240,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria revenge counter look: absorption flash into colossal counter-punch.
 
@@ -276,7 +276,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria homing claw / pursuit intercept look: predatory talons, inescapable forward lunge.
 
@@ -312,7 +312,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria swift counter-strike aesthetic: instantaneous straight jab, sharp kinetic shock rings.
 
@@ -348,7 +348,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria Shadowflame Hex / dark sonar rings look: alternating dark violet and black rings.
 
@@ -384,7 +384,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria screech / sonic debuff look: serrated soundwave arcs, hateful acoustic spikes.
 
@@ -420,7 +420,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria comedic debuff visual: oversized cartoon teardrops, deceitful violet gleam.
 
@@ -456,7 +456,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria honey / charm aura look: glittering deceptive sparkles, swirling dizzy stars.
 
@@ -492,7 +492,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria whetstone buff look: crossing blade edges, sharp friction sparks.
 
@@ -528,7 +528,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria self-sacrifice / dark singularity look: collapsing silhouette, heavy downward curse.
 
@@ -564,7 +564,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria buff aura / scheming devil horns look: wicked ideation glyph, surging Sp.Atk chevrons.
 
@@ -600,7 +600,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria trickster teleport look: twin circular swap arrows, swirling shadowy trail.
 
@@ -636,7 +636,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria rage debuff visual: throbbing anger vein glyph, mocking finger wag.
 
@@ -672,7 +672,7 @@ effect centered on the frame center, same scale in every frame.
 
 PALETTE:
 #F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
-Background: flat solid #FF00FF, nothing else in it.
+Background: flat solid #00FF00, nothing else in it.
 
 STYLE: Terraria mental torment debuff look: jagged barbed wire ring, whispering demon head.
 

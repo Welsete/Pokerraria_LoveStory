@@ -30,9 +30,9 @@ Também dá para desenhar o golpe direto em Python, sem o Gemini: veja `tools/vf
 por frame, escala 2x sem suavizar, só as 6 cores da paleta do tipo, contorno de 1px). Bom para orbes, anéis,
 estrelas e partículas; formas orgânicas (água, fogo, folhas) ficam melhores vindas do Gemini.
 
-**Cuidado com roxos:** o recorte do `convert.py` apaga pixels com vermelho e azul bem acima do verde, então tons
-roxos e rosados (Fantasma, Psíquico, Venenoso, Sombrio, Fada) podem sumir junto com o fundo magenta. Confira o
-resultado desses tipos com atenção e, se precisar, deixe o recorte mais estrito só para aquela sheet.
+**Fundo verde para tipos roxos:** Fantasma, Psíquico, Venenoso, Sombrio e Fada são gerados com fundo verde
+`#00FF00` (os prompts já pedem isso). Coloque o nome do arquivo em `GREEN_KEY` no `convert.py`: o recorte magenta
+apagaria 72% da arte desses tipos; o verde perde só a borda borrada do JPEG.
 
 ## Prompts novos
 Quando faltar prompt para um golpe, escreva no mesmo formato do arquivo do tipo, com a paleta do tipo, contagem de
