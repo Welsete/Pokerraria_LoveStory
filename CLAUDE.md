@@ -38,8 +38,8 @@ São desenhadas com o mod **Blueprint Builder** e salvas em JSON (formatVersion 
 constrói a estrutura em mundos novos, sem precisar do Blueprint Builder instalado.
 - Designs do Welsete no jogo: `C:\Users\Welsete\Documents\My Games\Terraria\tModLoader\BlueprintBuilder\Designs`
   (conectar à sessão). Tem conceitos do Centro e do Ginásio da Misty, e uma biblioteca de prédios (castelo, arena
-  mágica, vila do deserto, tavernas...) para Ginásios e arenas futuras. **O nome do arquivo nem sempre é o do
-  design**: confira o campo `name` dentro do JSON.
+  mágica, vila do deserto, tavernas...) para Ginásios e arenas futuras. Desde 2026-11-03 o nome de cada arquivo é igual ao
+  campo `name` do design; mantenha assim ao salvar designs novos.
 - Versão final que vai no mod: `Terramon/Assets/Structures/<Nome>.json`, gerada/ajustada pelos scripts de
   `tools/structures/` (que usam `terraria-ids.txt` para validar nomes de itens).
 - Para o Welsete ver um design no jogo: copie o JSON para a pasta Designs e ele abre no Blueprint Builder.
