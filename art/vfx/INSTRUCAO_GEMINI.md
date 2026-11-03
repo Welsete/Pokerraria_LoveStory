@@ -35,3 +35,4 @@ CONTENT
   the impact on the target: a burst, then fading particles.
 - Effects that hit the ground (stomps, quakes, slams) sit a little below the middle of each cell, not at its bottom.
 - The last frame is almost empty: only a few small fading particles.
+```

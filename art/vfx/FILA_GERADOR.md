@@ -2,7 +2,7 @@
 
 Prompts dos golpes que ainda esperam o gerador (regra em [VFX.md](../../VFX.md)). Gere, salve a imagem em
 `Desktop/Pokerraria/vfx_spritesheets/` e avise o Claude. Este arquivo é refeito por `tools/vfx/vfx_md.py`.
-Antes do primeiro prompt, cole no Gemini a instrução fixa de [INSTRUCAO_GEMINI.md](INSTRUCAO_GEMINI.md).
+No Antigravity: abra a pasta Desktop/Pokerraria e rode o workflow /gerar-lote-vfx (regras em .agent/rules). Em outro chat do Gemini, cole antes a instrução fixa de [INSTRUCAO_GEMINI.md](INSTRUCAO_GEMINI.md).
 Comece pelas seções **Prioridade** (golpes que hoje têm uma versão provisória fraca).
 
 ## Prioridade · Lutador
