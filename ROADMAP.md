@@ -59,6 +59,20 @@ Eventos no estilo das invasões do Terraria (como o Exército Goblin): aparecem 
       topo (o espírito da Marowak); de noite fica mais perigosa (?) bioma e se precisa do Silph Scope
       [construtor-mundo + roteirista-lovestory]
 
+## Chefes Pokémon no estilo Terraria (ideia do Welsete, 2026-11-03; ainda sem versão)
+
+Pokémon gigantes lutando como os chefes do Terraria (tipo o Olho de Cthulhu): luta em tempo real, barra de vida de
+chefe, padrões de ataque próprios, item para invocar e recompensas. Diferente da batalha por turno do Showdown.
+
+- [ ] **Base de chefes:** um molde de chefe Pokémon (fases por vida, ataques com animação dos golpes, música, barra
+      de chefe, item de invocação, recompensas) para os próximos reaproveitarem [programador-batalha + animador-vfx]
+- [ ] **Gengar gigante:** chefe final da Torre de Lavender. Some e reaparece pela sombra, solta Shadow Ball, chama
+      fantasmas menores, usa Hypnosis para deixar o jogador lento (?) ataques e fases [programador-batalha]
+- [ ] **Mewtwo, chefe final:** duas batalhas seguidas. Primeiro a batalha Pokémon por turno (Showdown); depois a luta
+      de ação estilo Terraria, com ataques próprios (Psystrike, barreiras, clones) (?) ordem das fases e onde
+      acontece [programador-batalha + roteirista-lovestory]
+- [ ] Chefes para outros eventos (Equipe Rocket, invasões) (?) quais [programador-batalha]
+
 ## 0.7.0 · Ginásios e treinadores vivos
 
 - [ ] Sprites próprios para os 6 líderes restantes no padrão da Misty (Surge, Erika, Koga, Sabrina, Blaine,

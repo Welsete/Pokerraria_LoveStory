@@ -30,4 +30,5 @@ houver). Perguntas ainda sem resposta ficam no fim.
 - Capítulo 1: o texto de cada página do diário.
 - Em que bioma fica cada Ginásio que ainda não tem prédio próprio?
 - Eventos (Equipe Rocket, invasão dos Spearow, Torre de Lavender): em que versão entram e se fazem parte da história do capítulo 1?
+- Chefes Pokémon no estilo Terraria (Gengar da Torre de Lavender, Mewtwo final em duas batalhas): ataques, fases e em que versão entram.
 - Multiplayer é prioridade em alguma versão antes da 1.0?
