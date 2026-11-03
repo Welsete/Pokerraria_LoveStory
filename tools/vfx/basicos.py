@@ -68,7 +68,7 @@ ARQUIVOS = {"fogo": "Fogo", "agua": "Água", "planta": "Planta", "eletrico": "El
 # Swords Dance, Dragon Dance e Dragon Claw têm desenho próprio em draw_themed_moves.py
 BASICOS = {
     # Provisórios: esperando arte do gerador de imagem (ver PROVISORIOS)
-    "Mega Punch": "impacto_forte", "Drain Punch": "impacto", "Dynamic Punch": "impacto_forte", "Focus Punch": "impacto_forte", "Mach Punch": "impacto", "Hammer Arm": "impacto_forte", "Force Palm": "impacto", "Rock Smash": "impacto", "Superpower": "impacto_forte", "High Jump Kick": "impacto_forte", "Low Kick": "impacto", "Low Sweep": "impacto", "Mega Kick": "impacto_forte", "Stomp": "impacto",     # Normal
+    "Mega Punch": "impacto_forte", "Mach Punch": "impacto", "Superpower": "impacto_forte", "High Jump Kick": "impacto_forte", "Mega Kick": "impacto_forte", "Stomp": "impacto",     # Normal
     "Body Slam": "impacto_forte", "Covet": "impacto", "Crush Claw": "garra", "Cut": "corte", "Double-Edge": "impacto_forte",
     "Double Hit": "impacto", "Endeavor": "impacto", "Extreme Speed": "impacto", "Facade": "impacto", "Fake Out": "impacto",
     "False Swipe": "corte", "Feint": "impacto", "Flail": "impacto", "Fury Attack": "impacto", "Fury Swipes": "garra",
@@ -135,7 +135,7 @@ BASICOS = {
     "Cosmic Power": "aura", "Rest": "cura", "Heal Pulse": "cura", "Hypnosis": "debuff", "Kinesis": "debuff",
 }
 # Golpes com versão de código só até a arte do gerador chegar: aparecem na fila do gerador (VFX.md)
-PROVISORIOS = {"Mega Punch", "Drain Punch", "Dynamic Punch", "Focus Punch", "Mach Punch", "Hammer Arm", "Force Palm", "Rock Smash", "Superpower", "High Jump Kick", "Low Kick", "Low Sweep", "Mega Kick", "Stomp"}
+PROVISORIOS = {"Mega Punch", "Mach Punch", "Superpower", "High Jump Kick", "Mega Kick", "Stomp"}
 # Status no próprio usuário (os outros moldes tocam no alvo)
 NO_USUARIO = {"aura", "cura"}
 

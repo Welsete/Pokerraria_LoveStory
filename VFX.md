@@ -39,7 +39,7 @@ Quando um golpe do gerador fica pronto, a animação dele substitui a versão de
 
 ## Situação
 
-416 golpes no catálogo: **68** com arte própria, **204** desenhados por código, **144** esperando o gerador.
+416 golpes no catálogo: **76** com arte própria, **204** desenhados por código, **136** esperando o gerador.
 
 ## Faltam: para o gerador de imagem
 
@@ -57,7 +57,7 @@ Em ordem de tipo. Entre parênteses, o arquivo de prompts. Os marcados com * já
 - **Venenoso** (6, `venenoso.md` · fundo verde): Gunk Shot, Poison Fang, Acid Spray, Belch, Sludge Wave, Toxic Spikes
 - **Inseto** (4, `inseto.md`): Bug Bite, Leech Life, U-turn, String Shot
 - **Voador** (7, `voador.md`): Bounce, Brave Bird, Sky Attack, Gust, Hurricane, Mirror Move, Tailwind
-- **Lutador** (17, `lutador.md`): Counter, Drain Punch*, Dynamic Punch*, Focus Punch*, Force Palm*, Hammer Arm*, High Jump Kick*, Low Kick*, Low Sweep*, Mach Punch*, Rock Smash*, Seismic Toss, Storm Throw, Superpower*, Vital Throw, Final Gambit, Quick Guard
+- **Lutador** (9, `lutador.md`): Counter, High Jump Kick*, Mach Punch*, Seismic Toss, Storm Throw, Superpower*, Vital Throw, Final Gambit, Quick Guard
 - **Fada** (2, `fada.md` · fundo verde): Play Rough, Misty Terrain
 - **Psíquico** (15, `psiquico.md` · fundo verde): Dream Eater, Future Sight, Mirror Coat, Psystrike, Ally Switch, Gravity, Guard Swap, Healing Wish, Imprison, Light Screen, Power Swap, Reflect, Role Play, Teleport, Wonder Room
 - **Normal** (40, `normal_*.md`): Bind, Explosion, Giga Impact, Guillotine, Horn Drill, Hyper Fang, Mega Kick*, Mega Punch*, Pay Day, Raging Bull, Rapid Spin, Self-Destruct, Stomp*, Super Fang, Thrash, Vice Grip, Wrap, Tri Attack, After You, Baton Pass, Block, Conversion, Conversion 2, Copycat, Follow Me, Helping Hand, Metronome, Mimic, Pain Split, Perish Song, Recycle, Reflect Type, Roar, Safeguard, Sleep Talk, Splash, Substitute, Teeter Dance, Transform, Whirlwind
@@ -96,7 +96,7 @@ Os prompts de todos esses, prontos para copiar, estão em [art/vfx/FILA_GERADOR.
 - **Aço** (3): Bullet Punch, Meteor Mash, Flash Cannon
 - **Terrestre** (1): Stomping Tantrum
 - **Pedra** (1): Rock Slide
-- **Lutador** (4): Axe Kick, Brick Break, Close Combat, Double Kick
+- **Lutador** (12): Axe Kick, Brick Break, Close Combat, Double Kick, Drain Punch, Dynamic Punch, Focus Punch, Force Palm, Hammer Arm, Low Kick, Low Sweep, Rock Smash
 - **Fada** (1): Dazzling Gleam
 - **Psíquico** (1): Psybeam
 - **Normal** (2): Hyper Beam, Swords Dance

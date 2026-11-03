@@ -72,6 +72,15 @@ SHEETS = [
     ("lote1_shadow_punch.png", "ShadowPunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
     ("lote1_stomping_tantrum.png", "StompingTantrum", (4, 2), 3, dict(Travel=0, Ticks=4)),
     ("lote1_sucker_punch.png", "SuckerPunch", (4, 2), 3, dict(Travel=0, Ticks=3, Face=1)),
+    # Lote 2 do Gemini (2026-11-03). Mach Punch e High Jump Kick vieram com um personagem desenhado: ficaram de fora
+    ("lote2_drain_punch.png", "DrainPunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote2_dynamic_punch.png", "DynamicPunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote2_focus_punch.png", "FocusPunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote2_force_palm.png", "ForcePalm", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote2_hammer_arm.png", "HammerArm", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote2_low_kick.png", "LowKick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote2_low_sweep.png", "LowSweep", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote2_rock_smash.png", "RockSmash", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
 ]
 
 

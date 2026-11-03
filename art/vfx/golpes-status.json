@@ -1289,32 +1289,27 @@
  {
   "tipo": "Lutador",
   "golpe": "Drain Punch",
-  "situacao": "provisorio",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Dynamic Punch",
-  "situacao": "provisorio",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Focus Punch",
-  "situacao": "provisorio",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Force Palm",
-  "situacao": "provisorio",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Hammer Arm",
-  "situacao": "provisorio",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1325,14 +1320,12 @@
  {
   "tipo": "Lutador",
   "golpe": "Low Kick",
-  "situacao": "provisorio",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Low Sweep",
-  "situacao": "provisorio",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1355,8 +1348,7 @@
  {
   "tipo": "Lutador",
   "golpe": "Rock Smash",
-  "situacao": "provisorio",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
