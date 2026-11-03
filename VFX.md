@@ -15,6 +15,11 @@ onda gigante ou um meteoro.
 | Pós, esporos, gás e areia: nuvem no alvo | Drenar vida (partículas voltando ao usuário), golpes de duas etapas |
 | Buffs, curas e debuffs simples | Qualquer básico que, no jogo, ficou genérico demais e merece arte própria |
 
+Meio-termo: **raios, feixes e golpes de pura luz** são desenhados à mão em código, com carga, raio e impacto próprios
+(Solar Beam, Hyper Beam, Psybeam, Charge Beam, Flash Cannon, Thunder, Dazzling Gleam). Estão em
+`tools/vfx/draw_solar_beam.py` e `tools/vfx/draw_light_moves.py`; um raio novo é uma linha em `MOVES` com o estilo
+de carga, de raio e de impacto.
+
 Na dúvida, começa no código: é de graça e na hora. Se ficar fraco no jogo, o golpe sobe para o gerador.
 
 ## Como fazer
@@ -32,7 +37,7 @@ Quando um golpe do gerador fica pronto, a animação dele substitui a versão de
 
 ## Situação
 
-416 golpes no catálogo: **45** com arte própria, **232** desenhados por código, **139** esperando o gerador.
+416 golpes no catálogo: **51** com arte própria, **232** desenhados por código, **133** esperando o gerador.
 
 ## Faltam: para o gerador de imagem
 
@@ -41,20 +46,22 @@ Em ordem de tipo. Entre parênteses, o arquivo de prompts.
 - **Fogo** (1, `fogo.md`): Will-O-Wisp
 - **Água** (8, `agua.md`): Aqua Tail, Dive, Waterfall, Wave Crash, Muddy Water, Surf, Whirlpool, Rain Dance
 - **Planta** (11, `planta.md`): Petal Blizzard, Power Whip, Vine Whip, Absorb, Giga Drain, Leaf Storm, Mega Drain, Petal Dance, Grassy Terrain, Ingrain, Leech Seed
-- **Elétrico** (6, `eletrico.md`): Thunder Fang, Charge Beam, Thunder, Zap Cannon, Electric Terrain, Magnetic Flux
+- **Elétrico** (4, `eletrico.md`): Thunder Fang, Zap Cannon, Electric Terrain, Magnetic Flux
 - **Dragão** (4, `dragao.md`): Dragon Tail, Outrage, Dragon Breath, Twister
 - **Fantasma** (4, `fantasma.md` · fundo verde): Lick, Shadow Sneak, Curse, Destiny Bond
 - **Sombrio** (5, `sombrio.md` · fundo verde): Bite, Crunch, Fling, Memento, Switcheroo
-- **Aço** (3, `aco.md`): Gyro Ball, Iron Tail, Flash Cannon
+- **Aço** (2, `aco.md`): Gyro Ball, Iron Tail
 - **Terrestre** (9, `terrestre.md`): Bone Rush, Bonemerang, Bulldoze, Dig, Drill Run, Earthquake, Fissure, Sand Tomb, Spikes
 - **Pedra** (8, `pedra.md`): Head Smash, Rock Slide, Rollout, Stone Edge, Ancient Power, Sandstorm, Stealth Rock, Wide Guard
 - **Venenoso** (6, `venenoso.md` · fundo verde): Gunk Shot, Poison Fang, Acid Spray, Belch, Sludge Wave, Toxic Spikes
 - **Inseto** (4, `inseto.md`): Bug Bite, Leech Life, U-turn, String Shot
 - **Voador** (7, `voador.md`): Bounce, Brave Bird, Sky Attack, Gust, Hurricane, Mirror Move, Tailwind
 - **Lutador** (6, `lutador.md`): Counter, Seismic Toss, Storm Throw, Vital Throw, Final Gambit, Quick Guard
-- **Fada** (3, `fada.md` · fundo verde): Play Rough, Dazzling Gleam, Misty Terrain
-- **Psíquico** (16, `psiquico.md` · fundo verde): Dream Eater, Future Sight, Mirror Coat, Psybeam, Psystrike, Ally Switch, Gravity, Guard Swap, Healing Wish, Imprison, Light Screen, Power Swap, Reflect, Role Play, Teleport, Wonder Room
-- **Normal** (38, `normal_*.md`): Bind, Explosion, Giga Impact, Guillotine, Horn Drill, Hyper Fang, Pay Day, Raging Bull, Rapid Spin, Self-Destruct, Super Fang, Thrash, Vice Grip, Wrap, Hyper Beam, Tri Attack, After You, Baton Pass, Block, Conversion, Conversion 2, Copycat, Follow Me, Helping Hand, Metronome, Mimic, Pain Split, Perish Song, Recycle, Reflect Type, Roar, Safeguard, Sleep Talk, Splash, Substitute, Teeter Dance, Transform, Whirlwind
+- **Fada** (2, `fada.md` · fundo verde): Play Rough, Misty Terrain
+- **Psíquico** (15, `psiquico.md` · fundo verde): Dream Eater, Future Sight, Mirror Coat, Psystrike, Ally Switch, Gravity, Guard Swap, Healing Wish, Imprison, Light Screen, Power Swap, Reflect, Role Play, Teleport, Wonder Room
+- **Normal** (37, `normal_*.md`): Bind, Explosion, Giga Impact, Guillotine, Horn Drill, Hyper Fang, Pay Day, Raging Bull, Rapid Spin, Self-Destruct, Super Fang, Thrash, Vice Grip, Wrap, Tri Attack, After You, Baton Pass, Block, Conversion, Conversion 2, Copycat, Follow Me, Helping Hand, Metronome, Mimic, Pain Split, Perish Song, Recycle, Reflect Type, Roar, Safeguard, Sleep Talk, Splash, Substitute, Teeter Dance, Transform, Whirlwind
+
+Os prompts de todos esses, prontos para copiar, estão em [art/vfx/FILA_GERADOR.md](art/vfx/FILA_GERADOR.md).
 
 ## Feitos por código
 
@@ -80,8 +87,11 @@ Em ordem de tipo. Entre parênteses, o arquivo de prompts.
 - **Fogo** (18): Blaze Kick, Fire Fang, Fire Punch, Flame Charge, Flame Wheel, Flare Blitz, Heat Crash, Ember, Eruption, Fire Blast, Fire Spin, Flamethrower, Heat Wave, Incinerate, Inferno, Lava Plume, Overheat, Sunny Day
 - **Água** (4): Aqua Jet, Bubble Beam, Hydro Pump, Water Gun
 - **Planta** (2): Razor Leaf, Solar Beam
-- **Elétrico** (3): Thunder Punch, Thunder Shock, Thunderbolt
+- **Elétrico** (5): Thunder Punch, Charge Beam, Thunder, Thunder Shock, Thunderbolt
 - **Gelo** (15): Ice Fang, Ice Punch, Ice Shard, Icicle Crash, Icicle Spear, Aurora Beam, Blizzard, Freeze Dry, Ice Beam, Icy Wind, Powder Snow, Sheer Cold, Haze, Mist, Snowscape
 - **Fantasma** (1): Shadow Ball
 - **Sombrio** (1): Night Slash
-- **Aço** (1): Bullet Punch
+- **Aço** (2): Bullet Punch, Flash Cannon
+- **Fada** (1): Dazzling Gleam
+- **Psíquico** (1): Psybeam
+- **Normal** (1): Hyper Beam

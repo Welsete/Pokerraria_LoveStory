@@ -38,6 +38,11 @@ onda gigante ou um meteoro.
 | Pós, esporos, gás e areia: nuvem no alvo | Drenar vida (partículas voltando ao usuário), golpes de duas etapas |
 | Buffs, curas e debuffs simples | Qualquer básico que, no jogo, ficou genérico demais e merece arte própria |
 
+Meio-termo: **raios, feixes e golpes de pura luz** são desenhados à mão em código, com carga, raio e impacto próprios
+(Solar Beam, Hyper Beam, Psybeam, Charge Beam, Flash Cannon, Thunder, Dazzling Gleam). Estão em
+`tools/vfx/draw_solar_beam.py` e `tools/vfx/draw_light_moves.py`; um raio novo é uma linha em `MOVES` com o estilo
+de carga, de raio e de impacto.
+
 Na dúvida, começa no código: é de graça e na hora. Se ficar fraco no jogo, o golpe sobe para o gerador.
 
 ## Como fazer
@@ -60,6 +65,7 @@ for t, l in por("gerador").items():
     if l:
         verde = " · fundo verde" if t in VERDE else ""
         L.append(f"- **{t}** ({len(l)}, `{ARQ[t]}.md`{verde}): " + ", ".join(s["golpe"] for s in l))
+L.append("\nOs prompts de todos esses, prontos para copiar, estão em [art/vfx/FILA_GERADOR.md](art/vfx/FILA_GERADOR.md).")
 L.append("\n## Feitos por código\n")
 for t, l in por("codigo").items():
     if l:
@@ -70,3 +76,25 @@ for t, l in por("animado").items():
         L.append(f"- **{t}** ({len(l)}): " + ", ".join(s["golpe"] for s in l))
 open(os.path.join(ROOT, "VFX.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
 print(dict(c))
+
+# Fila do gerador: os prompts de todos os golpes que faltam, em um arquivo só, para copiar e colar no Gemini
+F = ["# Fila do gerador de imagem", "",
+     "Prompts dos golpes que ainda esperam o gerador (regra em [VFX.md](../../VFX.md)). Gere, salve a imagem em",
+     "`Desktop/Pokerraria/vfx_spritesheets/` e avise o Claude. Este arquivo é refeito por `tools/vfx/vfx_md.py`.", ""]
+for t, l in por("gerador").items():
+    if not l:
+        continue
+    F.append(f"## {t}" + (" (fundo verde #00FF00)" if t in VERDE else ""))
+    arquivos = [ARQ[t]] if not ARQ[t].endswith("*") else ["normal_fisico", "normal_especial", "normal_status"]
+    blocos = {}
+    for arq in arquivos:
+        txt = open(os.path.join(ROOT, "art", "vfx", "prompts", arq + ".md"), encoding="utf-8").read()
+        for blk in txt.split("\n## ")[1:]:
+            nome = re.sub(r"\s*\*?\(.*$", "", re.sub(r"^\d+\.\s*", "", blk.split("\n", 1)[0])).strip()
+            m = re.search(r"```text\n(.*?)```", blk, re.S)
+            if m:
+                blocos[nome] = m.group(1).strip()
+    for st in l:
+        F += ["", f"### {st['golpe']}", "", "```text", blocos.get(st["golpe"], "(prompt não encontrado)"), "```"]
+    F.append("")
+open(os.path.join(ROOT, "art", "vfx", "FILA_GERADOR.md"), "w", encoding="utf-8").write("\n".join(F) + "\n")
