@@ -1,4 +1,4 @@
-Frames 9
+Frames 16
 Travel 0
 Ticks 3
 Face 1

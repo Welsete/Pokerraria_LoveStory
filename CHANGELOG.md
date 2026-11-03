@@ -14,6 +14,7 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 - Will-O-Wisp (three ghost flames that fly over, circle the target and sink in), Twister (a dragon-colored tornado with spinning debris) and Rock Slide (boulders crashing down in dust) drawn in code (286 in total).
 - Swords Dance shows six swords spinning around the user, Dragon Dance an energy dragon spiralling up, Dragon Claw a dragon head behind the claws. Punches, kicks, Dragon Rush and Dragon Pulse keep simple impacts until their generated art arrives.
 - Dragon Rush: a dragon skull of blue fire flies at the target and bursts (generated art).
+- Generated art for Dragon Pulse, Axe Kick, Brick Break, Close Combat, Double Kick, Meteor Mash, Rage Fist, Shadow Punch, Stomping Tantrum and Sucker Punch.
 - Ice Beam redrawn in code: ice crystals growing out of the beam's edges.
 - Twister and Rock Slide now sit on the target instead of below it.
 - Test panel, Moves tab: search moves by name (click the box and type; right click clears). The rest of the moves are listed in VFX.md for the image generator.

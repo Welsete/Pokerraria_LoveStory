@@ -61,19 +61,32 @@ SHEETS = [
     # Gemini, 2752x1536: dragon heads flying (6 frames loop on the way), then the front-facing skull on the target;
     # draw_themed_moves.py append_burst adds a dragon-colored burst after it
     ("dragon_rush_gemini.jpg", "DragonRush", [(688, 0, 1376, 768), (1376, 0, 2064, 768), (2064, 0, 2752, 768), (688, 768, 1376, 1536), (1376, 768, 2064, 1536), (2064, 768, 2752, 1536), (0, 768, 688, 1536)], 6, dict(Travel=6, Ticks=4, Face=1)),
+    # Lote 1 do Gemini (2026-11-03): socos, chutes e Dragon Pulse
+    ("lote1_dragon_pulse.png", "DragonPulse", (4, 2), 3, dict(Travel=3, Ticks=4, Face=1)),
+    ("lote1_axe_kick.png", "AxeKick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote1_brick_break.png", "BrickBreak", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote1_close_combat.png", "CloseCombat", (4, 4), 2, dict(Travel=0, Ticks=3, Face=1)),
+    ("lote1_double_kick.png", "DoubleKick", (4, 2), 3, dict(Travel=0, Ticks=3, Face=1)),
+    ("lote1_meteor_mash.png", "MeteorMash", (4, 4), 2, dict(Travel=2, Ticks=3, Face=1)),
+    ("lote1_rage_fist.png", "RageFist", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote1_shadow_punch.png", "ShadowPunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote1_stomping_tantrum.png", "StompingTantrum", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote1_sucker_punch.png", "SuckerPunch", (4, 2), 3, dict(Travel=0, Ticks=3, Face=1)),
 ]
 
 
 # Sheets drawn on a green background instead of magenta. Purple and pink types (Ghost, Psychic, Poison, Dark, Fairy)
 # must use green: the magenta key would erase their own colors (72% of a Ghost-palette sheet was lost in a test).
-GREEN_KEY = set()
+GREEN_KEY = {"lote1_rage_fist.png", "lote1_shadow_punch.png", "lote1_sucker_punch.png"}
 
 
 def load(path, key="magenta"):
     """Keys the background out. Uses the soft-matte keyer of agent-sprite-forge (.claude/skills/generate2dsprite) when
     it is there: in a test it kept 100% of a Ghost-palette sheet where the old keyer below lost 72%."""
     im = Image.open(path)
-    forge = None if path.endswith(".png") else _forge_matte()  # PNGs come with their own alpha: old path
+    # A PNG that already has transparency keeps it (old path); a flat PNG or a JPEG gets keyed
+    own_alpha = im.mode in ("RGBA", "LA", "P") and np.array(im.convert("RGBA"))[..., 3].min() < 255
+    forge = None if own_alpha else _forge_matte()
     if forge:
         keyed, _ = forge.key_still(im.convert("RGB"), quality="soft", key=key)
         return np.array(keyed.convert("RGBA")).astype(float)
