@@ -1,0 +1,103 @@
+{
+  "schema": "codeart2d.fx.v1",
+  "canvas": [
+    56,
+    56
+  ],
+  "origin": [
+    28,
+    28
+  ],
+  "palette": {
+    "nucleo": "#F3E8FF",
+    "alto": "#9333EA",
+    "medio": "#4B1058",
+    "base": "#2D0036",
+    "escuro": "#18001E",
+    "contorno": "#0A000D"
+  },
+  "routes": [
+    "pixel"
+  ],
+  "effects": [
+    {
+      "id": "nightslash",
+      "durationMs": 450,
+      "impactMs": 150,
+      "seed": 13,
+      "outline": "contorno",
+      "ramps": {
+        "lamina": [
+          "nucleo",
+          "alto",
+          "medio",
+          "base"
+        ],
+        "brilho": [
+          "nucleo",
+          "alto",
+          "medio"
+        ]
+      },
+      "primitives": [
+        {
+          "type": "slash",
+          "ramp": "lamina",
+          "center": [
+            24,
+            24
+          ],
+          "radius": 18,
+          "from": -150,
+          "to": 30,
+          "width": 8,
+          "trail": 0.85
+        },
+        {
+          "type": "flash",
+          "ramp": "brilho",
+          "origin": [
+            39,
+            33
+          ],
+          "radius": 2,
+          "rays": 8,
+          "rayLength": 9,
+          "rotation": 22,
+          "lifeMs": 100
+        },
+        {
+          "type": "ring",
+          "ramp": "brilho",
+          "origin": [
+            39,
+            33
+          ],
+          "radius": [
+            2,
+            9
+          ],
+          "width": [
+            2,
+            1
+          ],
+          "lifeMs": 200
+        },
+        {
+          "type": "sparks",
+          "ramp": "brilho",
+          "origin": [
+            39,
+            33
+          ],
+          "count": 12,
+          "angle": 30,
+          "spread": 200,
+          "speed": 38,
+          "lifeMs": 220,
+          "length": 5
+        }
+      ]
+    }
+  ]
+}

@@ -11,6 +11,7 @@ Skills que o Claude usa ao trabalhar no Pokerraria. Avaliadas pelo agente `cacad
 | `writing-for-agents` | mattpocock/skills @ 4ae2317 (MIT) | 9 | Escrever ou revisar CLAUDE.md, agentes e skills sem inchar o contexto |
 | `generate2dsprite` | [0x0funky/agent-sprite-forge](https://github.com/0x0funky/agent-sprite-forge) @ 5324342 (MIT) | 9 | Recorte e limpeza de spritesheets. O `tools/vfx/convert.py` usa o keyer dele (`forge_matte.py`) |
 | `generate2dmedia` | agent-sprite-forge @ 5324342 (MIT) | 8 | Dependência da anterior; gera imagem por API se um dia houver chave (instalada só por isso) |
+| `codeart2d` | agent-sprite-forge @ 5324342 (MIT) | 7 | Instalada a pedido do Welsete. Efeitos por código a partir de uma descrição JSON (`fx.v1`); exemplo em `art/vfx/codeart/night_slash.fx.json`. Precisa de `pip install --user "resvg-py>=0.5,<0.6"` |
 
 Mudanças locais: `handoff` salva no repo (não na pasta temporária); `teach` usa `docs/aprendizado/` e as regras
 didáticas do Welsete. A pasta `agents/` (config do Codex) foi removida.
