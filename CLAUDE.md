@@ -65,6 +65,10 @@ rode `python3 tools/painel/gerar_dados.py "$HOME/mnt/Pokerraria/painel"`, suba c
 (Artifact `asset: true`) e atualize o `source.url` e o `updated` do dataset correspondente (`roadmap`, `golpes`,
 `commits`, `builds`).
 
+ffmpeg 7 (com libvpx-vp9 e libx264, exigido pelas partes de vídeo do agent-sprite-forge) fica em `$HOME/bin`, fora
+do PATH padrão do shell: use `export PATH="$HOME/bin:$PATH"` antes. Se o ambiente for recriado, baixe de novo o build
+estático em johnvansickle.com/ffmpeg (o do sistema é 4.4).
+
 Commits: mensagem curta em inglês, no estilo dos existentes ("Misty stands at her Gym spot again"), descrevendo o
 que muda para quem joga. Toda mudança visível vai para a seção `## Next` do CHANGELOG.
 
