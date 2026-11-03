@@ -21,10 +21,198 @@
  ],
  "effects": [
   {
-   "id": "pound",
+   "id": "megakick",
+   "durationMs": 450,
+   "impactMs": 0,
+   "seed": 2496076,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": 6,
+     "rays": 8,
+     "rayLength": 15,
+     "rotation": 0,
+     "lifeMs": 220
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": [
+      3,
+      20
+     ],
+     "width": [
+      4,
+      1
+     ],
+     "lifeMs": 260
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "count": 12,
+     "spread": 360,
+     "speed": 60,
+     "lifeMs": 260,
+     "length": 6,
+     "width": 2
+    },
+    {
+     "type": "dust",
+     "ramp": "fumaca",
+     "origin": [
+      28,
+      44
+     ],
+     "count": 6,
+     "spread": 22,
+     "rise": 8,
+     "drift": 6,
+     "radius": [
+      1.5,
+      3.5
+     ],
+     "lifeMs": 380
+    }
+   ]
+  },
+  {
+   "id": "megapunch",
+   "durationMs": 450,
+   "impactMs": 0,
+   "seed": 3821181,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": 6,
+     "rays": 8,
+     "rayLength": 15,
+     "rotation": 45,
+     "lifeMs": 220
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": [
+      3,
+      20
+     ],
+     "width": [
+      4,
+      1
+     ],
+     "lifeMs": 260
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "count": 12,
+     "spread": 360,
+     "speed": 60,
+     "lifeMs": 260,
+     "length": 6,
+     "width": 2
+    },
+    {
+     "type": "dust",
+     "ramp": "fumaca",
+     "origin": [
+      28,
+      44
+     ],
+     "count": 6,
+     "spread": 22,
+     "rise": 8,
+     "drift": 6,
+     "radius": [
+      1.5,
+      3.5
+     ],
+     "lifeMs": 380
+    }
+   ]
+  },
+  {
+   "id": "stomp",
    "durationMs": 350,
    "impactMs": 0,
-   "seed": 3436598,
+   "seed": 14183768,
    "outline": "contorno",
    "ramps": {
     "brilho": [

@@ -12,7 +12,7 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 - New Solar Beam, drawn in code: sunlight gathers on the user with orbiting leaves, the beam has a white core with vines of light spiralling around it, and it bursts into light and scattered leaves on the target.
 - Hyper Beam, Psybeam, Charge Beam, Flash Cannon, Thunder and Dazzling Gleam drawn in code in the same style: a charge on the user, a beam with its own texture (shock rings, psychic rings, crackling bolts, light chevrons), a bolt falling from the sky, a ring of starlight (283 in total).
 - Will-O-Wisp (three ghost flames that fly over, circle the target and sink in), Twister (a dragon-colored tornado with spinning debris) and Rock Slide (boulders crashing down in dust) drawn in code (286 in total).
-- Punches now show a fist, kicks a boot, Swords Dance six swords spinning around the user, and Dragon Dance, Dragon Rush, Dragon Pulse and Dragon Claw a dragon head of energy.
+- Swords Dance shows six swords spinning around the user, Dragon Dance an energy dragon spiralling up, Dragon Claw a dragon head behind the claws. Punches, kicks, Dragon Rush and Dragon Pulse keep simple impacts until their generated art arrives.
 - Ice Beam redrawn in code: ice crystals growing out of the beam's edges.
 - Twister and Rock Slide now sit on the target instead of below it.
 - Test panel, Moves tab: search moves by name (click the box and type; right click clears). The rest of the moves are listed in VFX.md for the image generator.

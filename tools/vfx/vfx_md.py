@@ -17,6 +17,10 @@ mid = lambda n: "".join(p[:1].upper() + p[1:] for p in re.split(r"[^A-Za-z0-9]+"
 for s in status:  # o que já tem animação conta como feito, venha de onde vier
     if s["situacao"] == "gerador" and os.path.exists(os.path.join(moves, mid(s["golpe"]) + ".png")):
         s["situacao"] = "animado"
+PROV = [s for s in status if s["situacao"] == "provisorio"]
+for s in PROV:  # provisórios em código contam como fila do gerador
+    s["situacao"] = "gerador"
+    s["provisorio"] = True
 c = collections.Counter(s["situacao"] for s in status)
 por = lambda sit: collections.OrderedDict((t, [s for s in status if s["tipo"] == t and s["situacao"] == sit]) for t in ARQ)
 
@@ -62,11 +66,12 @@ Quando um golpe do gerador fica pronto, a animação dele substitui a versão de
 """)
 L.append(f"## Situação\n\n{len(status)} golpes no catálogo: **{c['animado']}** com arte própria, **{c['codigo']}** "
          f"desenhados por código, **{c['gerador']}** esperando o gerador.\n")
-L.append("## Faltam: para o gerador de imagem\n\nEm ordem de tipo. Entre parênteses, o arquivo de prompts.\n")
+L.append("## Faltam: para o gerador de imagem\n\nEm ordem de tipo. Entre parênteses, o arquivo de prompts. Os marcados com * já têm uma "
+         "versão provisória em código (o Welsete achou fraca) e são a **prioridade**.\n")
 for t, l in por("gerador").items():
     if l:
         verde = " · fundo verde" if t in VERDE else ""
-        L.append(f"- **{t}** ({len(l)}, `{ARQ[t]}.md`{verde}): " + ", ".join(s["golpe"] for s in l))
+        L.append(f"- **{t}** ({len(l)}, `{ARQ[t]}.md`{verde}): " + ", ".join(s["golpe"] + ("*" if s.get("provisorio") else "") for s in l))
 L.append("\nOs prompts de todos esses, prontos para copiar, estão em [art/vfx/FILA_GERADOR.md](art/vfx/FILA_GERADOR.md).")
 L.append("\n## Feitos por código\n")
 for t, l in por("codigo").items():
@@ -82,11 +87,22 @@ print(dict(c))
 # Fila do gerador: os prompts de todos os golpes que faltam, em um arquivo só, para copiar e colar no Gemini
 F = ["# Fila do gerador de imagem", "",
      "Prompts dos golpes que ainda esperam o gerador (regra em [VFX.md](../../VFX.md)). Gere, salve a imagem em",
-     "`Desktop/Pokerraria/vfx_spritesheets/` e avise o Claude. Este arquivo é refeito por `tools/vfx/vfx_md.py`.", ""]
-for t, l in por("gerador").items():
-    if not l:
-        continue
-    F.append(f"## {t}" + (" (fundo verde #00FF00)" if t in VERDE else ""))
+     "`Desktop/Pokerraria/vfx_spritesheets/` e avise o Claude. Este arquivo é refeito por `tools/vfx/vfx_md.py`.",
+     "Antes do primeiro prompt, cole no Gemini a instrução fixa de [INSTRUCAO_GEMINI.md](INSTRUCAO_GEMINI.md).",
+     "Comece pelas seções **Prioridade** (golpes que hoje têm uma versão provisória fraca).", ""]
+def secoes():
+    prio = collections.OrderedDict((t, [s for s in l if s.get("provisorio")]) for t, l in por("gerador").items())
+    resto = collections.OrderedDict((t, [s for s in l if not s.get("provisorio")]) for t, l in por("gerador").items())
+    for t, l in prio.items():
+        if l:
+            yield "Prioridade · " + t, t, l
+    for t, l in resto.items():
+        if l:
+            yield t, t, l
+
+
+for titulo, t, l in secoes():
+    F.append(f"## {titulo}" + (" (fundo verde #00FF00)" if t in VERDE else ""))
     arquivos = [ARQ[t]] if not ARQ[t].endswith("*") else ["normal_fisico", "normal_especial", "normal_status"]
     blocos = {}
     for arq in arquivos:

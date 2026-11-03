@@ -2,6 +2,874 @@
 
 Prompts dos golpes que ainda esperam o gerador (regra em [VFX.md](../../VFX.md)). Gere, salve a imagem em
 `Desktop/Pokerraria/vfx_spritesheets/` e avise o Claude. Este arquivo é refeito por `tools/vfx/vfx_md.py`.
+Antes do primeiro prompt, cole no Gemini a instrução fixa de [INSTRUCAO_GEMINI.md](INSTRUCAO_GEMINI.md).
+Comece pelas seções **Prioridade** (golpes que hoje têm uma versão provisória fraca).
+
+## Prioridade · Dragão
+
+### Dragon Rush
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Dragon Rush | TYPE: Dragon
+SUBJECT: a menacing dragon skull phantom aura charging forward at breakneck speed.
+
+DURATION & FRAME RULES:
+- Projéteis elementais: 8–12 frames em loop.
+
+SHEET TYPE: PROJECTILE LOOP, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFFFFF #A5B4FC #6366F1 #4338CA #251F72 #130D3E
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria Phantasm / Stardust Dragon look: horned spectral skull, undulating draconic mane.
+
+FRAME BY FRAME:
+1: Horned dragon skull silhouette rushing right, white glowing eye sockets (#FFFFFF), curved horns.
+2: Jaw opens slightly; ethereal indigo mane whips backward shedding 2 trailing sparks.
+3: Core contracts under momentum; top horn flares with a sharp white kinetic highlight.
+4: Jaw snaps wide in a draconic roar, throat emitting a focused energy needle.
+5: Symmetrical charging skull restored; trailing energy ribbons undulate like serpentine wings.
+6: Mane waves ripple along the spectral spine, alternating light and deep indigo tones.
+7: Spectral snout sharpens into an aerodynamic ramming wedge.
+8: Ethereal flames curl back into place, smoothly looping back to Frame 1.
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Dragon Pulse
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Dragon Pulse | TYPE: Dragon
+SUBJECT: a multi-layered dragon-headed shockwave pulse tearing horizontally through air.
+
+DURATION & FRAME RULES:
+- Projéteis elementais: 8–12 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFFFFF #A5B4FC #6366F1 #4338CA #251F72 #130D3E
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria Nebula Arcanum / Dragon head projectile aesthetic: stylized snout, concentric rings.
+
+FRAME BY FRAME:
+1: Stylized dragon head energy pulse forming at left, horns pointing back, white core eye.
+2: Dragon head surges forward, trailing 2 concentric elliptical shockwave rings behind it.
+3: Impact point: snout strikes center target, driving through with intense blue flare.
+4: Peak detonation: dragon head opens jaw wide and explodes into a radial 8-point nova.
+5: Nova expands into an outer ring of draconic teeth shards; center clears.
+6: Teeth shards lose velocity, turning deep purple and crumbling.
+7: Shards dissolve into floating draconic dust motes.
+8: Last frame: only 3 small fading sparks (1px each, #130D3E).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+## Prioridade · Fantasma (fundo verde #00FF00)
+
+### Rage Fist
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Rage Fist | TYPE: Ghost
+SUBJECT: a colossal demonic spectral fist accumulating grudges and slamming down with vengeful malice.
+
+DURATION & FRAME RULES:
+- Explosões: 8–14 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
+Background: flat solid #00FF00, nothing else in it.
+
+STYLE: Terraria Golem fist / Shadowflame punch look: massive ethereal knuckles, spiteful energy fissures.
+
+FRAME BY FRAME:
+1: Giant spectral purple fist raised overhead, surrounded by swirling ghostly grudge souls.
+2: Fist plunges downward at extreme speed, trailing dark purple malice streaks.
+3: Impact smash: knuckles crash into ground center with a blinding white shock flash (#FFFFFF).
+4: Peak vendetta: violent horizontal shockwave of jagged phantom spikes erupts left and right.
+5: Fist shatters into 6 flying ethereal bone fragments and wailing spirit wisps.
+6: Spirit wisps swirl in an expanding circle; bone fragments dissolve.
+7: Wisps ascend slowly like purple chimney smoke.
+8: Last frame: only 4 small fading malice embers (1px each, #240046).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Shadow Punch
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Shadow Punch | TYPE: Ghost
+SUBJECT: a phantom fist emerging seamlessly from the shadow dimension for an inescapable punch.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFFFFF #E9D5FF #A855F7 #7E22CE #4C1D95 #240046
+Background: flat solid #00FF00, nothing else in it.
+
+STYLE: Terraria Shadowflame Apparition look: dimensional rift, crisp fist silhouette.
+
+FRAME BY FRAME:
+1: Dark purple dimensional void tear opening at center, glowing lavender rim (#E9D5FF).
+2: Ethereal fist thrusts forward directly out of the tear, knuckles glowing white.
+3: Punch connects: front knuckles deliver full impact, creating a circular purple shockwave ring.
+4: Peak strike: 4 sharp ghost flame sparks burst outward from the knuckle line.
+5: Fist begins dissolving into purple smoke as it retracts back into the void.
+6: Dimensional tear shrinks to a slit; smoke curls around it.
+7: Tear snaps shut with a tiny spark.
+8: Last frame: only 3 small fading shadow motes (1px each, #240046).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+## Prioridade · Sombrio (fundo verde #00FF00)
+
+### Sucker Punch
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Sucker Punch | TYPE: Dark
+SUBJECT: an underhanded lightning-fast counter-jab striking before the target can execute its move.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#F3E8FF #9333EA #4B1058 #2D0036 #18001E #0A000D
+Background: flat solid #00FF00, nothing else in it.
+
+STYLE: Terraria swift counter-strike aesthetic: instantaneous straight jab, sharp kinetic shock rings.
+
+FRAME BY FRAME:
+1: Fist silhouette teleports instantaneously from shadow at center, already at strike apex.
+2: Knuckles connect before target reacts, pure white contact spark (#F3E8FF).
+3: Impact detonation: twin elliptical shock rings burst horizontally from knuckle line.
+4: Peak jab: sharp 4-point shadow starburst pops outward, knocking target backward.
+5: Fist snaps back into shadow, trailing 2 wispy violet speed lines.
+6: Shock rings expand to frame edges and thin out.
+7: Speed lines dissolve into air.
+8: Last frame: only 2 small fading jab sparks (1px each, #0A000D).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+## Prioridade · Aço
+
+### Meteor Mash
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Meteor Mash | TYPE: Steel
+SUBJECT: a celestial cosmic steel meteor punch hurtling with orbital force and detonating in stardust.
+
+DURATION & FRAME RULES:
+- Golpes especiais: 15–24 frames.
+- Explosões: 8–14 frames.
+
+SHEET TYPE: SPECIAL MOVE, 16 frames (4 descida orbital, 6 impacto meteórico, 6 poeira estelar)
+
+CANVAS: 512x512 px total, grid 4 columns x 4 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFFFFF #F1F5F9 #CBD5E1 #64748B #334155 #0F172A
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria Starfury / Meteorite slam look: faceted metallic meteorite, cosmic diamond sparks.
+
+FRAME BY FRAME:
+1: Dense faceted steel meteorite plummeting from top-left, surrounded by burning atmospheric friction.
+2: Meteorite accelerates, kinetic trail broadens into a silver-and-white comet tail.
+3: Impact strike: meteorite hits center target, triggering a blinding full-frame white flash (#FFFFFF).
+4: Cataclysmic detonation: colossal radial shockwave of polished steel plates bursts outward.
+5: Peak meteor mash: 100px explosion with 4 cosmic starburst spikes and 8 flying meteor shrapnel chunks.
+6: Shockwave ring: outer steel compression hoop tears across the screen boundaries.
+7: Meteor core shatters into spinning steel shards; center clears into a celestial crater.
+8: Flying shrapnel chunks decelerate and begin ballistic descent.
+9: Dense carpet of glittering cosmic stardust blankets the central area.
+10: Ground crater crackles with residual kinetic arcs.
+11: Cosmic stardust begins drifting upward with gentle buoyancy.
+12: Shrapnel chunks settle on the floor baseline.
+13: Stardust thins out into ambient sparkling motes.
+14: Kinetic arcs fade from ground crater.
+15: 4 tiny drifting stardust pixels remaining.
+16: Last frame: only 3 small fading metallic motes (1px each, #0F172A).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+## Prioridade · Terrestre
+
+### Stomping Tantrum
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Stomping Tantrum | TYPE: Ground
+SUBJECT: a frustrated furious stomping tantrum doubling in power if the previous move failed.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFFBEB #FDE68A #D97706 #92400E #582306 #2D1002
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria rapid foot stomp look: alternating ground impact craters, angry red-amber dust.
+
+FRAME BY FRAME:
+1: Right foot stomps down hard on left baseline, creating a small dust crater.
+2: Left foot stomps down hard on right baseline with doubled force.
+3: Rapid alternation: dual stomps strike simultaneously at center with a bright white flash (#FFFBEB).
+4: Peak tantrum: violent horizontal shockwave tears across floor with 4 flying dirt clods.
+5: Ground baseline covered in multiple jagged stomp indentations.
+6: Dirt clods drop back to floor; dust cloud billows outward.
+7: Dust settles.
+8: Last frame: only 3 small fading tantrum dust motes (1px each, #2D1002).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+## Prioridade · Lutador
+
+### Axe Kick
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Axe Kick | TYPE: Fighting
+SUBJECT: a high vertical axe kick slamming downward like a heavy guillotine blade.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+Every art pixel is exactly 1 pixel (no mixed pixel sizes).
+
+PALETTE (use only these colors, flat fills, no gradients, no glow):
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria warrior melee slash look: vertical red kinetic blade arc, heavy ground crunch.
+
+FRAME BY FRAME:
+1: Heel silhouette raised high at top-left, glowing with sharp red kinetic charge.
+2: Heel drives straight downward at Mach speed, trailing a broad vertical crimson slash arc.
+3: Impact crash: heel slams into ground baseline with a blinding white shock point (#FFF1F2).
+4: Peak axe: dual horizontal shockwave geysers erupt left and right across the floor.
+5: Heel rebounds upward into stance; ground crack glows with crimson friction heat.
+6: Shockwave geysers shatter into flying kinetic sparks.
+7: Ground crack cools to dark maroon.
+8: Last frame: only 3 small fading combat sparks (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Brick Break
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Brick Break | TYPE: Fighting
+SUBJECT: a hardened karate chop shattering barrier screens and solid bricks into flying debris.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria barrier-shatter look: diagonal knife-hand slash, shattering barrier shards.
+
+FRAME BY FRAME:
+1: Hardened knife-hand chop slashing down at 45 degrees, leading edge glinting white.
+2: Hand contacts barrier pane at center, driving through with intense red pressure lines.
+3: Impact shatter: barrier pane cracks in spiderweb pattern with a bright #FFF1F2 flash.
+4: Peak break: barrier explodes outward in 6 angular crystalline shards and 4 red sparks.
+5: Hand pulls through; broken barrier shards fly outward in ballistic trajectories.
+6: Shards lose velocity, turning deep maroon (#9F1239).
+7: Shards break down into tumbling powder motes.
+8: Last frame: only 3 small fading brick dust pixels (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Close Combat
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Close Combat | TYPE: Fighting
+SUBJECT: an all-out ferocious flurry of pummeling fists and kicks overwhelming target defenses.
+
+DURATION & FRAME RULES:
+- Golpes especiais: 15–24 frames.
+- Explosões: 8–14 frames.
+
+SHEET TYPE: SPECIAL MOVE, 16 frames (4 saraivada de golpes, 6 clímax brutal, 6 dispersão exausta)
+
+CANVAS: 512x512 px total, grid 4 columns x 4 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria Fetid Baghnakhs / rapid melee flurry visual: overlapping fist arcs, dense impacts.
+
+FRAME BY FRAME:
+1: First red straight punch thrusting from left, contact spark flashing at center.
+2: Second punch hooks from right; first punch recoils, leaving red kinetic blur.
+3: Rapid flurry begins: 4 simultaneous fist silhouettes striking from multiple angles.
+4: Dense barrage: 8 overlapping fist strike lines criss-crossing the target area.
+5: Target engulfed in a continuous storm of white impact flashes (#FFF1F2).
+6: Clímax wind-up: all fists retract into a momentary pause before final strike.
+7: Ultimate double-fist hammer strike drives into center with crushing force.
+8: Cataclysmic detonation: massive 90px radial shockwave bursts outward in 360 degrees.
+9: Shockwave ring tears outward; 8 flying kinetic shards ejected from impact.
+10: Fists snap back; target area covered in heavy rolling red combat dust.
+11: Dust cloud billows upward, cooling from crimson to dark burgundy.
+12: Shockwave ring expands off-screen.
+13: Combat dust thins into transparent smoke clusters.
+14: Residual kinetic heat crackles along ground baseline.
+15: 4 tiny cooling sparks remaining.
+16: Last frame: only 3 small fading combat sparks (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Double Kick
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Double Kick | TYPE: Fighting
+SUBJECT: rapid two-hit kicking combination striking high and low in fluid succession.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria double kick strike look: staggered impact stars, dual speed arcs.
+
+FRAME BY FRAME:
+1: First boot slash sweeps horizontally across upper center line.
+2: Strike 1 impact: boot hits with a sharp white impact star (#FFF1F2).
+3: First boot snaps back as second boot sweeps upward from lower angle.
+4: Strike 2 impact: second boot hits with a larger diamond impact star and shock ring.
+5: Dual shock rings expand outward simultaneously, intersecting at center.
+6: Shock rings fade from red to dark burgundy (#9F1239).
+7: Kinetic speed lines dissolve into air.
+8: Last frame: only 3 small fading kick spark pixels (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Drain Punch
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Drain Punch | TYPE: Fighting
+SUBJECT: an energy-siphoning fist strike siphoning red-and-white life orbs back into user.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria Vampire Knives / life drain punch look: heavy impact fist, siphoning nutrient orbs.
+
+FRAME BY FRAME:
+1: Clenched red fist thrusting forward with spiral suction lines orbiting the wrist.
+2: Fist impacts center target, knuckles flashing pure white (#FFF1F2).
+3: Impact burst: circular shockwave explodes outward; 4 life-energy orbs emerge from target.
+4: Peak siphon: energy orbs spiral backward in graceful arcs toward the striking fist.
+5: Orbs absorb into fist knuckles with tiny revitalizing sparkle crosses.
+6: Fist pulls back, glowing with restored vitality aura.
+7: Siphon trails fade into ambient air.
+8: Last frame: only 3 small fading vitality sparkles (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Dynamic Punch
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Dynamic Punch | TYPE: Fighting
+SUBJECT: a 100% confusion-inducing haymaker punch detonating in an erratic spinning star explosion.
+
+DURATION & FRAME RULES:
+- Explosões: 8–14 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria heavy crit haymaker look: massive spinning starburst, dizzy orbital stars.
+
+FRAME BY FRAME:
+1: Oversized red fist winding up with spinning corkscrew motion lines.
+2: Haymaker drives forward, knuckles impacting center with tremendous force.
+3: Detonation: contact point explodes into an erratic 8-point rotating starburst (#FFF1F2).
+4: Peak concussive blast: massive circular shockwave expands (70px), ejecting 3 dizzy spiral stars.
+5: Fist recoils; dizzy spiral stars begin orbiting in an eccentric ellipse at head level.
+6: Concussive shockwave dissolves; dizzy stars wobble irregularly.
+7: Dizzy stars slow down, fading from red to pink.
+8: Last frame: only 3 small fading dizzy star motes (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Focus Punch
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Focus Punch | TYPE: Fighting
+SUBJECT: a patiently concentrated 150-power nuclear fist punch releasing built-up tension in a mega blast.
+
+DURATION & FRAME RULES:
+- Explosões: 8–14 frames.
+
+SHEET TYPE: EXPLOSION ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria mega critical punch visual: massive focus crosshair, apocalyptic shockwave cone.
+
+FRAME BY FRAME:
+1: Concentrated fist locked at hip, surrounded by 4 inward-pointing crimson focus chevrons.
+2: Chevrons collapse into knuckles with a blinding white critical charge point (#FFF1F2).
+3: Release: fist punches forward at supersonic velocity, breaking sound barrier.
+4: Mega impact: colossal horizontal conical shockwave blasts outward to right (90px wide).
+5: Secondary radial blast: ground and air rupture into 8 heavy flying kinetic blocks.
+6: Shockwave cone expands off-screen; fist holds follow-through pose.
+7: Heavy impact smoke billows across center.
+8: Last frame: only 4 small fading kinetic debris pixels (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Force Palm
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Force Palm | TYPE: Fighting
+SUBJECT: an open palm thrust releasing a pressurized shockwave of internal martial qi.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria martial palm strike look: open palm silhouette, concentric qi shock rings.
+
+FRAME BY FRAME:
+1: Open palm thrusting forward with fingers straight, center palm glowing white (#FFF1F2).
+2: Palm contacts target chest; internal qi shockwave begins expanding from palm heel.
+3: Qi discharge: violent planar shockwave ring erupts horizontally through target.
+4: Peak palm: 3 concentric pressurized shock hoops blast outward from open palm.
+5: Palm retracts smoothly; shock hoops expand and thin out.
+6: Shock hoops break into dotted pressure beads.
+7: Pressure beads dissolve into air.
+8: Last frame: only 3 small fading qi spark pixels (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Hammer Arm
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Hammer Arm | TYPE: Fighting
+SUBJECT: a heavy muscle-hardened forearm slamming down like an iron club and shaking ground.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria heavy club smash look: bulging muscular forearm, seismic ground fracture.
+
+FRAME BY FRAME:
+1: Massive muscular forearm raised high overhead, bulging with red tension veins.
+2: Forearm hammers down with brutal weight, trailing heavy crimson wind streaks.
+3: Ground impact: forearm crashes onto baseline center, generating a white shock seam (#FFF1F2).
+4: Peak hammer: violent horizontal seismic shockwave tears left and right along floor.
+5: Forearm embeds slightly in ground; heavy ground debris cubes pop into air.
+6: Forearm lifts back into stance; ground fracture glows deep burgundy.
+7: Ground fracture settles into an indented furrow.
+8: Last frame: only 3 small fading debris pixels (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### High Jump Kick
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: High Jump Kick | TYPE: Fighting
+SUBJECT: an acrobatic soaring flying knee/kick plunging diagonally at lethal velocity.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria divekick melee look: diagonal sonic spear, explosive ground impact.
+
+FRAME BY FRAME:
+1: Flying kick silhouette plunging from upper-left at 45 degrees, pointed toe glinting white.
+2: Kick cuts through air, trailing supersonic wedge-shaped shockwaves behind the foot.
+3: Strike impact: foot pierces center target with a blinding diamond contact star (#FFF1F2).
+4: Peak flying kick: massive 45-degree angled shockwave cone erupts downward and right.
+5: Foot recoils with an acrobatic backflip; impact crater crackles with kinetic heat.
+6: Shockwave cone expands off-screen; combat dust billows.
+7: Dust settles onto floor baseline.
+8: Last frame: only 3 small fading divekick sparks (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Low Kick
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Low Kick | TYPE: Fighting
+SUBJECT: a sweeping shin kick tripping target's ankles with damage scaling by weight.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria low ankle sweep look: ground-skimming horizontal arc, trip flash.
+
+FRAME BY FRAME:
+1: Sweeping shin kicking low along floor baseline from left, trailing red motion arc.
+2: Shin connects with target ankle level, creating a crisp white impact star (#FFF1F2).
+3: Impact trip: horizontal shockwave sweeps low along the ground, knocking target off-balance.
+4: Peak sweep: 3 small friction sparks burst upward from ankle collision point.
+5: Shin finishes follow-through sweep; target silhouette tips over.
+6: Low shockwave dissipates along floor.
+7: Residual friction dust settles.
+8: Last frame: only 2 small fading ground sparks (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Low Sweep
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Low Sweep | TYPE: Fighting
+SUBJECT: a 360-degree crouching spin kick sweeping target's feet and reducing Speed.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria crouching spin sweep look: elliptical floor disc, speed reduction debuff.
+
+FRAME BY FRAME:
+1: Crouched leg sweeping low in a circular arc along floor baseline.
+2: Leg sweeps full 180 degrees, trailing a wide flat red disc trail (#FB7185).
+3: Full circle: leg completes 360-degree sweep, creating a complete circular ground shock ring.
+4: Peak trip: shock ring pulses with bright white impact nodes, knocking target legs out.
+5: Downward chevron debuff arrow (Speed -1) drops onto target ankle level.
+6: Ground shock ring fractures into fading segments.
+7: Debuff arrow dissolves into fading motes.
+8: Last frame: only 3 small fading sweep dust pixels (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Mach Punch
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Mach Punch | TYPE: Fighting
+SUBJECT: an instantaneous supersonic straight punch striking before the eye can track.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria priority swift strike look: instantaneous straight punch, sonic cone rings.
+
+FRAME BY FRAME:
+1: Fist punches forward at Mach 2, already reaching center target in a single frame blur.
+2: Supersonic cone shockwave erupts around knuckles with a blinding white flash (#FFF1F2).
+3: Impact punch connects, driving a horizontal sonic spear clean through target.
+4: Peak mach: 3 nested conical sonic rings burst outward along the punch line.
+5: Fist snaps back instantaneously into resting stance.
+6: Sonic cone rings expand to frame boundaries and thin out.
+7: Residual speed lines fade into air.
+8: Last frame: only 2 small fading sonic spark pixels (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Rock Smash
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Rock Smash | TYPE: Fighting
+SUBJECT: a crushing karate punch demolishing solid boulders into flying rock shrapnel.
+
+DURATION & FRAME RULES:
+- Impactos pequenos: 5–8 frames.
+
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria pickaxe / block shatter look: cracking boulder, flying stone debris cubes.
+
+FRAME BY FRAME:
+1: Solid boulder silhouette hovering at center, clenched red fist striking down into it.
+2: Fist impacts boulder surface with a bright white cleavage spark (#FFF1F2).
+3: Demolition: heavy fracture cracks tear through the boulder in all directions.
+4: Peak smash: boulder shatters violently into 6 angular stone debris cubes flying outward.
+5: Debris cubes tumble in mid-air; target Defense reduction debuff arrow pulses down.
+6: Debris cubes drop toward floor baseline with gravity.
+7: Stone debris hits ground, shattering into dust.
+8: Last frame: only 3 small fading dust pixels (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+### Superpower
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+
+ATTACK: Superpower | TYPE: Fighting
+SUBJECT: unleashing supreme titanic strength in a massive seismic shock that briefly strains muscles.
+
+DURATION & FRAME RULES:
+- Explosões: 8–14 frames.
+
+SHEET TYPE: EXPLOSION ONE-SHOT, 8 frames
+
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
+effect centered on the frame center, same scale in every frame.
+
+PALETTE:
+#FFF1F2 #FECDD3 #FB7185 #E11D48 #9F1239 #4C0519
+Background: flat solid #FF00FF, nothing else in it.
+
+STYLE: Terraria titan glove / supreme smash look: colossal shockwave, muscle exhaustion debuffs.
+
+FRAME BY FRAME:
+1: Colossal red muscular fist plunging down from top, glowing white tension nodes.
+2: Fist strikes center with apocalyptic strength, crushing ground baseline into a deep bowl.
+3: Cataclysmic detonation: massive 360-degree radial shockwave explodes outward (80px wide).
+4: Peak superpower: blinding white core (#FFF1F2) with 6 heavy flying kinetic debris blocks.
+5: Blast hollows out; two downward debuff arrows (Atk/Def down) pulse over user silhouette.
+6: Flying debris blocks crash back to floor; red shockwave ring expands off-screen.
+7: Heavy muscle strain steam wisps rise from center.
+8: Last frame: only 4 small fading strain steam motes (1px each, #4C0519).
+
+Do not include characters, text, UI, borders or shadows.
+```
+
+## Prioridade · Normal
+
+### Mega Kick
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+ATTACK: Mega Kick | TYPE: Normal
+SUBJECT: a high-power 120-damage roundhouse kick slamming target with crushing kinetic weight.
+DURATION & FRAME RULES: Impactos pequenos: 5–8 frames.
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px, effect centered.
+PALETTE: #FFFFFF #F5F5F5 #D4D4D4 #A3A3A3 #525252 #171717 | Background: #FF00FF
+FRAME BY FRAME:
+1: Boot silhouette sweeps in from left in a wide horizontal roundhouse arc.
+2: Boot accelerates to maximum speed, trailing a broad silver kinetic blade ribbon.
+3: Impact crash: boot connects with center target, triggering a blinding white contact star (#FFFFFF).
+4: Peak mega kick: colossal horizontal shockwave blasts outward to right (70px wide).
+5: Target launched across screen; boot completes follow-through rotation.
+6: Shockwave expands to borders and thins out.
+7: Kinetic speed lines dissolve into air.
+8: Last frame: only 3 small fading kick sparks (1px each, #171717).
+```
+
+### Mega Punch
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+ATTACK: Mega Punch | TYPE: Normal
+SUBJECT: a straight haymaker punch delivering 80-damage pure muscular kinetic wallop.
+DURATION & FRAME RULES: Impactos pequenos: 5–8 frames.
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px, effect centered.
+PALETTE: #FFFFFF #F5F5F5 #D4D4D4 #A3A3A3 #525252 #171717 | Background: #FF00FF
+FRAME BY FRAME:
+1: Clenched muscular fist punches straight forward from left at high velocity.
+2: Fist strikes center target, knuckles flashing pure white (#FFFFFF).
+3: Impact burst: circular shockwave of kinetic energy explodes 360 degrees around fist.
+4: Peak mega punch: fist dissolves into an expanding hollow impact ring with 4 sparks.
+5: Fist snaps back into ready stance; impact ring fractures into moving arcs.
+6: Arcs lose energy, fading to dark gray (#525252).
+7: Residual impact smoke drifts upward.
+8: Last frame: only 3 small fading punch motes (1px each, #171717).
+```
+
+### Stomp
+
+```text
+Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
+ATTACK: Stomp | TYPE: Normal
+SUBJECT: a heavy crushing foot stomping down on target with double damage if target used Minimize.
+DURATION & FRAME RULES: Impactos pequenos: 5–8 frames.
+SHEET TYPE: IMPACT ONE-SHOT, 8 frames
+CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px, effect centered.
+PALETTE: #FFFFFF #F5F5F5 #D4D4D4 #A3A3A3 #525252 #171717 | Background: #FF00FF
+FRAME BY FRAME:
+1: Massive sole of a heavy boot or dinosaur foot plunging down from top edge.
+2: Stomp contact: foot crushes onto center target, flattening ground with a white shock seam (#FFFFFF).
+3: Impact crunch: horizontal shockwave bursts left and right across floor baseline.
+4: Peak stomp: target flattened in ground indentation; 4 small dust clods pop into air.
+5: Foot lifts back into stance; ground indentation glows with friction heat.
+6: Dust clods drop back to floor.
+7: Ground indentation settles.
+8: Last frame: only 3 small fading stomp dust pixels (1px each, #171717).
+```
 
 ## Água
 

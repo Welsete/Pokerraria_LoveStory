@@ -545,7 +545,8 @@
  {
   "tipo": "Dragão",
   "golpe": "Dragon Rush",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Dragão",
@@ -571,7 +572,8 @@
  {
   "tipo": "Dragão",
   "golpe": "Dragon Pulse",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "pulso"
  },
  {
   "tipo": "Dragão",
@@ -597,12 +599,14 @@
  {
   "tipo": "Fantasma",
   "golpe": "Rage Fist",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Fantasma",
   "golpe": "Shadow Punch",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto"
  },
  {
   "tipo": "Fantasma",
@@ -695,7 +699,8 @@
  {
   "tipo": "Sombrio",
   "golpe": "Sucker Punch",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto"
  },
  {
   "tipo": "Sombrio",
@@ -791,7 +796,8 @@
  {
   "tipo": "Aço",
   "golpe": "Meteor Mash",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Aço",
@@ -865,7 +871,8 @@
  {
   "tipo": "Terrestre",
   "golpe": "Stomping Tantrum",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Terrestre",
@@ -1258,17 +1265,20 @@
  {
   "tipo": "Lutador",
   "golpe": "Axe Kick",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Lutador",
   "golpe": "Brick Break",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto"
  },
  {
   "tipo": "Lutador",
   "golpe": "Close Combat",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Lutador",
@@ -1284,52 +1294,62 @@
  {
   "tipo": "Lutador",
   "golpe": "Double Kick",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto"
  },
  {
   "tipo": "Lutador",
   "golpe": "Drain Punch",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto"
  },
  {
   "tipo": "Lutador",
   "golpe": "Dynamic Punch",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Lutador",
   "golpe": "Focus Punch",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Lutador",
   "golpe": "Force Palm",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto"
  },
  {
   "tipo": "Lutador",
   "golpe": "Hammer Arm",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Lutador",
   "golpe": "High Jump Kick",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Lutador",
   "golpe": "Low Kick",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto"
  },
  {
   "tipo": "Lutador",
   "golpe": "Low Sweep",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto"
  },
  {
   "tipo": "Lutador",
   "golpe": "Mach Punch",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto"
  },
  {
   "tipo": "Lutador",
@@ -1346,7 +1366,8 @@
  {
   "tipo": "Lutador",
   "golpe": "Rock Smash",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto"
  },
  {
   "tipo": "Lutador",
@@ -1367,7 +1388,8 @@
  {
   "tipo": "Lutador",
   "golpe": "Superpower",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Lutador",
@@ -1770,12 +1792,14 @@
  {
   "tipo": "Normal",
   "golpe": "Mega Kick",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Normal",
   "golpe": "Mega Punch",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto_forte"
  },
  {
   "tipo": "Normal",
@@ -1842,7 +1866,8 @@
  {
   "tipo": "Normal",
   "golpe": "Stomp",
-  "situacao": "animado"
+  "situacao": "provisorio",
+  "molde": "impacto"
  },
  {
   "tipo": "Normal",

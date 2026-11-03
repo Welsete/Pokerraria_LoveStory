@@ -278,14 +278,13 @@ OTHER = {"Swords Dance": ("Normal", swords_dance), "Dragon Dance": ("Dragão", d
          "Dragon Pulse": ("Dragão", lambda: dragon_projectile(True)), "Dragon Claw": ("Dragão", dragon_claw)}
 
 
+# Socos, chutes, Dragon Rush e Dragon Pulse ficaram feios desenhados assim (decisão do Welsete, 2026-11-03): eles
+# voltaram para o gerador de imagem (provisórios em código, em basicos.py). Os moldes punch/kick ficam aqui guardados.
+EM_USO = ["Swords Dance", "Dragon Dance", "Dragon Claw"]
+
+
 def all_moves():
-    out = {}
-    for n, (t, big) in PUNCH.items():
-        out[n] = (t, (lambda b: lambda: punch(b))(big))
-    for n, (t, big) in KICK.items():
-        out[n] = (t, (lambda b: lambda: kick(b))(big))
-    out.update(OTHER)
-    return out
+    return {n: OTHER[n] for n in EM_USO}
 
 
 def move_id(nome):
