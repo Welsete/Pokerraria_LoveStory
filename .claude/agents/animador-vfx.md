@@ -25,6 +25,15 @@ sem usar o travessão longo.
    inteiro (sem franja rosa), os frames não podem cortar o efeito na borda.
 5. Teste no jogo pelo painel F8, aba Moves. Atualize o CHANGELOG (`## Next`) com os golpes novos.
 
+## Desenhar por código
+Também dá para desenhar o golpe direto em Python, sem o Gemini: veja `tools/vfx/draw_shadow_ball.py` (arte em 56x56
+por frame, escala 2x sem suavizar, só as 6 cores da paleta do tipo, contorno de 1px). Bom para orbes, anéis,
+estrelas e partículas; formas orgânicas (água, fogo, folhas) ficam melhores vindas do Gemini.
+
+**Cuidado com roxos:** o recorte do `convert.py` apaga pixels com vermelho e azul bem acima do verde, então tons
+roxos e rosados (Fantasma, Psíquico, Venenoso, Sombrio, Fada) podem sumir junto com o fundo magenta. Confira o
+resultado desses tipos com atenção e, se precisar, deixe o recorte mais estrito só para aquela sheet.
+
 ## Prompts novos
 Quando faltar prompt para um golpe, escreva no mesmo formato do arquivo do tipo, com a paleta do tipo, contagem de
 frames da categoria e fundo `#FF00FF`. O Welsete e a Isa geram a imagem no Gemini; você não gera imagem.

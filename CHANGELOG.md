@@ -5,6 +5,7 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 ## Next
 
 - 8 more drawn move animations, the first of Water, Electric and Grass: Water Gun, Hydro Pump, Bubble Beam, Aqua Jet, Thunder Shock, Thunderbolt, Thunder Punch and Razor Leaf (43 in total).
+- Shadow Ball gets an animation drawn pixel by pixel in code, in the Ghost palette (44 in total).
 - 17 more drawn move animations: Blaze Kick, Eruption, Fire Fang, Fire Punch, Fire Spin, Flame Charge, Flame Wheel, Flare Blitz, Heat Crash, Heat Wave, Incinerate, Inferno, Lava Plume, Overheat, Sunny Day, Mist and Snowscape (35 in total).
 - Nurse Joy's healing machine on the counter beside her: your Poké Balls go into its slots one by one and glow while the healing jingle plays.
 - New Pokémon Center: two floors under a red roof with a giant Poké Ball, Nurse Joy at the counter downstairs and a room with four PCs upstairs. New worlds get it near spawn; older ones can build it from the League tab of the test panel.
