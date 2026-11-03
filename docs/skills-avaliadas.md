@@ -38,8 +38,8 @@ CLI logado; sem isso, sobra o processamento de sheets que já existem e a arte p
 
 | Nota | Skill | Motivo |
 | --- | --- | --- |
-| **9** | `generate2dsprite` | Recorta, limpa e registra sheets de FX: keyer "soft matte" sem franja rosa, fundo verde/azul para artes roxas, QC de sheet, paleta. Substitui e melhora o nosso `convert.py`. **Pendente**: precisa de permissão do Welsete para rodar código de terceiros. |
-| 8 | `generate2dmedia` | Gera a imagem direto pela API (com chave do Gemini, o Claude geraria as sheets sozinho, sem o Welsete copiar e colar). Dependência da anterior. Custa por imagem. |
+| **9** | `generate2dsprite` | Recorta, limpa e registra sheets de FX: keyer "soft matte" sem franja rosa, fundo verde/azul para artes roxas, QC de sheet, paleta. Substitui e melhora o nosso `convert.py`. **Instalada** (Welsete autorizou rodar o código); o `convert.py` usa o keyer dela. |
+| 8 | `generate2dmedia` | Gera a imagem direto pela API (com chave do Gemini, o Claude geraria as sheets sozinho, sem o Welsete copiar e colar). Dependência da anterior. Custa por imagem. **Instalada** como dependência; sem chave de API configurada. |
 | 7 | `codeart2d` | Arte por código com paleta exata e QA. Sobrepõe o nosso `draw_shadow_ball.py`, mas é mais completa. |
 | 6 | `video2dsprite` | Anima personagens a partir de um still via vídeo (xAI/Grok). Útil se um dia voltarmos às caminhadas dos treinadores. |
 | 3 | `generate2dmap` | Mapas para Tiled, Godot e LDtk; no Terraria usamos o Blueprint Builder. |
