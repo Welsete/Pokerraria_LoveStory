@@ -4,6 +4,7 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+- Test panel: "Teleport on map" (right click anywhere on the full screen map to go there, landing above ground), and in Debug Mode the map marks the Gym and League pedestals.
 - 8 more drawn move animations, the first of Water, Electric and Grass: Water Gun, Hydro Pump, Bubble Beam, Aqua Jet, Thunder Shock, Thunderbolt, Thunder Punch and Razor Leaf (43 in total).
 - Shadow Ball gets an animation drawn pixel by pixel in code, in the Ghost palette (44 in total).
 - Night Slash: a test animation built with the codeart2d tool from an effect description (45 in total).

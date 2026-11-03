@@ -518,6 +518,7 @@ GUI: {
 		GiveGear: Dar equipamentos
 		GiveBossItems: Dar invocadores de chefe
 		RevealMap: Revelar mapa
+		TeleportOnMap: TP pelo mapa (liga/desliga)
 		NoEvolution: "{0} não evolui por nível."
 		PerfectIVsDone: "{0} agora tem 31 em todos os IVs."
 		TeachSpriteMoveDone: "{0} aprendeu {1} no 1º espaço."
@@ -538,6 +539,11 @@ GUI: {
 		GearGiven: Você recebeu Concha-celular, Gancho Lunar, Botas Terrafaísca, Asas de Peixe-dragão, Broca Laser e tochas.
 		BossItemsGiven: Você recebeu o item de invocar de cada chefe.
 		MapRevealed: O mapa inteiro foi revelado.
+		MapTeleportOn: TP pelo mapa ligado: abra o mapa e clique com o botão direito onde quiser ir.
+		MapTeleportOff: TP pelo mapa desligado.
+		MapTeleportHint: Botão direito: teleportar para cá
+		DebugGymPedestal: Pedestal dos Ginásios
+		DebugLeaguePedestal: Pedestal da Liga Pokémon
 		TabMoves: Golpes
 		MovesHint: "Clique esquerdo: tocar agora na batalha · Direito: ensinar no 1º espaço"
 		PlayAllMoves: Tocar todos ({0})

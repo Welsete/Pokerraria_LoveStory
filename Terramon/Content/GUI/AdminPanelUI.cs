@@ -121,7 +121,8 @@ public sealed class AdminPanelUI : SmartUIState
             ("GiveMoney", GiveMoney),
             ("GiveGear", GiveGear),
             ("GiveBossItems", GiveBossItems),
-            ("RevealMap", RevealMap)
+            ("RevealMap", RevealMap),
+            ("TeleportOnMap", ToggleTeleportOnMap)
         ]),
         ("TabMoves", []), // Every move with a drawn animation, see BuildMoveGrid
         ("TabItems", []) // A grid of every item of the mod, see BuildItemGrid
@@ -735,6 +736,15 @@ public sealed class AdminPanelUI : SmartUIState
 
         Main.refreshMap = true;
         Say("MapRevealed");
+    }
+
+    /// <summary>
+    ///     While on, a right click on the full screen map teleports there (see <see cref="AdminMapSystem" />).
+    /// </summary>
+    private static void ToggleTeleportOnMap()
+    {
+        AdminMapSystem.TeleportOnMap = !AdminMapSystem.TeleportOnMap;
+        Say(AdminMapSystem.TeleportOnMap ? "MapTeleportOn" : "MapTeleportOff");
     }
 
     #endregion
