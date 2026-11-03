@@ -11,18 +11,7 @@ SRC, OUT = sys.argv[1], sys.argv[2]
 REACH = 150
 
 SHEETS = [
-    ("solar_beam_spritesheet_1792854445400.jpg", "SolarBeam", 4, [
-        ((110, 5, 240, 195), "burst"),     # light gathering
-        ((415, 5, 610, 195), "burst"),     # flash
-        ((690, 5, 1185, 195), "burst"),    # arrow with rings, flying
-        ((0, 205, 675, 370), "beam"),      # beam with its head
-        ((685, 205, 1376, 370), "beam"),   # full beam
-        ((0, 385, 925, 575), "beam"),      # pulsing beam
-        ((0, 580, 350, 762), "beam"),      # beam breaking up
-        ((990, 385, 1100, 575), "burst"),  # ring
-        ((350, 580, 615, 762), "burst"),   # ring and crescents
-        ((1140, 385, 1280, 575), "burst"), # crescents fading
-    ], dict(Charge=2, Travel=1, Beam="3 6", Ticks=5, Face=1)),
+    # Solar Beam is drawn in code now (tools/vfx/draw_solar_beam.py); its old Gemini cut is kept below, unused
     ("ice_beam_vfx_spritesheet_1792855768122.jpg", "IceBeam", 4, [
         ((70, 80, 275, 300), "burst"),     # crystal forming
         ((385, 80, 670, 300), "burst"),    # spiral point, flying
@@ -47,6 +36,21 @@ SHEETS = [
         ((910, 570, 1110, 750), "burst"),
         ((1190, 600, 1345, 720), "burst"),
     ], dict(Travel=0, Beam="0 5", Ticks=4, Face=1)),
+]
+
+OLD_SOLAR_BEAM = [
+    ("solar_beam_spritesheet_1792854445400.jpg", "SolarBeam", 4, [
+        ((110, 5, 240, 195), "burst"),     # light gathering
+        ((415, 5, 610, 195), "burst"),     # flash
+        ((690, 5, 1185, 195), "burst"),    # arrow with rings, flying
+        ((0, 205, 675, 370), "beam"),      # beam with its head
+        ((685, 205, 1376, 370), "beam"),   # full beam
+        ((0, 385, 925, 575), "beam"),      # pulsing beam
+        ((0, 580, 350, 762), "beam"),      # beam breaking up
+        ((990, 385, 1100, 575), "burst"),  # ring
+        ((350, 580, 615, 762), "burst"),   # ring and crescents
+        ((1140, 385, 1280, 575), "burst"), # crescents fading
+    ], dict(Charge=2, Travel=1, Beam="3 6", Ticks=5, Face=1)),
 ]
 
 for file, move, k, pieces, settings in SHEETS:
