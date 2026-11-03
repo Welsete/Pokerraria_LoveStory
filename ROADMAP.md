@@ -45,6 +45,20 @@ Decisões em `docs/DECISOES.md` (grill-me de 2026-11-03).
 - [ ] Gancho no fim do capítulo (?) qual [roteirista-lovestory]
 - [ ] Textos pt-BR e en-US: páginas, falas da Aurora, entradas do diário [roteirista-lovestory]
 
+## Eventos no mundo (ideias do Welsete, 2026-11-03; ainda sem versão)
+
+Eventos no estilo das invasões do Terraria (como o Exército Goblin): aparecem de vez em quando ou quando uma condição
+é cumprida, têm barra de progresso e uma recompensa no fim.
+
+- [ ] **Equipe Rocket pelo mapa:** grupos de recrutas da Rocket aparecem em pontos do mapa, roubam Pokémon ou itens
+      e fogem; vencer as batalhas devolve o que levaram. Pode crescer até uma invasão com Jessie, James e Meowth no
+      dirigível (?) quando começa e o que roubam [programador-batalha + npcs-e-sprites + construtor-mundo]
+- [ ] **Invasão dos Spearow:** um bando de Spearow ataca um Pikachu ferido; o jogador protege o Pikachu até a barra
+      do evento encher; no fim o Pikachu pode se juntar à equipe (?) gatilho e recompensa [programador-batalha]
+- [ ] **Torre Pokémon de Lavender:** estrutura gerada no mundo com andares de Pokémon Fantasma, névoa e um chefe no
+      topo (o espírito da Marowak); de noite fica mais perigosa (?) bioma e se precisa do Silph Scope
+      [construtor-mundo + roteirista-lovestory]
+
 ## 0.7.0 · Ginásios e treinadores vivos
 
 - [ ] Sprites próprios para os 6 líderes restantes no padrão da Misty (Surge, Erika, Koga, Sabrina, Blaine,

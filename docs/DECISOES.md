@@ -29,4 +29,5 @@ houver). Perguntas ainda sem resposta ficam no fim.
 - Capítulo 1: qual é o gancho no fim (depois da Misty)?
 - Capítulo 1: o texto de cada página do diário.
 - Em que bioma fica cada Ginásio que ainda não tem prédio próprio?
+- Eventos (Equipe Rocket, invasão dos Spearow, Torre de Lavender): em que versão entram e se fazem parte da história do capítulo 1?
 - Multiplayer é prioridade em alguma versão antes da 1.0?
