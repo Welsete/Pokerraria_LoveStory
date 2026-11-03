@@ -72,7 +72,7 @@ SHEETS = [
     ("lote1_shadow_punch.png", "ShadowPunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
     ("lote1_stomping_tantrum.png", "StompingTantrum", (4, 2), 3, dict(Travel=0, Ticks=4)),
     ("lote1_sucker_punch.png", "SuckerPunch", (4, 2), 3, dict(Travel=0, Ticks=3, Face=1)),
-    # Lote 2 do Gemini (2026-11-03). Mach Punch e High Jump Kick vieram com um personagem desenhado: ficaram de fora
+    # Lote 2 do Gemini (2026-11-03)
     ("lote2_drain_punch.png", "DrainPunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
     ("lote2_dynamic_punch.png", "DynamicPunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
     ("lote2_focus_punch.png", "FocusPunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
@@ -81,6 +81,10 @@ SHEETS = [
     ("lote2_low_kick.png", "LowKick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
     ("lote2_low_sweep.png", "LowSweep", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
     ("lote2_rock_smash.png", "RockSmash", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    # High Jump Kick keeps the kicking silhouette (Welsete liked it); Mach Punch came with a boxer on the left of each
+    # frame (2 columns x 4 rows): only the part right of him is cut
+    ("lote2_high_jump_kick.png", "HighJumpKick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote2_mach_punch.png", "MachPunch", [(295, 0, 688, 192), (860, 0, 1253, 192), (295, 192, 688, 384), (860, 192, 1253, 384), (295, 384, 688, 576), (860, 384, 1253, 576), (295, 576, 688, 768), (860, 576, 1253, 768)], 3, dict(Travel=0, Ticks=3, Face=1)),
 ]
 
 

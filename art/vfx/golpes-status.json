@@ -1314,8 +1314,7 @@
  {
   "tipo": "Lutador",
   "golpe": "High Jump Kick",
-  "situacao": "provisorio",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1330,8 +1329,7 @@
  {
   "tipo": "Lutador",
   "golpe": "Mach Punch",
-  "situacao": "provisorio",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
