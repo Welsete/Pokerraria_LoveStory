@@ -60,6 +60,11 @@ constrói a estrutura em mundos novos, sem precisar do Blueprint Builder instala
 4. Funcionou: commit em `main` e push. O CI publica os `.tmod` no release `build-main`; tags `v*` geram release
    de versão com a seção do CHANGELOG.
 
+Painel do projeto (dashboard no claude.ai): https://claude.ai/artifact/9NgURoGYbuDrwcqVPDp1mG. Depois de cada push,
+rode `python3 tools/painel/gerar_dados.py "$HOME/mnt/Pokerraria/painel"`, suba cada JSON alterado ao painel
+(Artifact `asset: true`) e atualize o `source.url` e o `updated` do dataset correspondente (`roadmap`, `golpes`,
+`commits`, `builds`).
+
 Commits: mensagem curta em inglês, no estilo dos existentes ("Misty stands at her Gym spot again"), descrevendo o
 que muda para quem joga. Toda mudança visível vai para a seção `## Next` do CHANGELOG.
 
