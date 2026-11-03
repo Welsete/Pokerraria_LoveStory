@@ -287,6 +287,35 @@ def all_moves():
     return {n: OTHER[n] for n in EM_USO}
 
 
+def append_burst(name, tipo, n=4, big=True):
+    """Acrescenta um impacto desenhado em código (cores do tipo) ao fim de uma tira que já existe, para sheets do
+    gerador que não trazem o impacto. Usa o tamanho de frame da tira."""
+    path = f"Terramon/Assets/Moves/{name}"
+    lines = open(path + ".txt").read().split("\n")
+    frames = int(lines[0].split()[1])
+    strip = Image.open(path + ".png").convert("RGBA")
+    fw, fh = strip.width // frames, strip.height
+    cols = PALETAS[tipo]
+    rnd = random.Random(1)
+    extra = []
+    for k in range(n):
+        cv = Canvas(fw // SCALE, fh // SCALE)
+        burst(cv, cv.w / 2, cv.h / 2, k, big, rnd)
+        img = cv.outline()
+        out = np.zeros((cv.h, cv.w, 4), np.uint8)
+        for i, hx in enumerate(cols, start=1):
+            out[img == i] = [int(hx[j:j + 2], 16) for j in (1, 3, 5)] + [255]
+        extra.append(Image.fromarray(out.repeat(SCALE, 0).repeat(SCALE, 1), "RGBA").resize((fw, fh), Image.NEAREST))
+    new = Image.new("RGBA", (fw * (frames + n), fh))
+    new.paste(strip, (0, 0))
+    for i, e in enumerate(extra):
+        new.paste(e, (fw * (frames + i), 0))
+    new.save(path + ".png", optimize=True)
+    lines[0] = f"Frames {frames + n}"
+    open(path + ".txt", "w").write("\n".join(lines))
+    print(name, "+", n, "frames de impacto")
+
+
 def move_id(nome):
     import re
     return "".join(p[:1].upper() + p[1:] for p in re.split(r"[^A-Za-z0-9]+", nome) if p)

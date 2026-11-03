@@ -39,7 +39,7 @@ Quando um golpe do gerador fica pronto, a animação dele substitui a versão de
 
 ## Situação
 
-416 golpes no catálogo: **57** com arte própria, **204** desenhados por código, **155** esperando o gerador.
+416 golpes no catálogo: **58** com arte própria, **204** desenhados por código, **154** esperando o gerador.
 
 ## Faltam: para o gerador de imagem
 
@@ -48,7 +48,7 @@ Em ordem de tipo. Entre parênteses, o arquivo de prompts. Os marcados com * já
 - **Água** (8, `agua.md`): Aqua Tail, Dive, Waterfall, Wave Crash, Muddy Water, Surf, Whirlpool, Rain Dance
 - **Planta** (11, `planta.md`): Petal Blizzard, Power Whip, Vine Whip, Absorb, Giga Drain, Leaf Storm, Mega Drain, Petal Dance, Grassy Terrain, Ingrain, Leech Seed
 - **Elétrico** (4, `eletrico.md`): Thunder Fang, Zap Cannon, Electric Terrain, Magnetic Flux
-- **Dragão** (5, `dragao.md`): Dragon Rush*, Dragon Tail, Outrage, Dragon Breath, Dragon Pulse*
+- **Dragão** (4, `dragao.md`): Dragon Tail, Outrage, Dragon Breath, Dragon Pulse*
 - **Fantasma** (6, `fantasma.md` · fundo verde): Lick, Rage Fist*, Shadow Punch*, Shadow Sneak, Curse, Destiny Bond
 - **Sombrio** (6, `sombrio.md` · fundo verde): Bite, Crunch, Fling, Sucker Punch*, Memento, Switcheroo
 - **Aço** (3, `aco.md`): Gyro Ball, Iron Tail, Meteor Mash*
@@ -90,7 +90,7 @@ Os prompts de todos esses, prontos para copiar, estão em [art/vfx/FILA_GERADOR.
 - **Planta** (2): Razor Leaf, Solar Beam
 - **Elétrico** (5): Thunder Punch, Charge Beam, Thunder, Thunder Shock, Thunderbolt
 - **Gelo** (15): Ice Fang, Ice Punch, Ice Shard, Icicle Crash, Icicle Spear, Aurora Beam, Blizzard, Freeze Dry, Ice Beam, Icy Wind, Powder Snow, Sheer Cold, Haze, Mist, Snowscape
-- **Dragão** (3): Dragon Claw, Twister, Dragon Dance
+- **Dragão** (4): Dragon Claw, Dragon Rush, Twister, Dragon Dance
 - **Fantasma** (1): Shadow Ball
 - **Sombrio** (1): Night Slash
 - **Aço** (2): Bullet Punch, Flash Cannon

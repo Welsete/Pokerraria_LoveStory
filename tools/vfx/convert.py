@@ -58,6 +58,9 @@ SHEETS = [
      [(0, 0, 344, 384), (344, 0, 688, 384), (688, 0, 1032, 384), (1032, 0, 1376, 384), (0, 384, 344, 768), (688, 384, 1032, 768)], 3, dict(Travel=1, Ticks=4, Face=1)),
     ("thunder_punch_vfx_spritesheet_1793722488169.jpg", "ThunderPunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
     ("razor_leaf_vfx_spritesheet_1793721701699.jpg", "RazorLeaf", (4, 2), 3, dict(Travel=7, Ticks=3, Face=1)),
+    # Gemini, 2752x1536: dragon heads flying (6 frames loop on the way), then the front-facing skull on the target;
+    # draw_themed_moves.py append_burst adds a dragon-colored burst after it
+    ("dragon_rush_gemini.jpg", "DragonRush", [(688, 0, 1376, 768), (1376, 0, 2064, 768), (2064, 0, 2752, 768), (688, 768, 1376, 1536), (1376, 768, 2064, 1536), (2064, 768, 2752, 1536), (0, 768, 688, 1536)], 6, dict(Travel=6, Ticks=4, Face=1)),
 ]
 
 

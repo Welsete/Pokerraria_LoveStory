@@ -7,41 +7,6 @@ Comece pelas seções **Prioridade** (golpes que hoje têm uma versão provisór
 
 ## Prioridade · Dragão
 
-### Dragon Rush
-
-```text
-Pixel-art VFX sprite sheet, original design, for a Terraria-style 2D game.
-
-ATTACK: Dragon Rush | TYPE: Dragon
-SUBJECT: a menacing dragon skull phantom aura charging forward at breakneck speed.
-
-DURATION & FRAME RULES:
-- Projéteis elementais: 8–12 frames em loop.
-
-SHEET TYPE: PROJECTILE LOOP, 8 frames
-
-CANVAS: 512x256 px total, grid 4 columns x 2 rows, each frame 128x128 px,
-effect centered on the frame center, same scale in every frame.
-
-PALETTE:
-#FFFFFF #A5B4FC #6366F1 #4338CA #251F72 #130D3E
-Background: flat solid #FF00FF, nothing else in it.
-
-STYLE: Terraria Phantasm / Stardust Dragon look: horned spectral skull, undulating draconic mane.
-
-FRAME BY FRAME:
-1: Horned dragon skull silhouette rushing right, white glowing eye sockets (#FFFFFF), curved horns.
-2: Jaw opens slightly; ethereal indigo mane whips backward shedding 2 trailing sparks.
-3: Core contracts under momentum; top horn flares with a sharp white kinetic highlight.
-4: Jaw snaps wide in a draconic roar, throat emitting a focused energy needle.
-5: Symmetrical charging skull restored; trailing energy ribbons undulate like serpentine wings.
-6: Mane waves ripple along the spectral spine, alternating light and deep indigo tones.
-7: Spectral snout sharpens into an aerodynamic ramming wedge.
-8: Ethereal flames curl back into place, smoothly looping back to Frame 1.
-
-Do not include characters, text, UI, borders or shadows.
-```
-
 ### Dragon Pulse
 
 ```text

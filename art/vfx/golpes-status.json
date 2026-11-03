@@ -545,8 +545,7 @@
  {
   "tipo": "Dragão",
   "golpe": "Dragon Rush",
-  "situacao": "provisorio",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Dragão",
