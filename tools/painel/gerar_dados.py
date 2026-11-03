@@ -19,7 +19,9 @@ anim = {os.path.splitext(f)[0] for f in os.listdir('Terramon/Assets/Moves') if f
 animn = {norm(a): a for a in anim}
 rows, achados = {}, set()
 for arq, tipo in TIPOS.items():
-    nomes = re.findall(r'^## \d+\.\s*(.+)$', open(f'art/vfx/prompts/{arq}.md').read(), re.M)
+    # "## 2. Aqua Jet *(Já Gerado)*": a marca entre parênteses não faz parte do nome
+    nomes = [re.sub(r'\s*\*?\(.*$', '', n) for n in
+             re.findall(r'^## \d+\.\s*(.+)$', open(f'art/vfx/prompts/{arq}.md').read(), re.M)]
     r = rows.setdefault(tipo, {'tipo': tipo, 'catalogados': 0, 'animados': 0})
     r['catalogados'] += len(nomes)
     for n in nomes:
