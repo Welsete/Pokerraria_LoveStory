@@ -1,0 +1,2314 @@
+[
+ {
+  "tipo": "Fogo",
+  "golpe": "Blaze Kick",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Fire Fang",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Fire Punch",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Flame Charge",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Flame Wheel",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Flare Blitz",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Heat Crash",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Ember",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Eruption",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Fire Blast",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Fire Spin",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Flamethrower",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Heat Wave",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Incinerate",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Inferno",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Lava Plume",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Overheat",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Sunny Day",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fogo",
+  "golpe": "Will-O-Wisp",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Aqua Cutter",
+  "situacao": "codigo",
+  "molde": "corte"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Aqua Jet",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Aqua Tail",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Crabhammer",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Dive",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Liquidation",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Razor Shell",
+  "situacao": "codigo",
+  "molde": "corte"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Waterfall",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Wave Crash",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Brine",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Bubble Beam",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Hydro Pump",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Muddy Water",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Surf",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Water Gun",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Water Pulse",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Whirlpool",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Aqua Ring",
+  "situacao": "codigo",
+  "molde": "cura"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Life Dew",
+  "situacao": "codigo",
+  "molde": "cura"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Rain Dance",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Soak",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Água",
+  "golpe": "Withdraw",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Branch Poke",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Bullet Seed",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Leaf Blade",
+  "situacao": "codigo",
+  "molde": "corte"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Leafage",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Petal Blizzard",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Power Whip",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Razor Leaf",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Seed Bomb",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Vine Whip",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Wood Hammer",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Absorb",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Energy Ball",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Giga Drain",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Leaf Storm",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Magical Leaf",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Mega Drain",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Petal Dance",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Solar Beam",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Aromatherapy",
+  "situacao": "codigo",
+  "molde": "cura"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Grassy Terrain",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Ingrain",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Leech Seed",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Sleep Powder",
+  "situacao": "codigo",
+  "molde": "nuvem"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Spore",
+  "situacao": "codigo",
+  "molde": "nuvem"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Stun Spore",
+  "situacao": "codigo",
+  "molde": "nuvem"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Synthesis",
+  "situacao": "codigo",
+  "molde": "cura"
+ },
+ {
+  "tipo": "Planta",
+  "golpe": "Worry Seed",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Nuzzle",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Spark",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Thunder Fang",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Thunder Punch",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Charge Beam",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Discharge",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Electro Ball",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Shock Wave",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Thunder",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Thunder Shock",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Thunderbolt",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Zap Cannon",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Charge",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Eerie Impulse",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Electric Terrain",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Magnet Rise",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Magnetic Flux",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Elétrico",
+  "golpe": "Thunder Wave",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Ice Fang",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Ice Punch",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Ice Shard",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Icicle Crash",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Icicle Spear",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Aurora Beam",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Blizzard",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Freeze Dry",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Ice Beam",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Icy Wind",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Powder Snow",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Sheer Cold",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Haze",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Mist",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Gelo",
+  "golpe": "Snowscape",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Dragão",
+  "golpe": "Dragon Claw",
+  "situacao": "codigo",
+  "molde": "garra"
+ },
+ {
+  "tipo": "Dragão",
+  "golpe": "Dragon Rush",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Dragão",
+  "golpe": "Dragon Tail",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Dragão",
+  "golpe": "Dual Chop",
+  "situacao": "codigo",
+  "molde": "cruz"
+ },
+ {
+  "tipo": "Dragão",
+  "golpe": "Outrage",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Dragão",
+  "golpe": "Dragon Breath",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Dragão",
+  "golpe": "Dragon Pulse",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Dragão",
+  "golpe": "Twister",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Dragão",
+  "golpe": "Dragon Dance",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Fantasma",
+  "golpe": "Astonish",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Fantasma",
+  "golpe": "Lick",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Fantasma",
+  "golpe": "Rage Fist",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Fantasma",
+  "golpe": "Shadow Punch",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Fantasma",
+  "golpe": "Shadow Sneak",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Fantasma",
+  "golpe": "Hex",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Fantasma",
+  "golpe": "Night Shade",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Fantasma",
+  "golpe": "Shadow Ball",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Fantasma",
+  "golpe": "Confuse Ray",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Fantasma",
+  "golpe": "Curse",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Fantasma",
+  "golpe": "Destiny Bond",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Fantasma",
+  "golpe": "Spite",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Assurance",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Bite",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Crunch",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Fling",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Knock Off",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Night Slash",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Payback",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Pursuit",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Sucker Punch",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Dark Pulse",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Snarl",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Fake Tears",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Flatter",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Hone Claws",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Memento",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Nasty Plot",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Switcheroo",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Taunt",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Sombrio",
+  "golpe": "Torment",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Aço",
+  "golpe": "Bullet Punch",
+  "situacao": "animado"
+ },
+ {
+  "tipo": "Aço",
+  "golpe": "Gyro Ball",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Aço",
+  "golpe": "Heavy Slam",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Aço",
+  "golpe": "Iron Head",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Aço",
+  "golpe": "Iron Tail",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Aço",
+  "golpe": "Metal Claw",
+  "situacao": "codigo",
+  "molde": "garra"
+ },
+ {
+  "tipo": "Aço",
+  "golpe": "Meteor Mash",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Aço",
+  "golpe": "Smart Strike",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Aço",
+  "golpe": "Flash Cannon",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Aço",
+  "golpe": "Iron Defense",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Aço",
+  "golpe": "Metal Sound",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Bone Rush",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Bonemerang",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Bulldoze",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Dig",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Drill Run",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Earthquake",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Fissure",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "High Horsepower",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Sand Tomb",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Stomping Tantrum",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Earth Power",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Mud Shot",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Mud Slap",
+  "situacao": "codigo",
+  "molde": "nuvem"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Sand Attack",
+  "situacao": "codigo",
+  "molde": "nuvem"
+ },
+ {
+  "tipo": "Terrestre",
+  "golpe": "Spikes",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Head Smash",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Rock Blast",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Rock Slide",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Rock Throw",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Rollout",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Smack Down",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Stone Edge",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Ancient Power",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Power Gem",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Rock Polish",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Sandstorm",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Stealth Rock",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Pedra",
+  "golpe": "Wide Guard",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Cross Poison",
+  "situacao": "codigo",
+  "molde": "cruz"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Gunk Shot",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Poison Fang",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Poison Jab",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Poison Sting",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Acid",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Acid Spray",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Belch",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Clear Smog",
+  "situacao": "codigo",
+  "molde": "nuvem"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Sludge",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Sludge Bomb",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Sludge Wave",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Smog",
+  "situacao": "codigo",
+  "molde": "nuvem"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Venoshock",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Acid Armor",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Coil",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Gastro Acid",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Poison Gas",
+  "situacao": "codigo",
+  "molde": "nuvem"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Poison Powder",
+  "situacao": "codigo",
+  "molde": "nuvem"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Toxic",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Venenoso",
+  "golpe": "Toxic Spikes",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "Bug Bite",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "Fell Stinger",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "Fury Cutter",
+  "situacao": "codigo",
+  "molde": "corte"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "Leech Life",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "Megahorn",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "Pin Missile",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "Twineedle",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "U-turn",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "X-Scissor",
+  "situacao": "codigo",
+  "molde": "cruz"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "Bug Buzz",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "Quiver Dance",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "Rage Powder",
+  "situacao": "codigo",
+  "molde": "nuvem"
+ },
+ {
+  "tipo": "Inseto",
+  "golpe": "String Shot",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Acrobatics",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Aerial Ace",
+  "situacao": "codigo",
+  "molde": "corte"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Bounce",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Brave Bird",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Drill Peck",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Peck",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Pluck",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Sky Attack",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Wing Attack",
+  "situacao": "codigo",
+  "molde": "corte"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Air Cutter",
+  "situacao": "codigo",
+  "molde": "corte"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Air Slash",
+  "situacao": "codigo",
+  "molde": "corte"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Gust",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Hurricane",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Feather Dance",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Mirror Move",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Roost",
+  "situacao": "codigo",
+  "molde": "cura"
+ },
+ {
+  "tipo": "Voador",
+  "golpe": "Tailwind",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Axe Kick",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Brick Break",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Close Combat",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Counter",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Cross Chop",
+  "situacao": "codigo",
+  "molde": "cruz"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Double Kick",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Drain Punch",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Dynamic Punch",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Focus Punch",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Force Palm",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Hammer Arm",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "High Jump Kick",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Low Kick",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Low Sweep",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Mach Punch",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Revenge",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Reversal",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Rock Smash",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Seismic Toss",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Storm Throw",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Submission",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Superpower",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Vital Throw",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Aura Sphere",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Final Gambit",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Vacuum Wave",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Bulk Up",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Detect",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Lutador",
+  "golpe": "Quick Guard",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Fada",
+  "golpe": "Play Rough",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Fada",
+  "golpe": "Dazzling Gleam",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Fada",
+  "golpe": "Disarming Voice",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Fada",
+  "golpe": "Moonblast",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Fada",
+  "golpe": "Baby-Doll Eyes",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Fada",
+  "golpe": "Charm",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Fada",
+  "golpe": "Misty Terrain",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Fada",
+  "golpe": "Moonlight",
+  "situacao": "codigo",
+  "molde": "cura"
+ },
+ {
+  "tipo": "Fada",
+  "golpe": "Sweet Kiss",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Psycho Cut",
+  "situacao": "codigo",
+  "molde": "corte"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Zen Headbutt",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Confusion",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Dream Eater",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Extrasensory",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Future Sight",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Mirror Coat",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Psybeam",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Psychic",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Psyshock",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Psystrike",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Stored Power",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Agility",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Ally Switch",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Amnesia",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Calm Mind",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Cosmic Power",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Gravity",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Guard Swap",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Heal Pulse",
+  "situacao": "codigo",
+  "molde": "cura"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Healing Wish",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Hypnosis",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Imprison",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Kinesis",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Light Screen",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Power Swap",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Reflect",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Rest",
+  "situacao": "codigo",
+  "molde": "cura"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Role Play",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Teleport",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Psíquico",
+  "golpe": "Wonder Room",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Bind",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Body Slam",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Covet",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Crush Claw",
+  "situacao": "codigo",
+  "molde": "garra"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Cut",
+  "situacao": "codigo",
+  "molde": "corte"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Double-Edge",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Double Hit",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Endeavor",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Explosion",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Extreme Speed",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Facade",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Fake Out",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "False Swipe",
+  "situacao": "codigo",
+  "molde": "corte"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Feint",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Flail",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Fury Attack",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Fury Swipes",
+  "situacao": "codigo",
+  "molde": "garra"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Giga Impact",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Guillotine",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Headbutt",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Horn Attack",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Horn Drill",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Hyper Fang",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Last Resort",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Mega Kick",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Mega Punch",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Pay Day",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Pound",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Quick Attack",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Rage",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Raging Bull",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Rapid Spin",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Retaliate",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Scratch",
+  "situacao": "codigo",
+  "molde": "garra"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Self-Destruct",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Slam",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Slash",
+  "situacao": "codigo",
+  "molde": "corte"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Stomp",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Strength",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Super Fang",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Tackle",
+  "situacao": "codigo",
+  "molde": "impacto"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Take Down",
+  "situacao": "codigo",
+  "molde": "impacto_forte"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Thrash",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Vice Grip",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Wrap",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Echoed Voice",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Hyper Beam",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Hyper Voice",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Round",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Snore",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Spit Up",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Swift",
+  "situacao": "codigo",
+  "molde": "projetil"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Tri Attack",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Uproar",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Acupressure",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "After You",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Baton Pass",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Belly Drum",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Block",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Conversion",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Conversion 2",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Copycat",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Defense Curl",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Disable",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Double Team",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Encore",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Endure",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Focus Energy",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Follow Me",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Glare",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Growl",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Growth",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Harden",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Helping Hand",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Howl",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Leer",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Lock-On",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Lovely Kiss",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Mean Look",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Metronome",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Mimic",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Minimize",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Pain Split",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Perish Song",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Play Nice",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Protect",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Psych Up",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Recover",
+  "situacao": "codigo",
+  "molde": "cura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Recycle",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Reflect Type",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Roar",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Safeguard",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Scary Face",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Screech",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Shell Smash",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Sing",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Slack Off",
+  "situacao": "codigo",
+  "molde": "cura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Sleep Talk",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Smokescreen",
+  "situacao": "codigo",
+  "molde": "nuvem"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Soft-Boiled",
+  "situacao": "codigo",
+  "molde": "cura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Splash",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Stockpile",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Substitute",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Supersonic",
+  "situacao": "codigo",
+  "molde": "pulso"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Swagger",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Swallow",
+  "situacao": "codigo",
+  "molde": "cura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Sweet Scent",
+  "situacao": "codigo",
+  "molde": "nuvem"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Swords Dance",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Tail Whip",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Tearful Look",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Teeter Dance",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Tickle",
+  "situacao": "codigo",
+  "molde": "debuff"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Transform",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Whirlwind",
+  "situacao": "gerador"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Work Up",
+  "situacao": "codigo",
+  "molde": "aura"
+ },
+ {
+  "tipo": "Normal",
+  "golpe": "Yawn",
+  "situacao": "codigo",
+  "molde": "debuff"
+ }
+]

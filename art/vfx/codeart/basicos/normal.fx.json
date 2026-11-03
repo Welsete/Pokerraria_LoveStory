@@ -1,0 +1,154 @@
+{
+ "schema": "codeart2d.fx.v1",
+ "canvas": [
+  56,
+  56
+ ],
+ "origin": [
+  28,
+  28
+ ],
+ "palette": {
+  "nucleo": "#FFFFFF",
+  "alto": "#F5F5F5",
+  "medio": "#D4D4D4",
+  "base": "#A3A3A3",
+  "escuro": "#525252",
+  "contorno": "#171717"
+ },
+ "routes": [
+  "pixel"
+ ],
+ "effects": [
+  {
+   "id": "smokescreen",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 2040566,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "dust",
+     "ramp": "nevoa",
+     "origin": [
+      28,
+      38
+     ],
+     "count": 10,
+     "spread": 18,
+     "rise": 20,
+     "drift": 10,
+     "radius": [
+      2.5,
+      5
+     ],
+     "lifeMs": 480
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      30
+     ],
+     "count": 6,
+     "angle": -90,
+     "spread": 160,
+     "speed": 26,
+     "lifeMs": 380,
+     "length": 3,
+     "atMs": 80
+    }
+   ]
+  },
+  {
+   "id": "sweetscent",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 9315712,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "dust",
+     "ramp": "nevoa",
+     "origin": [
+      28,
+      38
+     ],
+     "count": 10,
+     "spread": 18,
+     "rise": 20,
+     "drift": 10,
+     "radius": [
+      2.5,
+      5
+     ],
+     "lifeMs": 480
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      30
+     ],
+     "count": 6,
+     "angle": -90,
+     "spread": 160,
+     "speed": 26,
+     "lifeMs": 380,
+     "length": 3,
+     "atMs": 80
+    }
+   ]
+  }
+ ]
+}

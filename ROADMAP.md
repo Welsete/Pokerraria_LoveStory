@@ -29,7 +29,8 @@ O que está em `## Next` do CHANGELOG, testado e publicado.
 - [ ] Recortar, animar e testar cada um no painel F8 [animador-vfx]
 - [ ] Golpes de dois turnos com animação de carga (Solar Beam já serve de modelo: Fly, Dig, Skull Bash...)
       [programador-batalha + animador-vfx]
-- [ ] Animação padrão melhor para golpes sem sheet própria, por tipo [animador-vfx]
+- [x] Golpes básicos desenhados por código, nas cores do tipo (232 golpes; regra em VFX.md) [animador-vfx]
+- [ ] Gerar os golpes avançados que faltam (lista em VFX.md) [Welsete/Isa + animador-vfx]
 
 ## 0.6.0 · LoveStory capítulo 1
 

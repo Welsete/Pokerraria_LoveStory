@@ -1,0 +1,595 @@
+{
+ "schema": "codeart2d.fx.v1",
+ "canvas": [
+  56,
+  56
+ ],
+ "origin": [
+  28,
+  28
+ ],
+ "palette": {
+  "nucleo": "#F8FAFC",
+  "alto": "#E2E8F0",
+  "medio": "#94A3B8",
+  "base": "#64748B",
+  "escuro": "#475569",
+  "contorno": "#1E293B"
+ },
+ "routes": [
+  "pixel"
+ ],
+ "effects": [
+  {
+   "id": "rockblastvoo",
+   "durationMs": 200,
+   "impactMs": 0,
+   "seed": 726023,
+   "loop": true,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "projectile",
+     "ramp": "brilho",
+     "origin": [
+      34,
+      28
+     ],
+     "angle": 0,
+     "radius": 5,
+     "trail": 16,
+     "orbiters": 3
+    }
+   ]
+  },
+  {
+   "id": "rockblast",
+   "durationMs": 300,
+   "impactMs": 0,
+   "seed": 726023,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": 3,
+     "rays": 6,
+     "rayLength": 9,
+     "rotation": 30,
+     "lifeMs": 120
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": [
+      3,
+      13
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 220
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "count": 9,
+     "spread": 360,
+     "speed": 40,
+     "lifeMs": 240,
+     "length": 5,
+     "width": 2
+    }
+   ]
+  },
+  {
+   "id": "rockthrowvoo",
+   "durationMs": 200,
+   "impactMs": 0,
+   "seed": 3287071,
+   "loop": true,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "projectile",
+     "ramp": "brilho",
+     "origin": [
+      34,
+      28
+     ],
+     "angle": 0,
+     "radius": 5,
+     "trail": 16,
+     "orbiters": 3
+    }
+   ]
+  },
+  {
+   "id": "rockthrow",
+   "durationMs": 300,
+   "impactMs": 0,
+   "seed": 3287071,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": 3,
+     "rays": 6,
+     "rayLength": 9,
+     "rotation": 30,
+     "lifeMs": 120
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": [
+      3,
+      13
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 220
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "count": 9,
+     "spread": 360,
+     "speed": 40,
+     "lifeMs": 240,
+     "length": 5,
+     "width": 2
+    }
+   ]
+  },
+  {
+   "id": "smackdownvoo",
+   "durationMs": 200,
+   "impactMs": 0,
+   "seed": 9423182,
+   "loop": true,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "projectile",
+     "ramp": "brilho",
+     "origin": [
+      34,
+      28
+     ],
+     "angle": 0,
+     "radius": 6,
+     "trail": 16,
+     "orbiters": 2
+    }
+   ]
+  },
+  {
+   "id": "smackdown",
+   "durationMs": 300,
+   "impactMs": 0,
+   "seed": 9423182,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": 3,
+     "rays": 6,
+     "rayLength": 9,
+     "rotation": 30,
+     "lifeMs": 120
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": [
+      3,
+      13
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 220
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "count": 9,
+     "spread": 360,
+     "speed": 40,
+     "lifeMs": 240,
+     "length": 5,
+     "width": 2
+    }
+   ]
+  },
+  {
+   "id": "powergemvoo",
+   "durationMs": 200,
+   "impactMs": 0,
+   "seed": 10300511,
+   "loop": true,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "projectile",
+     "ramp": "brilho",
+     "origin": [
+      34,
+      28
+     ],
+     "angle": 0,
+     "radius": 5,
+     "trail": 16,
+     "orbiters": 3
+    }
+   ]
+  },
+  {
+   "id": "powergem",
+   "durationMs": 300,
+   "impactMs": 0,
+   "seed": 10300511,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": 3,
+     "rays": 6,
+     "rayLength": 9,
+     "rotation": 30,
+     "lifeMs": 120
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": [
+      3,
+      13
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 220
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "count": 9,
+     "spread": 360,
+     "speed": 40,
+     "lifeMs": 240,
+     "length": 5,
+     "width": 2
+    }
+   ]
+  },
+  {
+   "id": "rockpolish",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 10378354,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "radius": [
+      6,
+      20
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "squash": 0.5,
+     "lifeMs": 380
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "count": 12,
+     "angle": -90,
+     "spread": 50,
+     "speed": 60,
+     "lifeMs": 440,
+     "length": 7,
+     "width": 2
+    },
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      26
+     ],
+     "radius": 2,
+     "rays": 4,
+     "rayLength": 9,
+     "atMs": 250,
+     "lifeMs": 200
+    }
+   ]
+  }
+ ]
+}

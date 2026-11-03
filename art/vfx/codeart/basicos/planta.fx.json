@@ -1,0 +1,219 @@
+{
+ "schema": "codeart2d.fx.v1",
+ "canvas": [
+  56,
+  56
+ ],
+ "origin": [
+  28,
+  28
+ ],
+ "palette": {
+  "nucleo": "#FFFFFF",
+  "alto": "#FFF494",
+  "medio": "#A7F432",
+  "base": "#46C328",
+  "escuro": "#1B7A22",
+  "contorno": "#0C3F15"
+ },
+ "routes": [
+  "pixel"
+ ],
+ "effects": [
+  {
+   "id": "sleeppowder",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 3240881,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "dust",
+     "ramp": "nevoa",
+     "origin": [
+      28,
+      38
+     ],
+     "count": 10,
+     "spread": 18,
+     "rise": 20,
+     "drift": 10,
+     "radius": [
+      2.5,
+      5
+     ],
+     "lifeMs": 480
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      30
+     ],
+     "count": 6,
+     "angle": -90,
+     "spread": 160,
+     "speed": 26,
+     "lifeMs": 380,
+     "length": 3,
+     "atMs": 80
+    }
+   ]
+  },
+  {
+   "id": "spore",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 6797186,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "dust",
+     "ramp": "nevoa",
+     "origin": [
+      28,
+      38
+     ],
+     "count": 10,
+     "spread": 18,
+     "rise": 20,
+     "drift": 10,
+     "radius": [
+      2.5,
+      5
+     ],
+     "lifeMs": 480
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      30
+     ],
+     "count": 6,
+     "angle": -90,
+     "spread": 160,
+     "speed": 26,
+     "lifeMs": 380,
+     "length": 3,
+     "atMs": 80
+    }
+   ]
+  },
+  {
+   "id": "stunspore",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 4411348,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "dust",
+     "ramp": "nevoa",
+     "origin": [
+      28,
+      38
+     ],
+     "count": 10,
+     "spread": 18,
+     "rise": 20,
+     "drift": 10,
+     "radius": [
+      2.5,
+      5
+     ],
+     "lifeMs": 480
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      30
+     ],
+     "count": 6,
+     "angle": -90,
+     "spread": 160,
+     "speed": 26,
+     "lifeMs": 380,
+     "length": 3,
+     "atMs": 80
+    }
+   ]
+  }
+ ]
+}

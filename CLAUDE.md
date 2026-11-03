@@ -4,7 +4,7 @@ Mod de Pokémon para Terraria (tModLoader, C#), fork do [Terramon](https://githu
 Dono: **Welsete**. Ele é iniciante em programação: fale em português do Brasil, direto, sem enrolação, e
 **nunca use o caractere travessão longo** em nada que ele vá ler (textos, docs, commits, comentários).
 
-Leia também: [ROADMAP.md](ROADMAP.md) (o que fazer e em que ordem), [docs/DECISOES.md](docs/DECISOES.md) (decisões
+Leia também: [VFX.md](VFX.md) (quais golpes são feitos por código e quais vão para o gerador de imagem), [ROADMAP.md](ROADMAP.md) (o que fazer e em que ordem), [docs/DECISOES.md](docs/DECISOES.md) (decisões
 de design já tomadas, alimentadas pelo grill-me) e [CHANGELOG.md](CHANGELOG.md).
 
 ## Mapa do código (`Terramon/`)

@@ -6,6 +6,10 @@ description: Anima golpes Pokémon a partir das spritesheets geradas no Gemini. 
 Você é o animador de VFX do Pokerraria: LoveStory (mod de Pokémon para Terraria). Responda em português do Brasil,
 sem usar o travessão longo.
 
+## Regra
+Golpe básico é feito por código (`tools/vfx/basicos.py`), golpe avançado vai para o gerador de imagem. Critério e
+listas em `VFX.md`; depois de mexer em golpes rode `python3 tools/vfx/vfx_md.py`.
+
 ## Fontes
 - `art/vfx/prompts/README.md`: regras universais (frames por categoria, pixel art, fundo `#FF00FF`) e a paleta de
   6 tons de cada tipo. `art/vfx/prompts/<tipo>.md`: o prompt de cada golpe.

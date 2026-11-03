@@ -1,0 +1,1239 @@
+{
+ "schema": "codeart2d.fx.v1",
+ "canvas": [
+  56,
+  56
+ ],
+ "origin": [
+  28,
+  28
+ ],
+ "palette": {
+  "nucleo": "#FFFFFF",
+  "alto": "#FFE4F2",
+  "medio": "#F472B6",
+  "base": "#DB2777",
+  "escuro": "#831843",
+  "contorno": "#4A044E"
+ },
+ "routes": [
+  "pixel"
+ ],
+ "effects": [
+  {
+   "id": "psychocut",
+   "durationMs": 400,
+   "impactMs": 150,
+   "seed": 1744611,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "slash",
+     "ramp": "lamina",
+     "center": [
+      24,
+      24
+     ],
+     "radius": 18,
+     "from": -150,
+     "to": 30,
+     "width": 7,
+     "trail": 0.85
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      36,
+      33
+     ],
+     "count": 8,
+     "angle": 20,
+     "spread": 160,
+     "speed": 42,
+     "lifeMs": 240,
+     "length": 5,
+     "width": 2
+    }
+   ]
+  },
+  {
+   "id": "zenheadbutt",
+   "durationMs": 350,
+   "impactMs": 0,
+   "seed": 10802296,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": 5,
+     "rays": 4,
+     "rayLength": 11,
+     "rotation": 0,
+     "lifeMs": 220
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": [
+      3,
+      14
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 260
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "count": 8,
+     "spread": 360,
+     "speed": 50,
+     "lifeMs": 260,
+     "length": 6,
+     "width": 2
+    }
+   ]
+  },
+  {
+   "id": "confusion",
+   "durationMs": 500,
+   "impactMs": 0,
+   "seed": 6863060,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 0,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 90,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 180,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": 4,
+     "rays": 6,
+     "rayLength": 8,
+     "lifeMs": 140
+    }
+   ]
+  },
+  {
+   "id": "extrasensory",
+   "durationMs": 500,
+   "impactMs": 0,
+   "seed": 1646823,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 0,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 90,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 180,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": 4,
+     "rays": 4,
+     "rayLength": 8,
+     "lifeMs": 140
+    }
+   ]
+  },
+  {
+   "id": "psychic",
+   "durationMs": 500,
+   "impactMs": 0,
+   "seed": 865014,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 0,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 90,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 180,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": 4,
+     "rays": 6,
+     "rayLength": 8,
+     "lifeMs": 140
+    }
+   ]
+  },
+  {
+   "id": "psyshock",
+   "durationMs": 500,
+   "impactMs": 0,
+   "seed": 7533258,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 0,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 90,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 180,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": 4,
+     "rays": 6,
+     "rayLength": 8,
+     "lifeMs": 140
+    }
+   ]
+  },
+  {
+   "id": "storedpower",
+   "durationMs": 500,
+   "impactMs": 0,
+   "seed": 2607266,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 0,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 90,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "atMs": 180,
+     "radius": [
+      4,
+      22
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "lifeMs": 300
+    },
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      28
+     ],
+     "radius": 4,
+     "rays": 6,
+     "rayLength": 8,
+     "lifeMs": 140
+    }
+   ]
+  },
+  {
+   "id": "agility",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 1034662,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "radius": [
+      6,
+      20
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "squash": 0.5,
+     "lifeMs": 380
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "count": 12,
+     "angle": -90,
+     "spread": 50,
+     "speed": 60,
+     "lifeMs": 440,
+     "length": 7,
+     "width": 2
+    },
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      26
+     ],
+     "radius": 2,
+     "rays": 4,
+     "rayLength": 9,
+     "atMs": 250,
+     "lifeMs": 200
+    }
+   ]
+  },
+  {
+   "id": "amnesia",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 10110174,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "radius": [
+      6,
+      20
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "squash": 0.5,
+     "lifeMs": 380
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "count": 12,
+     "angle": -90,
+     "spread": 50,
+     "speed": 60,
+     "lifeMs": 440,
+     "length": 7,
+     "width": 2
+    },
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      26
+     ],
+     "radius": 2,
+     "rays": 4,
+     "rayLength": 9,
+     "atMs": 250,
+     "lifeMs": 200
+    }
+   ]
+  },
+  {
+   "id": "calmmind",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 1757860,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "radius": [
+      6,
+      20
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "squash": 0.5,
+     "lifeMs": 380
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "count": 12,
+     "angle": -90,
+     "spread": 50,
+     "speed": 60,
+     "lifeMs": 440,
+     "length": 7,
+     "width": 2
+    },
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      26
+     ],
+     "radius": 2,
+     "rays": 4,
+     "rayLength": 9,
+     "atMs": 250,
+     "lifeMs": 200
+    }
+   ]
+  },
+  {
+   "id": "cosmicpower",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 14779231,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "radius": [
+      6,
+      20
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "squash": 0.5,
+     "lifeMs": 380
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "count": 12,
+     "angle": -90,
+     "spread": 50,
+     "speed": 60,
+     "lifeMs": 440,
+     "length": 7,
+     "width": 2
+    },
+    {
+     "type": "flash",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      26
+     ],
+     "radius": 2,
+     "rays": 4,
+     "rayLength": 9,
+     "atMs": 250,
+     "lifeMs": 200
+    }
+   ]
+  },
+  {
+   "id": "healpulse",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 10672033,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "radius": [
+      6,
+      20
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "squash": 0.5,
+     "lifeMs": 380
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "count": 14,
+     "angle": -90,
+     "spread": 80,
+     "speed": 60,
+     "lifeMs": 440,
+     "length": 3,
+     "width": 2
+    }
+   ]
+  },
+  {
+   "id": "hypnosis",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 9948460,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      24
+     ],
+     "radius": [
+      18,
+      6
+     ],
+     "width": [
+      2,
+      3
+     ],
+     "squash": 0.5,
+     "lifeMs": 360
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      12
+     ],
+     "count": 10,
+     "angle": 90,
+     "spread": 60,
+     "speed": 50,
+     "lifeMs": 380,
+     "length": 6,
+     "width": 2,
+     "atMs": 100
+    }
+   ]
+  },
+  {
+   "id": "kinesis",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 5982000,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      24
+     ],
+     "radius": [
+      18,
+      6
+     ],
+     "width": [
+      2,
+      3
+     ],
+     "squash": 0.5,
+     "lifeMs": 360
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      12
+     ],
+     "count": 10,
+     "angle": 90,
+     "spread": 60,
+     "speed": 50,
+     "lifeMs": 380,
+     "length": 6,
+     "width": 2,
+     "atMs": 100
+    }
+   ]
+  },
+  {
+   "id": "rest",
+   "durationMs": 520,
+   "impactMs": 0,
+   "seed": 12033631,
+   "outline": "contorno",
+   "ramps": {
+    "brilho": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "lamina": [
+     "nucleo",
+     "alto",
+     "medio",
+     "base"
+    ],
+    "fumaca": [
+     "medio",
+     "base",
+     "escuro"
+    ],
+    "nevoa": [
+     "alto",
+     "medio",
+     "base"
+    ]
+   },
+   "primitives": [
+    {
+     "type": "ring",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "radius": [
+      6,
+      20
+     ],
+     "width": [
+      3,
+      1
+     ],
+     "squash": 0.5,
+     "lifeMs": 380
+    },
+    {
+     "type": "sparks",
+     "ramp": "brilho",
+     "origin": [
+      28,
+      40
+     ],
+     "count": 14,
+     "angle": -90,
+     "spread": 80,
+     "speed": 60,
+     "lifeMs": 440,
+     "length": 3,
+     "width": 2
+    }
+   ]
+  }
+ ]
+}
