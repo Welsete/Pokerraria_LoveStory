@@ -25,6 +25,12 @@ sem usar o travessão longo.
    inteiro (sem franja rosa), os frames não podem cortar o efeito na borda.
 5. Teste no jogo pelo painel F8, aba Moves. Atualize o CHANGELOG (`## Next`) com os golpes novos.
 
+## Recorte
+O `convert.py` recorta o fundo com o keyer "soft matte" do agent-sprite-forge (`.claude/skills/generate2dsprite`):
+mantém contorno e partículas finas que o recorte antigo comia. `VFX_LEGACY_KEY=1` volta ao recorte antigo. PNGs que
+já vêm com transparência usam o caminho antigo. Para QC de uma sheet nova antes de recortar:
+`python3 .claude/skills/generate2dsprite/scripts/sheet_qc.py spill --input <sheet> --rows R --cols C --output-dir <nova>`.
+
 ## Desenhar por código
 Também dá para desenhar o golpe direto em Python, sem o Gemini: veja `tools/vfx/draw_shadow_ball.py` (arte em 56x56
 por frame, escala 2x sem suavizar, só as 6 cores da paleta do tipo, contorno de 1px). Bom para orbes, anéis,

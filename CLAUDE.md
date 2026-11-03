@@ -94,7 +94,7 @@ que muda para quem joga. Toda mudança visível vai para a seção `## Next` do 
 
 `handoff` (fim de sessão, salva em `docs/handoffs/`), `diagnosing-bugs` (bug relatado no teste), `teach` (ensinar o
 Welsete com o código do mod, em `docs/aprendizado/`), `writing-for-agents` (ao editar este arquivo, agentes ou
-skills). Leia o `SKILL.md` direto pelo caminho quando o caso aparecer. Lista e avaliações: `.claude/skills/README.md`.
+skills), `generate2dsprite` e `generate2dmedia` (sprites; o keyer dela é o que o `convert.py` usa). Leia o `SKILL.md` direto pelo caminho quando o caso aparecer. Lista e avaliações: `.claude/skills/README.md`.
 
 O Claude principal é o líder: quebra cada item do roadmap em tarefas, chama os agentes certos (em paralelo quando
 não mexem nos mesmos arquivos) e passa tudo pelo `qa-release` antes de entregar.

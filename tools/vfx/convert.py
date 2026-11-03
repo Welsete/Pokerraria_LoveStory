@@ -52,7 +52,7 @@ SHEETS = [
     ("aqua_jet_spritesheet_clean_1793722489127.jpg", "AquaJet", (4, 2), 3, dict(Travel=7, Ticks=3, Face=1)),
     # Darker cells with magenta grid lines and a bar at the bottom: cut inside the lines
     ("thunder_shock_vfx_spritesheet_1793722431954.jpg", "ThunderShock",
-     [(2, 2, 341, 380), (347, 2, 686, 380), (692, 2, 1030, 380), (1036, 2, 1374, 380), (2, 388, 341, 726), (347, 388, 686, 726), (692, 388, 1030, 726), (1036, 388, 1374, 726)], 3, dict(Travel=2, Ticks=4, Face=1)),
+     [(2, 2, 338, 378), (350, 2, 683, 378), (695, 2, 1027, 378), (1039, 2, 1374, 378), (2, 390, 338, 724), (350, 390, 683, 724), (695, 390, 1027, 724), (1039, 390, 1374, 724)], 3, dict(Travel=2, Ticks=4, Face=1)),
     # Leaves out frame 6 (a brown scorch shaped like the bolt) and the near-empty last frame
     ("thunderbolt_vfx_spritesheet_1793721667921.jpg", "Thunderbolt",
      [(0, 0, 344, 384), (344, 0, 688, 384), (688, 0, 1032, 384), (1032, 0, 1376, 384), (0, 384, 344, 768), (688, 384, 1032, 768)], 3, dict(Travel=1, Ticks=4, Face=1)),
@@ -67,7 +67,28 @@ GREEN_KEY = set()
 
 
 def load(path, key="magenta"):
+    """Keys the background out. Uses the soft-matte keyer of agent-sprite-forge (.claude/skills/generate2dsprite) when
+    it is there: in a test it kept 100% of a Ghost-palette sheet where the old keyer below lost 72%."""
     im = Image.open(path)
+    forge = None if path.endswith(".png") else _forge_matte()  # PNGs come with their own alpha: old path
+    if forge:
+        keyed, _ = forge.key_still(im.convert("RGB"), quality="soft", key=key)
+        return np.array(keyed.convert("RGBA")).astype(float)
+    return _legacy_load(im, path, key)
+
+
+def _forge_matte():
+    import os
+    here = os.path.dirname(os.path.abspath(__file__))
+    scripts = os.path.join(here, "..", "..", ".claude", "skills", "generate2dsprite", "scripts")
+    if os.environ.get("VFX_LEGACY_KEY") or not os.path.isdir(scripts):
+        return None
+    sys.path.insert(0, scripts)
+    import forge_matte
+    return forge_matte
+
+
+def _legacy_load(im, path, key):
     if key == "green":
         a = np.array(im.convert("RGB")).astype(float)
         r, g, b = a[..., 0], a[..., 1], a[..., 2]
