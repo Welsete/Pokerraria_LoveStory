@@ -29,7 +29,7 @@ coloque o nome em `BASICOS` com o molde, rode `python3 tools/vfx/basicos.py "Nom
 `python3 tools/vfx/vfx_md.py`. Moldes: `impacto`, `impacto_forte`, `corte`, `garra`, `cruz`, `projetil`, `pulso`,
 `nuvem`, `aura`, `cura`, `debuff`. As cores vêm da paleta de 6 tons do tipo.
 
-**Gerador:** o prompt pronto de cada golpe está em `art/vfx/prompts/<tipo>.md`. O Welsete ou a Isa geram no
+**Gerador:** o prompt pronto de cada golpe está em `art/vfx/prompts/<tipo>.md`. O Welsete gera no
 Gemini, a imagem vai para `vfx_spritesheets/` e o Claude recorta (`tools/vfx/convert.py`), anima e testa no painel
 F8, aba Moves. Fantasma, Psíquico, Venenoso, Sombrio e Fada são gerados com **fundo verde `#00FF00`**.
 

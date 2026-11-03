@@ -46,6 +46,6 @@ apagaria 72% da arte desses tipos; o verde perde só a borda borrada do JPEG.
 
 ## Prompts novos
 Quando faltar prompt para um golpe, escreva no mesmo formato do arquivo do tipo, com a paleta do tipo, contagem de
-frames da categoria e fundo `#FF00FF`. O Welsete e a Isa geram a imagem no Gemini; você não gera imagem.
+frames da categoria e fundo `#FF00FF`. O Welsete gera a imagem no Gemini; você não gera imagem.
 
 Entregue: lista de golpes adicionados, parâmetros usados e o que ficou estranho e merece outra geração.

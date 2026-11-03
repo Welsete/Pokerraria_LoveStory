@@ -19,7 +19,7 @@ Registro do agente `cacador-de-skills`. Entram no projeto só as com nota 9 ou 1
 | 6 | `to-tickets` | Quebra planos em tickets. Exige `setup-matt-pocock-skills` e tracker. |
 | 6 | `wayfinder` | Planejar trabalhos enormes por tickets de decisão. Exige tracker. |
 | 6 | `grill-me`, `grill-with-docs` | Versões do grilling; mesma observação. |
-| 6 | `to-questionnaire` | Questionário para outra pessoa responder (ex.: Isa). Pontual. |
+| 6 | `to-questionnaire` | Questionário para outra pessoa responder. Pontual. |
 | 6 | `wait-what` | Reexplicar quando a resposta não ficou clara. Pequena. |
 | 6 | `prototype` | Protótipo descartável; pouco uso num mod. |
 | 5 | `to-spec`, `implement`, `implement-spec`, `triage`, `pr` | Fluxo de tickets/PR; trabalhamos direto no `main`. |

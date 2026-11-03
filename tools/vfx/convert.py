@@ -1,4 +1,4 @@
-"""Turns Isa's generated move sheets (magenta background) into the frame strips MoveVisuals reads."""
+"""Turns the generated move sheets (magenta background) into the frame strips MoveVisuals reads."""
 import sys
 import numpy as np
 from PIL import Image

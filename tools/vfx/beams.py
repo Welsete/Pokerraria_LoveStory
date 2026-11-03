@@ -1,4 +1,4 @@
-"""Solar Beam, Ice Beam and Flamethrower: Isa's sheets have pieces of different sizes instead of a grid, so each piece
+"""Solar Beam, Ice Beam and Flamethrower: the generated sheets have pieces of different sizes instead of a grid, so each piece
 is cut by hand. A "beam" piece is laid out with its tip on the frame's center and REACH pixels long, and the game
 stretches it from the user to the target (Beam A B in the .txt); a "burst" piece sits on the center."""
 import sys

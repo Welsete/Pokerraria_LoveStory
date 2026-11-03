@@ -79,7 +79,7 @@ que muda para quem joga. Toda mudança visível vai para a seção `## Next` do 
 - Textos de jogo em pt-BR e en-US sempre juntos.
 - Decisões de estilo, nomes e humor são do Welsete. Na dúvida, pergunte (ou rode o grill-me do mod).
 - A Misty fica **parada** no Ginásio (a caminhada foi deixada de lado). Os frames de andar continuam no sprite.
-- VFX: a Isa e o Welsete geram as spritesheets no Gemini a partir de `art/vfx/prompts/`; o Claude recorta, anima e
+- VFX: o Welsete gera as spritesheets no Gemini a partir de `art/vfx/prompts/`; o Claude recorta, anima e
   ajusta o `.txt`.
 
 ## Equipe (`.claude/agents/`)

@@ -6,7 +6,7 @@ houver). Perguntas ainda sem resposta ficam no fim.
 ## Decididas
 
 - 2026-11-03 · A Misty fica parada no seu ponto do Ginásio. A caminhada fica guardada para depois.
-- 2026-11-03 · As spritesheets de VFX são geradas no Gemini (Welsete e Isa) a partir de `art/vfx/prompts/`; o
+- 2026-11-03 · As spritesheets de VFX são geradas no Gemini pelo Welsete a partir de `art/vfx/prompts/`; o
   Claude recorta e anima.
 - 2026-11-03 · Toda mudança vai direto para a pasta Mods do PC do Welsete para ele testar antes do push.
 
