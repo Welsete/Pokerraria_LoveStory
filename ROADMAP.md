@@ -32,12 +32,18 @@ O que está em `## Next` do CHANGELOG, testado e publicado.
 - [x] Golpes básicos desenhados por código, nas cores do tipo (232 golpes; regra em VFX.md) [animador-vfx]
 - [ ] Gerar os golpes avançados que faltam (lista em VFX.md) [Welsete + animador-vfx]
 
-## 0.6.0 · LoveStory capítulo 1
+## 0.6.0 · LoveStory capítulo 1 (até o Ginásio da Misty)
 
-- [ ] Definir o enredo do capítulo 1: quem "sabia que você viria", onde a história aparece, como termina o
-      capítulo (?) [grill-me + roteirista-lovestory]
-- [ ] Itens/notas/encontros que contam a história no mundo [roteirista-lovestory + construtor-mundo]
-- [ ] Diálogos pt-BR e en-US [roteirista-lovestory]
+Decisões em `docs/DECISOES.md` (grill-me de 2026-11-03).
+
+- [x] Definir o enredo do capítulo 1: o jogador do futuro, a Aurora presa entre os mundos [grill-me]
+- [ ] Menu de diário: páginas encontradas, o que já aconteceu e para onde ir [programador-batalha]
+- [ ] Páginas do diário como itens em baús e masmorras, com o efeito "Hora da história" [programador-batalha + roteirista-lovestory]
+- [ ] Aurora: NPC rival com sprite, dois encontros com batalha (?) onde, quando e com que time [npcs-e-sprites + roteirista-lovestory]
+- [ ] Masmorra curta do Brock (3 ou 4 salas, alavancas: só uma abre, as outras soltam pedras) [construtor-mundo]
+- [ ] Masmorra curta da Misty (comportas que mudam o nível da água) [construtor-mundo]
+- [ ] Gancho no fim do capítulo (?) qual [roteirista-lovestory]
+- [ ] Textos pt-BR e en-US: páginas, falas da Aurora, entradas do diário [roteirista-lovestory]
 
 ## 0.7.0 · Ginásios e treinadores vivos
 
