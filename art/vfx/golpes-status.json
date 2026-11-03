@@ -108,7 +108,7 @@
  {
   "tipo": "Água",
   "golpe": "Aqua Tail",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Água",
@@ -119,7 +119,7 @@
  {
   "tipo": "Água",
   "golpe": "Dive",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Água",
@@ -136,7 +136,7 @@
  {
   "tipo": "Água",
   "golpe": "Waterfall",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Água",

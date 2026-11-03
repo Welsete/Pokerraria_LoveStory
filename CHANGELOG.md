@@ -18,6 +18,7 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 - Generated art for Drain Punch, Dynamic Punch, Focus Punch, Force Palm, Hammer Arm, Low Kick, Low Sweep and Rock Smash.
 - Generated art for Mach Punch (the boxer in the sheet cut out) and High Jump Kick (with a kicking silhouette).
 - Generated art for Mega Kick, Mega Punch, Stomp and Superpower (first batch made in Antigravity). No move uses a provisional code drawing anymore.
+- Generated art for Aqua Tail, Dive and Waterfall.
 - Ice Beam redrawn in code: ice crystals growing out of the beam's edges.
 - Twister and Rock Slide now sit on the target instead of below it.
 - Test panel, Moves tab: search moves by name (click the box and type; right click clears). The rest of the moves are listed in VFX.md for the image generator.
