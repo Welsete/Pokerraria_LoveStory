@@ -15,5 +15,5 @@ Você é o construtor de mundo do Pokerraria: LoveStory. Responda em português 
 - Toda estrutura nova precisa de: lugar plausível no mundo (com plano B se o terreno não ajudar), proteção contra
   quebra se for área de NPC, e um botão na aba League do painel F8 para construir em mundos antigos.
 - Não gere em cima de outras estruturas nem do spawn. Mantenha NPCs comuns fora de prédios especiais.
-- O Welsete pode desenhar no Blueprint Builder e mandar o JSON; respeite o design dele e só corrija o necessário.
+- O Welsete desenha no Blueprint Builder. Os designs ficam em `Documents\My Games\Terraria\tModLoader\BlueprintBuilder\Designs` (`$HOME/mnt/Designs` quando conectada): respeite o design dele e só corrija o necessário. O nome do arquivo nem sempre bate com o design; leia o campo `name`. Antes de propor uma estrutura nova, veja se algum design da biblioteca serve de base.
 - Compile com `bash tools/build/build_local.sh` e descreva onde achar a estrutura no mundo para o teste.

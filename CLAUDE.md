@@ -32,6 +32,18 @@ Outros projetos: `TmonRuntimes/` (mod dependência com o runtime do Showdown), `
 - `tools/sprites/cut_frames.py`: corta frames de NPC. `tools/structures/*.py`: estruturas. `tools/logo/logo.py`.
 - `tools/build/build_local.sh`: compila o mod no shell Linux do PC e copia os `.tmod` para a pasta Mods.
 
+## Estruturas (Ginásios, Centro Pokémon)
+
+São desenhadas com o mod **Blueprint Builder** e salvas em JSON (formatVersion 1). O `Blueprint.cs` lê esse JSON e
+constrói a estrutura em mundos novos, sem precisar do Blueprint Builder instalado.
+- Designs do Welsete no jogo: `C:\Users\Welsete\Documents\My Games\Terraria\tModLoader\BlueprintBuilder\Designs`
+  (conectar à sessão). Tem conceitos do Centro e do Ginásio da Misty, e uma biblioteca de prédios (castelo, arena
+  mágica, vila do deserto, tavernas...) para Ginásios e arenas futuras. **O nome do arquivo nem sempre é o do
+  design**: confira o campo `name` dentro do JSON.
+- Versão final que vai no mod: `Terramon/Assets/Structures/<Nome>.json`, gerada/ajustada pelos scripts de
+  `tools/structures/` (que usam `terraria-ids.txt` para validar nomes de itens).
+- Para o Welsete ver um design no jogo: copie o JSON para a pasta Designs e ele abre no Blueprint Builder.
+
 ## Arte (`art/`, não vai para dentro do mod)
 
 - `art/vfx/prompts/`: catálogo mestre de prompts de VFX por tipo (paletas de 6 tons, contagem de frames, regras de
@@ -71,6 +83,13 @@ que muda para quem joga. Toda mudança visível vai para a seção `## Next` do 
 | `npcs-e-sprites` | Sprites e comportamento de NPCs (líderes, Joy, Carvalho), retratos |
 | `roteirista-lovestory` | História, diálogos, textos e traduções pt-BR/en-US |
 | `qa-release` | Build, revisão de código, checklist de teste para o Welsete, CHANGELOG e versões |
+| `cacador-de-skills` | Avalia repositórios de skills (nota 1 a 10) e instala as com nota 9 ou 10 |
+
+## Skills (`.claude/skills/`)
+
+`handoff` (fim de sessão, salva em `docs/handoffs/`), `diagnosing-bugs` (bug relatado no teste), `teach` (ensinar o
+Welsete com o código do mod, em `docs/aprendizado/`), `writing-for-agents` (ao editar este arquivo, agentes ou
+skills). Leia o `SKILL.md` direto pelo caminho quando o caso aparecer. Lista e avaliações: `.claude/skills/README.md`.
 
 O Claude principal é o líder: quebra cada item do roadmap em tarefas, chama os agentes certos (em paralelo quando
 não mexem nos mesmos arquivos) e passa tudo pelo `qa-release` antes de entregar.
