@@ -81,6 +81,10 @@ SHEETS = [
     ("lote2_low_kick.png", "LowKick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
     ("lote2_low_sweep.png", "LowSweep", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
     ("lote2_rock_smash.png", "RockSmash", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote3_mega_kick.png", "MegaKick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote3_mega_punch.png", "MegaPunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote3_stomp.png", "Stomp", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote3_superpower.png", "Superpower", (4, 2), 3, dict(Travel=0, Ticks=4)),
     # High Jump Kick keeps the kicking silhouette (Welsete liked it); Mach Punch came with a boxer on the left of each
     # frame (2 columns x 4 rows): only the part right of him is cut
     ("lote2_high_jump_kick.png", "HighJumpKick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),

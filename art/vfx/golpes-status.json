@@ -1367,8 +1367,7 @@
  {
   "tipo": "Lutador",
   "golpe": "Superpower",
-  "situacao": "provisorio",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1771,14 +1770,12 @@
  {
   "tipo": "Normal",
   "golpe": "Mega Kick",
-  "situacao": "provisorio",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Normal",
   "golpe": "Mega Punch",
-  "situacao": "provisorio",
-  "molde": "impacto_forte"
+  "situacao": "animado"
  },
  {
   "tipo": "Normal",
@@ -1845,8 +1842,7 @@
  {
   "tipo": "Normal",
   "golpe": "Stomp",
-  "situacao": "provisorio",
-  "molde": "impacto"
+  "situacao": "animado"
  },
  {
   "tipo": "Normal",

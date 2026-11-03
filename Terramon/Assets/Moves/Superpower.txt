@@ -1,5 +1,4 @@
 Frames 8
 Travel 0
-Ticks 3
-Face 1
+Ticks 4
 Scale 1
