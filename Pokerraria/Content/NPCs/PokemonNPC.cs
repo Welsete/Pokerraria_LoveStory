@@ -249,7 +249,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         if (Data != null && BattlePlayback.ShownHP(Data) == 0)
             StatusVisuals.DrawDizzyStars(spriteBatch, NPC.Bottom - new Vector2(0f, NPC.frame.Width + 2f), screenPos,
                 NPC.whoAmI);
-        else if (Data != null && BattlePlayback.ShownStatus(Data) == NonVolatileStatus.Slp)
+        else if ((Data != null && BattlePlayback.ShownStatus(Data) == NonVolatileStatus.Slp) ||
+                 PokemonAnimations.IsDozing(this))
             StatusVisuals.DrawSleepZ(spriteBatch, NPC.Top, screenPos, NPC.whoAmI);
     }
 

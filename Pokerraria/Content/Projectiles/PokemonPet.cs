@@ -465,7 +465,9 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         if (InBallFlight || IsHeldByEvolution)
             return;
         // What the battle turn being shown says, so it doesn't fall asleep before the move that puts it to sleep
-        if (!Projectile.isAPreviewDummy && Data != null && BattlePlayback.ShownStatus(Data) == NonVolatileStatus.Slp)
+        // Also when it dozes off while its trainer stands around (AFK)
+        if (!Projectile.isAPreviewDummy && Data != null &&
+            (BattlePlayback.ShownStatus(Data) == NonVolatileStatus.Slp || PokemonAnimations.IsDozing(AnimOwner)))
             StatusVisuals.DrawSleepZ(Main.spriteBatch, Projectile.Top, Main.screenPosition, Projectile.whoAmI);
 
         // Marks this pet for HP bar rendering if it needs one

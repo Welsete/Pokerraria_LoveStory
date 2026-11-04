@@ -5,7 +5,8 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 ## Next
 
 - The battle options menu has a story frame: a thin brass line, brass corners with an aurora gem and a small heart crest on top. The screens keep their original blue.
-
+- A Pokémon that dozes off while its trainer stands around (AFK) now shows the floating z's too.
+- Photosynthesis (Grass types) really heals in the sun now: 2 life a second by day on the surface, with a leafy sparkle while it works. It was being added at a point where the game threw it away.
 - The journal's pages are written in an old book's lettering (IM Fell English), in ink on the paper.
 - Battles: the "Click to skip" hint while a turn plays is now a pulsing gold-framed button, easier to notice.
 - Brock's dungeon chest: it only counts as used once you take something out of it, so dying to its trap before taking anything doesn't lose the loot.

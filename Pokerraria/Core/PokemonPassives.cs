@@ -174,10 +174,6 @@ public sealed class PokemonPassivePlayer : ModPlayer
                 case PokemonPassive.DeepBreath:
                     Player.breathMax += 100;
                     break;
-                case PokemonPassive.Photosynthesis:
-                    if (Main.dayTime && Player.ZoneOverworldHeight)
-                        Player.lifeRegen += 2;
-                    break;
                 case PokemonPassive.Foresight:
                     Player.dangerSense = true;
                     break;
@@ -193,6 +189,18 @@ public sealed class PokemonPassivePlayer : ModPlayer
                     break;
             }
         }
+    }
+
+    /// <summary>
+    ///     Out in the open on a sunny day (the surface or the sky, not underground), where Grass types photosynthesize.
+    /// </summary>
+    private bool InSunlight => Main.dayTime && (Player.ZoneOverworldHeight || Player.ZoneSkyHeight) && !Player.ZoneRain;
+
+    // Life regen goes here: what PostUpdateEquips adds to it can be thrown away before the regen is worked out
+    public override void UpdateLifeRegen()
+    {
+        if (Active.Contains(PokemonPassive.Photosynthesis) && InSunlight)
+            Player.lifeRegen += 4; // 2 life a second, on top of the natural regen
     }
 
     public override void ModifyLuck(ref float luck)
@@ -225,6 +233,16 @@ public sealed class PokemonPassivePlayer : ModPlayer
                     break;
                 case PokemonPassive.Static:
                     Lighting.AddLight(petCenter, 0.55f, 0.55f, 0.25f);
+                    break;
+                case PokemonPassive.Photosynthesis:
+                    // A leafy sparkle on the trainer while it's healing them, so it shows it's working
+                    if (InSunlight && Player.statLife < Player.statLifeMax2 && Main.rand.NextBool(20))
+                    {
+                        var leaf = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.GreenFairy,
+                            0f, -1f, 120, default, 0.8f);
+                        leaf.noGravity = true;
+                        leaf.velocity *= 0.4f;
+                    }
                     break;
                 case PokemonPassive.AuraResonance:
                     AuraDust(petCenter);

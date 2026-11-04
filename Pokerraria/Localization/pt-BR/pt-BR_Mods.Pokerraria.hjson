@@ -2392,7 +2392,7 @@ Passives: {
 
 	Photosynthesis: {
 		Name: Fotossíntese
-		Description: regenera vida mais rápido sob a luz do sol
+		Description: regenera 2 de vida por segundo sob o sol (de dia, na superfície e sem chuva)
 	}
 
 	Static: {

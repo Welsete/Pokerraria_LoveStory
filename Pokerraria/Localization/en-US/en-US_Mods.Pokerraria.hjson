@@ -2392,7 +2392,7 @@ Passives: {
 
 	Photosynthesis: {
 		Name: Photosynthesis
-		Description: faster life regeneration in sunlight
+		Description: regenerates 2 life a second in sunlight (daytime, on the surface, no rain)
 	}
 
 	Static: {

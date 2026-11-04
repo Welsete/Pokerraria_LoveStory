@@ -44,6 +44,11 @@ public sealed class PokemonAnimations : ModSystem
     private static readonly HashSet<object> Asleep = [];
     private static readonly HashSet<object> Resting = [];
 
+    /// <summary>
+    ///     Lying down (or curled up asleep) after standing around for a while, to draw the floating z's.
+    /// </summary>
+    public static bool IsDozing(object owner) => Resting.Contains(owner);
+
     // How long a Pokémon stands around before it sits, then lies down (or falls asleep)
     private const uint SitAfter = 60 * 10;
     private const uint LayAfter = 60 * 30;
