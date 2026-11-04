@@ -209,7 +209,7 @@ LoveStory: {
 Buffs: {
 	RepelBuff: {
 		DisplayName: "Repel"
-		Description: "Wild Pokémon don't appear"
+		Description: "Wild Pokémon don't appear and other creatures come half as often"
 	}
 
 	StoryTime: {
@@ -1121,7 +1121,7 @@ CommonTooltips: {
 Items: {
 	Repel: {
 		DisplayName: "Repel"
-		Tooltip: "A spray that keeps wild Pokémon away for 3 minutes"
+		Tooltip: "A spray that keeps wild Pokémon away for 3 minutes\nand halves other creature spawns"
 	}
 
 	BoulderBadge: {

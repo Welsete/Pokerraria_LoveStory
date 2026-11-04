@@ -209,7 +209,7 @@ LoveStory: {
 Buffs: {
 	RepelBuff: {
 		DisplayName: "Repelente"
-		Description: "Pokémon selvagens não aparecem"
+		Description: "Pokémon selvagens não aparecem e os outros bichos aparecem pela metade"
 	}
 
 	StoryTime: {
@@ -1121,7 +1121,7 @@ CommonTooltips: {
 Items: {
 	Repel: {
 		DisplayName: "Repelente"
-		Tooltip: "Um spray que mantém Pokémon selvagens longe por 3 minutos"
+		Tooltip: "Um spray que mantém Pokémon selvagens longe por 3 minutos\ne faz os outros bichos aparecerem pela metade"
 	}
 
 	BoulderBadge: {

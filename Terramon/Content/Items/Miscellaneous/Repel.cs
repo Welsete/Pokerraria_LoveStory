@@ -3,7 +3,7 @@ using Terramon.Content.Buffs;
 namespace Terramon.Content.Items;
 
 /// <summary>
-///     Repel: a spray that keeps wild Pokémon away for a while (other creatures still come).
+///     Repel: a spray that keeps wild Pokémon away for a while, and other creatures down to half (see RepelSpawns).
 /// </summary>
 public class Repel : TerramonItem
 {
