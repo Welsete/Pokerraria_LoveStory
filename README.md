@@ -177,32 +177,31 @@ The **Pokédex** (<kbd>P</kbd>) has an animated preview of each Pokémon, its ab
 
 ## 📦 Install
 
-1. Download the two files (latest stable version):
+<div align="center">
 
-   <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Pokerraria.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20Pokerraria.tmod-e3b54a?style=for-the-badge" alt="Download Pokerraria.tmod"></a>
-   <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20TmonRuntimes.tmod-e3b54a?style=for-the-badge" alt="Download TmonRuntimes.tmod"></a>
+<img src=".github/assets/install/install_banner_en.png" width="700" alt="How to install">
 
-   Want what's newest, still being tested? Get both files from the [test build](https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main).
-2. Put both files in `Documents/My Games/Terraria/tModLoader/Mods`.
-3. Open tModLoader, go to **Workshop → Manage Mods**, enable both and reload.
-4. **Start a new world** to get the Gyms, the League, the Pokémon Center and Professor Oak.
+<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Pokerraria.tmod"><img src=".github/assets/install/install_dl_pokerraria_en.png" width="340" alt="Download Pokerraria.tmod"></a> &nbsp; <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src=".github/assets/install/install_dl_runtimes_en.png" width="340" alt="Download TmonRuntimes.tmod"></a>
 
-Pokerraria: LoveStory replaces the original Terramon, so don't enable both. If you played an older version (the file was called `Terramon.tmod`), delete that file from the Mods folder: characters start their team from scratch. The language follows your game: Portuguese (Brasil) or English.
+<sub>Want what's newest, still being tested? Get both files from the <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main">test build</a>.</sub>
 
-### Controls
+<img src=".github/assets/install/install_steps_en.png" width="760" alt="1. Download both files. 2. Put them in the Mods folder. 3. Enable both and reload. 4. Start a new world.">
 
-| Key | What it does |
-|:-:|---|
-| <kbd>I</kbd> | Summary of a Pokémon |
-| <kbd>P</kbd> | Pokédex |
-| <kbd>F</kbd> | Show or hide the party |
-| <kbd>'</kbd> | Send out or call back your partner |
-| <kbd>[</kbd> <kbd>]</kbd> | Previous or next Pokémon |
-| <kbd>L</kbd> | Battle history |
-| <kbd>B</kbd> | Skip an evolution |
-| <kbd>F8</kbd> | Test panel (only with Debug Mode on in the mod's settings) |
+</div>
 
-Every key can be changed in **Settings → Controls**.
+> [!TIP]
+> **Mods folder:** `Documents/My Games/Terraria/tModLoader/Mods`. Then open tModLoader, go to **Workshop → Manage Mods**, enable both and reload. A **new world** comes with the Gyms, the League, the Pokémon Center and Professor Oak. The language follows your game: Portuguese (Brasil) or English.
+
+> [!WARNING]
+> Pokerraria replaces the original Terramon: don't enable both. If you played an older version (the file was called `Terramon.tmod`), delete that file from the Mods folder. Characters start their team from scratch.
+
+<div align="center">
+
+<img src=".github/assets/install/install_controls_en.png" width="700" alt="Controls: I Pokémon summary, P Pokédex, F show the party, ' call your partner, [ ] switch Pokémon, L battle history, B stop an evolution, F8 test panel (Debug Mode)">
+
+<sub>Every key can be changed in <b>Settings → Controls</b>. The test panel (F8) only works with Debug Mode on in the mod's settings.</sub>
+
+</div>
 
 ## 🗺️ What's next
 

@@ -177,32 +177,31 @@ A **Pokédex** (<kbd>P</kbd>) tem uma prévia animada de cada Pokémon, habilida
 
 ## 📦 Instalação
 
-1. Baixe os dois arquivos (versão estável mais recente):
+<div align="center">
 
-   <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Pokerraria.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20Pokerraria.tmod-e3b54a?style=for-the-badge" alt="Baixar Pokerraria.tmod"></a>
-   <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20TmonRuntimes.tmod-e3b54a?style=for-the-badge" alt="Baixar TmonRuntimes.tmod"></a>
+<img src=".github/assets/install/install_banner_pt.png" width="700" alt="Como instalar">
 
-   Quer as novidades que ainda estão em teste? Pegue os dois arquivos na [versão de teste](https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main).
-2. Coloque os dois arquivos em `Documentos/My Games/Terraria/tModLoader/Mods`.
-3. Abra o tModLoader, vá em **Workshop → Gerenciar Mods**, ative os dois e recarregue.
-4. **Crie um mundo novo** para ter os Ginásios, a Liga, o Centro Pokémon e o Professor Carvalho.
+<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Pokerraria.tmod"><img src=".github/assets/install/install_dl_pokerraria_pt.png" width="340" alt="Baixar Pokerraria.tmod"></a> &nbsp; <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src=".github/assets/install/install_dl_runtimes_pt.png" width="340" alt="Baixar TmonRuntimes.tmod"></a>
 
-O Pokerraria: LoveStory substitui o Terramon original, então não ative os dois. Se você jogava uma versão antiga (o arquivo se chamava `Terramon.tmod`), apague esse arquivo da pasta Mods: os personagens começam a equipe do zero. O idioma segue o do seu jogo: Português (Brasil) ou English.
+<sub>Quer as novidades que ainda estão em teste? Pegue os dois arquivos na <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main">versão de teste</a>.</sub>
 
-### Controles
+<img src=".github/assets/install/install_steps_pt.png" width="760" alt="1. Baixe os dois arquivos. 2. Coloque na pasta Mods. 3. Ative os dois e recarregue. 4. Crie um mundo novo.">
 
-| Tecla | O que faz |
-|:-:|---|
-| <kbd>I</kbd> | Resumo de um Pokémon |
-| <kbd>P</kbd> | Pokédex |
-| <kbd>F</kbd> | Mostrar ou esconder a equipe |
-| <kbd>'</kbd> | Chamar ou guardar seu parceiro |
-| <kbd>[</kbd> <kbd>]</kbd> | Pokémon anterior ou próximo |
-| <kbd>L</kbd> | Histórico da batalha |
-| <kbd>B</kbd> | Cancelar uma evolução |
-| <kbd>F8</kbd> | Painel de testes (só com o Modo Debug ligado nas configurações do mod) |
+</div>
 
-Todas as teclas podem ser trocadas em **Configurações → Controles**.
+> [!TIP]
+> **Pasta Mods:** `Documentos/My Games/Terraria/tModLoader/Mods`. Depois abra o tModLoader, vá em **Workshop → Gerenciar Mods**, ative os dois e recarregue. Um **mundo novo** já vem com os Ginásios, a Liga, o Centro Pokémon e o Professor Carvalho. O idioma segue o do seu jogo: Português (Brasil) ou English.
+
+> [!WARNING]
+> O Pokerraria substitui o Terramon original: não ative os dois juntos. Se você jogava uma versão antiga (o arquivo se chamava `Terramon.tmod`), apague esse arquivo da pasta Mods. Os personagens começam a equipe do zero.
+
+<div align="center">
+
+<img src=".github/assets/install/install_controls_pt.png" width="700" alt="Controles: I resumo do Pokémon, P Pokédex, F mostrar a equipe, ' chamar o parceiro, [ ] trocar de Pokémon, L histórico da batalha, B cancelar evolução, F8 painel de testes (Modo Debug)">
+
+<sub>Todas as teclas podem ser trocadas em <b>Configurações → Controles</b>. O painel de testes (F8) só funciona com o Modo Debug ligado nas configurações do mod.</sub>
+
+</div>
 
 ## 🗺️ O que vem por aí
 
