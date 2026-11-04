@@ -143,7 +143,7 @@ LoveStory: {
 	PageItem: "Diary page: {0}"
 	PageItemTooltip:
 		'''
-		A strangely familiar handwriting
+		Written in a hurry. The ink glows faintly in the dark
 		Use to read it and keep it in the journal (J)
 		'''
 
@@ -167,22 +167,22 @@ LoveStory: {
 			Title: "Prologue"
 			Text:
 				'''
-				If this page reached you, there's still time.
+				If this page reached you, the passage is still open.
 
-				Don't try to find out who I am. Not now.
+				I shouldn't be here. This isn't my place, and maybe not even my time. Every night the sky lights up in colors that don't exist in Kanto, and I feel myself fading a little more.
 
-				This world is changing. Things from somewhere else are crossing over, and not all of them should.
+				Don't look for me. Not yet. Get strong first.
 
-				Find the old professor. Choose a companion. And follow the pages: I left each one where you'd think to look.
+				Find the old professor and choose a companion. The other pages will be where you'd think to look.
 				'''
 		}
 		Brock: {
 			Title: "Stone by stone"
 			Text:
 				'''
-				Stone by stone. That's how I learned not to give up.
+				I lost here, the first time. Someone laughed at me the whole afternoon, and it was the best afternoon of that year.
 
-				I lost here the first time. She laughed at me the whole afternoon, and I never forgot that laugh.
+				I still remember the sound of that laugh. It's one of the few things the other side couldn't take from me.
 
 				In the dungeon, don't trust every lever. Only one tells the truth.
 				'''
@@ -193,9 +193,9 @@ LoveStory: {
 				'''
 				The water rises and falls, but the way goes on down below.
 
-				It was near here that the sky cracked for the first time. If you see it, don't run.
+				It was near here that the sky cracked for the first time. Green and purple lights, too beautiful to be anything good. If you see it, don't run.
 
-				Maybe we'll meet on the other side. Maybe you'll recognize me.
+				When we meet, pretend you don't know anything. I'll pretend too.
 				'''
 		}
 	}

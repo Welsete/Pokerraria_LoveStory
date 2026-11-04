@@ -143,7 +143,7 @@ LoveStory: {
 	PageItem: "Página do diário: {0}"
 	PageItemTooltip:
 		'''
-		Uma letra estranhamente familiar
+		Escrita às pressas. A tinta brilha de leve no escuro
 		Use para ler e guardar no diário (J)
 		'''
 
@@ -167,22 +167,22 @@ LoveStory: {
 			Title: "Prólogo"
 			Text:
 				'''
-				Se esta página chegou até você, então ainda dá tempo.
+				Se esta página chegou até você, a passagem ainda está aberta.
 
-				Não tente descobrir quem eu sou. Não agora.
+				Eu não deveria estar aqui. Este não é o meu lugar, e talvez nem seja o meu tempo. Toda noite o céu acende em cores que não existem em Kanto, e eu sinto que estou sumindo um pouco mais.
 
-				Este mundo está mudando. Coisas de outro lugar estão atravessando para cá, e nem todas deveriam.
+				Não me procure. Ainda não. Primeiro fique forte.
 
-				Procure o velho professor. Escolha um companheiro. E siga as páginas: deixei cada uma onde você pensaria em olhar.
+				Procure o velho professor e escolha um companheiro. As outras páginas vão estar onde você pensaria em olhar.
 				'''
 		}
 		Brock: {
 			Title: "Pedra por pedra"
 			Text:
 				'''
-				Pedra por pedra. Foi assim que eu aprendi a não desistir.
+				Perdi aqui, na primeira vez. Alguém riu de mim a tarde inteira, e foi a melhor tarde daquele ano.
 
-				Perdi aqui na primeira vez. Ela riu de mim a tarde inteira, e eu nunca esqueci aquela risada.
+				Ainda lembro do som daquela risada. É uma das poucas coisas que o outro lado não conseguiu me tirar.
 
 				Na masmorra, não confie em todas as alavancas. Só uma diz a verdade.
 				'''
@@ -193,9 +193,9 @@ LoveStory: {
 				'''
 				A água sobe e desce, mas o caminho continua lá embaixo.
 
-				Foi aqui perto que o céu rachou pela primeira vez. Se você vir, não fuja.
+				Foi aqui perto que o céu rachou pela primeira vez. Luzes verdes e roxas, bonitas demais para serem coisa boa. Se você vir, não fuja.
 
-				Talvez a gente se encontre do outro lado. Talvez você me reconheça.
+				Quando a gente se encontrar, finja que não sabe de nada. Eu também vou fingir.
 				'''
 		}
 	}
