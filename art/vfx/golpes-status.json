@@ -834,22 +834,22 @@
  {
   "tipo": "Terrestre",
   "golpe": "Dig",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Terrestre",
   "golpe": "Drill Run",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Terrestre",
   "golpe": "Earthquake",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Terrestre",
   "golpe": "Fissure",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Terrestre",
@@ -860,7 +860,7 @@
  {
   "tipo": "Terrestre",
   "golpe": "Sand Tomb",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Terrestre",
@@ -894,12 +894,12 @@
  {
   "tipo": "Terrestre",
   "golpe": "Spikes",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Pedra",
   "golpe": "Head Smash",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Pedra",
@@ -921,7 +921,7 @@
  {
   "tipo": "Pedra",
   "golpe": "Rollout",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Pedra",
@@ -932,12 +932,12 @@
  {
   "tipo": "Pedra",
   "golpe": "Stone Edge",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Pedra",
   "golpe": "Ancient Power",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Pedra",

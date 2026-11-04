@@ -126,6 +126,19 @@ SHEETS = [
     ("lote7_iron_tail.png", "IronTail", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
     ("lote7_memento.png", "Memento", (4, 2), 3, dict(Travel=0, Ticks=5)),
     ("lote7_switcheroo.png", "Switcheroo", (4, 2), 3, dict(Travel=0, Ticks=4, At="middle")),
+    # Lote 8 (Ground and Rock, 2026-11-04)
+    ("lote8_ancient_power.jpg", "AncientPower", (4, 2), 3, dict(Travel=0, Ticks=5)),
+    ("lote8_dig.jpg", "Dig", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote8_drill_run.jpg", "DrillRun", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    # 4x4 sheet with 14 frames: the last two cells are empty
+    ("lote8_earthquake.jpg", "Earthquake", [(c * 256, r * 256, c * 256 + 256, r * 256 + 256) for r in range(4) for c in range(4)][:14], 2, dict(Travel=0, Ticks=3)),
+    ("lote8_fissure.jpg", "Fissure", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    # Leaves out frame 7: its dust sits on a lighter, tinted block of background
+    ("lote8_head_smash.jpg", "HeadSmash", [(c * 344, r * 384, c * 344 + 344, r * 384 + 384) for r in range(2) for c in range(4) if r * 4 + c != 6], 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote8_rollout.jpg", "Rollout", (4, 2), 3, dict(Travel=7, Ticks=3, Face=1)),
+    ("lote8_sand_tomb.jpg", "SandTomb", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote8_spikes.jpg", "Spikes", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote8_stone_edge.jpg", "StoneEdge", (4, 2), 3, dict(Travel=0, Ticks=4)),
     # High Jump Kick keeps the kicking silhouette (Welsete liked it); Mach Punch came with a boxer on the left of each
     # frame (2 columns x 4 rows): only the part right of him is cut
     ("lote2_high_jump_kick.png", "HighJumpKick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
@@ -231,6 +244,54 @@ def recolor(strip, ramp):
     return out
 
 
+# Sheets that came with a flat block of ground drawn under the effect (a cream slab under Dig): big patches of that
+# color are cut out, small bits of it inside the art (highlights) stay
+SLAB = {"Dig": (254, 249, 225)}
+
+
+def cut_slab(a, color, tol=14, min_size=1500):
+    from scipy import ndimage
+    near = (np.abs(a[..., :3] - np.array(color, float)).max(-1) < tol) & (a[..., 3] > 0)
+    lab, n = ndimage.label(near)
+    if n:
+        sizes = ndimage.sum(near, lab, range(1, n + 1))
+        big = np.isin(lab, np.nonzero(sizes >= min_size)[0] + 1)
+        big = ndimage.binary_dilation(big, iterations=2) & (np.abs(a[..., :3] - np.array(color, float)).max(-1) < tol * 3)
+        a = a.copy()
+        a[..., 3][big] = 0
+    return a
+
+
+# Pink left by a tinted magenta background (a lighter patch behind Head Smash's dust, the line under Sand Tomb):
+# "cut" drops it, a color paints it (Earthquake's last dust cloud came out pink)
+DEPINK = {"HeadSmash": "cut", "SandTomb": "cut", "Fissure": "cut", "Earthquake": (222, 196, 150)}
+
+# Sheets with a slab of ground drawn under every frame: everything a few pixels below the ground's top goes, so the
+# effect sits on the real Terraria ground instead of a block of fake one
+GROUND_CUT = {"Earthquake"}
+
+
+def depink(strip, how):
+    out = strip.copy()
+    rgb = out[..., :3].astype(int)
+    pink = (rgb[..., 0] - rgb[..., 1] > 25) & (rgb[..., 2] - rgb[..., 1] > 12) & (out[..., 3] > 0)
+    if how == "cut":
+        out[..., 3][pink] = 0
+    else:
+        out[..., :3][pink] = how
+    return out
+
+
+def cut_ground(strip, frames):
+    w = strip.shape[1] // frames
+    last = strip[:, (frames - 1) * w:, 3] > 0
+    rows = np.nonzero(last.mean(1) > 0.8)[0]
+    if len(rows):
+        strip = strip.copy()
+        strip[rows[0] + 3:, :, 3] = 0
+    return strip
+
+
 def despill(a):
     """Green left in the art by a green background (smoke or chains blended with it): no pixel may be greener than its
     red or blue, so those parts turn back to gray or purple. Only for GREEN_KEY sheets (purple and dark types)."""
@@ -248,6 +309,8 @@ def main():
         a = load(f"{SRC}/{file}", "green" if file in GREEN_KEY else "magenta")
         if file in GREEN_KEY:
             a = despill(a)
+        if move in SLAB:
+            a = cut_slab(a, SLAB[move])
         fr = [shrink(f, k) for f in frames_of(a, layout)]
         w = max(f.shape[1] for f in fr)
         h = max(f.shape[0] for f in fr)
@@ -259,6 +322,10 @@ def main():
             strip[y:y + f.shape[0], i * w + x:i * w + x + f.shape[1]] = f.clip(0, 255).astype(np.uint8)
         if move in RECOLOR:
             strip = recolor(strip, RECOLOR[move])
+        if move in DEPINK:
+            strip = depink(strip, DEPINK[move])
+        if move in GROUND_CUT:
+            strip = cut_ground(strip, len(fr))
         Image.fromarray(strip, "RGBA").save(f"{OUT}/{move}.png", optimize=True)
         lines = [f"Frames {len(fr)}"] + [f"{key} {val}" for key, val in settings.items()] + ["Scale 1"]
         open(f"{OUT}/{move}.txt", "w").write("\n".join(lines) + "\n")

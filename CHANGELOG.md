@@ -4,6 +4,7 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+- 10 more moves with their own animation (Ground and Rock): Ancient Power, Dig, Drill Run, Earthquake, Fissure, Head Smash, Rollout, Sand Tomb, Spikes and Stone Edge.
 - The battle options menu has a story frame: a thin brass line, brass corners with an aurora gem and a small heart crest on top. The screens keep their original blue.
 - A Pokémon that dozes off while its trainer stands around (AFK) now shows the floating z's too.
 - Photosynthesis (Grass types) really heals in the sun now: 2 life a second by day on the surface, with a leafy sparkle while it works. It was being added at a point where the game threw it away.

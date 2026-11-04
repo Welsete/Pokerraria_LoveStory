@@ -39,14 +39,13 @@ Quando um golpe do gerador fica pronto, a animação dele substitui a versão de
 
 ## Situação
 
-416 golpes no catálogo: **122** com arte própria, **204** desenhados por código, **90** esperando o gerador.
+416 golpes no catálogo: **132** com arte própria, **204** desenhados por código, **80** esperando o gerador.
 
 ## Faltam: para o gerador de imagem
 
 Em ordem de tipo. Entre parênteses, o arquivo de prompts. Os marcados com * já têm uma versão provisória em código (o Welsete achou fraca) e são a **prioridade**.
 
-- **Terrestre** (6, `terrestre.md`): Dig, Drill Run, Earthquake, Fissure, Sand Tomb, Spikes
-- **Pedra** (7, `pedra.md`): Head Smash, Rollout, Stone Edge, Ancient Power, Sandstorm, Stealth Rock, Wide Guard
+- **Pedra** (3, `pedra.md`): Sandstorm, Stealth Rock, Wide Guard
 - **Venenoso** (6, `venenoso.md` · fundo verde): Gunk Shot, Poison Fang, Acid Spray, Belch, Sludge Wave, Toxic Spikes
 - **Inseto** (4, `inseto.md`): Bug Bite, Leech Life, U-turn, String Shot
 - **Voador** (7, `voador.md`): Bounce, Brave Bird, Sky Attack, Gust, Hurricane, Mirror Move, Tailwind
@@ -87,8 +86,8 @@ Os prompts de todos esses, prontos para copiar, estão em [art/vfx/FILA_GERADOR.
 - **Fantasma** (7): Lick, Rage Fist, Shadow Punch, Shadow Sneak, Shadow Ball, Curse, Destiny Bond
 - **Sombrio** (7): Bite, Crunch, Fling, Night Slash, Sucker Punch, Memento, Switcheroo
 - **Aço** (5): Bullet Punch, Gyro Ball, Iron Tail, Meteor Mash, Flash Cannon
-- **Terrestre** (4): Bone Rush, Bonemerang, Bulldoze, Stomping Tantrum
-- **Pedra** (1): Rock Slide
+- **Terrestre** (10): Bone Rush, Bonemerang, Bulldoze, Dig, Drill Run, Earthquake, Fissure, Sand Tomb, Stomping Tantrum, Spikes
+- **Pedra** (5): Head Smash, Rock Slide, Rollout, Stone Edge, Ancient Power
 - **Lutador** (15): Axe Kick, Brick Break, Close Combat, Double Kick, Drain Punch, Dynamic Punch, Focus Punch, Force Palm, Hammer Arm, High Jump Kick, Low Kick, Low Sweep, Mach Punch, Rock Smash, Superpower
 - **Fada** (1): Dazzling Gleam
 - **Psíquico** (1): Psybeam
