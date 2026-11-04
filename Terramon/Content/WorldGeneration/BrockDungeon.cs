@@ -283,7 +283,7 @@ public static class BrockDungeon
         RopeDown(to, f, floor - 1);
 
         // A few torches low on the back wall, under the darts' way
-        for (var x = from + 3; x < to; x += 9)
+        for (var x = from + 8; x < to; x += 20)
             WorldGen.PlaceTile(x, floor - 6, TileID.Torches, true, true);
     }
 
@@ -523,8 +523,8 @@ public static class BrockDungeon
 
     private static void Decorate(RoomSpan room, int f)
     {
-        // Torches low on the back wall only: the ceilings stay dark
-        for (var x = room.From + 3; x <= room.To - 2; x += 8)
+        // Few torches, low on the back wall only: the ceilings and most of the floor stay dark
+        for (var x = room.From + 4; x <= room.To - 2; x += 16)
         {
             if (!Main.tile[x, f - 4].HasTile && Main.tile[x, f].HasTile && Main.tile[x, f].TileType == TileID.GrayBrick)
                 WorldGen.PlaceTile(x, f - 4, TileID.Torches, true, true);
