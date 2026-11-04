@@ -16,9 +16,9 @@ O que está em `## Next` do CHANGELOG, testado e publicado.
 - [x] 35 golpes com animação desenhada
 - [x] Misty parada no Ginásio
 - [x] Fontes de arte (prompts e spritesheets de VFX) no repositório
-- [ ] Rodada de teste completa do Welsete num mundo novo [qa-release]
-- [ ] Corrigir o que aparecer no teste [programador-batalha, construtor-mundo]
-- [ ] Fechar a versão: build.txt 0.4.0, CHANGELOG, README, tag `v0.4.0` [qa-release]
+- [x] Rodada de teste completa do Welsete num mundo novo [qa-release]
+- [x] Corrigir o que aparecer no teste (nada apareceu; o que surgir depois vai para a 0.4.1)
+- [x] Fechar a versão: build.txt 0.4.0, CHANGELOG, README, tag `v0.4.0` [qa-release]
 
 ## 0.5.0 · Golpes de Água, Elétrico e Planta
 

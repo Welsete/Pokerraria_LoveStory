@@ -7,7 +7,7 @@
 ### Catch 'em all in Terraria. Beat the bosses. Earn the badges. Become the Champion.
 
 <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main"><img src="https://img.shields.io/badge/Download-latest%20build-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Download"></a>
-<img src="https://img.shields.io/badge/Version-0.3.0-8a4fd8?style=for-the-badge" alt="Version 0.3.0">
+<img src="https://img.shields.io/badge/Version-0.4.0-8a4fd8?style=for-the-badge" alt="Version 0.4.0">
 <img src="https://img.shields.io/badge/tModLoader-1.4.4-2b3a7a?style=for-the-badge" alt="tModLoader 1.4.4">
 <img src="https://img.shields.io/badge/Pok%C3%A9mon-151%20%2B%20Lucario-b8323a?style=for-the-badge" alt="151 Pokémon">
 <img src="https://img.shields.io/badge/Languages-PT--BR%20%7C%20EN-3f7a35?style=for-the-badge" alt="PT-BR and EN">
