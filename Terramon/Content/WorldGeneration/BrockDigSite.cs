@@ -3,49 +3,46 @@ using Terraria.Localization;
 namespace Terramon.Content.WorldGeneration;
 
 /// <summary>
-///     The way down to Brock's Gym (worlds with the dungeon): a fossil dig. Pewter City is the town of fossils, and
-///     the dungeon below is older than the gym. A rocky outcrop with its layers showing (stone, granite, clay), the
-///     skeleton of a huge ancient creature lying on it with its ribcage arching over the dig pit and its skull resting
-///     on the cliff, a wooden scaffold with a crane over the pit, lanterns, barrels and the sign. The rope goes down the
-///     pit. The design is <see cref="Template" />, drawn by tools/structures/brock_dig_site.py.
+///     The way down to Brock's Gym (worlds with the dungeon): a rocky hill with its layers showing (stone, clay,
+///     sandstone, granite) and a fossil dig in its face, where the skeleton of a huge ancient creature lies in the rock
+///     (Pewter City is the town of fossils, and the dungeon below is older than the gym). A mine tunnel at ground level,
+///     shored with timber frames, with a minecart track and lanterns, leads into the hill to the shaft and its rope.
+///     The design is <see cref="Template" />, drawn by tools/structures/brock_dig_site.py.
 /// </summary>
 public static class BrockDigSite
 {
     /// <summary>
     ///     One character per tile; the last row sits on the ground's surface.
-    ///     R stone, N granite, D clay (the rock's layers), b fossil bone, e the skull's eye, w wooden beam, - wooden
-    ///     platform, W planks, | rope (the middle one goes down to the dungeon), ~ crane rope, L lantern, C barrel, s sign,
-    ///     = shaft wall, . the dug-out pit. Spaces are open air up high and the ground left as it is lower down.
+    ///     R stone, D clay, Y sandstone, N granite (the rock's layers), . the dug-out fossil recess, b fossil bone, e the
+    ///     skull's eye, - platform, t the mine tunnel, w timber (wooden beam), W wood, = minecart track, | the rope down,
+    ///     v the shaft's opening, L lantern, C barrel, s sign, _ cleared way in. Spaces are open air (the ground is left as
+    ///     it is on the last row).
     /// </summary>
     private static readonly string[] Template =
     [
-        "                            wwwwwwwwww                                     ",
-        "                            w   bbbbb~bbb                 bbbbbbb          ",
-        "                       -------bbb    ~b  bbbb           bbbbbbbbbbbbb      ",
-        "                       Lw bbwb   b   ~   b  bbb        bbbebbbbbbbbbbbbb   ",
-        "                        wbb w b  b   ~  b  b   bb      bbbbbbbbbbbbbbbbbb  ",
-        "                      bbw |bw b  b   ~  b  b   b bb    bb b b b b b bbbbb  ",
-        "                     b bw |bw b  b   ~  b  b  b  b b bb b             bbb  ",
-        "                    b  -------b  b   ~  b  b  b  b  b   bb b b b b bbbbb   ",
-        "                  bb    w |bwLb   b b~  b  b  b  b    RRRbbbbbbbbbbbbbb    ",
-        "                 b b    w |bw  b  b b~ b  b   b  b    RRRRRRRRRRRRRRR      ",
-        "                b  b    w | w  b  b b~ b  b   b  b   RRRRRRRRRRNNNNNNR     ",
-        "               b   b    w | w  b  b bL b  b  b       RNNNNNNNNNRRRRRRR     ",
-        "              b    b   -------         b     b      RDRRRRRRRRRDDDDDDDR    ",
-        "             b     b    w | w   wwww|wwww           DDDDDDDDDDDDDDDDDDD    ",
-        "           bb      b    w | w   w   |   w          RRRDDDDDDDDDRRRRRRRRR   ",
-        "          b        b    w | CCs w   |   w  C       RRRRRRRRRRRRRRRRRRRRR   ",
-        "         bRRRRRRR  bRR RRRR RRRRw ..|...wRRRR  R  RNNNRRRRRRRRRNNNNNNNNNR  ",
-        "        bRRRRRRRRRRNNNRNNNNRRRRRw...|...wNNNNRRRRRRRRRNNNNNNNNNRRRRRRRRRN  ",
-        "       b DDDDDDDDDRRRRRRRRRDDDDDw...|...wRRRRDDDDDDDDDRRRRRRRRRDDDDDDDDDR  ",
-        "     bbRRDDDDDDDDDDDDDDDDDDDDDDDw...|...wDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD  ",
-        "      RDDRRRRRRRRRDDDDDDDDDRRRRRw...|...wDDDDRRRRRRRRRDDDDDDDDDRRRRRRRRRD  ",
-        "      RRRRRRRRRRRRRRRRRRRRRRRRRRw...|...wRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR  ",
-        "      RRRNNNNNNNNNRRRRRRRRRNNNNNwWW=|=WWwRRRRNNNNNNNNNRRRRRRRRRNNNNNNNNNR  ",
+        "                              RRRRRRRRRR                        ",
+        "                           RRRNNNNNNNNRRRRR                     ",
+        "                       R RRRRRRRRRRRRRRRRRRRRR                  ",
+        "                     .......RRRRRRRbbbbbDDDDDD R                ",
+        "                   ..............bbbbbbbbbDDDDRDRR              ",
+        "                 bbbbbbbbbbbbbbbbbbebbbbbbbYYYYYYYR             ",
+        "                .bbbbbbbbbbbbbbbbbbbbbbbbbbNNNNNNNNRR           ",
+        "              bbb.b.b.b.b.b.b.bb..b.b.bRbRbRRRRRRRRNN           ",
+        "             b..b.b.b.b.b.b.b.bb...bbbbbbbRRRRRRRRRRRRR         ",
+        "              ..bb.b.b.b.b.b.b.b....RRDDDDDDDDDDDDDRRRRR        ",
+        "            RRD..b.b.b.b.b.b.b....DDDDDDDDDDDDDDDDDDDDDDR       ",
+        "           RDYYYYYYYY.......DDDDDDDDDDYYYYYYYYYYYYYDDDDDDR      ",
+        "          RYYNNNNNNNNNNNNNYYYYYYYYYYYYNNNNNNNNNNNNNYYYYYYYR     ",
+        "   WWW   RWNNRRWRRRRWRRRRWNNNNWNNNNWNNRRWRRRRRRRRRRNNNNNNNN     ",
+        "____wwttttwtLttwttttwtLttwttttwtLttwttttwLtt|ttRRRRRRRRRRRRRR   ",
+        "____wwttttwttttwttttwttttwttttwttttwttttwttt|ttDDDDRRRRRRRRRR   ",
+        "____wwttttwttttwttttwttttwttttwttttwttttwttt|ttDDDDDDDDDDDDDDR  ",
+        "_s__w==C===================================t|ttYYYYDDDDDDDDDDD  ",
+        "   YRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRv|vRNNNNYYYYYYYYYYY  ",
     ];
 
-    private const int Center = 36; // The rope's column
-    private const int Open = 7; // The bottom rows where spaces keep the ground as it is
+    private const int Center = 44; // The rope's column
+    private const int Open = 1; // The bottom rows where spaces keep the ground as it is
 
     private static int Width => Template[0].Length;
     private static int Height => Template.Length;
@@ -85,25 +82,28 @@ public static class BrockDigSite
                     case 'R': Block(x, y, TileID.Stone); break;
                     case 'N': Block(x, y, TileID.Granite); break;
                     case 'D': Block(x, y, TileID.ClayBlock); break;
+                    case 'Y': Block(x, y, TileID.Sandstone); break;
                     case 'b': Block(x, y, TileID.BoneBlock); break;
                     case 'W': Block(x, y, TileID.WoodBlock); break;
                     case 'e': tile.WallType = WallID.Stone; break;
                     case '.': tile.WallType = WallID.Dirt; break;
-                    case '=': tile.WallType = WallID.Dirt; break;
+                    case 't':
+                    case 'v': tile.WallType = WallID.Wood; break;
                     case 'w':
+                        tile.WallType = WallID.Wood;
                         tile.HasTile = true;
                         tile.TileType = TileID.WoodenBeam;
                         break;
                     case '-':
                     case '|':
-                    case '~':
+                    case '=':
                     case 'L':
                     case 'C':
                     case 's':
                         if (ch == '|' && col == Center)
                             ropeTop = Math.Min(ropeTop, y);
-                        if (low)
-                            tile.WallType = WallID.Dirt;
+                        if (ch != 's')
+                            tile.WallType = WallID.Wood;
                         later.Add((new Point(x, y), ch));
                         break;
                 }
@@ -129,11 +129,13 @@ public static class BrockDigSite
         WorldGen.RangeFrame(area.Left - 1, area.Top - 1, area.Right + 1, area.Bottom + 1);
 
         // Platforms and ropes (top to bottom, each rope hangs from the one above), then what hangs or stands on them
-        foreach (var (p, what) in later.Where(l => l.What is '-' or '|' or '~').OrderBy(l => l.At.Y))
+        foreach (var (p, what) in later.Where(l => l.What is '-' or '|' or '=').OrderBy(l => l.At.Y))
         {
             var tile = Main.tile[p.X, p.Y];
             if (what == '-')
                 WorldGen.PlaceTile(p.X, p.Y, TileID.Platforms, true, true);
+            else if (what == '=')
+                WorldGen.PlaceTile(p.X, p.Y, TileID.MinecartTrack, true, true);
             else
             {
                 tile.HasTile = true;

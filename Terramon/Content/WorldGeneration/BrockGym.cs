@@ -282,7 +282,8 @@ public static class BrockGymBuilder
         ];
 
         var minDepth = (int)Main.worldSurface + 15;
-        var maxDepth = Math.Max(minDepth + 10, (int)Main.rockLayer + 60);
+        // Not too deep: the rope from the surface down to the dungeon should be a climb, not a fall of hundreds of tiles
+        var maxDepth = Math.Max(minDepth + 10, Math.Min((int)Main.rockLayer + 60, minDepth + 60));
         foreach (var (maxOffset, solidPercent, strictStructures) in tiers)
         {
             for (var attempt = 0; attempt < 1500; attempt++)
