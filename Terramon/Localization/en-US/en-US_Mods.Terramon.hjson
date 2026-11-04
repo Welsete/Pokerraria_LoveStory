@@ -2260,7 +2260,7 @@ BrockGym: {
 	DungeonSign1: "These walls are older than the Gym. Someone has been through here before you."
 	DungeonSign2: "Three levers. Only one way."
 	Welcome: "{0} is waiting for you on the stage. Talk to him to challenge the Pewter City Gym!"
-	Sign: Pewter City Gym. Leader: Brock, the rock-solid Pokémon trainer! He uses Rock-type Pokémon: Water and Grass types have the edge. You can challenge him once the Eye of Cthulhu is defeated. Climb down the rope and watch out for traps on the way!
+	Sign: Pewter City Gym. Leader: Brock, the rock-solid Pokémon trainer! He uses Rock-type Pokémon: Water and Grass types have the edge. You can challenge him once the Eye of Cthulhu is defeated. Climb down the rope.
 	Announce: "Brock's Gym is in the caverns {0} tiles {1} of spawn. Look for a small stone shrine with a rope going down into the ground, or for the Boulder Badge on the map."
 	MapName: Brock's Gym (Pewter City)
 	MapEntrance: Entrance to Brock's Gym

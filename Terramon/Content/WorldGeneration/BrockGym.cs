@@ -38,6 +38,13 @@ public class BrockGymSystem : ModSystem
     /// </summary>
     public static bool HasDungeon { get; internal set; }
 
+    /// <summary>
+    ///     The dungeon's tiles, or empty if this world has none.
+    /// </summary>
+    public static Rectangle DungeonArea => HasDungeon && SurfaceEntrance != Point.Zero
+        ? BrockDungeon.Area(SurfaceEntrance.X, Interior.Bottom)
+        : Rectangle.Empty;
+
     // Whether a player was inside last time we looked, so Brock only shows up when someone walks in
     private static bool _occupied;
     private static int _checkTimer;
@@ -300,7 +307,13 @@ public static class BrockGymBuilder
     }
 
     private static Rectangle Footprint(int left, int top)
-        => new(left - EntranceGap - 4, top - 2, Width + EntranceGap + 8, Height + 4);
+    {
+        // The dungeon reaches higher and lower than the hall
+        var floorY = top + Height - 1 - Shell;
+        var dungeon = BrockDungeon.Area(left - EntranceGap, floorY);
+        var hall = new Rectangle(left - EntranceGap - 4, top - 2, Width + EntranceGap + 8, Height + 4);
+        return Rectangle.Union(hall, new Rectangle(dungeon.X - 1, dungeon.Y - 2, dungeon.Width + 2, dungeon.Height + 4));
+    }
 
     private static bool CanPlace(int left, int top, int solidPercent, bool strictStructures)
     {
@@ -423,7 +436,7 @@ public static class BrockGymBuilder
         BrockGymSystem.HasDungeon = false;
         TryStep("dungeon", () =>
         {
-            BrockDungeon.Build(left - EntranceGap, left, top, bottom, floorY);
+            BrockDungeon.Build(left - EntranceGap, floorY);
             BrockGymSystem.HasDungeon = true;
         });
         TryStep("entrance", () => BuildEntrance(left, floorY));
@@ -431,7 +444,8 @@ public static class BrockGymBuilder
         TryStep("decorations",
             () => Decorate(inLeft, inRight, ceilingY, floorY, centerLeft, centerRight, stageLeft, stageTop));
 
-        WorldGen.RangeFrame(left - EntranceGap - 4, top - 2, right + 2, bottom + 2);
+        var footprint = Footprint(left, top);
+        WorldGen.RangeFrame(footprint.Left, footprint.Top, footprint.Right, footprint.Bottom);
 
         // After framing, so the boulders stay up in the ceiling until a trap drops them
         TryStep("traps", () => BuildTraps(left, ceilingY, floorY, centerLeft, centerRight));
@@ -519,7 +533,7 @@ public static class BrockGymBuilder
             : left - (BrockGymSystem.HasDungeon ? EntranceGap : 6); // 6: the tunnel of the first versions
         ProtectedAreas.Add(new Rectangle(left, top, Width, Height));
         if (BrockGymSystem.HasDungeon)
-            ProtectedAreas.Add(new Rectangle(shaftX - 3, top, left - shaftX + 3, Height));
+            ProtectedAreas.Add(BrockDungeon.Area(shaftX, floorY));
         else
             ProtectedAreas.Add(new Rectangle(shaftX - 1, floorY - 4, left - shaftX + 1, 5));
         if (surfaceEntrance != Point.Zero && surfaceEntrance.X == shaftX && surfaceEntrance.Y < floorY)

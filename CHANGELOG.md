@@ -4,7 +4,7 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
-- Brock's Gym dungeon (new worlds): between the rope and the hall, four rooms of old stone. Three identical levers, only one opens the stone gate and the other two drop a boulder on whoever pulled them; a corridor with boulder traps; a chest with the diary page "Stone by stone", a random evolution stone, Ultra Balls, Potions and Repels. In older worlds the page turns up in Brock's hall, and Misty's page in her Gym.
+- Brock's Gym dungeon (new worlds): between the rope and the hall, six rooms of old stone. A tall dark hall with three identical levers: only one opens the stone gate, the other two drop a boulder from high up in the dark on whoever pulled them. A wide spike pit crossed on stone pillars, a tall corridor with hidden boulder traps, a lava pit crossed on pillars one block wide, and a chest with the diary page "Stone by stone", a random evolution stone, Ultra Balls, Potions and Repels. Cave bats spawn far more often inside. In older worlds the page turns up in Brock's hall, and Misty's page in her Gym.
 - New item: Repel, a spray that keeps wild Pokémon away for 3 minutes (crafted with a Bottle, Deathweed and Gel at a Placed Bottle).
 
 - Two-turn moves now show their charging turn: Fly and Bounce rise in a gust, Dig throws up dirt and opens a hole, Dive sends up a water spout, Phantom Force and Shadow Force sink into ghostly smoke, and Skull Bash, Sky Attack, Razor Wind, Solar Beam, Solar Blade, Meteor Beam, Geomancy, Electro Shot, Freeze Shock and Ice Burn gather energy on the user. In the test panel these moves play their charging turn first.

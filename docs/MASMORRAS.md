@@ -72,6 +72,10 @@ oceano nem para o mundo.
 
 ## Estado
 
-- Brock: **feita** (`Content/WorldGeneration/BrockDungeon.cs`), em mundos novos ou com "Construir Ginásio do Brock aqui"
+- Brock: **feita, versão 2** (2026-11-04, depois do primeiro teste do Welsete: mais difícil e maior). Seis salas: chegada;
+  salão das alavancas com 24 de altura (pedras caem do escuro); fosso de espinhos com pilares; corredor alto com pedras
+  escondidas; fosso de lava com pilares de 1 bloco; baú. Morcegos nascem mais lá dentro. O portão não abria porque o
+  Terraria não aciona atuador embaixo de bloco protegido; `ProtectedActuators` libera isso.
+- Brock (versão 1): (`Content/WorldGeneration/BrockDungeon.cs`), em mundos novos ou com "Construir Ginásio do Brock aqui"
   no painel F8. Botão "TP masmorra do Brock" para testar. Em mundos antigos a página aparece ao entrar no salão.
 - Misty: falta. Até lá, a página da Misty aparece ao entrar no Ginásio dela.
