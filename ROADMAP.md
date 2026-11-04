@@ -104,4 +104,4 @@ chefe, padrões de ataque próprios, item para invocar e recompensas. Diferente 
 ## Sempre que der
 
 - [ ] Limpar branches antigas no GitHub (`tools/dump-ids` e as `feature/*` já incorporadas)
-- [ ] Resolver os avisos RCS1242 do build
+- [x] Resolver os avisos RCS1242 do build (o build compila sem nenhum aviso)

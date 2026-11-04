@@ -215,7 +215,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
 
         float hpWidth = dims.Width - 84f;
         float drawHpY = dims.Y + dims.Height - (DrawEXPBar ? 68f : 52f);
-        float parallelogramCenterForHp = GetParallelogramCenter(drawHpY + hpBarHeight * 0.5f, in parallelogramRect);
+        float parallelogramCenterForHp = GetParallelogramCenter(drawHpY + hpBarHeight * 0.5f, parallelogramRect);
         Vector2 drawHpPosition = new(parallelogramCenterForHp - (hpWidth * 0.5f) - (sideShift * 0.75f), drawHpY);
         
         // Remove floating points from draw position
@@ -373,7 +373,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         Utils.DrawBorderString(spriteBatch, label, textPosition, Color.White, textScale, 0.5f, 0.5f);
     }
 
-    public static float GetParallelogramCenter(float y, in Rectangle bounds)
+    public static float GetParallelogramCenter(float y, Rectangle bounds)
     {
         if (y < bounds.Y || y > bounds.Y + bounds.Height)
             return y;

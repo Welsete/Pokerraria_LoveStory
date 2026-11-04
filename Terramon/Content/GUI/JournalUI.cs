@@ -22,7 +22,7 @@ public sealed class JournalUI : SmartUIState
     private const float LeftX = 44f;
     private const float RightX = 388f;
     private const float PageWidth = 290f;
-    private const float Top = 28f;
+    private const float PageTop = 28f;
     private const float Bottom = 412f;
 
     private static readonly Color Gold = new(255, 196, 60);
@@ -180,15 +180,15 @@ public sealed class JournalUI : SmartUIState
         var found = Diary.Pages;
 
         var title = Add(Text(Journal.Text("Title"), 0.7f, Gold, true));
-        Centered(title, LeftX, Top);
+        Centered(title, LeftX, PageTop);
         var chapter = Add(Text(Journal.Text("Chapter1"), 0.8f, Faded));
-        Centered(chapter, LeftX, Top + 44f);
+        Centered(chapter, LeftX, PageTop + 44f);
 
         for (var i = 0; i < Journal.Pages.Length; i++)
         {
             var id = Journal.Pages[i];
             var has = found.Contains(id);
-            var y = Top + 84f + i * 34f;
+            var y = PageTop + 84f + i * 34f;
 
             var box = Add(new UIImage(Tex(has ? "Check" : "Unchecked")));
             box.Left.Pixels = LeftX + 8f;
@@ -217,8 +217,8 @@ public sealed class JournalUI : SmartUIState
 
         // Right page: next step and what happened so far
         var nextTitle = Add(Text(Journal.Text("TabNext"), 0.5f, Gold, true));
-        Centered(nextTitle, RightX, Top);
-        var list = Column(RightX, Top + 40f, Bottom - Top - 40f);
+        Centered(nextTitle, RightX, PageTop);
+        var list = Column(RightX, PageTop + 40f, Bottom - PageTop - 40f);
         var next = Journal.NextStep(player);
         Paragraph(list, next == null ? Journal.Text("ChapterEnd") : Journal.Text($"Steps.{next.Key}.Next"), Ink, 0.95f);
         Paragraph(list, Journal.Text("Progress", Journal.Chapter1.Count(s => s.Done(player)), Journal.Chapter1.Length),
@@ -245,21 +245,21 @@ public sealed class JournalUI : SmartUIState
         var has = Diary.Pages.Contains(id);
 
         var title = Add(Text(has ? Journal.PageTitle(id).Value : "???", 0.55f, has ? Gold : Missing, true));
-        Centered(title, LeftX, Top);
+        Centered(title, LeftX, PageTop);
 
         var picture = Add(new PagePicture(Tex("Page" + id), has));
         picture.Left.Pixels = LeftX + (PageWidth - 300f) / 2f;
-        picture.Top.Pixels = Top + 56f;
+        picture.Top.Pixels = PageTop + 56f;
 
         var number = Add(Text(Journal.Text("PageNumber", index + 1, Journal.Pages.Length), 0.8f, Faded));
-        Centered(number, LeftX, Top + 280f);
+        Centered(number, LeftX, PageTop + 280f);
         if (!has)
         {
             var hint = Add(Text(Journal.Text("PageMissingHint"), 0.75f, Faded));
-            Centered(hint, LeftX, Top + 306f);
+            Centered(hint, LeftX, PageTop + 306f);
         }
 
-        var list = Column(RightX, Top + 6f, Bottom - Top - 40f);
+        var list = Column(RightX, PageTop + 6f, Bottom - PageTop - 40f);
         Paragraph(list, has ? Journal.PageText(id) : Journal.Text("PageMissing"), has ? Ink : Faded, 0.9f);
 
         // Turning the pages

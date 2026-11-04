@@ -1290,7 +1290,7 @@ public sealed class DynamicPixelRatioElement : UIElement
             DrawAdjustableCorners(spriteBatch, _corners.Value, bounds, drawColor, zoom);
     }
 
-    public static void DrawAdjustableCorners(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col,
+    public static void DrawAdjustableCorners(SpriteBatch spriteBatch, Texture2D tex, Rectangle rect, Color col,
         float scale)
     {
         Rectangle frame = tex.Frame(2);
@@ -1329,7 +1329,7 @@ public sealed class DynamicPixelRatioElement : UIElement
             {
                 spriteBatch.End();
                 data.SamplerState = SamplerState.PointClamp;
-                spriteBatch.Begin(in data);
+                spriteBatch.Begin(data);
             }
 
             spriteBatch.Draw(tex, drawPos, frame, col, 0f, Vector2.Zero, new Vector2(xScale * pxScale, pxScale),
@@ -1337,7 +1337,7 @@ public sealed class DynamicPixelRatioElement : UIElement
 
             spriteBatch.End();
             data.SamplerState = SamplerState.LinearClamp;
-            spriteBatch.Begin(in data);
+            spriteBatch.Begin(data);
 
             var pxs = quadWidth * xScale;
             drawPos.X += (int)pxs;
@@ -1357,14 +1357,14 @@ public sealed class DynamicPixelRatioElement : UIElement
             spriteBatch.Restart(newEffect: null);
     }
 
-    public static void DrawAdjustableBox(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col,
+    public static void DrawAdjustableBox(SpriteBatch spriteBatch, Texture2D tex, Rectangle rect, Color col,
         float pxScale, bool noStretching = false, SkipDrawBoxSegment flags = SkipDrawBoxSegment.None)
     {
         Vector2 quadSize = new Vector2(tex.Width / 3f, tex.Height / 3f) * pxScale;
         var xScale = (rect.Width - quadSize.X * 2f) / quadSize.X;
         var yScale = (rect.Height - quadSize.Y * 2f) / quadSize.Y;
 
-        void DrawSegment(in Vector2 position, in Rectangle frame, float xSize = 1f, float ySize = 1f)
+        void DrawSegment(Vector2 position, Rectangle frame, float xSize = 1f, float ySize = 1f)
         {
             spriteBatch.Draw(tex, position, frame, col, 0f, Vector2.Zero, new Vector2(xSize * pxScale, ySize * pxScale),
                 SpriteEffects.None, 0f);
@@ -1391,7 +1391,7 @@ public sealed class DynamicPixelRatioElement : UIElement
                         frame.Width = (int)MathF.Ceiling(frame.Width * (scale - currentScale));
                 }
 
-                DrawSegment(in position, in frame);
+                DrawSegment(position, frame);
             }
         }
 
@@ -1471,7 +1471,7 @@ public sealed class DynamicPixelRatioElement : UIElement
         }
     }
 
-    public static void DrawAdjustableParallelogram(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col,
+    public static void DrawAdjustableParallelogram(SpriteBatch spriteBatch, Texture2D tex, Rectangle rect, Color col,
         float pxScale)
     {
         Rectangle frame = tex.Frame(3, 3);

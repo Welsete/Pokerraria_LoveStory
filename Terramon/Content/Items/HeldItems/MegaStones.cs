@@ -116,7 +116,7 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : HeldItem
 
         gd.SetRenderTargets(oldTargets);
 
-        sb.Begin(in oldData);
+        sb.Begin(oldData);
     }
 
     private static void LoadPalettes(Mod mod)

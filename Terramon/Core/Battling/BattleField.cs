@@ -322,7 +322,7 @@ public sealed class BattleField
     ///     How many more turns (counting this one) Disable keeps blocking the move. It lasts 4 turns after the one it
     ///     was used in if the Pokémon had already moved, or 4 turns counting that one if it hadn't.
     /// </summary>
-    public int DisabledTurnsLeft(in BattlePokemon mon)
+    public int DisabledTurnsLeft(BattlePokemon mon)
     {
         var total = mon.DisabledAfterMoving ? 5 : 4;
         return Math.Clamp(total - (Turn - mon.DisabledTurn), 1, 4);

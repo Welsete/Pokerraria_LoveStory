@@ -27,7 +27,7 @@ public struct SpriteBatchData
 
 public static class DrawUtils
 {
-    public static void Begin(this SpriteBatch spriteBatch, in SpriteBatchData spriteBatchData)
+    public static void Begin(this SpriteBatch spriteBatch, SpriteBatchData spriteBatchData)
     {
         spriteBatch.Begin
         (
@@ -46,7 +46,7 @@ public static class DrawUtils
     public static SpriteBatchData Restart(this SpriteBatch sb)
     {
         sb.End(out var data);
-        sb.Begin(in data);
+        sb.Begin(data);
         return data;
     }
 
@@ -54,7 +54,7 @@ public static class DrawUtils
     {
         sb.End(out var data);
         data.SortMode = newSortMode;
-        sb.Begin(in data);
+        sb.Begin(data);
         return data;
     }
 
@@ -62,7 +62,7 @@ public static class DrawUtils
     {
         sb.End(out var data);
         data.SamplerState = newSamplerState;
-        sb.Begin(in data);
+        sb.Begin(data);
         return data;
     }
 
@@ -70,7 +70,7 @@ public static class DrawUtils
     {
         sb.End(out var data);
         data.Effect = newEffect;
-        sb.Begin(in data);
+        sb.Begin(data);
         return data;
     }
 
@@ -121,13 +121,13 @@ public static class DrawUtils
             if (matrix is not null) modified.Matrix = matrix.Value;
 
             // Restart with modified settings
-            sb.Begin(in modified);
+            sb.Begin(modified);
         }
 
         public void Dispose()
         {
             _sb.End();
-            _sb.Begin(in _backup); // Restore previous state
+            _sb.Begin(_backup); // Restore previous state
         }
     }
 }
