@@ -6,7 +6,8 @@
 
 ### Catch 'em all in Terraria. Beat the bosses. Earn the badges. Become the Champion.
 
-<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main"><img src="https://img.shields.io/badge/Download-latest%20build-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Download"></a>
+<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Terramon.tmod"><img src="https://img.shields.io/badge/Download-Terramon.tmod-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Download Terramon.tmod"></a>
+<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src="https://img.shields.io/badge/Download-TmonRuntimes.tmod-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Download TmonRuntimes.tmod"></a>
 <img src="https://img.shields.io/badge/Version-0.4.0-8a4fd8?style=for-the-badge" alt="Version 0.4.0">
 <img src="https://img.shields.io/badge/tModLoader-1.4.4-2b3a7a?style=for-the-badge" alt="tModLoader 1.4.4">
 <img src="https://img.shields.io/badge/Pok%C3%A9mon-151%20%2B%20Lucario-b8323a?style=for-the-badge" alt="151 Pokémon">
@@ -176,7 +177,12 @@ The **Pokédex** (<kbd>P</kbd>) has an animated preview of each Pokémon, its ab
 
 ## 📦 Install
 
-1. Download **Terramon.tmod** and **TmonRuntimes.tmod** from the [latest build](https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main).
+1. Download the two files (latest stable version):
+
+   <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Terramon.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20Terramon.tmod-e3b54a?style=for-the-badge" alt="Download Terramon.tmod"></a>
+   <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20TmonRuntimes.tmod-e3b54a?style=for-the-badge" alt="Download TmonRuntimes.tmod"></a>
+
+   Want what's newest, still being tested? Get both files from the [test build](https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main).
 2. Put both files in `Documents/My Games/Terraria/tModLoader/Mods`.
 3. Open tModLoader, go to **Workshop → Manage Mods**, enable both and reload.
 4. **Start a new world** to get the Gyms, the League, the Pokémon Center and Professor Oak.

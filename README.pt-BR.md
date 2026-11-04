@@ -6,7 +6,8 @@
 
 ### Capture todos no Terraria. Derrote os chefes. Conquiste as insígnias. Torne-se o Campeão.
 
-<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main"><img src="https://img.shields.io/badge/Baixar-vers%C3%A3o%20mais%20recente-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Baixar"></a>
+<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Terramon.tmod"><img src="https://img.shields.io/badge/Baixar-Terramon.tmod-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Baixar Terramon.tmod"></a>
+<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src="https://img.shields.io/badge/Baixar-TmonRuntimes.tmod-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Baixar TmonRuntimes.tmod"></a>
 <img src="https://img.shields.io/badge/Vers%C3%A3o-0.3.0-8a4fd8?style=for-the-badge" alt="Versão 0.3.0">
 <img src="https://img.shields.io/badge/tModLoader-1.4.4-2b3a7a?style=for-the-badge" alt="tModLoader 1.4.4">
 <img src="https://img.shields.io/badge/Pok%C3%A9mon-151%20%2B%20Lucario-b8323a?style=for-the-badge" alt="151 Pokémon">
@@ -176,7 +177,12 @@ A **Pokédex** (<kbd>P</kbd>) tem uma prévia animada de cada Pokémon, habilida
 
 ## 📦 Instalação
 
-1. Baixe **Terramon.tmod** e **TmonRuntimes.tmod** na [versão mais recente](https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main).
+1. Baixe os dois arquivos (versão estável mais recente):
+
+   <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Terramon.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20Terramon.tmod-e3b54a?style=for-the-badge" alt="Baixar Terramon.tmod"></a>
+   <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20TmonRuntimes.tmod-e3b54a?style=for-the-badge" alt="Baixar TmonRuntimes.tmod"></a>
+
+   Quer as novidades que ainda estão em teste? Pegue os dois arquivos na [versão de teste](https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main).
 2. Coloque os dois arquivos em `Documentos/My Games/Terraria/tModLoader/Mods`.
 3. Abra o tModLoader, vá em **Workshop → Gerenciar Mods**, ative os dois e recarregue.
 4. **Crie um mundo novo** para ter os Ginásios, a Liga, o Centro Pokémon e o Professor Carvalho.
