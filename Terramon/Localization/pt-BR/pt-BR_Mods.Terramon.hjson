@@ -139,11 +139,11 @@ LoveStory: {
 	FoundPage: "Você encontrou a página: {0}"
 	PageMissing: "Você ainda não encontrou esta página."
 	NewPage: "Nova página no diário: {0} (aperte J para abrir o diário)"
-	FirstPageHint: "Tem uma página de diário na sua mochila, escrita com a sua letra. Use-a para ler."
+	FirstPageHint: "Tem uma página de diário na sua mochila. Você não lembra de ter guardado ela ali."
 	PageItem: "Página do diário: {0}"
 	PageItemTooltip:
 		'''
-		Escrita com a sua própria letra
+		Uma letra estranhamente familiar
 		Use para ler e guardar no diário (J)
 		'''
 
@@ -167,13 +167,13 @@ LoveStory: {
 			Title: "Prólogo"
 			Text:
 				'''
-				Se você está lendo isto, deu certo.
+				Se esta página chegou até você, então ainda dá tempo.
 
-				Eu sou você, alguns anos mais velho. Não tenho tempo de explicar tudo: este mundo e Kanto estão se misturando, e alguém que eu amo ficou presa no meio do caminho entre os dois.
+				Não tente descobrir quem eu sou. Não agora.
 
-				Você ainda não conhece ela. Vai conhecer.
+				Este mundo está mudando. Coisas de outro lugar estão atravessando para cá, e nem todas deveriam.
 
-				Fale com o Professor Carvalho, escolha seu primeiro Pokémon e siga as páginas. Escondi cada uma onde só nós dois procuraríamos.
+				Procure o velho professor. Escolha um companheiro. E siga as páginas: deixei cada uma onde você pensaria em olhar.
 				'''
 		}
 		Brock: {
@@ -182,9 +182,9 @@ LoveStory: {
 				'''
 				Pedra por pedra. Foi assim que eu aprendi a não desistir.
 
-				Ela me venceu aqui na primeira vez, sabia? Passou a tarde inteira rindo da minha cara. Eu daria tudo para ouvir aquela risada de novo.
+				Perdi aqui na primeira vez. Ela riu de mim a tarde inteira, e eu nunca esqueci aquela risada.
 
-				Na masmorra, não puxe todas as alavancas. Só uma abre o caminho.
+				Na masmorra, não confie em todas as alavancas. Só uma diz a verdade.
 				'''
 		}
 		Misty: {
@@ -193,9 +193,9 @@ LoveStory: {
 				'''
 				A água sobe e desce, mas o caminho continua lá embaixo.
 
-				Foi depois da Misty que eu vi a primeira rachadura no céu. Quando acontecer com você, não fuja dela.
+				Foi aqui perto que o céu rachou pela primeira vez. Se você vir, não fuja.
 
-				Ela vai estar do outro lado.
+				Talvez a gente se encontre do outro lado. Talvez você me reconheça.
 				'''
 		}
 	}

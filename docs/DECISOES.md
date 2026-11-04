@@ -18,6 +18,7 @@ houver). Perguntas ainda sem resposta ficam no fim.
 - 2026-11-03 · O "Love" da história: no futuro, a pessoa que o jogador ama ficou presa entre Kanto e Terraria; ele voltou no tempo para salvá-la.
 - 2026-11-03 · Essa pessoa é a Aurora, uma treinadora rival enfrentada no começo; a rivalidade vira algo mais ao longo dos capítulos.
 - 2026-11-03 · A história chega por páginas do diário do jogador do futuro (escondidas em baús e masmorras; ler dá o efeito "Hora da história", que para o nascimento de inimigos) e por encontros com a Aurora em momentos marcados (ela batalha e some de novo).
+- 2026-11-03 · Mistério: as páginas nunca dizem quem as escreveu. O jogador só desconfia (letra "estranhamente familiar", o autor sabe onde ele procuraria); a revelação de que é ele mesmo, vindo do futuro, fica para um capítulo mais à frente.
 - 2026-11-03 · Um menu de diário anota as páginas encontradas, o que já aconteceu e para onde ir em seguida.
 - 2026-11-03 · O capítulo 1 vai do começo até o Ginásio da Misty: duas insígnias, dois encontros com a Aurora e um gancho no fim.
 - 2026-11-03 · Os Ginásios do Brock e da Misty ganham masmorras curtas (3 ou 4 salas) antes do líder, cada uma com uma página do diário. Brock: só uma alavanca abre, as outras soltam pedras. Misty: comportas que mudam o nível da água.
@@ -27,7 +28,7 @@ houver). Perguntas ainda sem resposta ficam no fim.
 - Capítulo 1: onde e como acontece cada encontro com a Aurora?
 - Capítulo 1: que time a Aurora usa nas batalhas?
 - Capítulo 1: qual é o gancho no fim (depois da Misty)?
-- Capítulo 1: o texto de cada página do diário. Rascunhos do Claude no jogo (Prólogo, "Pedra por pedra", "Rachadura no céu"), esperando o Welsete aprovar ou reescrever. Ficam em Localization, chave LoveStory.Pages.
+- Capítulo 1: o texto de cada página do diário. Rascunhos do Claude no jogo (Prólogo, "Pedra por pedra", "Rachadura no céu"), reescritos para não entregar o autor; esperando o Welsete aprovar. Ficam em Localization, chave LoveStory.Pages.
 - Em que bioma fica cada Ginásio que ainda não tem prédio próprio?
 - Eventos (Equipe Rocket, invasão dos Spearow, Torre de Lavender): em que versão entram e se fazem parte da história do capítulo 1?
 - Chefes Pokémon no estilo Terraria (Gengar da Torre de Lavender, Mewtwo final em duas batalhas): ataques, fases e em que versão entram.

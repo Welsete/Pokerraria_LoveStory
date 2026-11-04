@@ -139,11 +139,11 @@ LoveStory: {
 	FoundPage: "You found the page: {0}"
 	PageMissing: "You haven't found this page yet."
 	NewPage: "New page in the journal: {0} (press J to open the journal)"
-	FirstPageHint: "There's a diary page in your bag, in your own handwriting. Use it to read it."
+	FirstPageHint: "There's a diary page in your bag. You don't remember putting it there."
 	PageItem: "Diary page: {0}"
 	PageItemTooltip:
 		'''
-		Written in your own handwriting
+		A strangely familiar handwriting
 		Use to read it and keep it in the journal (J)
 		'''
 
@@ -167,13 +167,13 @@ LoveStory: {
 			Title: "Prologue"
 			Text:
 				'''
-				If you're reading this, it worked.
+				If this page reached you, there's still time.
 
-				I'm you, a few years older. I don't have time to explain everything: this world and Kanto are blending together, and someone I love got trapped halfway between them.
+				Don't try to find out who I am. Not now.
 
-				You don't know her yet. You will.
+				This world is changing. Things from somewhere else are crossing over, and not all of them should.
 
-				Talk to Professor Oak, choose your first Pokémon and follow the pages. I hid each one where only the two of us would look.
+				Find the old professor. Choose a companion. And follow the pages: I left each one where you'd think to look.
 				'''
 		}
 		Brock: {
@@ -182,9 +182,9 @@ LoveStory: {
 				'''
 				Stone by stone. That's how I learned not to give up.
 
-				She beat me here the first time, you know? Spent the whole afternoon laughing at me. I'd give anything to hear that laugh again.
+				I lost here the first time. She laughed at me the whole afternoon, and I never forgot that laugh.
 
-				In the dungeon, don't pull every lever. Only one opens the way.
+				In the dungeon, don't trust every lever. Only one tells the truth.
 				'''
 		}
 		Misty: {
@@ -193,9 +193,9 @@ LoveStory: {
 				'''
 				The water rises and falls, but the way goes on down below.
 
-				It was after Misty that I saw the first crack in the sky. When it happens to you, don't run from it.
+				It was near here that the sky cracked for the first time. If you see it, don't run.
 
-				She'll be on the other side.
+				Maybe we'll meet on the other side. Maybe you'll recognize me.
 				'''
 		}
 	}
