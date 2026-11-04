@@ -74,6 +74,10 @@ oceano nem para o mundo.
 
 ## Estado
 
+- **Brock: encerrado (2026-11-04).** Entrada nova (colina com fóssil e túnel de mina, `BrockDigSite.cs`), masmorra de
+  10 salas que reseta quando fica vazia, dardos por tempo, baú generoso que abre uma vez por jogador, lugares só no
+  mapa depois de encontrados (`Discoveries.cs`).
+
 - Brock: **versão 4** (2026-11-04): dardos por tempo (`BrockDungeonDarts`, a cada 2 s, direita e esquerda alternando,
   só com alguém perto), salão dos dardos antes do baú (60 de largura, chão rebaixado, dardos em 3 alturas nas duas
   paredes, abrigos de pedra que cobrem dos dois lados) e pedregulhos caindo ao abrir o baú (`BrockDungeonChestTrap`,
