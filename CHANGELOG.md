@@ -4,6 +4,8 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+- Fixed: entering a world with Brock's dungeon could crash the game (a stack overflow when the dungeon's traps were reset).
+
 - Fixed: the rope down to Brock's Gym could start on a floating island and go through the sky down to the caves. It now always starts on the ground.
 
 - Brock's Gym dungeon (new worlds): between the rope and the hall, ten rooms of old stone, about 270 tiles long. A tall dark hall with three identical levers (only one opens the stone gate, the other two drop a boulder from high up in the dark); a spike pit crossed on pillars; a dart gallery; a tall corridor with hidden boulders; a false floor that opens over spikes; a lava pit crossed on pillars one block wide; a deep well with darts in both walls down to a dark gallery with lava; a huge sunken dart hall where you run from shelter to shelter between volleys; and a generous chest (the diary page "Stone by stone", a random evolution stone, Ultra Balls, Potions, Repels, a Hard Stone, a Focus Sash, Revives, Rare Candies, Exp. Candies, berries, Nuggets, a Copper Relic, Healing and Obsidian Skin potions, a Compass and rope), which brings boulders down from the ceiling when opened. The dungeon's dart traps fire on their own on a timer. Cave bats (and hellbats near the lava) swarm inside. The dungeon starts over whenever nobody is left inside (gate and false floor closed, levers off, boulders back), so dying means doing it all again; a switch behind the gate opens it on the way back. In older worlds the page turns up in Brock's hall, and Misty's page in her Gym.

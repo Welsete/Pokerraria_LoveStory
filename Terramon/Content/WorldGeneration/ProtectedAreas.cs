@@ -162,6 +162,14 @@ public class ProtectedAreasGlobalTile : GlobalTile
 
     public override bool CanExplode(int i, int j, int type) => !ProtectedAreas.IsProtected(i, j);
 
+    /// <summary>
+    ///     Boulders set in a protected ceiling (trap boulders) are never framed: framing one with nothing under it makes
+    ///     Terraria try to drop it, the protection refuses, and it tries again forever (a stack overflow). They drop when
+    ///     their wire is hit instead (see BoulderTrapSystem).
+    /// </summary>
+    public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak)
+        => type != TileID.Boulder || !ProtectedAreas.IsProtected(i, j);
+
     public override bool CanPlace(int i, int j, int type)
     {
         if (!ProtectedAreas.IsProtected(i, j))

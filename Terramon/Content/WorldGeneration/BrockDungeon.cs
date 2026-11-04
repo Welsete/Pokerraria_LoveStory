@@ -486,8 +486,8 @@ public static class BrockDungeon
             }
         }
 
-        var area = Area(shaftX, f);
-        WorldGen.RangeFrame(area.Left, area.Top, area.Right, area.Bottom);
+        // No RangeFrame here: framing a boulder hanging from the ceiling makes Terraria try to drop it, which the
+        // protection refuses, over and over (a stack overflow). The gate and false floor are framed one by one instead.
         if (Main.netMode != NetmodeID.Server)
             return;
         foreach (var room in rooms)
@@ -508,8 +508,10 @@ public static class BrockDungeon
     private static void Actuate(int x, int y, bool open)
     {
         var tile = Main.tile[x, y];
-        if (tile.HasActuator)
-            tile.IsActuated = open;
+        if (!tile.HasActuator || tile.IsActuated == open)
+            return;
+        tile.IsActuated = open;
+        WorldGen.SquareTileFrame(x, y, false);
     }
 
     private static void RestoreBoulder(int x, int bottomY)
