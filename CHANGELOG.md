@@ -4,6 +4,8 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+- The mod's screens follow the Pokerraria look, kept light: the blue-indigo of the party slots, PC, party sidebar, Pokédex buttons, battle panels and the mod's windows is now the green leather of the journal. Gold highlights, type colors, the battle buttons and the HP bars stay as they were.
+
 - The journal's pages are written in an old book's lettering (IM Fell English), in ink on the paper.
 - Battles: the "Click to skip" hint while a turn plays is now a pulsing gold-framed button, easier to notice.
 - Brock's dungeon chest: it only counts as used once you take something out of it, so dying to its trap before taking anything doesn't lose the loot.
