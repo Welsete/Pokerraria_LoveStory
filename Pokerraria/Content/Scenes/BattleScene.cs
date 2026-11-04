@@ -1,0 +1,20 @@
+﻿namespace Pokerraria.Content.Scenes;
+
+public class BattleScene : ModSceneEffect
+{
+    public override int Music => MusicLoader.GetMusicSlot("Pokerraria/Sounds/Music/BattleWild");
+    
+    public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
+
+    public override bool IsSceneEffectActive(Player player)
+    {
+        var modPlayer = player.Pokerraria();
+        return modPlayer.BattleClient != null && modPlayer.BattleClient.BattleOngoing;
+    }
+
+    public override void SpecialVisuals(Player player, bool isActive)
+    {
+        if (isActive)
+            Main.musicFade[Music] = 1f;
+    }
+}

@@ -3,7 +3,7 @@ smoothing (every art pixel is a 2x2 block, like Terraria's own sprites), only th
 Follows art/vfx/prompts/fantasma.md (8. Shadow Ball), with one more orb frame so the ball spins while it flies.
 
 Run: python3 tools/vfx/draw_shadow_ball.py   (from the repo root)
-Writes Terramon/Assets/Moves/ShadowBall.png/.txt and a preview sheet on magenta in art/vfx/sheets/."""
+Writes Pokerraria/Assets/Moves/ShadowBall.png/.txt and a preview sheet on magenta in art/vfx/sheets/."""
 import math
 import random
 
@@ -188,9 +188,9 @@ def to_rgba(img):
 
 
 strip = np.concatenate([to_rgba(f) for f in FRAMES], axis=1)
-Image.fromarray(strip, "RGBA").save("Terramon/Assets/Moves/ShadowBall.png", optimize=True)
+Image.fromarray(strip, "RGBA").save("Pokerraria/Assets/Moves/ShadowBall.png", optimize=True)
 # Two frames loop while the ball flies to the target, then the explosion plays on it
-open("Terramon/Assets/Moves/ShadowBall.txt", "w").write(f"Frames {len(FRAMES)}\nTravel 2\nTicks 4\nScale 1\n")
+open("Pokerraria/Assets/Moves/ShadowBall.txt", "w").write(f"Frames {len(FRAMES)}\nTravel 2\nTicks 4\nScale 1\n")
 
 preview = Image.new("RGBA", (strip.shape[1], strip.shape[0]), (255, 0, 255, 255))
 preview.alpha_composite(Image.fromarray(strip, "RGBA"))

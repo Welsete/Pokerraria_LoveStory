@@ -7,7 +7,7 @@ OUT = sys.argv[1]
 os.makedirs(OUT, exist_ok=True)
 dump = lambda name, rows: json.dump(rows, open(os.path.join(OUT, name), 'w'), ensure_ascii=False)
 
-# Golpes: catálogo de prompts por tipo x animações em Terramon/Assets/Moves
+# Golpes: catálogo de prompts por tipo x animações em Pokerraria/Assets/Moves
 TIPOS = {'fogo': 'Fogo', 'agua': 'Água', 'planta': 'Planta', 'eletrico': 'Elétrico', 'gelo': 'Gelo', 'dragao': 'Dragão',
          'fantasma': 'Fantasma', 'sombrio': 'Sombrio', 'aco': 'Aço', 'terrestre': 'Terrestre', 'pedra': 'Pedra',
          'venenoso': 'Venenoso', 'inseto': 'Inseto', 'voador': 'Voador', 'lutador': 'Lutador', 'fada': 'Fada',
@@ -15,7 +15,7 @@ TIPOS = {'fogo': 'Fogo', 'agua': 'Água', 'planta': 'Planta', 'eletrico': 'Elét
 # Golpes animados que não estão no catálogo de prompts: tipo de cada um
 FORA_DO_CATALOGO = {'Ember': 'Fogo', 'FireBlast': 'Fogo', 'SolarBeam': 'Planta'}
 norm = lambda s: re.sub(r'[^a-z]', '', s.lower())
-anim = {os.path.splitext(f)[0] for f in os.listdir('Terramon/Assets/Moves') if f.endswith('.png')}
+anim = {os.path.splitext(f)[0] for f in os.listdir('Pokerraria/Assets/Moves') if f.endswith('.png')}
 animn = {norm(a): a for a in anim}
 rows, achados = {}, set()
 for arq, tipo in TIPOS.items():

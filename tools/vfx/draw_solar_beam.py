@@ -6,7 +6,7 @@ Frames de raio: a ponta fica no centro do frame e o raio ocupa a metade esquerda
 até o alvo (Beam A B em MoveVisuals.cs).
 
 Rodar da raiz do repo: python3 tools/vfx/draw_solar_beam.py
-Grava Terramon/Assets/Moves/SolarBeam.png/.txt e uma prévia em fundo magenta em art/vfx/sheets/.
+Grava Pokerraria/Assets/Moves/SolarBeam.png/.txt e uma prévia em fundo magenta em art/vfx/sheets/.
 """
 import math
 import random
@@ -181,9 +181,9 @@ def to_rgba(img):
 
 
 strip = np.concatenate([to_rgba(f) for f in FRAMES], axis=1)
-Image.fromarray(strip, "RGBA").save("Terramon/Assets/Moves/SolarBeam.png", optimize=True)
+Image.fromarray(strip, "RGBA").save("Pokerraria/Assets/Moves/SolarBeam.png", optimize=True)
 b0 = len(CHARGE)
-open("Terramon/Assets/Moves/SolarBeam.txt", "w").write(
+open("Pokerraria/Assets/Moves/SolarBeam.txt", "w").write(
     f"Frames {len(FRAMES)}\nCharge {len(CHARGE)}\nTravel 0\nBeam {b0} {b0 + len(BEAM) - 1}\nTicks 4\nFace 1\nScale 1\n")
 prev = Image.new("RGBA", (strip.shape[1], strip.shape[0]), (255, 0, 255, 255))
 prev.alpha_composite(Image.fromarray(strip, "RGBA"))

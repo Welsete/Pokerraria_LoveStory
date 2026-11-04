@@ -7,7 +7,7 @@ Dono: **Welsete**. Ele é iniciante em programação: fale em português do Bras
 Leia também: [VFX.md](VFX.md) (quais golpes são feitos por código e quais vão para o gerador de imagem), [ROADMAP.md](ROADMAP.md) (o que fazer e em que ordem), [docs/DECISOES.md](docs/DECISOES.md) (decisões
 de design já tomadas, alimentadas pelo grill-me) e [CHANGELOG.md](CHANGELOG.md).
 
-## Mapa do código (`Terramon/`)
+## Mapa do código (`Pokerraria/`)
 
 | Pasta | O que tem |
 | --- | --- |
@@ -42,7 +42,7 @@ constrói a estrutura em mundos novos, sem precisar do Blueprint Builder instala
   (conectar à sessão). Tem conceitos do Centro e do Ginásio da Misty, e uma biblioteca de prédios (castelo, arena
   mágica, vila do deserto, tavernas...) para Ginásios e arenas futuras. Desde 2026-11-03 o nome de cada arquivo é igual ao
   campo `name` do design; mantenha assim ao salvar designs novos.
-- Versão final que vai no mod: `Terramon/Assets/Structures/<Nome>.json`, gerada/ajustada pelos scripts de
+- Versão final que vai no mod: `Pokerraria/Assets/Structures/<Nome>.json`, gerada/ajustada pelos scripts de
   `tools/structures/` (que usam `terraria-ids.txt` para validar nomes de itens).
 - Para o Welsete ver um design no jogo: copie o JSON para a pasta Designs e ele abre no Blueprint Builder.
 

@@ -12,7 +12,7 @@ jobs:
             - uses: actions/checkout@v7
             - uses: JamzOJamz/build-tmodloader-mod@v1
               with:
-                  project: Terramon/Terramon.csproj
+                  project: Pokerraria/Pokerraria.csproj
                   dotnet-version: |
                       8.0.x
                       10.0.x
@@ -20,7 +20,7 @@ jobs:
             # download then stops at unzip's "replace?" prompt, so clear it first
             - name: Clear tModLoader download
               run: rm -rf "$RUNNER_TEMP/tml"
-            # Terramon needs this dependency mod for turn-based battles, so build it too
+            # Pokerraria needs this dependency mod for turn-based battles, so build it too
             - uses: JamzOJamz/build-tmodloader-mod@v1
               with:
                   project: TmonRuntimes/TmonRuntimes.csproj

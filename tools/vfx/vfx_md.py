@@ -12,7 +12,7 @@ ARQ = {"Fogo": "fogo", "Água": "agua", "Planta": "planta", "Elétrico": "eletri
        "Venenoso": "venenoso", "Inseto": "inseto", "Voador": "voador", "Lutador": "lutador", "Fada": "fada",
        "Psíquico": "psiquico", "Normal": "normal_*"}
 VERDE = {"Fantasma", "Psíquico", "Venenoso", "Sombrio", "Fada"}
-moves = os.path.join(ROOT, "Terramon", "Assets", "Moves")
+moves = os.path.join(ROOT, "Pokerraria", "Assets", "Moves")
 mid = lambda n: "".join(p[:1].upper() + p[1:] for p in re.split(r"[^A-Za-z0-9]+", n) if p)
 for s in status:  # o que já tem animação conta como feito, venha de onde vier
     if s["situacao"] == "gerador" and os.path.exists(os.path.join(moves, mid(s["golpe"]) + ".png")):

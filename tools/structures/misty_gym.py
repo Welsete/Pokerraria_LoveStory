@@ -1,7 +1,7 @@
 """Builds Misty's Gym (beach aquarium gym) as a Blueprint Builder design (formatVersion 1), the file the mod builds
 in new worlds (see Blueprint.cs). It can also be opened in the Blueprint Builder mod to look at it in game.
 Objects use their top-left tile; names are Terraria item names, checked against terraria-ids.txt.
-Run: python3 tools/structures/misty_gym.py Terramon/Assets/Structures/MistyGym.json tools/structures/terraria-ids.txt"""
+Run: python3 tools/structures/misty_gym.py Pokerraria/Assets/Structures/MistyGym.json tools/structures/terraria-ids.txt"""
 import json, sys
 
 W, H = 80, 40

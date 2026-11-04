@@ -6,9 +6,9 @@ description: Constrói estruturas e geração de mundo do Pokerraria. Use para G
 Você é o construtor de mundo do Pokerraria: LoveStory. Responda em português do Brasil, sem usar o travessão longo.
 
 ## Onde fica
-- `Terramon/Content/WorldGeneration/`: `Blueprint.cs` (lê o JSON do mod Blueprint Builder, aceita itens e tiles do
+- `Pokerraria/Content/WorldGeneration/`: `Blueprint.cs` (lê o JSON do mod Blueprint Builder, aceita itens e tiles do
   mod), `PokemonCenter.cs`, `MistyGym.cs`, `BrockGym.cs`, `GymBuildings.cs`, `ProtectedAreas.cs`, `WorldgenWorld.cs`.
-- `Terramon/Assets/Structures/*.json`: os designs. `tools/structures/*.py`: scripts que geraram/ajustaram designs.
+- `Pokerraria/Assets/Structures/*.json`: os designs. `tools/structures/*.py`: scripts que geraram/ajustaram designs.
   `tools/structures/terraria-ids.txt`: nomes dos IDs do Terraria.
 
 ## Regras

@@ -4,7 +4,7 @@ Cada golpe básico usa um MOLDE (impacto, corte, projétil, pulso, aura...) nas 
 estão em BASICOS ficam para o gerador de imagem (Gemini): veja VFX.md na raiz do repositório.
 
 Uso (da raiz do repo):  python3 tools/vfx/basicos.py [Nome,Nome,...]
-Escreve art/vfx/codeart/basicos/<tipo>.fx.json, roda o fx_build.py do codeart2d e grava Terramon/Assets/Moves/<Golpe>.png/.txt.
+Escreve art/vfx/codeart/basicos/<tipo>.fx.json, roda o fx_build.py do codeart2d e grava Pokerraria/Assets/Moves/<Golpe>.png/.txt.
 Também grava art/vfx/golpes-status.json (todos os golpes do catálogo: animado, básico ou gerador), lido pelo VFX.md.
 Requer: pip install --user "resvg-py>=0.5,<0.6"
 """
@@ -21,7 +21,7 @@ from PIL import Image
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 FX_BUILD = os.path.join(ROOT, ".claude", "skills", "codeart2d", "scripts", "fx_build.py")
 SPECS = os.path.join(ROOT, "art", "vfx", "codeart", "basicos")
-MOVES = os.path.join(ROOT, "Terramon", "Assets", "Moves")
+MOVES = os.path.join(ROOT, "Pokerraria", "Assets", "Moves")
 WORK = os.path.join(os.path.expanduser("~"), "tmp", "basicos")
 N = 56       # pixels de arte por lado do frame
 SCALE = 2    # cada pixel de arte vira 2x2 na tela, como os sprites do Terraria
@@ -248,7 +248,7 @@ def catalogo():
 
 def main():
     so = set(sys.argv[1].split(",")) if len(sys.argv) > 1 else None
-    move_ids = set(re.findall(r"^\s*(\w+),", open(os.path.join(ROOT, "Terramon", "ID", "MoveID.cs")).read(), re.M))
+    move_ids = set(re.findall(r"^\s*(\w+),", open(os.path.join(ROOT, "Pokerraria", "ID", "MoveID.cs")).read(), re.M))
     feitos_antes = {os.path.splitext(f)[0] for f in os.listdir(MOVES) if f.endswith(".png")}
     cat = catalogo()
     norm = lambda s: re.sub(r"[^a-z0-9]", "", s.lower())

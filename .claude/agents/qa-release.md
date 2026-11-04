@@ -16,6 +16,6 @@ travessão longo.
 4. CHANGELOG: entrada em `## Next` escrita para quem joga.
 
 ## Versões
-- Versão em `Terramon/build.txt`. Ao fechar uma versão: troque `## Next` pela versão no CHANGELOG, atualize README e
+- Versão em `Pokerraria/build.txt`. Ao fechar uma versão: troque `## Next` pela versão no CHANGELOG, atualize README e
   README.pt-BR se o roadmap mudou, crie a tag `vX.Y.Z` (o CI publica o release).
 - Marque no `ROADMAP.md` o que foi entregue.

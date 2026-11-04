@@ -33,7 +33,7 @@ cat > ModSources/tModLoader.targets <<XML
 XML
 
 export ExtraBuildModFlags="-tmlsavedirectory $BT/tmlsave"
-for mod in TmonRuntimes Terramon; do
+for mod in TmonRuntimes Pokerraria; do
 	# O tModLoader dá ao mod o nome da pasta do .csproj, então o repo vai para ModSources/<mod>
 	rsync -a --delete --exclude .git --exclude art --exclude obj --exclude bin "$REPO/" "ModSources/$mod/"
 	dotnet build "ModSources/$mod/$mod/$mod.csproj" -c Release --nologo -clp:ErrorsOnly
@@ -41,6 +41,6 @@ done
 ls -la tmlsave/Mods/*.tmod
 
 if [ -n "$DEST" ]; then
-	cp tmlsave/Mods/Terramon.tmod tmlsave/Mods/TmonRuntimes.tmod "$DEST/"
+	cp tmlsave/Mods/Pokerraria.tmod tmlsave/Mods/TmonRuntimes.tmod "$DEST/"
 	echo "Copiado para $DEST"
 fi

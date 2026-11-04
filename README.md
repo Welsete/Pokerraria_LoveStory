@@ -6,7 +6,7 @@
 
 ### Catch 'em all in Terraria. Beat the bosses. Earn the badges. Become the Champion.
 
-<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Terramon.tmod"><img src="https://img.shields.io/badge/Download-Terramon.tmod-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Download Terramon.tmod"></a>
+<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Pokerraria.tmod"><img src="https://img.shields.io/badge/Download-Pokerraria.tmod-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Download Pokerraria.tmod"></a>
 <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src="https://img.shields.io/badge/Download-TmonRuntimes.tmod-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Download TmonRuntimes.tmod"></a>
 <img src="https://img.shields.io/badge/Version-0.4.0-8a4fd8?style=for-the-badge" alt="Version 0.4.0">
 <img src="https://img.shields.io/badge/tModLoader-1.4.4-2b3a7a?style=for-the-badge" alt="tModLoader 1.4.4">
@@ -179,7 +179,7 @@ The **Pokédex** (<kbd>P</kbd>) has an animated preview of each Pokémon, its ab
 
 1. Download the two files (latest stable version):
 
-   <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Terramon.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20Terramon.tmod-e3b54a?style=for-the-badge" alt="Download Terramon.tmod"></a>
+   <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Pokerraria.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20Pokerraria.tmod-e3b54a?style=for-the-badge" alt="Download Pokerraria.tmod"></a>
    <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20TmonRuntimes.tmod-e3b54a?style=for-the-badge" alt="Download TmonRuntimes.tmod"></a>
 
    Want what's newest, still being tested? Get both files from the [test build](https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main).
@@ -187,7 +187,7 @@ The **Pokédex** (<kbd>P</kbd>) has an animated preview of each Pokémon, its ab
 3. Open tModLoader, go to **Workshop → Manage Mods**, enable both and reload.
 4. **Start a new world** to get the Gyms, the League, the Pokémon Center and Professor Oak.
 
-The file is still called `Terramon.tmod` so saves from earlier versions keep working. Pokerraria: LoveStory replaces the original Terramon, so don't enable both. The language follows your game: Portuguese (Brasil) or English.
+Pokerraria: LoveStory replaces the original Terramon, so don't enable both. If you played an older version (the file was called `Terramon.tmod`), delete that file from the Mods folder: characters start their team from scratch. The language follows your game: Portuguese (Brasil) or English.
 
 ### Controls
 
@@ -238,7 +238,7 @@ Turn on **Debug Mode** in the mod's settings and press <kbd>F8</kbd> for the tes
 ## 💛 Credits
 
 - **Terramon** is made by the [Terramon team](https://github.com/JamzOJamz/Terramon) and licensed under GPL-3.0. This fork keeps the same license.
-- **Pokémon sprites and portraits** come from the [PMD SpriteCollab](https://github.com/PMDCollab/SpriteCollab) project, licensed under CC BY-NC 4.0. The artists of each Pokémon are listed in [CREDITS.md](https://github.com/Welsete/Pokerraria_LoveStory/blob/main/Terramon/Assets/Pokemon/Anim/CREDITS.md).
+- **Pokémon sprites and portraits** come from the [PMD SpriteCollab](https://github.com/PMDCollab/SpriteCollab) project, licensed under CC BY-NC 4.0. The artists of each Pokémon are listed in [CREDITS.md](https://github.com/Welsete/Pokerraria_LoveStory/blob/main/Pokerraria/Assets/Pokemon/Anim/CREDITS.md).
 - **Battles** run on [Pokémon Showdown](https://github.com/smogon/pokemon-showdown).
 - **Pokerraria: LoveStory** original art for Brock, the held items, Onix, Professor Oak and the move animations.
 

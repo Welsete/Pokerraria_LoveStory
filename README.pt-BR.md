@@ -6,7 +6,7 @@
 
 ### Capture todos no Terraria. Derrote os chefes. Conquiste as insígnias. Torne-se o Campeão.
 
-<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Terramon.tmod"><img src="https://img.shields.io/badge/Baixar-Terramon.tmod-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Baixar Terramon.tmod"></a>
+<a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Pokerraria.tmod"><img src="https://img.shields.io/badge/Baixar-Pokerraria.tmod-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Baixar Pokerraria.tmod"></a>
 <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src="https://img.shields.io/badge/Baixar-TmonRuntimes.tmod-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Baixar TmonRuntimes.tmod"></a>
 <img src="https://img.shields.io/badge/Vers%C3%A3o-0.3.0-8a4fd8?style=for-the-badge" alt="Versão 0.3.0">
 <img src="https://img.shields.io/badge/tModLoader-1.4.4-2b3a7a?style=for-the-badge" alt="tModLoader 1.4.4">
@@ -179,7 +179,7 @@ A **Pokédex** (<kbd>P</kbd>) tem uma prévia animada de cada Pokémon, habilida
 
 1. Baixe os dois arquivos (versão estável mais recente):
 
-   <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Terramon.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20Terramon.tmod-e3b54a?style=for-the-badge" alt="Baixar Terramon.tmod"></a>
+   <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Pokerraria.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20Pokerraria.tmod-e3b54a?style=for-the-badge" alt="Baixar Pokerraria.tmod"></a>
    <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src="https://img.shields.io/badge/%E2%AC%87%20TmonRuntimes.tmod-e3b54a?style=for-the-badge" alt="Baixar TmonRuntimes.tmod"></a>
 
    Quer as novidades que ainda estão em teste? Pegue os dois arquivos na [versão de teste](https://github.com/Welsete/Pokerraria_LoveStory/releases/tag/build-main).
@@ -187,7 +187,7 @@ A **Pokédex** (<kbd>P</kbd>) tem uma prévia animada de cada Pokémon, habilida
 3. Abra o tModLoader, vá em **Workshop → Gerenciar Mods**, ative os dois e recarregue.
 4. **Crie um mundo novo** para ter os Ginásios, a Liga, o Centro Pokémon e o Professor Carvalho.
 
-O arquivo ainda se chama `Terramon.tmod` para que os saves de versões anteriores continuem funcionando. O Pokerraria: LoveStory substitui o Terramon original, então não ative os dois. O idioma segue o do seu jogo: Português (Brasil) ou English.
+O Pokerraria: LoveStory substitui o Terramon original, então não ative os dois. Se você jogava uma versão antiga (o arquivo se chamava `Terramon.tmod`), apague esse arquivo da pasta Mods: os personagens começam a equipe do zero. O idioma segue o do seu jogo: Português (Brasil) ou English.
 
 ### Controles
 
@@ -238,7 +238,7 @@ Ligue o **Modo Debug** nas configurações do mod e aperte <kbd>F8</kbd> para ab
 ## 💛 Créditos
 
 - O **Terramon** é feito pela [equipe do Terramon](https://github.com/JamzOJamz/Terramon) e licenciado sob GPL-3.0. Este fork mantém a mesma licença.
-- Os **sprites e retratos dos Pokémon** vêm do projeto [PMD SpriteCollab](https://github.com/PMDCollab/SpriteCollab), licenciado sob CC BY-NC 4.0. Os artistas de cada Pokémon estão listados em [CREDITS.md](https://github.com/Welsete/Pokerraria_LoveStory/blob/main/Terramon/Assets/Pokemon/Anim/CREDITS.md).
+- Os **sprites e retratos dos Pokémon** vêm do projeto [PMD SpriteCollab](https://github.com/PMDCollab/SpriteCollab), licenciado sob CC BY-NC 4.0. Os artistas de cada Pokémon estão listados em [CREDITS.md](https://github.com/Welsete/Pokerraria_LoveStory/blob/main/Pokerraria/Assets/Pokemon/Anim/CREDITS.md).
 - As **batalhas** rodam no [Pokémon Showdown](https://github.com/smogon/pokemon-showdown).
 - Arte original do **Pokerraria: LoveStory** para o Brock, os itens para segurar, o Onix, o Professor Carvalho e as animações de golpes.
 

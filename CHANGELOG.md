@@ -4,6 +4,8 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+- The mod is now called Pokerraria inside too: the file is `Pokerraria.tmod` (it was `Terramon.tmod`). Delete the old `Terramon.tmod` from the Mods folder. Characters and worlds from before lose this mod's data (team, PC, badges, journal): start fresh.
+
 - Generated art for 30 more moves: Absorb, Mega Drain, Giga Drain, Leech Seed, Ingrain, Grassy Terrain, Leaf Storm, Petal Dance, Vine Whip, Thunder Fang, Electric Terrain, Magnetic Flux, Zap Cannon, Dragon Breath, Dragon Tail, Outrage, Curse, Destiny Bond, Lick, Shadow Sneak, Bite, Crunch, Fling, Memento, Switcheroo, Bone Rush, Bonemerang, Bulldoze, Gyro Ball and Iron Tail.
 
 - No more messages telling where the Gyms, the Pokémon Center and the League are when entering a world. Each place shows on your map once you've found it (got close enough to see it), with a message when you do. In Debug Mode the map still shows everything.

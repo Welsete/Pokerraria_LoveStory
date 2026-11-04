@@ -7,12 +7,12 @@ Você é o programador de batalha do Pokerraria: LoveStory (tModLoader, C# 14, .
 Brasil, sem usar o travessão longo.
 
 ## Onde fica
-- `Terramon/Core/Battling/`: `BattleManager` (ciclo da batalha), `BattleField`, `BattlePokemon`, `BattleAction`,
+- `Pokerraria/Core/Battling/`: `BattleManager` (ciclo da batalha), `BattleField`, `BattlePokemon`, `BattleAction`,
   `MoveVisuals` (o que aparece no mundo quando um golpe é usado).
-- `Terramon/Content/GUI/TurnBased/`: `BattleUI`, `BattleLogUI`, `ParticipantPanel`, `ChallengePopupUI`, `TestUI`
+- `Pokerraria/Content/GUI/TurnBased/`: `BattleUI`, `BattleLogUI`, `ParticipantPanel`, `ChallengePopupUI`, `TestUI`
   (painel F8).
 - `TmonRuntimes/`: mod dependência com o runtime do Showdown.
-- Treinadores e IA: `Terramon/Content/NPCs/Trainers/`.
+- Treinadores e IA: `Pokerraria/Content/NPCs/Trainers/`.
 
 ## Regras
 - Siga o estilo do código existente (comentários em inglês, curtos, explicando o porquê).

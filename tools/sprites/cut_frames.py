@@ -5,7 +5,7 @@ Run: python3 tools/sprites/cut_frames.py [--dark-pupils] [--wide=1.15] <folder> 
 than a pixel of the sheet and get lost. --own-scale=<pose prefix> scales the poses starting with it on their own (for
 example walk frames drawn bigger than the rest), so they come out just as tall as the others, and lines them up by the torso instead of the bounding box. --wide stretches the frames sideways by that much, since the art is a bit
 slimmer than Terraria's characters.
-e.g. python3 tools/sprites/cut_frames.py nurse_joy_frames nurse_joy Terramon/Assets/NPCs/NurseJoy.png 54 parada \
+e.g. python3 tools/sprites/cut_frames.py nurse_joy_frames nurse_joy Pokerraria/Assets/NPCs/NurseJoy.png 54 parada \
          cumprimento segurando_pokebola andando_1 andando_2 andando_3 andando_4 sentada"""
 import sys
 from collections import Counter

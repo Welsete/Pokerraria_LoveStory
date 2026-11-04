@@ -2,7 +2,7 @@
 
 Pixel art em escala 2x (livro, caixinhas) e 3x (ilustrações), sem suavizar.
 Rodar da raiz do repo: python3 tools/lovestory/draw_journal.py
-Grava em Terramon/Assets/GUI/Journal/.
+Grava em Pokerraria/Assets/GUI/Journal/.
 """
 import math
 import random
@@ -10,7 +10,7 @@ import random
 import numpy as np
 from PIL import Image
 
-OUT = "Terramon/Assets/GUI/Journal/"
+OUT = "Pokerraria/Assets/GUI/Journal/"
 
 
 def save(arr, name, scale):

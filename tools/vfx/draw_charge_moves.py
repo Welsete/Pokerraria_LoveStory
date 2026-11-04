@@ -277,8 +277,8 @@ def save(name, cols, frames):
             out[img == i] = [int(hx[j:j + 2], 16) for j in (1, 3, 5)] + [255]
         return out.repeat(SCALE, 0).repeat(SCALE, 1)
     strip = np.concatenate([rgba(f) for f in frames], axis=1)
-    Image.fromarray(strip, "RGBA").save(f"Terramon/Assets/Moves/Charge/{name}.png", optimize=True)
-    open(f"Terramon/Assets/Moves/Charge/{name}.txt", "w").write(f"Frames {len(frames)}\nTravel 0\nTicks 4\nAt user\nScale 1\n")
+    Image.fromarray(strip, "RGBA").save(f"Pokerraria/Assets/Moves/Charge/{name}.png", optimize=True)
+    open(f"Pokerraria/Assets/Moves/Charge/{name}.txt", "w").write(f"Frames {len(frames)}\nTravel 0\nTicks 4\nAt user\nScale 1\n")
     return strip
 
 

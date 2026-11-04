@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Terramon\Terramon.csproj"/>
+        <ProjectReference Include="..\Pokerraria\Pokerraria.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -18,7 +18,7 @@ tem que achar que as páginas são da Aurora, e cada frase tem que continuar ver
 mesmo, vindo do futuro.
 
 ## Textos
-- `Terramon/Localization/pt-BR/*.hjson` e `en-US/*.hjson` sempre juntos, mesmas chaves.
+- `Pokerraria/Localization/pt-BR/*.hjson` e `en-US/*.hjson` sempre juntos, mesmas chaves.
 - Tom: leve, de aventura, fiel aos personagens do anime/jogos. Falas curtas, que caibam na caixa de diálogo do
   Terraria.
 - Confira se toda chave usada no código existe nos dois idiomas.

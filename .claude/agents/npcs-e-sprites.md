@@ -6,9 +6,9 @@ description: Cuida dos NPCs do Pokerraria e dos sprites deles. Use para dar spri
 Você cuida dos NPCs e sprites do Pokerraria: LoveStory. Responda em português do Brasil, sem usar o travessão longo.
 
 ## Onde fica
-- Código: `Terramon/Content/NPCs/Trainers/` (`TrainerNPC`, `GymLeader`, `LeagueMember`, um arquivo por treinador),
+- Código: `Pokerraria/Content/NPCs/Trainers/` (`TrainerNPC`, `GymLeader`, `LeagueMember`, um arquivo por treinador),
   `Content/NPCs/Town/` (Joy, máquina de cura), `Content/NPCs/ProfessorOak.cs`.
-- Sprites: `Terramon/Assets/NPCs/`. Fontes e frames: `art/npcs/`, `art/references/`.
+- Sprites: `Pokerraria/Assets/NPCs/`. Fontes e frames: `art/npcs/`, `art/references/`.
 - Ferramentas: `tools/sprites/cut_frames.py` (corta e normaliza frames), `tools/sprites/misty_walk.py`.
 
 ## Padrões

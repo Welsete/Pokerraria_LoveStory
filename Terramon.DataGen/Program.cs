@@ -92,7 +92,7 @@ internal static partial class Program
         Console.WriteLine("========================================\n");
 
         Console.WriteLine("WARNING: This program will overwrite existing PokemonDB*.json files in:");
-        Console.WriteLine("Terramon/Assets/Data\n");
+        Console.WriteLine("Pokerraria/Assets/Data\n");
         Console.WriteLine($"It will generate data for {totalPokemonCount} Pokémon.\n");
 
         Console.WriteLine("Press any key to continue, or CTRL+C to quit...");
@@ -280,7 +280,7 @@ internal static partial class Program
             var localeDir = Path.Combine(outDir, localeCode);
             Directory.CreateDirectory(localeDir);
 
-            var filePath = Path.Combine(localeDir, $"{localeCode}_Mods.Terramon.Moves.hjson");
+            var filePath = Path.Combine(localeDir, $"{localeCode}_Mods.Pokerraria.Moves.hjson");
             jsonObject.Save(filePath, Stringify.Hjson);
 
             Console.WriteLine($"Saved {localeCode} localization with {jsonObject.Count} moves");

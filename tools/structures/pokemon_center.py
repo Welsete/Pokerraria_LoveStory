@@ -1,6 +1,6 @@
 """Pokemon Center as a Blueprint Builder design (formatVersion 1): two floors, the healing counter downstairs and the
 PC room upstairs, a giant Poke Ball on the roof. Objects use their top-left tile.
-Run: python3 tools/structures/pokemon_center.py Terramon/Assets/Structures/PokemonCenter.json tools/structures/terraria-ids.txt [--preview]   (--preview leaves out the mod's own PCs, for the
+Run: python3 tools/structures/pokemon_center.py Pokerraria/Assets/Structures/PokemonCenter.json tools/structures/terraria-ids.txt [--preview]   (--preview leaves out the mod's own PCs, for the
 Blueprint Builder mod, which only knows vanilla items)"""
 import json, sys
 
@@ -17,7 +17,7 @@ SIZES = {"GlassDoor": (1, 3), "HeartStatue": (2, 3), "HeartLantern": (1, 2), "Cr
          "MarbleSofa": (3, 2), "PottedForestTree": (2, 4), "PottedForestPalm": (2, 4), "MarbleBookcase": (3, 4),
          "TrashCan": (2, 2), "MarbleTable": (3, 2), "MarbleChair": (1, 2), "LampPost": (1, 6), "Bench": (3, 2),
          "PureWaterFountain": (2, 4), "Sunflower": (2, 4), "RedBanner": (1, 3), "CrystalLamp": (1, 3),
-         "Terramon/PCItemRed": (2, 3), "Terramon/PCItemWhite": (2, 3), "MarbleWorkBench": (2, 1), "Book": (1, 1)}
+         "Pokerraria/PCItemRed": (2, 3), "Pokerraria/PCItemWhite": (2, 3), "MarbleWorkBench": (2, 1), "Book": (1, 1)}
 PREVIEW = "--preview" in sys.argv
 
 
@@ -51,7 +51,7 @@ def wall(x, y, name, paint=0):
 
 
 def obj(x, y, item, right=False):
-    if PREVIEW and item.startswith("Terramon/"):
+    if PREVIEW and item.startswith("Pokerraria/"):
         return
     o = {"x": x, "y": y, "item": item}
     if right:
@@ -188,13 +188,13 @@ stand(66, "MarbleSofa")
 stand(70, "MarbleBookcase")
 stand(74, "CrystalLamp")
 stand(78, "PottedForestPalm")
-stand(76, "Terramon/PCItemRed")  # a PC downstairs too, like in the games
+stand(76, "Pokerraria/PCItemRed")  # a PC downstairs too, like in the games
 
 # --- Second floor: the PC room ---
-stand(40, "Terramon/PCItemRed", MID)
-stand(44, "Terramon/PCItemWhite", MID)
-stand(48, "Terramon/PCItemRed", MID)
-stand(52, "Terramon/PCItemWhite", MID)
+stand(40, "Pokerraria/PCItemRed", MID)
+stand(44, "Pokerraria/PCItemWhite", MID)
+stand(48, "Pokerraria/PCItemRed", MID)
+stand(52, "Pokerraria/PCItemWhite", MID)
 stand(17, "MarbleBookcase", MID)
 stand(21, "MarbleSofa", MID)
 stand(57, "MarbleTable", MID)
@@ -227,7 +227,7 @@ design = {"formatVersion": 1, "name": "Centro Pokemon", "width": W, "height": H,
 if __name__ == "__main__":
     ids = {l.split()[2] for l in open(sys.argv[2]) if l.startswith("IDDUMP ItemID")}
     names = {c.get(k) for c in design["cells"] for k in ("tile", "wall")} | {o["item"] for o in objects}
-    bad = sorted(n for n in names if n and n not in ids and not n.startswith("Terramon/"))
+    bad = sorted(n for n in names if n and n not in ids and not n.startswith("Pokerraria/"))
     assert not bad, bad
     json.dump(design, open(sys.argv[1], "w", encoding="utf-8"), separators=(",", ":"), ensure_ascii=False)
     print(len(design["cells"]), "cells", len(objects), "objects")
