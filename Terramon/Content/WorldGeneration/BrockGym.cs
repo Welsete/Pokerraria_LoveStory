@@ -296,7 +296,7 @@ public static class BrockGymBuilder
                 Build(left, top);
                 GenVars.structures?.AddProtectedStructure(Footprint(left, top), 4);
                 GenVars.structures?.AddProtectedStructure(
-                    new Rectangle(left - EntranceGap - 4, BrockGymSystem.SurfaceEntrance.Y - 6, 12, 12), 2);
+                    BrockTemple.Area(BrockGymSystem.SurfaceEntrance.X, BrockGymSystem.SurfaceEntrance.Y), 2);
                 Terramon.Instance.Logger.Info(
                     $"Built Brock's Gym at ({left}, {top}) (offset {maxOffset}, solid {solidPercent}%).");
                 return true;
@@ -540,6 +540,8 @@ public static class BrockGymBuilder
         if (surfaceEntrance != Point.Zero && surfaceEntrance.X == shaftX && surfaceEntrance.Y < floorY)
             ProtectedAreas.Add(new Rectangle(shaftX - 1, surfaceEntrance.Y - RopeAbove,
                 3, floorY - surfaceEntrance.Y + RopeAbove + 1));
+        if (BrockGymSystem.HasDungeon && surfaceEntrance != Point.Zero)
+            ProtectedAreas.Add(BrockTemple.Area(surfaceEntrance.X, surfaceEntrance.Y));
     }
 
     /// <summary>
@@ -874,11 +876,16 @@ public static class BrockGymBuilder
             }
         }
 
-        BuildShrine(shaftX, surface);
+        // The temple over the rope (the small shrine of the first versions in worlds without the dungeon)
+        var ropeTop = surface - RopeAbove;
+        if (BrockGymSystem.HasDungeon)
+            ropeTop = BrockTemple.Build(shaftX, surface);
+        else
+            BuildShrine(shaftX, surface);
 
         // Ropes are set directly, top to bottom, so each one hangs from the one above. The top ones stick out of the
-        // shrine's floor so they are easy to grab.
-        for (var y = surface - RopeAbove; y < floorY; y++)
+        // floor so they are easy to grab.
+        for (var y = ropeTop; y < floorY; y++)
         {
             var rope = Main.tile[shaftX, y];
             rope.ClearTile();
@@ -886,8 +893,8 @@ public static class BrockGymBuilder
             rope.TileType = TileID.Rope;
         }
 
-        // The sign inside the shrine, next to the rope
-        if (WorldGen.PlaceObject(shaftX + 3, surface - 1, TileID.Signs, true))
+        // The sign inside the shrine, next to the rope (the temple places its own)
+        if (!BrockGymSystem.HasDungeon && WorldGen.PlaceObject(shaftX + 3, surface - 1, TileID.Signs, true))
         {
             var sign = Sign.ReadSign(shaftX + 3, surface - 2, true);
             if (sign >= 0)
