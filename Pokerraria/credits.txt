@@ -66,3 +66,4 @@ Sound effects (button_locked.wav)
 - PMDCollab (PMD Sprite Repository) and Spike Chunsoft -
 Mystery Dungeon-style Pokémon sprites and portraits (CC BY-NC 4.0)
 Full list of artists: Assets/Pokemon/Anim/CREDITS.md
+Journal lettering: IM Fell English, by Igino Marini (SIL Open Font License 1.1, tools/lovestory/fonts/OFL.txt).

@@ -25,7 +25,7 @@ public sealed class TestBattleUI : SmartUIState
     private readonly static UIElement _optionsPanel;
     private readonly static UIText _promptText;
     private readonly static UIElement _optionButtons;
-    private readonly static UIText _skipHint;
+    private readonly static UITextPanel<LocalizedText> _skipHint;
     private readonly static UIElement _movesPanel;
     private readonly static UIElement _pokemonPanel;
     private readonly static UIElement _bagPanel;
@@ -75,11 +75,15 @@ public sealed class TestBattleUI : SmartUIState
         _optionButtons = optionButtons;
 
         // Shown in the corner while a turn is being shown
-        _skipHint = new UIText(Pokerraria.Instance.GetLocalization("Battle.SkipTurnHint"), 0.8f)
+        // A small gold-framed button, gently pulsing so it's noticed (see UpdateTurnPlayback)
+        _skipHint = new UITextPanel<LocalizedText>(Pokerraria.Instance.GetLocalization("Battle.SkipTurnHint"), 0.9f)
         {
             HAlign = 1f,
             VAlign = 1f,
-            TextColor = new Color(170, 170, 190)
+            BackgroundColor = new Color(30, 40, 80) * 0.95f,
+            BorderColor = new Color(255, 205, 80),
+            TextColor = new Color(255, 225, 130),
+            IgnoresMouseInteraction = true // The click goes to the panel, which skips
         };
 
         for (ButtonType i = ButtonType.Fight; i <= ButtonType.Run; i++)
@@ -1097,6 +1101,13 @@ public sealed class TestBattleUI : SmartUIState
             }
 
             _optionsPanel.Recalculate();
+        }
+
+        if (_skipHint.Parent != null)
+        {
+            var pulse = 0.65f + 0.35f * (float)Math.Sin(Main.GlobalTimeWrappedHourly * 4f);
+            _skipHint.BorderColor = new Color(255, 205, 80) * pulse;
+            _skipHint.TextColor = Color.Lerp(new Color(200, 170, 90), new Color(255, 240, 170), pulse);
         }
 
         if (!busy)

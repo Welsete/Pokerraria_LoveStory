@@ -31,6 +31,10 @@ public sealed class JournalUI : SmartUIState
     private static readonly Color Missing = new(230, 120, 140);
     private static readonly Color Hover = new(255, 230, 140);
 
+    // Ink on the pages' paper (the old book lettering, see OldFont)
+    private static readonly Color PageInk = new(58, 38, 24);
+    private static readonly Color TitleInk = new(110, 52, 18);
+
     /// <summary>
     ///     The page open on the book, or null for the contents.
     /// </summary>
@@ -244,8 +248,15 @@ public sealed class JournalUI : SmartUIState
         var index = Array.IndexOf(Journal.Pages, id);
         var has = Diary.Pages.Contains(id);
 
-        var title = Add(Text(has ? Journal.PageTitle(id).Value : "???", 0.55f, has ? Gold : Missing, true));
-        Centered(title, LeftX, PageTop);
+        // A found page is written in the old book's ink; a missing one is just a red "???"
+        if (has)
+        {
+            var title = Add(new InkText(Journal.PageTitle(id).Value, OldFont.Title, PageWidth, TitleInk, centered: true));
+            title.Left.Pixels = LeftX;
+            title.Top.Pixels = PageTop + 4f;
+        }
+        else
+            Centered(Add(Text("???", 0.55f, Missing, true)), LeftX, PageTop);
 
         var picture = Add(new PagePicture(Tex("Page" + id), has));
         picture.Left.Pixels = LeftX + (PageWidth - 300f) / 2f;
@@ -260,7 +271,10 @@ public sealed class JournalUI : SmartUIState
         }
 
         var list = Column(RightX, PageTop + 6f, Bottom - PageTop - 40f);
-        Paragraph(list, has ? Journal.PageText(id) : Journal.Text("PageMissing"), has ? Ink : Faded, 0.9f);
+        if (has)
+            list.Add(new InkText(Journal.PageText(id), OldFont.Text, PageWidth - 20f, PageInk));
+        else
+            Paragraph(list, Journal.Text("PageMissing"), Faded, 0.9f);
 
         // Turning the pages
         if (index > 0)

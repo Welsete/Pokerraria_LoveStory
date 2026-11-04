@@ -34,7 +34,7 @@ Battle: {
 	GainedExp: "{0} ganhou {1} pontos de Exp.!"
 	LevelUp: "{0} subiu para o Nv. {1}!"
 	ChooseNext: Escolha outro Pokémon para mandar à batalha.
-	SkipTurnHint: Clique para pular
+	SkipTurnHint: "» Clique aqui para pular"
 	Back: "« Voltar"
 	ReturnedFainted: "{0} voltou para a Poké Bola. Use um Reviver para curá-lo."
 	Log: {
@@ -2266,7 +2266,7 @@ Discoveries: {
 }
 
 BrockGym: {
-	ChestOnce: "Pegue tudo: este baú só abre uma vez para você."
+	ChestOnce: "Pegue o que quiser: depois que você tirar algo daqui, este baú não abre mais para você."
 	ChestDone: "Você já pegou o que tinha neste baú."
 	DungeonSign1: "Estas paredes são mais antigas que o Ginásio. Alguém já passou por aqui antes de você."
 	DungeonSign2: "Três alavancas. Um só caminho."

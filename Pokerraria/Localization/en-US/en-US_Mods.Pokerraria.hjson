@@ -34,7 +34,7 @@ Battle: {
 	GainedExp: "{0} gained {1} Exp. Points!"
 	LevelUp: "{0} grew to Lv. {1}!"
 	ChooseNext: Choose another Pokémon to send out.
-	SkipTurnHint: Click to skip
+	SkipTurnHint: "» Click here to skip"
 	Back: "« Back"
 	ReturnedFainted: "{0} returned to its Poké Ball. Use a Revive to heal it."
 	Log: {
@@ -2266,7 +2266,7 @@ Discoveries: {
 }
 
 BrockGym: {
-	ChestOnce: "Take everything: this chest only opens once for you."
+	ChestOnce: "Take what you want: once you take something out, this chest won't open for you again."
 	ChestDone: "You already took what was in this chest."
 	DungeonSign1: "These walls are older than the Gym. Someone has been through here before you."
 	DungeonSign2: "Three levers. Only one way."

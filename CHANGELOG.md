@@ -4,6 +4,10 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+- The journal's pages are written in an old book's lettering (IM Fell English), in ink on the paper.
+- Battles: the "Click to skip" hint while a turn plays is now a pulsing gold-framed button, easier to notice.
+- Brock's dungeon chest: it only counts as used once you take something out of it, so dying to its trap before taking anything doesn't lose the loot.
+
 ## 0.5.0
 
 - The mod is now called Pokerraria inside too: the file is `Pokerraria.tmod` (it was `Terramon.tmod`). Delete the old `Terramon.tmod` from the Mods folder. Characters and worlds from before lose this mod's data (team, PC, badges, journal): start fresh.

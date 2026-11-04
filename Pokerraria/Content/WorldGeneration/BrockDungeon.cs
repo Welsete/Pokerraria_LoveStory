@@ -909,19 +909,40 @@ public class BrockDungeonDarts : ModSystem
 }
 
 /// <summary>
-///     The chest at the end of Brock's dungeon opens once per player and world: the first time, it's filled with the
-///     loot if someone else already emptied it, and boulders come down from the dark ceiling; after that it stays shut
-///     for that player, so nobody piles up items.
+///     The chest at the end of Brock's dungeon gives its loot once per player and world. Opening it brings boulders down
+///     from the dark ceiling and, if someone else already emptied it, fills it with the loot again. It only counts as
+///     used once the player takes something out: dying to the trap before taking anything doesn't lose the loot. After
+///     that it stays shut for that player, so nobody piles up items.
 /// </summary>
 public class BrockDungeonChestTrap : ModPlayer
 {
     private int _lastChest = -1;
-    private readonly HashSet<string> _opened = []; // World ids
+    private readonly HashSet<string> _opened = []; // Worlds where this player took the loot
+    private int _watching = -1; // The dungeon chest while it's open, to see when something is taken out
+    private int _countAtOpen;
+
+    private static string World => Main.ActiveWorldFileData?.UniqueId.ToString() ?? "";
+
+    private static int Count(Chest chest) => chest.item.Sum(i => i.IsAir ? 0 : i.stack);
 
     public override void PostUpdate()
     {
         if (Player.whoAmI != Main.myPlayer)
             return;
+
+        // Something taken out of the open chest: now the loot is theirs
+        if (_watching >= 0)
+        {
+            var open = Main.chest[_watching];
+            if (Player.chest != _watching || open == null)
+                _watching = -1;
+            else if (Count(open) < _countAtOpen)
+            {
+                _opened.Add(World);
+                _watching = -1;
+            }
+        }
+
         var opened = Player.chest >= 0 && Player.chest != _lastChest;
         _lastChest = Player.chest;
         if (!opened || !BrockGymSystem.HasDungeon)
@@ -934,10 +955,9 @@ public class BrockDungeonChestTrap : ModPlayer
         if (!room.Contains(chest.x, chest.y))
             return;
 
-        var world = Main.ActiveWorldFileData?.UniqueId.ToString() ?? "";
-        if (!_opened.Add(world))
+        if (_opened.Contains(World))
         {
-            // Already opened once: it stays shut
+            // Already took the loot: it stays shut
             Player.chest = -1;
             _lastChest = -1;
             if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -949,6 +969,8 @@ public class BrockDungeonChestTrap : ModPlayer
 
         if (chest.item.All(i => i.IsAir))
             BrockDungeon.FillLoot(index);
+        _watching = index;
+        _countAtOpen = Count(chest);
         Main.NewText(Language.GetTextValue("Mods.Pokerraria.BrockGym.ChestOnce"), new Color(200, 170, 120));
 
         SoundEngine.PlaySound(SoundID.Item14, Player.Center);
