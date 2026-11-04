@@ -243,6 +243,12 @@ Pokémon é © Nintendo, Game Freak e The Pokémon Company. Este é um projeto d
 O Pokerraria é e sempre será gratuito, com tudo liberado para todo mundo: nada pago, sem recompensas, sem metas.
 Se quiser pagar um café para o desenvolvedor, é totalmente opcional:
 
+**Pix** (chave aleatória `2db8d9ed-85b7-40c8-9a32-c7c60498a203`):
+
+<img src=".github/assets/pix.png" width="180" alt="QR Code do Pix">
+
+**Do exterior**, pelo Ko-fi (PayPal ou cartão):
+
 <a href="https://ko-fi.com/welsete"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Apoie o Welsete no Ko-fi"></a>
 
 ## 🤝 Contribuindo

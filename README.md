@@ -245,6 +245,10 @@ If you'd like to buy the developer a coffee, it's entirely optional:
 
 <a href="https://ko-fi.com/welsete"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support Welsete on Ko-fi"></a>
 
+From Brazil, Pix works too (random key `2db8d9ed-85b7-40c8-9a32-c7c60498a203`):
+
+<img src=".github/assets/pix.png" width="180" alt="Pix QR code">
+
 ## 🤝 Contributing
 
 Found a bug or have an idea? Open an [issue](https://github.com/Welsete/Pokerraria_LoveStory/issues).
