@@ -1,4 +1,6 @@
 using Terramon.Content.Items;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.Localization;
 
 namespace Terramon.Content.WorldGeneration;
@@ -12,7 +14,7 @@ namespace Terramon.Content.WorldGeneration;
 /// </summary>
 public static class BrockDungeon
 {
-    private enum Kind { Landing, Levers, SpikePit, Darts, Boulders, FalseFloor, LavaPit, Well, Chest }
+    private enum Kind { Landing, Levers, SpikePit, Darts, Boulders, FalseFloor, LavaPit, Well, DartHall, Chest }
 
     // Width and height (floor to ceiling) of each room, in order
     private static readonly (Kind Kind, int Width, int Height)[] Plan =
@@ -25,7 +27,8 @@ public static class BrockDungeon
         (Kind.FalseFloor, 24, 10),
         (Kind.LavaPit, 22, 12),
         (Kind.Well, 22, 10),
-        (Kind.Chest, 11, 8)
+        (Kind.DartHall, 60, 8),
+        (Kind.Chest, 13, 16)
     ];
 
     private const int WallWidth = 2; // Between two rooms (a doorway goes through it)
@@ -43,6 +46,7 @@ public static class BrockDungeon
     public const int Below = 17;
 
     private const int WellDepth = 14;
+    private const int HallDepth = 7; // How far the dart hall's floor is sunk below the doorways
     private const int GrayPressurePlate = 2;
 
     private readonly record struct RoomSpan(Kind Kind, int From, int To, int Ceiling)
@@ -138,6 +142,9 @@ public static class BrockDungeon
                     break;
                 case Kind.Well:
                     Well(room, f);
+                    break;
+                case Kind.DartHall:
+                    DartHall(room, f);
                     break;
                 case Kind.Chest:
                     Chest(room.From + 4, f);
@@ -240,6 +247,56 @@ public static class BrockDungeon
     }
 
     /// <summary>
+    ///     The dart hall: a long hall sunk below the doorways, with dart traps in both end walls at three heights (feet,
+    ///     head, jump), firing on a timer, one side then the other. Pairs of stone blocks on the floor make shelters that
+    ///     cover from both sides: run from one to the next between volleys. A rope on the far side climbs out.
+    /// </summary>
+    private static void DartHall(RoomSpan room, int f)
+    {
+        int from = room.From + 3, to = room.To - 3;
+        var floor = f + HallDepth;
+        for (var x = from; x <= to; x++)
+        {
+            for (var y = f; y < floor; y++)
+            {
+                var tile = Main.tile[x, y];
+                tile.ClearTile();
+                tile.WallType = WallID.StoneSlab;
+            }
+
+            Block(x, floor, TileID.GrayBrick);
+        }
+
+        // Shelters: two stone blocks 2 wide and 4 tall with room for one player between them
+        for (var x = from + 6; x + 6 <= to - 4; x += 12)
+        {
+            foreach (var px in new[] { x, x + 5 })
+            {
+                for (var dx = 0; dx < 2; dx++)
+                {
+                    for (var y = floor - 4; y < floor; y++)
+                        Block(px + dx, y, y == floor - 4 ? TileID.GrayBrick : TileID.Stone);
+                }
+            }
+        }
+
+        RopeDown(to, f, floor - 1);
+
+        // A few torches low on the back wall, under the darts' way
+        for (var x = from + 3; x < to; x += 9)
+            WorldGen.PlaceTile(x, floor - 6, TileID.Torches, true, true);
+    }
+
+    /// <summary>
+    ///     The chest room's tiles, for <see cref="BrockDungeonChestTrap" />.
+    /// </summary>
+    public static Rectangle ChestRoom(int shaftX, int floorY)
+    {
+        var room = Rooms(shaftX, floorY).First(r => r.Kind == Kind.Chest);
+        return new Rectangle(room.From, room.Ceiling, room.Width, floorY - room.Ceiling);
+    }
+
+    /// <summary>
     ///     Things that need the tiles framed first: the levers and their wires, the boulders in the ceilings, the plates
     ///     and the dart traps.
     /// </summary>
@@ -262,31 +319,25 @@ public static class BrockDungeon
                     break;
 
                 case Kind.Darts:
-                    // Dart traps at foot height, each set off by a plate a few tiles before it
+                    // Dart traps at foot height (they fire on a timer, see BrockDungeonDarts): four shooting at you as
+                    // you come, two at your back once you've run past them
                     for (var k = 0; k < 4; k++)
-                    {
-                        var dx = room.From + 6 + k * 7;
-                        Dart(dx, f - 1, facingRight: false);
-                        var px = dx - 3;
-                        Plate(px, f);
-                        Line(px, f - 1, px, f - 2, WireColor.Blue);
-                        Line(px, f - 2, dx, f - 2, WireColor.Blue);
-                        Line(dx, f - 2, dx, f - 1, WireColor.Blue);
-                    }
-
-                    // And two facing the other way, shooting at your back once you've run past them
+                        Dart(room.From + 6 + k * 7, f - 1, facingRight: false);
                     for (var k = 0; k < 2; k++)
+                        Dart(room.From + 8 + k * 14, f - 1, facingRight: true);
+                    break;
+
+                case Kind.DartHall:
+                {
+                    var floor = f + HallDepth;
+                    foreach (var y in new[] { floor - 1, floor - 3, floor - 5 })
                     {
-                        var dx = room.From + 8 + k * 14;
-                        Dart(dx, f - 1, facingRight: true);
-                        var px = dx + 3;
-                        Plate(px, f);
-                        Line(px, f - 1, px, f - 5, WireColor.Green);
-                        Line(dx, f - 5, px, f - 5, WireColor.Green);
-                        Line(dx, f - 5, dx, f - 1, WireColor.Green);
+                        Dart(room.From + 2, y, facingRight: true);
+                        Dart(room.To - 2, y, facingRight: false);
                     }
 
                     break;
+                }
 
                 case Kind.Boulders:
                     foreach (var bx in new[] { room.From + 5, room.From + 13, room.From + 21 })
@@ -306,34 +357,17 @@ public static class BrockDungeon
                 }
 
                 case Kind.LavaPit:
-                {
-                    // Stepping on the first pillar fires a dart across the lava from the far side
-                    var pillar = room.From + 8;
-                    var dx = room.To - 2;
-                    Dart(dx, f - 1, facingRight: false);
-                    Plate(pillar, f);
-                    Line(pillar, f - 1, pillar, f - 3, WireColor.Blue);
-                    Line(pillar, f - 3, dx, f - 3, WireColor.Blue);
-                    Line(dx, f - 3, dx, f - 1, WireColor.Blue);
+                    // A dart flying across the lava now and then, from the far side
+                    Dart(room.To - 2, f - 1, facingRight: false);
                     break;
-                }
 
                 case Kind.Well:
                 {
-                    // Down in the gallery: a dart trap at each end, set off by plates near the lava
+                    // Down in the gallery: a dart trap at each end
                     var bottom = f + WellDepth;
                     int from = room.From + 3, to = room.To - 3;
-                    var mid = (from + to) / 2;
                     Dart(from + 1, bottom - 1, facingRight: true);
                     Dart(to - 1, bottom - 1, facingRight: false);
-                    foreach (var (px, dx) in new[] { (mid - 4, to - 1), (mid + 4, from + 1) })
-                    {
-                        Plate(px, bottom);
-                        Line(px, bottom - 1, px, bottom - 4, WireColor.Yellow);
-                        Line(Math.Min(px, dx), bottom - 4, Math.Max(px, dx), bottom - 4, WireColor.Yellow);
-                        Line(dx, bottom - 4, dx, bottom - 1, WireColor.Yellow);
-                    }
-
                     break;
                 }
             }
@@ -668,6 +702,106 @@ public class ProtectedActuators : ModSystem
         finally
         {
             ProtectedAreas.Bypass = bypass;
+        }
+    }
+}
+
+/// <summary>
+///     The dart traps of Brock's dungeon fire on their own, on a timer (no plates): every two seconds, the ones facing
+///     right first and the ones facing left a second later, so there's a gap to run in. Only while someone is close.
+/// </summary>
+public class BrockDungeonDarts : ModSystem
+{
+    private const int Period = 120;
+    private static List<(Point Tile, int Direction)> _traps;
+
+    /// <summary>
+    ///     Makes the trap list be looked up again (the dungeon was just built).
+    /// </summary>
+    public static void Reset() => _traps = null;
+
+    public override void ClearWorld() => _traps = null;
+
+    public override void PostUpdateWorld()
+    {
+        if (Main.netMode == NetmodeID.MultiplayerClient || !BrockGymSystem.HasDungeon)
+            return;
+        var area = BrockGymSystem.DungeonArea;
+        if (area.IsEmpty || !Main.player.Any(p => p.active && !p.dead && Inflate(area).Contains(p.Center.ToTileCoordinates())))
+            return;
+
+        _traps ??= FindTraps(area);
+        var time = (int)(Main.GameUpdateCount % Period);
+        foreach (var ((x, y), direction) in _traps)
+        {
+            if (time != (direction > 0 ? 0 : Period / 2))
+                continue;
+            var tile = Main.tile[x, y];
+            if (!tile.HasTile || tile.TileType != TileID.Traps)
+                continue;
+            var position = new Vector2(x * 16 + 8 + direction * 12, y * 16 + 8);
+            Projectile.NewProjectile(new EntitySource_Wiring(x, y), position, new Vector2(direction * 12f, 0f),
+                ProjectileID.PoisonDartTrap, 20, 2f, Main.myPlayer);
+        }
+    }
+
+    private static Rectangle Inflate(Rectangle area)
+    {
+        area.Inflate(60, 40);
+        return area;
+    }
+
+    /// <summary>
+    ///     Every dart trap in the dungeon, past the landing (the gym's own trap there still waits for its plate).
+    /// </summary>
+    private static List<(Point, int)> FindTraps(Rectangle area)
+    {
+        var traps = new List<(Point, int)>();
+        for (var x = area.Left + 16; x < area.Right; x++)
+        {
+            for (var y = area.Top; y < area.Bottom; y++)
+            {
+                var tile = Main.tile[x, y];
+                if (tile.HasTile && tile.TileType == TileID.Traps && tile.TileFrameY == 0)
+                    traps.Add((new Point(x, y), tile.TileFrameX == 0 ? -1 : 1));
+            }
+        }
+
+        return traps;
+    }
+}
+
+/// <summary>
+///     Opening the chest at the end of Brock's dungeon brings boulders down from the dark ceiling of its room (at most
+///     every half minute).
+/// </summary>
+public class BrockDungeonChestTrap : ModPlayer
+{
+    private int _lastChest = -1;
+    private static uint _lastTrap;
+
+    public override void PostUpdate()
+    {
+        if (Player.whoAmI != Main.myPlayer)
+            return;
+        var opened = Player.chest >= 0 && Player.chest != _lastChest;
+        _lastChest = Player.chest;
+        if (!opened || !BrockGymSystem.HasDungeon || Main.GameUpdateCount - _lastTrap < 60 * 30)
+            return;
+        var chest = Main.chest[Player.chest];
+        if (chest == null)
+            return;
+        var room = BrockDungeon.ChestRoom(BrockGymSystem.SurfaceEntrance.X, BrockGymSystem.Interior.Bottom);
+        if (!room.Contains(chest.x, chest.y))
+            return;
+
+        _lastTrap = Main.GameUpdateCount;
+        SoundEngine.PlaySound(SoundID.Item14, Player.Center);
+        foreach (var dx in new[] { -6, -2, 2, 6 })
+        {
+            var position = new Vector2((chest.x + 1 + dx) * 16f, (room.Top + 1) * 16f);
+            Projectile.NewProjectile(Player.GetSource_FromThis(), position, new Vector2(0f, 2f), ProjectileID.Boulder,
+                60, 10f, Main.myPlayer);
         }
     }
 }

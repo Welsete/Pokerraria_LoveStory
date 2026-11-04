@@ -72,7 +72,11 @@ oceano nem para o mundo.
 
 ## Estado
 
-- Brock: **versão 3** (2026-11-04, "bem maior, cheia de armadilha, dardo, lava, morcego"): 9 salas, ~208 blocos.
+- Brock: **versão 4** (2026-11-04): dardos por tempo (`BrockDungeonDarts`, a cada 2 s, direita e esquerda alternando,
+  só com alguém perto), salão dos dardos antes do baú (60 de largura, chão rebaixado, dardos em 3 alturas nas duas
+  paredes, abrigos de pedra que cobrem dos dois lados) e pedregulhos caindo ao abrir o baú (`BrockDungeonChestTrap`,
+  no máximo a cada 30 s).
+- Brock (versão 3): (2026-11-04, "bem maior, cheia de armadilha, dardo, lava, morcego"): 9 salas, ~208 blocos.
   Chegada; alavancas (24 de altura); fosso de espinhos com pilares; galeria de dardos (dardos no chão, dos dois lados);
   corredor alto das pedras; chão falso sobre espinhos (corda do outro lado); fosso de lava com pilares de 1 bloco e dardo
   cruzando; poço até uma galeria escura com lava e dardos (corda para descer e outra para subir); baú. Morcegos 8x mais

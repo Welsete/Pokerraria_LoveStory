@@ -451,6 +451,7 @@ public static class BrockGymBuilder
         TryStep("traps", () => BuildTraps(left, ceilingY, floorY, centerLeft, centerRight));
         if (BrockGymSystem.HasDungeon)
             TryStep("dungeon traps", () => BrockDungeon.BuildTraps(left - EntranceGap, floorY));
+        BrockDungeonDarts.Reset();
     }
 
     /// <summary>
