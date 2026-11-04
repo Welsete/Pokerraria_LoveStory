@@ -246,14 +246,18 @@ Pokémon is © Nintendo, Game Freak and The Pokémon Company. This is a free, no
 
 ## ☕ Support the developer
 
-Pokerraria is and will always be free, with everything in it for everyone: no paid content, no rewards, no goals.
-If you'd like to buy the developer a coffee, it's entirely optional:
+<div align="center">
 
-<a href="https://ko-fi.com/welsete"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support Welsete on Ko-fi"></a>
+<img src=".github/assets/support/support_banner_en.png" width="700" alt="Support the developer">
 
-From Brazil, Pix works too (random key `2db8d9ed-85b7-40c8-9a32-c7c60498a203`):
+Pokerraria is and will always be **free**, with everything in it for everyone: no paid content, no rewards, no goals.<br>
+If you'd like to buy the developer a coffee, it's entirely optional. 💛
 
-<img src=".github/assets/pix.png" width="285" alt="Pix QR code">
+<a href="https://ko-fi.com/welsete"><img src=".github/assets/support/support_kofi_en.png" width="300" alt="Ko-fi (PayPal or card)"></a> &nbsp; <img src=".github/assets/support/support_pix_en.png" width="300" alt="Pix from Brazil: QR code">
+
+**Ko-fi** · [ko-fi.com/welsete](https://ko-fi.com/welsete) &nbsp;|&nbsp; **Pix (Brazil)** · random key `2db8d9ed-85b7-40c8-9a32-c7c60498a203`
+
+</div>
 
 ## 🤝 Contributing
 

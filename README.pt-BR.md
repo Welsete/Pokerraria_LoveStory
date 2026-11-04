@@ -246,16 +246,18 @@ Pokémon é © Nintendo, Game Freak e The Pokémon Company. Este é um projeto d
 
 ## ☕ Apoie o desenvolvedor
 
-O Pokerraria é e sempre será gratuito, com tudo liberado para todo mundo: nada pago, sem recompensas, sem metas.
-Se quiser pagar um café para o desenvolvedor, é totalmente opcional:
+<div align="center">
 
-**Pix** (chave aleatória `2db8d9ed-85b7-40c8-9a32-c7c60498a203`):
+<img src=".github/assets/support/support_banner_pt.png" width="700" alt="Apoie o desenvolvedor">
 
-<img src=".github/assets/pix.png" width="285" alt="QR Code do Pix">
+O Pokerraria é e sempre será **gratuito**, com tudo liberado para todo mundo: nada pago, sem recompensas, sem metas.<br>
+Se quiser pagar um café para o desenvolvedor, é totalmente opcional. 💛
 
-**Do exterior**, pelo Ko-fi (PayPal ou cartão):
+<img src=".github/assets/support/support_pix_pt.png" width="300" alt="Apoie com Pix: QR Code"> &nbsp; <a href="https://ko-fi.com/welsete"><img src=".github/assets/support/support_kofi_pt.png" width="300" alt="Do exterior: Ko-fi (PayPal ou cartão)"></a>
 
-<a href="https://ko-fi.com/welsete"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Apoie o Welsete no Ko-fi"></a>
+**Pix** · chave aleatória `2db8d9ed-85b7-40c8-9a32-c7c60498a203` &nbsp;|&nbsp; **Ko-fi** · [ko-fi.com/welsete](https://ko-fi.com/welsete)
+
+</div>
 
 ## 🤝 Contribuindo
 
