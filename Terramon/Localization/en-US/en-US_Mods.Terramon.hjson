@@ -2256,7 +2256,18 @@ Items.LeaguePedestalItem: {
 		'''
 }
 
+Discoveries: {
+	BrockEntrance: "You found the entrance to Brock's Gym. It now shows on your map."
+	BrockGym: "You reached the Pewter City Gym! It now shows on your map."
+	MistyGym: "You found Misty's Gym. It now shows on your map."
+	PokemonCenter: "You found a Pokémon Center. It now shows on your map."
+	Gym: "You found the Pokémon Gym."
+	League: "You found the Pokémon League."
+}
+
 BrockGym: {
+	ChestOnce: "Take everything: this chest only opens once for you."
+	ChestDone: "You already took what was in this chest."
 	DungeonSign1: "These walls are older than the Gym. Someone has been through here before you."
 	DungeonSign2: "Three levers. Only one way."
 	Welcome: "{0} is waiting for you on the stage. Talk to him to challenge the Pewter City Gym!"

@@ -80,37 +80,13 @@ public class GymBuildingsSystem : ModSystem
 }
 
 /// <summary>
-///     Tells each player once per world where the Gym and the League were built.
+///     Used to tell each player once per world where the Gym and the League were built (now they are found by going
+///     there, see DiscoveryPlayer; kept so old saves load).
 /// </summary>
 public class GymBuildingsPlayer : ModPlayer
 {
     // Worlds (by unique id) this player was already told about
     private readonly HashSet<string> _toldWorlds = [];
-
-    public override void OnEnterWorld()
-    {
-        var world = Main.ActiveWorldFileData?.UniqueId.ToString();
-        if (string.IsNullOrEmpty(world) || _toldWorlds.Contains(world))
-            return;
-
-        var told = false;
-        told |= Announce(GymBuildingsSystem.GymPosition, "Gym");
-        told |= Announce(GymBuildingsSystem.LeaguePosition, "League");
-        if (told)
-            _toldWorlds.Add(world);
-    }
-
-    private static bool Announce(Point position, string kind)
-    {
-        if (position == Point.Zero)
-            return false;
-
-        var offset = position.X - Main.spawnTileX;
-        var direction = Language.GetTextValue("Mods.Terramon.Pedestals." + (offset < 0 ? "West" : "East"));
-        Main.NewText(Language.GetTextValue($"Mods.Terramon.Pedestals.{kind}Built", Math.Abs(offset), direction),
-            new Color(255, 215, 90));
-        return true;
-    }
 
     public override void SaveData(TagCompound tag)
     {

@@ -2256,7 +2256,18 @@ Items.LeaguePedestalItem: {
 		'''
 }
 
+Discoveries: {
+	BrockEntrance: "Você encontrou a entrada do Ginásio do Brock. Ela agora aparece no seu mapa."
+	BrockGym: "Você chegou ao Ginásio de Pewter! Ele agora aparece no seu mapa."
+	MistyGym: "Você encontrou o Ginásio da Misty. Ele agora aparece no seu mapa."
+	PokemonCenter: "Você encontrou um Centro Pokémon. Ele agora aparece no seu mapa."
+	Gym: "Você encontrou o Ginásio Pokémon."
+	League: "Você encontrou a Liga Pokémon."
+}
+
 BrockGym: {
+	ChestOnce: "Pegue tudo: este baú só abre uma vez para você."
+	ChestDone: "Você já pegou o que tinha neste baú."
 	DungeonSign1: "Estas paredes são mais antigas que o Ginásio. Alguém já passou por aqui antes de você."
 	DungeonSign2: "Três alavancas. Um só caminho."
 	Welcome: "{0} está te esperando no palco. Fale com ele para desafiar o Ginásio de Pewter!"

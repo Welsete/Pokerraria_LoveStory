@@ -151,7 +151,7 @@ public class PokemonCenterMapLayer : ModMapLayer
 {
     public override void Draw(ref MapOverlayDrawContext context, ref string text)
     {
-        if (!PokemonCenterSystem.Exists)
+        if (!PokemonCenterSystem.Exists || !DiscoveryPlayer.Knows("PokemonCenter"))
             return;
 
         var icon = ModContent.Request<Texture2D>("Terramon/Assets/Items/PokeBalls/PokeBallItem").Value;
@@ -162,23 +162,11 @@ public class PokemonCenterMapLayer : ModMapLayer
 }
 
 /// <summary>
-///     Tells each player once per world where the Pokémon Center is.
+///     Used to tell each player once per world where the Pokémon Center is (now the place is found by going there, see DiscoveryPlayer; kept so old saves load).
 /// </summary>
 public class PokemonCenterPlayer : ModPlayer
 {
     private readonly HashSet<string> _toldWorlds = [];
-
-    public override void OnEnterWorld()
-    {
-        var world = Main.ActiveWorldFileData?.UniqueId.ToString();
-        if (!PokemonCenterSystem.Exists || string.IsNullOrEmpty(world) || !_toldWorlds.Add(world))
-            return;
-
-        var offset = PokemonCenterSystem.Interior.Center.X - Main.spawnTileX;
-        var direction = Language.GetTextValue("Mods.Terramon.Pedestals." + (offset < 0 ? "West" : "East"));
-        Main.NewText(Language.GetTextValue("Mods.Terramon.PokemonCenter.Announce", Math.Abs(offset), direction),
-            new Color(255, 130, 150));
-    }
 
     public override void SaveData(TagCompound tag)
     {

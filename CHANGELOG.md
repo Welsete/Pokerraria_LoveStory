@@ -4,6 +4,9 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+- No more messages telling where the Gyms, the Pokémon Center and the League are when entering a world. Each place shows on your map once you've found it (got close enough to see it), with a message when you do. In Debug Mode the map still shows everything.
+- The chest at the end of Brock's dungeon opens once per player: the first time it's filled with the loot (even if someone else emptied it), after that it stays shut for you.
+
 - New entrance to Brock's Gym (new worlds): a rocky hill with its layers of stone, clay, sandstone and granite showing, and a fossil dig in its face where the skeleton of a huge ancient creature lies in the rock. A mine tunnel at ground level, shored with timber, with a minecart track and lanterns, leads into the hill to the rope down. Brock's Gym is also no longer built hundreds of tiles deep.
 
 - Fixed: entering a world with Brock's dungeon could crash the game (a stack overflow when the dungeon's traps were reset).

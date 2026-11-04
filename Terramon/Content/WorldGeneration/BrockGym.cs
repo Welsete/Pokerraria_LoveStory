@@ -163,7 +163,8 @@ public class BrockGymSystem : ModSystem
 }
 
 /// <summary>
-///     Shows the Boulder Badge on the map over Brock's Gym, and over its entrance at the surface.
+///     Shows the Boulder Badge on the map over Brock's Gym, and over its entrance at the surface, once the player has
+///     found them.
 /// </summary>
 public class BrockGymMapLayer : ModMapLayer
 {
@@ -174,11 +175,11 @@ public class BrockGymMapLayer : ModMapLayer
 
         var icon = ModContent.Request<Texture2D>("Terramon/Assets/Items/Badges/BoulderBadge").Value;
         var gym = BrockGymSystem.Interior.Center.ToVector2();
-        if (context.Draw(icon, gym, Color.White, new SpriteFrame(1, 1, 0, 0), 0.9f, 1.4f, Alignment.Center)
+        if (DiscoveryPlayer.Knows("BrockGym") && context.Draw(icon, gym, Color.White, new SpriteFrame(1, 1, 0, 0), 0.9f, 1.4f, Alignment.Center)
             .IsMouseOver)
             text = Language.GetTextValue("Mods.Terramon.BrockGym.MapName");
 
-        if (BrockGymSystem.SurfaceEntrance == Point.Zero)
+        if (BrockGymSystem.SurfaceEntrance == Point.Zero || !DiscoveryPlayer.Knows("BrockEntrance"))
             return;
         if (context.Draw(icon, BrockGymSystem.SurfaceEntrance.ToVector2(), Color.White * 0.8f,
                 new SpriteFrame(1, 1, 0, 0), 0.6f, 1f, Alignment.Bottom).IsMouseOver)
@@ -187,26 +188,11 @@ public class BrockGymMapLayer : ModMapLayer
 }
 
 /// <summary>
-///     Tells each player once per world where Brock's Gym is.
+///     Used to tell each player once per world where Brock's Gym is (now the place is found by going there, see DiscoveryPlayer; kept so old saves load).
 /// </summary>
 public class BrockGymPlayer : ModPlayer
 {
     private readonly HashSet<string> _toldWorlds = [];
-
-    public override void OnEnterWorld()
-    {
-        var world = Main.ActiveWorldFileData?.UniqueId.ToString();
-        if (!BrockGymSystem.Exists || string.IsNullOrEmpty(world) || !_toldWorlds.Add(world))
-            return;
-
-        var entrance = BrockGymSystem.SurfaceEntrance == Point.Zero
-            ? BrockGymSystem.Interior.Center
-            : BrockGymSystem.SurfaceEntrance;
-        var offset = entrance.X - Main.spawnTileX;
-        var direction = Language.GetTextValue("Mods.Terramon.Pedestals." + (offset < 0 ? "West" : "East"));
-        Main.NewText(Language.GetTextValue("Mods.Terramon.BrockGym.Announce", Math.Abs(offset), direction),
-            new Color(200, 170, 120));
-    }
 
     public override void SaveData(TagCompound tag)
     {

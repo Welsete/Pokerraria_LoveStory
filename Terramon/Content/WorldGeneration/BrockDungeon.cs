@@ -1,4 +1,5 @@
 using Terramon.Content.Items;
+using Terraria.ModLoader.IO;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Localization;
@@ -733,8 +734,21 @@ public static class BrockDungeon
     private static void Chest(int x, int f)
     {
         var index = WorldGen.PlaceChest(x, f - 1, TileID.Containers, false, 1); // Gold Chest
-        if (index < 0)
+        if (index >= 0)
+            FillLoot(index);
+    }
+
+    /// <summary>
+    ///     Puts the loot in a chest (empties it first). Also used when a player opens the chest for the first time and
+    ///     finds it empty (see <see cref="BrockDungeonChestTrap" />), so everyone gets it once.
+    /// </summary>
+    public static void FillLoot(int index)
+    {
+        var chest = Main.chest[index];
+        if (chest == null)
             return;
+        foreach (var item in chest.item)
+            item.TurnToAir();
         var stones = ModContent.GetContent<EvolutionaryItem>()
             .Where(i => i is not LinkingCord)
             .Select(i => i.Type)
@@ -764,7 +778,6 @@ public static class BrockDungeon
             (ItemID.Compass, 1),
             (ItemID.Rope, 100)
         };
-        var chest = Main.chest[index];
         var slot = 0;
         foreach (var (type, stack) in loot)
         {
@@ -774,6 +787,11 @@ public static class BrockDungeon
             chest.item[slot].stack = Math.Clamp(stack, 1, chest.item[slot].maxStack);
             slot++;
         }
+
+        if (Main.netMode != NetmodeID.MultiplayerClient)
+            return;
+        for (var i = 0; i < chest.item.Length; i++)
+            NetMessage.SendData(MessageID.SyncChestItem, -1, -1, null, index, i);
     }
 }
 
@@ -891,13 +909,14 @@ public class BrockDungeonDarts : ModSystem
 }
 
 /// <summary>
-///     Opening the chest at the end of Brock's dungeon brings boulders down from the dark ceiling of its room (at most
-///     every half minute).
+///     The chest at the end of Brock's dungeon opens once per player and world: the first time, it's filled with the
+///     loot if someone else already emptied it, and boulders come down from the dark ceiling; after that it stays shut
+///     for that player, so nobody piles up items.
 /// </summary>
 public class BrockDungeonChestTrap : ModPlayer
 {
     private int _lastChest = -1;
-    private static uint _lastTrap;
+    private readonly HashSet<string> _opened = []; // World ids
 
     public override void PostUpdate()
     {
@@ -905,16 +924,33 @@ public class BrockDungeonChestTrap : ModPlayer
             return;
         var opened = Player.chest >= 0 && Player.chest != _lastChest;
         _lastChest = Player.chest;
-        if (!opened || !BrockGymSystem.HasDungeon || Main.GameUpdateCount - _lastTrap < 60 * 30)
+        if (!opened || !BrockGymSystem.HasDungeon)
             return;
-        var chest = Main.chest[Player.chest];
+        var index = Player.chest;
+        var chest = Main.chest[index];
         if (chest == null)
             return;
         var room = BrockDungeon.ChestRoom(BrockGymSystem.SurfaceEntrance.X, BrockGymSystem.Interior.Bottom);
         if (!room.Contains(chest.x, chest.y))
             return;
 
-        _lastTrap = Main.GameUpdateCount;
+        var world = Main.ActiveWorldFileData?.UniqueId.ToString() ?? "";
+        if (!_opened.Add(world))
+        {
+            // Already opened once: it stays shut
+            Player.chest = -1;
+            _lastChest = -1;
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                NetMessage.SendData(MessageID.SyncPlayerChestIndex, -1, -1, null, Player.whoAmI, -1);
+            SoundEngine.PlaySound(SoundID.MenuClose);
+            Main.NewText(Language.GetTextValue("Mods.Terramon.BrockGym.ChestDone"), new Color(200, 170, 120));
+            return;
+        }
+
+        if (chest.item.All(i => i.IsAir))
+            BrockDungeon.FillLoot(index);
+        Main.NewText(Language.GetTextValue("Mods.Terramon.BrockGym.ChestOnce"), new Color(200, 170, 120));
+
         SoundEngine.PlaySound(SoundID.Item14, Player.Center);
         foreach (var dx in new[] { -6, -2, 2, 6 })
         {
@@ -922,6 +958,19 @@ public class BrockDungeonChestTrap : ModPlayer
             Projectile.NewProjectile(Player.GetSource_FromThis(), position, new Vector2(0f, 2f), ProjectileID.Boulder,
                 60, 10f, Main.myPlayer);
         }
+    }
+
+    public override void SaveData(TagCompound tag)
+    {
+        if (_opened.Count > 0)
+            tag["brockChest"] = _opened.ToList();
+    }
+
+    public override void LoadData(TagCompound tag)
+    {
+        _opened.Clear();
+        foreach (var world in tag.GetList<string>("brockChest"))
+            _opened.Add(world);
     }
 }
 

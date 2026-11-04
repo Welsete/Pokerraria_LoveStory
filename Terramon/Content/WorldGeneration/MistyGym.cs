@@ -130,7 +130,7 @@ public class MistyGymMapLayer : ModMapLayer
 {
     public override void Draw(ref MapOverlayDrawContext context, ref string text)
     {
-        if (!MistyGymSystem.Exists)
+        if (!MistyGymSystem.Exists || !DiscoveryPlayer.Knows("MistyGym"))
             return;
         var icon = ModContent.Request<Texture2D>("Terramon/Assets/Items/Badges/CascadeBadge").Value;
         if (context.Draw(icon, MistyGymSystem.Interior.Center.ToVector2(), Color.White, new SpriteFrame(1, 1, 0, 0),
@@ -140,23 +140,11 @@ public class MistyGymMapLayer : ModMapLayer
 }
 
 /// <summary>
-///     Tells each player once per world where Misty's Gym is.
+///     Used to tell each player once per world where Misty's Gym is (now the place is found by going there, see DiscoveryPlayer; kept so old saves load).
 /// </summary>
 public class MistyGymPlayer : ModPlayer
 {
     private readonly HashSet<string> _toldWorlds = [];
-
-    public override void OnEnterWorld()
-    {
-        var world = Main.ActiveWorldFileData?.UniqueId.ToString();
-        if (!MistyGymSystem.Exists || string.IsNullOrEmpty(world) || !_toldWorlds.Add(world))
-            return;
-
-        var offset = MistyGymSystem.Interior.Center.X - Main.spawnTileX;
-        var direction = Language.GetTextValue("Mods.Terramon.Pedestals." + (offset < 0 ? "West" : "East"));
-        Main.NewText(Language.GetTextValue("Mods.Terramon.MistyGym.Announce", Math.Abs(offset), direction),
-            new Color(110, 180, 255));
-    }
 
     public override void SaveData(TagCompound tag)
     {
