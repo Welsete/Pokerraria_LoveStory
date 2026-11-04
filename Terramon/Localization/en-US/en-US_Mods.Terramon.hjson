@@ -125,7 +125,88 @@ Battle: {
 	}
 }
 
+LoveStory: {
+	Title: "Journal"
+	Close: "Close"
+	TabNext: "Next step"
+	TabStory: "So far"
+	TabPages: "Pages ({0}/{1})"
+	Chapter1: "Chapter 1: Up to Misty's Gym"
+	ChapterEnd: "You reached the end of chapter 1 for now. The story goes on in a later version."
+	Progress: "Chapter progress: {0}/{1}"
+	PagesHint: "Diary pages are hidden in chests and dungeons. Reading one brings Story time: no enemies spawn for a minute."
+	NothingYet: "Nothing has happened yet. Read the first diary page, it's in your bag."
+	FoundPage: "You found the page: {0}"
+	PageMissing: "You haven't found this page yet."
+	NewPage: "New page in the journal: {0} (press J to open the journal)"
+	FirstPageHint: "There's a diary page in your bag, in your own handwriting. Use it to read it."
+	PageItem: "Diary page: {0}"
+	PageItemTooltip:
+		'''
+		Written in your own handwriting
+		Use to read it and keep it in the journal (J)
+		'''
+
+	Steps: {
+		Starter: {
+			Next: "Talk to Professor Oak and choose your first Pokémon."
+			Done: "You chose your first Pokémon."
+		}
+		Brock: {
+			Next: "Beat Brock at the Pewter Gym and earn the Boulder Badge."
+			Done: "You beat Brock and earned the Boulder Badge."
+		}
+		Misty: {
+			Next: "Beat Misty at the beach Gym and earn the Cascade Badge."
+			Done: "You beat Misty and earned the Cascade Badge."
+		}
+	}
+
+	Pages: {
+		Prologue: {
+			Title: "Prologue"
+			Text:
+				'''
+				If you're reading this, it worked.
+
+				I'm you, a few years older. I don't have time to explain everything: this world and Kanto are blending together, and someone I love got trapped halfway between them.
+
+				You don't know her yet. You will.
+
+				Talk to Professor Oak, choose your first Pokémon and follow the pages. I hid each one where only the two of us would look.
+				'''
+		}
+		Brock: {
+			Title: "Stone by stone"
+			Text:
+				'''
+				Stone by stone. That's how I learned not to give up.
+
+				She beat me here the first time, you know? Spent the whole afternoon laughing at me. I'd give anything to hear that laugh again.
+
+				In the dungeon, don't pull every lever. Only one opens the way.
+				'''
+		}
+		Misty: {
+			Title: "A crack in the sky"
+			Text:
+				'''
+				The water rises and falls, but the way goes on down below.
+
+				It was after Misty that I saw the first crack in the sky. When it happens to you, don't run from it.
+
+				She'll be on the other side.
+				'''
+		}
+	}
+}
+
 Buffs: {
+	StoryTime: {
+		DisplayName: "Story time"
+		Description: "No enemies spawn while you read"
+	}
+
 	PokemonCompanion: {
 		DisplayName: Pokémon Companion
 		Description: "{0} is following you around!"
@@ -492,6 +573,8 @@ GUI: {
 		PokemonCenterBuilt: The Pokémon Center was built where you were standing.
 		SpawnOnix: Spawn wild Onix
 		CallOak: Call Professor Oak
+		GiveDiaryPages: "Give diary pages"
+		ResetJournal: "Reset journal"
 		OakCalled: Professor Oak is on his way (you can hear his story again).
 		SpawnLucario: Spawn wild Lucario
 		SpawnVulpix: Spawn wild Vulpix
@@ -573,6 +656,8 @@ GUI: {
 			MoonLord: The Moon Lord
 		}
 		BadgesReset: All badges, the League run and the Hall of Fame were reset
+		DiaryPagesGiven: "You got {0} diary pages"
+		JournalReset: "Journal reset (the first page comes back next time you enter the world)"
 		BattlesCleared: All battles were ended
 	}
 
@@ -1634,6 +1719,7 @@ MegaStoneNames: {
 }
 
 Keybinds: {
+	Journal.DisplayName: "Journal (LoveStory)"
 	OpenSummary.DisplayName: Open Pokémon Summary
 	BattleLog.DisplayName: Battle History
 	ToggleParty.DisplayName: Party

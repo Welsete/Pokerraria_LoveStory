@@ -3,6 +3,7 @@ using Terramon.Content.Commands;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.LoveStory;
 using Terramon.Content.NPCs;
 using Terramon.Content.NPCs.Trainers;
 using Terramon.Content.WorldGeneration;
@@ -109,7 +110,9 @@ public sealed class AdminPanelUI : SmartUIState
             ("BuildMistyGym", BuildMistyGymHere),
             ("TeleportPokemonCenter", TeleportToPokemonCenter),
             ("BuildPokemonCenter", BuildPokemonCenterHere),
-            ("CallOak", CallProfessorOak)
+            ("CallOak", CallProfessorOak),
+            ("GiveDiaryPages", GiveDiaryPages),
+            ("ResetJournal", ResetJournal)
         ]),
         ("TabTerraria", [
             ("ToggleTime", ToggleTime),
@@ -393,6 +396,20 @@ public sealed class AdminPanelUI : SmartUIState
         if (active == null)
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"), TerramonCommand.ChatColorRed);
         return active;
+    }
+
+    private static void GiveDiaryPages()
+    {
+        var player = Main.LocalPlayer;
+        foreach (var id in Journal.Pages)
+            player.QuickSpawnItem(player.GetSource_GiftOrReward(), DiaryPage.ItemType(id));
+        Say("DiaryPagesGiven", Journal.Pages.Length);
+    }
+
+    private static void ResetJournal()
+    {
+        Main.LocalPlayer.GetModPlayer<JournalPlayer>().Reset();
+        Say("JournalReset");
     }
 
     private static void HealParty()

@@ -27,7 +27,7 @@ houver). Perguntas ainda sem resposta ficam no fim.
 - Capítulo 1: onde e como acontece cada encontro com a Aurora?
 - Capítulo 1: que time a Aurora usa nas batalhas?
 - Capítulo 1: qual é o gancho no fim (depois da Misty)?
-- Capítulo 1: o texto de cada página do diário.
+- Capítulo 1: o texto de cada página do diário. Rascunhos do Claude no jogo (Prólogo, "Pedra por pedra", "Rachadura no céu"), esperando o Welsete aprovar ou reescrever. Ficam em Localization, chave LoveStory.Pages.
 - Em que bioma fica cada Ginásio que ainda não tem prédio próprio?
 - Eventos (Equipe Rocket, invasão dos Spearow, Torre de Lavender): em que versão entram e se fazem parte da história do capítulo 1?
 - Chefes Pokémon no estilo Terraria (Gengar da Torre de Lavender, Mewtwo final em duas batalhas): ataques, fases e em que versão entram.

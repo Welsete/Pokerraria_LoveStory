@@ -125,7 +125,88 @@ Battle: {
 	}
 }
 
+LoveStory: {
+	Title: "Diário"
+	Close: "Fechar"
+	TabNext: "Próximo passo"
+	TabStory: "Até agora"
+	TabPages: "Páginas ({0}/{1})"
+	Chapter1: "Capítulo 1: Até o Ginásio da Misty"
+	ChapterEnd: "Você chegou ao fim do capítulo 1 por enquanto. A história continua numa próxima versão."
+	Progress: "Progresso do capítulo: {0}/{1}"
+	PagesHint: "As páginas do diário ficam escondidas em baús e masmorras. Ler uma delas traz a Hora da história: nenhum inimigo aparece por um minuto."
+	NothingYet: "Nada aconteceu ainda. Leia a primeira página do diário, que está na sua mochila."
+	FoundPage: "Você encontrou a página: {0}"
+	PageMissing: "Você ainda não encontrou esta página."
+	NewPage: "Nova página no diário: {0} (aperte J para abrir o diário)"
+	FirstPageHint: "Tem uma página de diário na sua mochila, escrita com a sua letra. Use-a para ler."
+	PageItem: "Página do diário: {0}"
+	PageItemTooltip:
+		'''
+		Escrita com a sua própria letra
+		Use para ler e guardar no diário (J)
+		'''
+
+	Steps: {
+		Starter: {
+			Next: "Fale com o Professor Carvalho e escolha seu primeiro Pokémon."
+			Done: "Você escolheu seu primeiro Pokémon."
+		}
+		Brock: {
+			Next: "Vença o Brock no Ginásio de Pewter e ganhe a Insígnia Rocha."
+			Done: "Você venceu o Brock e ganhou a Insígnia Rocha."
+		}
+		Misty: {
+			Next: "Vença a Misty no Ginásio da praia e ganhe a Insígnia Cascata."
+			Done: "Você venceu a Misty e ganhou a Insígnia Cascata."
+		}
+	}
+
+	Pages: {
+		Prologue: {
+			Title: "Prólogo"
+			Text:
+				'''
+				Se você está lendo isto, deu certo.
+
+				Eu sou você, alguns anos mais velho. Não tenho tempo de explicar tudo: este mundo e Kanto estão se misturando, e alguém que eu amo ficou presa no meio do caminho entre os dois.
+
+				Você ainda não conhece ela. Vai conhecer.
+
+				Fale com o Professor Carvalho, escolha seu primeiro Pokémon e siga as páginas. Escondi cada uma onde só nós dois procuraríamos.
+				'''
+		}
+		Brock: {
+			Title: "Pedra por pedra"
+			Text:
+				'''
+				Pedra por pedra. Foi assim que eu aprendi a não desistir.
+
+				Ela me venceu aqui na primeira vez, sabia? Passou a tarde inteira rindo da minha cara. Eu daria tudo para ouvir aquela risada de novo.
+
+				Na masmorra, não puxe todas as alavancas. Só uma abre o caminho.
+				'''
+		}
+		Misty: {
+			Title: "Rachadura no céu"
+			Text:
+				'''
+				A água sobe e desce, mas o caminho continua lá embaixo.
+
+				Foi depois da Misty que eu vi a primeira rachadura no céu. Quando acontecer com você, não fuja dela.
+
+				Ela vai estar do outro lado.
+				'''
+		}
+	}
+}
+
 Buffs: {
+	StoryTime: {
+		DisplayName: "Hora da história"
+		Description: "Nenhum inimigo aparece enquanto você lê"
+	}
+
 	PokemonCompanion: {
 		DisplayName: Pokémon Companheiro
 		Description: "{0} está seguindo você!"
@@ -492,6 +573,8 @@ GUI: {
 		PokemonCenterBuilt: O Centro Pokémon foi construído onde você estava.
 		SpawnOnix: Chamar Onix selvagem
 		CallOak: Chamar o Professor Carvalho
+		GiveDiaryPages: "Dar páginas do diário"
+		ResetJournal: "Zerar diário"
 		OakCalled: O Professor Carvalho está chegando (dá para ouvir a história de novo).
 		SpawnLucario: Chamar Lucario selvagem
 		SpawnVulpix: Chamar Vulpix selvagem
@@ -573,6 +656,8 @@ GUI: {
 			MoonLord: Senhor da Lua
 		}
 		BadgesReset: Insígnias, desafio da Liga e Hall da Fama foram zerados
+		DiaryPagesGiven: "Você recebeu {0} páginas do diário"
+		JournalReset: "Diário zerado (a primeira página volta na próxima vez que entrar no mundo)"
 		BattlesCleared: Todas as batalhas foram encerradas
 	}
 
@@ -1634,6 +1719,7 @@ MegaStoneNames: {
 }
 
 Keybinds: {
+	Journal.DisplayName: "Diário (LoveStory)"
 	OpenSummary.DisplayName: Abrir Resumo do Pokémon
 	BattleLog.DisplayName: Histórico da Batalha
 	ToggleParty.DisplayName: Equipe

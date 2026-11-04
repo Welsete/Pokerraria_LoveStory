@@ -4,6 +4,9 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+- LoveStory journal (J): "Next step" shows where to go in chapter 1, "So far" what already happened, and "Pages" the diary pages found. A new character starts with the first page (the prologue) in the bag.
+- Diary pages: using one reads it, keeps it in the journal and starts Story time (no enemies or wild Pokémon spawn for a minute, and while the journal is open). The Brock and Misty pages will go in the Gym dungeons; for now they come from the test panel (League tab: "Give diary pages", "Reset journal").
+
 ## 0.4.0
 
 - Test panel: "Teleport on map" (right click anywhere on the full screen map to go there, landing above ground), and in Debug Mode the map marks the Gym and League pedestals.

@@ -37,8 +37,10 @@ O que está em `## Next` do CHANGELOG, testado e publicado.
 Decisões em `docs/DECISOES.md` (grill-me de 2026-11-03).
 
 - [x] Definir o enredo do capítulo 1: o jogador do futuro, a Aurora presa entre os mundos [grill-me]
-- [ ] Menu de diário: páginas encontradas, o que já aconteceu e para onde ir [programador-batalha]
-- [ ] Páginas do diário como itens em baús e masmorras, com o efeito "Hora da história" [programador-batalha + roteirista-lovestory]
+- [x] Menu de diário (J): páginas encontradas, o que já aconteceu e para onde ir [programador-batalha]
+- [x] Páginas do diário como itens, com o efeito "Hora da história" (Prólogo, Brock, Misty)
+- [ ] Colocar as páginas do Brock e da Misty nos baús das masmorras (quando as masmorras existirem) [construtor-mundo]
+- [ ] Encontros com a Aurora entram como passos do capítulo em `Journal.Chapter1` [programador-batalha]
 - [ ] Aurora: NPC rival com sprite, dois encontros com batalha (?) onde, quando e com que time [npcs-e-sprites + roteirista-lovestory]
 - [ ] Masmorra curta do Brock (3 ou 4 salas, alavancas: só uma abre, as outras soltam pedras) [construtor-mundo]
 - [ ] Masmorra curta da Misty (comportas que mudam o nível da água) [construtor-mundo]

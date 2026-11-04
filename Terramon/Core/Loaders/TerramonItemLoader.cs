@@ -113,7 +113,11 @@ internal sealed class TerramonItemRegistration : ModSystem
             // Fishing rods
             .Add<OldRod>()
             .Add<GoodRod>()
-            .Add<SuperRod>();
+            .Add<SuperRod>()
+            // LoveStory diary pages
+            .Add<DiaryPagePrologue>()
+            .Add<DiaryPageBrock>()
+            .Add<DiaryPageMisty>();
 
         // Add Gym badges and Pokémon League challenge items (league)
         TerramonItemRegistry

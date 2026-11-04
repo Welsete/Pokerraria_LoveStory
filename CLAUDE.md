@@ -16,6 +16,7 @@ de design já tomadas, alimentadas pelo grill-me) e [CHANGELOG.md](CHANGELOG.md)
 | `Content/NPCs/Trainers/` | Líderes, Elite dos Quatro e Campeão (`GymLeader`, `LeagueMember`, `TrainerNPC`, um arquivo por treinador) |
 | `Content/NPCs/Town/` | Enfermeira Joy, máquina de cura, Pokémon do Centro, vendedor |
 | `Content/NPCs/ProfessorOak.cs` | Professor Carvalho e a jornada inicial |
+| `Content/LoveStory/` | História: `Journal` (páginas e passos do capítulo), `JournalPlayer` (o que o jogador leu, salvo no personagem); a tela é `Content/GUI/JournalUI.cs` (tecla J), as páginas são `Content/Items/KeyItems/DiaryPage.cs` e a Hora da história é `Content/Buffs/StoryTime.cs`. Textos em `Localization`, chave `LoveStory` |
 | `Content/WorldGeneration/` | Estruturas geradas no mundo: `Blueprint.cs` (lê designs do Blueprint Builder), `PokemonCenter`, `MistyGym`, `BrockGym`, `GymBuildings` |
 | `Content/Pokemon/*.hjson` | Dados de cada Pokémon |
 | `Assets/Moves/` | Animações desenhadas de golpe: `<Golpe>.png` (tira de frames) + `<Golpe>.txt` (parâmetros, ver `MoveVisuals.cs`) |
