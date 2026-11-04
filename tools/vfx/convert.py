@@ -177,6 +177,29 @@ def frames_of(a, layout):
     return [a[y0:y1, x0:x1] for x0, y0, x1, y1 in layout]
 
 
+# Sheets that came in the wrong colors (the queue gave them the palette of only one of their types): each pixel is
+# moved to the color of the same brightness in this ramp, darkest (outline) to lightest
+RECOLOR = {
+    "MuddyWater": ["#1C1108", "#36220F", "#52371A", "#6E4E28", "#8E6A3E", "#B48E5E"],  # silt brown
+    "PetalBlizzard": ["#3E0F2A", "#7A1F4E", "#C23D7E", "#F07AAE", "#FFB8D6", "#FFF0F6"],  # flower pink
+}
+
+
+def recolor(strip, ramp):
+    rgb = strip[..., :3].astype(float)
+    lum = rgb @ np.array([0.299, 0.587, 0.114])
+    on = strip[..., 3] > 0
+    if not on.any():
+        return strip
+    # spread the brightness of this sheet over the whole ramp
+    lo, hi = np.percentile(lum[on], 2), np.percentile(lum[on], 98)
+    t = np.clip((lum - lo) / max(hi - lo, 1), 0, 0.999)
+    cols = np.array([[int(c[i:i + 2], 16) for i in (1, 3, 5)] for c in ramp])
+    out = strip.copy()
+    out[..., :3][on] = cols[(t[on] * len(ramp)).astype(int)]
+    return out
+
+
 def main():
     only = set(sys.argv[3].split(",")) if len(sys.argv) > 3 else None
     for file, move, layout, k, settings in SHEETS:
@@ -192,6 +215,8 @@ def main():
         for i, f in enumerate(fr):
             y, x = (h - f.shape[0]) // 2, (w - f.shape[1]) // 2
             strip[y:y + f.shape[0], i * w + x:i * w + x + f.shape[1]] = f.clip(0, 255).astype(np.uint8)
+        if move in RECOLOR:
+            strip = recolor(strip, RECOLOR[move])
         Image.fromarray(strip, "RGBA").save(f"{OUT}/{move}.png", optimize=True)
         lines = [f"Frames {len(fr)}"] + [f"{key} {val}" for key, val in settings.items()] + ["Scale 1"]
         open(f"{OUT}/{move}.txt", "w").write("\n".join(lines) + "\n")
