@@ -4,6 +4,8 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+- Generated art for 30 more moves: Absorb, Mega Drain, Giga Drain, Leech Seed, Ingrain, Grassy Terrain, Leaf Storm, Petal Dance, Vine Whip, Thunder Fang, Electric Terrain, Magnetic Flux, Zap Cannon, Dragon Breath, Dragon Tail, Outrage, Curse, Destiny Bond, Lick, Shadow Sneak, Bite, Crunch, Fling, Memento, Switcheroo, Bone Rush, Bonemerang, Bulldoze, Gyro Ball and Iron Tail.
+
 - No more messages telling where the Gyms, the Pokémon Center and the League are when entering a world. Each place shows on your map once you've found it (got close enough to see it), with a message when you do. In Debug Mode the map still shows everything.
 - The chest at the end of Brock's dungeon opens once per player: the first time it's filled with the loot (even if someone else emptied it), after that it stays shut for you.
 

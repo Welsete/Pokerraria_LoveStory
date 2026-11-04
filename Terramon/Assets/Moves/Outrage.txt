@@ -1,0 +1,4 @@
+Frames 16
+Travel 0
+Ticks 3
+Scale 1

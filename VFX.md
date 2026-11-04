@@ -39,19 +39,13 @@ Quando um golpe do gerador fica pronto, a animação dele substitui a versão de
 
 ## Situação
 
-416 golpes no catálogo: **92** com arte própria, **204** desenhados por código, **120** esperando o gerador.
+416 golpes no catálogo: **122** com arte própria, **204** desenhados por código, **90** esperando o gerador.
 
 ## Faltam: para o gerador de imagem
 
 Em ordem de tipo. Entre parênteses, o arquivo de prompts. Os marcados com * já têm uma versão provisória em código (o Welsete achou fraca) e são a **prioridade**.
 
-- **Planta** (9, `planta.md`): Vine Whip, Absorb, Giga Drain, Leaf Storm, Mega Drain, Petal Dance, Grassy Terrain, Ingrain, Leech Seed
-- **Elétrico** (4, `eletrico.md`): Thunder Fang, Zap Cannon, Electric Terrain, Magnetic Flux
-- **Dragão** (3, `dragao.md`): Dragon Tail, Outrage, Dragon Breath
-- **Fantasma** (4, `fantasma.md` · fundo verde): Lick, Shadow Sneak, Curse, Destiny Bond
-- **Sombrio** (5, `sombrio.md` · fundo verde): Bite, Crunch, Fling, Memento, Switcheroo
-- **Aço** (2, `aco.md`): Gyro Ball, Iron Tail
-- **Terrestre** (9, `terrestre.md`): Bone Rush, Bonemerang, Bulldoze, Dig, Drill Run, Earthquake, Fissure, Sand Tomb, Spikes
+- **Terrestre** (6, `terrestre.md`): Dig, Drill Run, Earthquake, Fissure, Sand Tomb, Spikes
 - **Pedra** (7, `pedra.md`): Head Smash, Rollout, Stone Edge, Ancient Power, Sandstorm, Stealth Rock, Wide Guard
 - **Venenoso** (6, `venenoso.md` · fundo verde): Gunk Shot, Poison Fang, Acid Spray, Belch, Sludge Wave, Toxic Spikes
 - **Inseto** (4, `inseto.md`): Bug Bite, Leech Life, U-turn, String Shot
@@ -86,14 +80,14 @@ Os prompts de todos esses, prontos para copiar, estão em [art/vfx/FILA_GERADOR.
 
 - **Fogo** (19): Blaze Kick, Fire Fang, Fire Punch, Flame Charge, Flame Wheel, Flare Blitz, Heat Crash, Ember, Eruption, Fire Blast, Fire Spin, Flamethrower, Heat Wave, Incinerate, Inferno, Lava Plume, Overheat, Sunny Day, Will-O-Wisp
 - **Água** (12): Aqua Jet, Aqua Tail, Dive, Waterfall, Wave Crash, Bubble Beam, Hydro Pump, Muddy Water, Surf, Water Gun, Whirlpool, Rain Dance
-- **Planta** (4): Petal Blizzard, Power Whip, Razor Leaf, Solar Beam
-- **Elétrico** (5): Thunder Punch, Charge Beam, Thunder, Thunder Shock, Thunderbolt
+- **Planta** (13): Petal Blizzard, Power Whip, Razor Leaf, Vine Whip, Absorb, Giga Drain, Leaf Storm, Mega Drain, Petal Dance, Solar Beam, Grassy Terrain, Ingrain, Leech Seed
+- **Elétrico** (9): Thunder Fang, Thunder Punch, Charge Beam, Thunder, Thunder Shock, Thunderbolt, Zap Cannon, Electric Terrain, Magnetic Flux
 - **Gelo** (15): Ice Fang, Ice Punch, Ice Shard, Icicle Crash, Icicle Spear, Aurora Beam, Blizzard, Freeze Dry, Ice Beam, Icy Wind, Powder Snow, Sheer Cold, Haze, Mist, Snowscape
-- **Dragão** (5): Dragon Claw, Dragon Rush, Dragon Pulse, Twister, Dragon Dance
-- **Fantasma** (3): Rage Fist, Shadow Punch, Shadow Ball
-- **Sombrio** (2): Night Slash, Sucker Punch
-- **Aço** (3): Bullet Punch, Meteor Mash, Flash Cannon
-- **Terrestre** (1): Stomping Tantrum
+- **Dragão** (8): Dragon Claw, Dragon Rush, Dragon Tail, Outrage, Dragon Breath, Dragon Pulse, Twister, Dragon Dance
+- **Fantasma** (7): Lick, Rage Fist, Shadow Punch, Shadow Sneak, Shadow Ball, Curse, Destiny Bond
+- **Sombrio** (7): Bite, Crunch, Fling, Night Slash, Sucker Punch, Memento, Switcheroo
+- **Aço** (5): Bullet Punch, Gyro Ball, Iron Tail, Meteor Mash, Flash Cannon
+- **Terrestre** (4): Bone Rush, Bonemerang, Bulldoze, Stomping Tantrum
 - **Pedra** (1): Rock Slide
 - **Lutador** (15): Axe Kick, Brick Break, Close Combat, Double Kick, Drain Punch, Dynamic Punch, Focus Punch, Force Palm, Hammer Arm, High Jump Kick, Low Kick, Low Sweep, Mach Punch, Rock Smash, Superpower
 - **Fada** (1): Dazzling Gleam

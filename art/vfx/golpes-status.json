@@ -262,7 +262,7 @@
  {
   "tipo": "Planta",
   "golpe": "Vine Whip",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Planta",
@@ -273,7 +273,7 @@
  {
   "tipo": "Planta",
   "golpe": "Absorb",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Planta",
@@ -284,12 +284,12 @@
  {
   "tipo": "Planta",
   "golpe": "Giga Drain",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Planta",
   "golpe": "Leaf Storm",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Planta",
@@ -300,12 +300,12 @@
  {
   "tipo": "Planta",
   "golpe": "Mega Drain",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Planta",
   "golpe": "Petal Dance",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Planta",
@@ -321,17 +321,17 @@
  {
   "tipo": "Planta",
   "golpe": "Grassy Terrain",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Planta",
   "golpe": "Ingrain",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Planta",
   "golpe": "Leech Seed",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Planta",
@@ -378,7 +378,7 @@
  {
   "tipo": "Elétrico",
   "golpe": "Thunder Fang",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Elétrico",
@@ -426,7 +426,7 @@
  {
   "tipo": "Elétrico",
   "golpe": "Zap Cannon",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Elétrico",
@@ -443,7 +443,7 @@
  {
   "tipo": "Elétrico",
   "golpe": "Electric Terrain",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Elétrico",
@@ -454,7 +454,7 @@
  {
   "tipo": "Elétrico",
   "golpe": "Magnetic Flux",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Elétrico",
@@ -550,7 +550,7 @@
  {
   "tipo": "Dragão",
   "golpe": "Dragon Tail",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Dragão",
@@ -561,12 +561,12 @@
  {
   "tipo": "Dragão",
   "golpe": "Outrage",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Dragão",
   "golpe": "Dragon Breath",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Dragão",
@@ -592,7 +592,7 @@
  {
   "tipo": "Fantasma",
   "golpe": "Lick",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Fantasma",
@@ -607,7 +607,7 @@
  {
   "tipo": "Fantasma",
   "golpe": "Shadow Sneak",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Fantasma",
@@ -635,12 +635,12 @@
  {
   "tipo": "Fantasma",
   "golpe": "Curse",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Fantasma",
   "golpe": "Destiny Bond",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Fantasma",
@@ -657,17 +657,17 @@
  {
   "tipo": "Sombrio",
   "golpe": "Bite",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Sombrio",
   "golpe": "Crunch",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Sombrio",
   "golpe": "Fling",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Sombrio",
@@ -730,7 +730,7 @@
  {
   "tipo": "Sombrio",
   "golpe": "Memento",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Sombrio",
@@ -741,7 +741,7 @@
  {
   "tipo": "Sombrio",
   "golpe": "Switcheroo",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Sombrio",
@@ -763,7 +763,7 @@
  {
   "tipo": "Aço",
   "golpe": "Gyro Ball",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Aço",
@@ -780,7 +780,7 @@
  {
   "tipo": "Aço",
   "golpe": "Iron Tail",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Aço",
@@ -819,17 +819,17 @@
  {
   "tipo": "Terrestre",
   "golpe": "Bone Rush",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Terrestre",
   "golpe": "Bonemerang",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Terrestre",
   "golpe": "Bulldoze",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Terrestre",

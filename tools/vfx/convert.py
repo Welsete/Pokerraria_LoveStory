@@ -96,6 +96,36 @@ SHEETS = [
     ("lote4_whirlpool.png", "Whirlpool", (4, 2), 3, dict(Travel=0, Ticks=4)),
     # Wave Crash came as a 4x4 sheet of loose pieces: only the wave rising, crashing and the spray are used
     ("lote4_wave_crash.png", "WaveCrash", [(0, 0, 256, 256), (256, 0, 512, 256), (512, 0, 768, 256), (768, 0, 1024, 256), (0, 256, 256, 512), (512, 256, 768, 512), (512, 512, 768, 768), (768, 512, 1024, 768), (256, 768, 512, 1024), (512, 768, 768, 1024)], 2, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote5_absorb.png", "Absorb", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote5_giga_drain.png", "GigaDrain", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote5_grassy_terrain.png", "GrassyTerrain", (4, 2), 3, dict(Travel=0, Ticks=5, At="middle")),
+    ("lote5_ingrain.png", "Ingrain", (4, 2), 3, dict(Travel=0, Ticks=5, At="user")),
+    ("lote5_leaf_storm.png", "LeafStorm", (4, 4), 2, dict(Travel=0, Ticks=3, Face=1)),
+    ("lote5_leech_seed.png", "LeechSeed", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote5_mega_drain.png", "MegaDrain", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote5_petal_dance.png", "PetalDance", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote5_thunder_fang.png", "ThunderFang", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote5_vine_whip.png", "VineWhip", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote6_curse.png", "Curse", (4, 2), 3, dict(Travel=0, Ticks=5, At="user")),
+    ("lote6_destiny_bond.png", "DestinyBond", (4, 2), 3, dict(Travel=0, Ticks=5, At="user")),
+    ("lote6_dragon_breath.png", "DragonBreath", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1, At="middle")),
+    ("lote6_dragon_tail.png", "DragonTail", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote6_electric_terrain.png", "ElectricTerrain", (4, 2), 3, dict(Travel=0, Ticks=5, At="middle")),
+    ("lote6_lick.png", "Lick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote6_magnetic_flux.png", "MagneticFlux", (4, 2), 3, dict(Travel=0, Ticks=5, At="user")),
+    ("lote6_outrage.png", "Outrage", (4, 4), 2, dict(Travel=0, Ticks=3)),
+    ("lote6_shadow_sneak.png", "ShadowSneak", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote6_zap_cannon.png", "ZapCannon", (4, 2), 3, dict(Travel=2, Ticks=4)),
+    ("lote7_bite.png", "Bite", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote7_bone_rush.png", "BoneRush", (4, 2), 3, dict(Travel=0, Ticks=3, Face=1)),
+    ("lote7_bonemerang.png", "Bonemerang", (4, 2), 3, dict(Travel=4, Ticks=3)),
+    ("lote7_bulldoze.png", "Bulldoze", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote7_crunch.png", "Crunch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote7_fling.png", "Fling", (4, 2), 3, dict(Travel=1, Ticks=4, Face=1)),
+    ("lote7_gyro_ball.png", "GyroBall", (4, 2), 3, dict(Travel=0, Ticks=3)),
+    ("lote7_iron_tail.png", "IronTail", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote7_memento.png", "Memento", (4, 2), 3, dict(Travel=0, Ticks=5)),
+    ("lote7_switcheroo.png", "Switcheroo", (4, 2), 3, dict(Travel=0, Ticks=4, At="middle")),
     # High Jump Kick keeps the kicking silhouette (Welsete liked it); Mach Punch came with a boxer on the left of each
     # frame (2 columns x 4 rows): only the part right of him is cut
     ("lote2_high_jump_kick.png", "HighJumpKick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
@@ -105,7 +135,8 @@ SHEETS = [
 
 # Sheets drawn on a green background instead of magenta. Purple and pink types (Ghost, Psychic, Poison, Dark, Fairy)
 # must use green: the magenta key would erase their own colors (72% of a Ghost-palette sheet was lost in a test).
-GREEN_KEY = {"lote1_rage_fist.png", "lote1_shadow_punch.png", "lote1_sucker_punch.png"}
+GREEN_KEY = {"lote1_rage_fist.png", "lote1_shadow_punch.png", "lote1_sucker_punch.png",
+             "lote6_curse.png", "lote6_destiny_bond.png", "lote6_lick.png", "lote6_shadow_sneak.png", "lote7_bite.png", "lote7_crunch.png", "lote7_fling.png", "lote7_memento.png", "lote7_switcheroo.png"}
 
 
 def load(path, key="magenta"):
@@ -200,12 +231,23 @@ def recolor(strip, ramp):
     return out
 
 
+def despill(a):
+    """Green left in the art by a green background (smoke or chains blended with it): no pixel may be greener than its
+    red or blue, so those parts turn back to gray or purple. Only for GREEN_KEY sheets (purple and dark types)."""
+    a = a.copy()
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    a[..., 1] = np.minimum(g, np.maximum(r, b))
+    return a
+
+
 def main():
     only = set(sys.argv[3].split(",")) if len(sys.argv) > 3 else None
     for file, move, layout, k, settings in SHEETS:
         if only and move not in only:
             continue
         a = load(f"{SRC}/{file}", "green" if file in GREEN_KEY else "magenta")
+        if file in GREEN_KEY:
+            a = despill(a)
         fr = [shrink(f, k) for f in frames_of(a, layout)]
         w = max(f.shape[1] for f in fr)
         h = max(f.shape[0] for f in fr)
