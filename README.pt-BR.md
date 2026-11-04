@@ -12,6 +12,7 @@
 <img src="https://img.shields.io/badge/Pok%C3%A9mon-151%20%2B%20Lucario-b8323a?style=for-the-badge" alt="151 Pokémon">
 <img src="https://img.shields.io/badge/Idiomas-PT--BR%20%7C%20EN-3f7a35?style=for-the-badge" alt="PT-BR e EN">
 <img src="https://img.shields.io/badge/Licen%C3%A7a-GPL--3.0-555?style=for-the-badge" alt="GPL-3.0">
+<a href="https://ko-fi.com/welsete"><img src="https://img.shields.io/badge/Ko--fi-apoiar-ff5e5b?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-fi"></a>
 
 <br><br>
 
@@ -236,6 +237,13 @@ Ligue o **Modo Debug** nas configurações do mod e aperte <kbd>F8</kbd> para ab
 - Arte original do **Pokerraria: LoveStory** para o Brock, os itens para segurar, o Onix, o Professor Carvalho e as animações de golpes.
 
 Pokémon é © Nintendo, Game Freak e The Pokémon Company. Este é um projeto de fã, gratuito e sem fins comerciais, sem ligação com essas empresas.
+
+## ☕ Apoie o desenvolvedor
+
+O Pokerraria é e sempre será gratuito, com tudo liberado para todo mundo: nada pago, sem recompensas, sem metas.
+Se quiser pagar um café para o desenvolvedor, é totalmente opcional:
+
+<a href="https://ko-fi.com/welsete"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Apoie o Welsete no Ko-fi"></a>
 
 ## 🤝 Contribuindo
 

@@ -238,6 +238,13 @@ Turn on **Debug Mode** in the mod's settings and press <kbd>F8</kbd> for the tes
 
 Pokémon is © Nintendo, Game Freak and The Pokémon Company. This is a free, non-commercial fan project and is not affiliated with them.
 
+## ☕ Support the developer
+
+Pokerraria is and will always be free, with everything in it for everyone: no paid content, no rewards, no goals.
+If you'd like to buy the developer a coffee, it's entirely optional:
+
+<a href="https://ko-fi.com/welsete"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support Welsete on Ko-fi"></a>
+
 ## 🤝 Contributing
 
 Found a bug or have an idea? Open an [issue](https://github.com/Welsete/Pokerraria_LoveStory/issues).
