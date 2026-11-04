@@ -478,7 +478,8 @@ public sealed class AdminPanelUI : SmartUIState
     ///     Every move that has its own drawn animation (Assets/Moves), by name.
     /// </summary>
     private static MoveID[] SpriteMoves => Enum.GetValues<MoveID>()
-        .Where(m => m != MoveID.None && ModContent.HasAsset($"Terramon/Assets/Moves/{m}"))
+        .Where(m => m != MoveID.None && (ModContent.HasAsset($"Terramon/Assets/Moves/{m}") ||
+                                         ModContent.HasAsset($"Terramon/Assets/Moves/Charge/{m}")))
         .Distinct()
         .OrderBy(m => MoveLearnUI.MoveName(m))
         .ToArray();

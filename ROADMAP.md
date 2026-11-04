@@ -27,7 +27,7 @@ O que está em `## Next` do CHANGELOG, testado e publicado.
 - [x] Primeiro lote animado: Water Gun, Hydro Pump, Bubble Beam, Aqua Jet, Thunder Shock, Thunderbolt,
       Thunder Punch e Razor Leaf [animador-vfx]
 - [ ] Recortar, animar e testar cada um no painel F8 [animador-vfx]
-- [ ] Golpes de dois turnos com animação de carga (Solar Beam já serve de modelo: Fly, Dig, Skull Bash...)
+- [x] Golpes de dois turnos com animação de carga (Solar Beam já serve de modelo: Fly, Dig, Skull Bash...)
       [programador-batalha + animador-vfx]
 - [x] Golpes básicos desenhados por código, nas cores do tipo (232 golpes; regra em VFX.md) [animador-vfx]
 - [ ] Gerar os golpes avançados que faltam (lista em VFX.md) [Welsete + animador-vfx]

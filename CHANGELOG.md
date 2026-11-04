@@ -4,6 +4,8 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+- Two-turn moves now show their charging turn: Fly and Bounce rise in a gust, Dig throws up dirt and opens a hole, Dive sends up a water spout, Phantom Force and Shadow Force sink into ghostly smoke, and Skull Bash, Sky Attack, Razor Wind, Solar Beam, Solar Blade, Meteor Beam, Geomancy, Electro Shot, Freeze Shock and Ice Burn gather energy on the user. In the test panel these moves play their charging turn first.
+
 - LoveStory journal (J), drawn as an open book: the contents list the diary pages with a progress bar, where to go next in chapter 1 and what already happened. Each page opens with its own picture (a black silhouette until it is found) and its text, with arrows to turn the pages. A new character starts with the first page (the prologue) in the bag.
 - Diary pages: using one reads it, keeps it in the journal and starts Story time (no enemies or wild Pokémon spawn for a minute, and while the journal is open). The Brock and Misty pages will go in the Gym dungeons; for now they come from the test panel (League tab: "Give diary pages", "Reset journal").
 

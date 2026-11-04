@@ -577,6 +577,7 @@ GUI: {
 		PokemonCenterBuilt: O Centro Pokémon foi construído onde você estava.
 		SpawnOnix: Chamar Onix selvagem
 		CallOak: Chamar o Professor Carvalho
+		ChargeTurn: "(turno de carga)"
 		GiveDiaryPages: "Dar páginas do diário"
 		ResetJournal: "Zerar diário"
 		OakCalled: O Professor Carvalho está chegando (dá para ouvir a história de novo).

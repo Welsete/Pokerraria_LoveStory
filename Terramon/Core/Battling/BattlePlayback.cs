@@ -929,7 +929,7 @@ public sealed class BattlePlayback : ModSystem
     private static int HitDelay(Step move)
     {
         if (move.Still)
-            return StillHitDelay;
+            return Math.Max(StillHitDelay, MoveVisuals.ChargeAnimationTicks(move.MoveId));
         var delay = Terramon.DatabaseV2.GetMove(move.MoveId)?.Category switch
         {
             MoveCategory.Physical => PhysicalHitDelay,

@@ -577,6 +577,7 @@ GUI: {
 		PokemonCenterBuilt: The Pokémon Center was built where you were standing.
 		SpawnOnix: Spawn wild Onix
 		CallOak: Call Professor Oak
+		ChargeTurn: "(charging turn)"
 		GiveDiaryPages: "Give diary pages"
 		ResetJournal: "Reset journal"
 		OakCalled: Professor Oak is on his way (you can hear his story again).

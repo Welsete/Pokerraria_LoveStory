@@ -28,7 +28,7 @@ Outros projetos: `TmonRuntimes/` (mod dependência com o runtime do Showdown), `
 
 ## Ferramentas (`tools/`)
 
-- `tools/vfx/convert.py` e `tools/vfx/beams.py`: transformam as spritesheets geradas no Gemini (fundo magenta
+- `tools/vfx/draw_charge_moves.py`: turno de carga dos golpes de dois turnos (`Assets/Moves/Charge/<MoveID>.png`, toca no usuário quando o Showdown manda o golpe "parado"). `tools/vfx/convert.py` e `tools/vfx/beams.py`: transformam as spritesheets geradas no Gemini (fundo magenta
   `#FF00FF`) nas tiras de frames de `Assets/Moves/`. Cada golpe novo vira uma linha na lista `SHEETS`.
 - `tools/sprites/cut_frames.py`: corta frames de NPC. `tools/structures/*.py`: estruturas. `tools/logo/logo.py`.
 - `tools/build/build_local.sh`: compila o mod no shell Linux do PC e copia os `.tmod` para a pasta Mods.

@@ -18,6 +18,8 @@ namespace Terramon.Core.Battling;
 ///     <c>Charge N</c>: the first N frames play on the user before anything flies (Solar Beam gathering light).
 ///     <c>Beam A B</c>: frames A to B are beams whose tip is at the frame's center; they are stretched and turned so
 ///     the beam goes all the way from the user to the target.
+///     Two-turn moves (Fly, Dig, Skull Bash...) can also have <c>Assets/Moves/Charge/&lt;MoveID name&gt;.png</c>, same
+///     format: it plays on the user during the charging turn, which otherwise shows nothing.
 /// </summary>
 public sealed class MoveVisuals : ModSystem
 {
@@ -31,6 +33,7 @@ public sealed class MoveVisuals : ModSystem
         public PokemonType Type;
         public MoveCategory Category;
         public bool Miss;
+        public bool ChargeTurn;
         public int Time;
         public int Duration;
         public MoveSprite Sprite;
@@ -67,6 +70,7 @@ public sealed class MoveVisuals : ModSystem
 
     private static readonly List<Effect> Effects = [];
     private static readonly Dictionary<ushort, MoveSprite> Sprites = [];
+    private static readonly Dictionary<ushort, MoveSprite> ChargeSprites = [];
 
     public override void Load()
     {
@@ -77,6 +81,7 @@ public sealed class MoveVisuals : ModSystem
     public override void Unload()
     {
         Sprites.Clear();
+        ChargeSprites.Clear();
     }
 
     /// <summary>
@@ -86,10 +91,26 @@ public sealed class MoveVisuals : ModSystem
     {
         if (Sprites.TryGetValue(moveId, out var cached))
             return cached;
+        return Sprites[moveId] = LoadSprite("Assets/Moves/" + (MoveID)moveId);
+    }
+
+    /// <summary>
+    ///     The drawn animation of the charging turn of a two-turn move, if it has one. It always plays on the user.
+    /// </summary>
+    private static MoveSprite ChargeSpriteFor(ushort moveId)
+    {
+        if (ChargeSprites.TryGetValue(moveId, out var cached))
+            return cached;
+        var sprite = LoadSprite("Assets/Moves/Charge/" + (MoveID)moveId);
+        if (sprite != null)
+            sprite.At = "user";
+        return ChargeSprites[moveId] = sprite;
+    }
+
+    private static MoveSprite LoadSprite(string path)
+    {
         MoveSprite sprite = null;
-        var name = ((MoveID)moveId).ToString();
         var mod = Terramon.Instance;
-        var path = "Assets/Moves/" + name;
         if (ModContent.HasAsset($"Terramon/{path}"))
         {
             sprite = new MoveSprite { Texture = mod.Assets.Request<Texture2D>(path) };
@@ -123,7 +144,6 @@ public sealed class MoveVisuals : ModSystem
             sprite.Travel = Math.Min(sprite.Travel, sprite.Frames - 1 - sprite.Charge);
         }
 
-        Sprites[moveId] = sprite;
         return sprite;
     }
 
@@ -133,17 +153,28 @@ public sealed class MoveVisuals : ModSystem
     public static int AnimationTicks(ushort moveId) => Main.dedServ ? 0 : SpriteFor(moveId)?.Duration ?? 0;
 
     /// <summary>
+    ///     How long the charging-turn animation of a two-turn move takes, or 0 if it has none.
+    /// </summary>
+    public static int ChargeAnimationTicks(ushort moveId) => Main.dedServ ? 0 : ChargeSpriteFor(moveId)?.Duration ?? 0;
+
+    /// <summary>
     ///     Starts the animation of a move. <paramref name="still" /> moves (e.g. the charging turn of Solar Beam) have
     ///     no animation in the games either.
     /// </summary>
     public static void Play(BattleSide userSide, ushort moveId, bool still, bool miss)
     {
-        if (Main.dedServ || still || userSide?.Provider == null)
+        if (Main.dedServ || userSide?.Provider == null)
             return;
 
         var move = Terramon.DatabaseV2.GetMove(moveId);
         if (move == null)
             return;
+
+        if (still)
+        {
+            PlayCharge(userSide, moveId, move.Type);
+            return;
+        }
 
         PokemonAnimations.PlayMove(userSide.Provider, moveId, move.Category, miss);
 
@@ -171,7 +202,27 @@ public sealed class MoveVisuals : ModSystem
         Effects.Add(effect);
     }
 
-    private static readonly Queue<(ushort Move, string Label)> Showcase = [];
+    /// <summary>
+    ///     The charging turn of a two-turn move (still in Showdown): its own animation on the user, when it has one.
+    /// </summary>
+    private static void PlayCharge(BattleSide userSide, ushort moveId, PokemonType type)
+    {
+        if (ChargeSpriteFor(moveId) is not { } sprite || Position(userSide.Provider) is not { } from)
+            return;
+        Effects.Add(new Effect
+        {
+            User = userSide.Provider,
+            Target = userSide.Opposite?.Provider,
+            Type = type,
+            Category = MoveCategory.Status,
+            ChargeTurn = true,
+            Sprite = sprite,
+            Duration = sprite.Duration
+        });
+        SoundEngine.PlaySound(SoundID.Item4, from);
+    }
+
+    private static readonly Queue<(ushort Move, string Label, bool Charge)> Showcase = [];
     private static BattleSide _showcaseSide;
     private static int _showcaseWait;
 
@@ -182,8 +233,14 @@ public sealed class MoveVisuals : ModSystem
     public static void PlayShowcase(BattleSide side, IEnumerable<(ushort Move, string Label)> moves)
     {
         Showcase.Clear();
-        foreach (var move in moves)
-            Showcase.Enqueue(move);
+        foreach (var (move, label) in moves)
+        {
+            // A two-turn move shows its charging turn first
+            if (ChargeSpriteFor(move) != null)
+                Showcase.Enqueue((move, label + " " + Language.GetTextValue("Mods.Terramon.GUI.AdminPanel.ChargeTurn"), true));
+            Showcase.Enqueue((move, label, false));
+        }
+
         _showcaseSide = side;
         _showcaseWait = ShowcaseGap;
     }
@@ -214,9 +271,9 @@ public sealed class MoveVisuals : ModSystem
             return;
         }
 
-        var (move, label) = Showcase.Dequeue();
+        var (move, label, charge) = Showcase.Dequeue();
         Main.NewText(label, Color.Gold);
-        Play(_showcaseSide, move, false, false);
+        Play(_showcaseSide, move, charge, false);
     }
 
     public override void ClearWorld()
@@ -241,7 +298,7 @@ public sealed class MoveVisuals : ModSystem
         if (effect.Sprite is { } sprite)
         {
             // Its own animation: flying frames, then the rest on the target (drawn in DrawSpritesOverDust)
-            if (effect.Time == sprite.HitTime)
+            if (effect.Time == sprite.HitTime && !effect.ChargeTurn)
             {
                 if (effect.Miss)
                 {
