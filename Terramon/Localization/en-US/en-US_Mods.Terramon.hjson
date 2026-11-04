@@ -126,6 +126,10 @@ Battle: {
 }
 
 LoveStory: {
+	PagesFound: "Pages found: {0}/{1}"
+	PageNumber: "Page {0} of {1}"
+	PageMissingHint: "Look in chests and dungeons"
+	BackToContents: "Back to contents"
 	Title: "Journal"
 	Close: "Close"
 	TabNext: "Next step"

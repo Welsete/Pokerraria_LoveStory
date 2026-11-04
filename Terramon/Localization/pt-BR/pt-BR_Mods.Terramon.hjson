@@ -126,6 +126,10 @@ Battle: {
 }
 
 LoveStory: {
+	PagesFound: "Páginas encontradas: {0}/{1}"
+	PageNumber: "Página {0} de {1}"
+	PageMissingHint: "Procure em baús e masmorras"
+	BackToContents: "Voltar ao sumário"
 	Title: "Diário"
 	Close: "Fechar"
 	TabNext: "Próximo passo"
