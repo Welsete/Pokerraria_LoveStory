@@ -826,15 +826,38 @@ public static class BrockGymBuilder
             }
         }
 
-        // Shaft up to the first solid ground from the top of the world
-        var surface = floorY - 4;
-        for (var y = 40; y < floorY - 4; y++)
+        // Shaft up to the ground's surface. Looking up from the gym (not down from the sky) so a floating island
+        // over it is never taken for the ground: the surface is the first solid tile with open sky above it (no blocks
+        // and no background walls for a good stretch).
+        var surface = -1;
+        for (var y = floorY - 8; y > 50 && surface < 0; y--)
         {
             var tile = Main.tile[shaftX, y];
-            if (tile.HasTile && Main.tileSolid[tile.TileType] && y > Main.worldSurface * 0.35)
+            if (!tile.HasTile || !Main.tileSolid[tile.TileType] || y > Main.worldSurface + 5)
+                continue;
+            var open = true;
+            for (var k = 1; k <= 20 && open; k++)
             {
+                var above = Main.tile[shaftX, y - k];
+                open = !(above.HasTile && Main.tileSolid[above.TileType]) && above.WallType == WallID.None;
+            }
+
+            if (open)
                 surface = y;
-                break;
+        }
+
+        if (surface < 0)
+        {
+            // Nothing like open sky found: the old way, first ground from the top
+            surface = floorY - 4;
+            for (var y = 40; y < floorY - 4; y++)
+            {
+                var tile = Main.tile[shaftX, y];
+                if (tile.HasTile && Main.tileSolid[tile.TileType] && y > Main.worldSurface * 0.35)
+                {
+                    surface = y;
+                    break;
+                }
             }
         }
 

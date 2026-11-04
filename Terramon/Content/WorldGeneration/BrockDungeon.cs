@@ -402,6 +402,12 @@ public static class BrockDungeon
                 Line(lx, f + 1, gateX, f + 1, WireColor.Red);
                 Line(gateX, f + 1, gateX, f - 4, WireColor.Red);
                 Line(gateX, f - 4, gateX + 1, f - 1, WireColor.Red);
+
+                // A switch on the other side of the gate, to open it again on the way back
+                var back = gateX + 3;
+                WorldGen.PlaceTile(back, f - 2, TileID.Switches, true, true);
+                Line(gateX, f + 1, back, f + 1, WireColor.Red);
+                Line(back, f + 1, back, f - 2, WireColor.Red);
             }
             else
             {
@@ -424,6 +430,93 @@ public static class BrockDungeon
         Line(plateX, f - 1, plateX, room.Ceiling - 1, WireColor.Yellow);
         Line(Math.Min(plateX, boulderX), room.Ceiling - 1, Math.Max(plateX, boulderX), room.Ceiling - 1,
             WireColor.Yellow);
+    }
+
+    /// <summary>
+    ///     Puts every challenge back the way it was built (see <see cref="BrockDungeonReset" />): the gate and the false
+    ///     floor closed, the levers and switches off, and a boulder back in every hollow of the ceilings.
+    /// </summary>
+    public static void ResetTraps(int shaftX, int floorY)
+    {
+        var f = floorY;
+        var rooms = Rooms(shaftX, f);
+        for (var i = 0; i < rooms.Count; i++)
+        {
+            var room = rooms[i];
+            switch (room.Kind)
+            {
+                case Kind.Levers:
+                {
+                    foreach (var lx in new[] { room.From + 4, room.From + 10, room.From + 16 })
+                    {
+                        var parts = Find(lx, f, TileID.Lever);
+                        parts.AddRange(Find(lx, f, TileID.Switches));
+                        foreach (var p in parts)
+                            LeverOff(p.X, p.Y);
+                        // The levers with blue or green wire are the wrong ones, with a boulder over them
+                        if (parts.Any(p => Main.tile[p.X, p.Y].BlueWire || Main.tile[p.X, p.Y].GreenWire))
+                            RestoreBoulder(lx, room.Ceiling - 1);
+                    }
+
+                    var gateX = room.To + 1;
+                    for (var x = gateX; x < rooms[i + 1].From; x++)
+                    {
+                        for (var y = f - 4; y < f; y++)
+                            Actuate(x, y, false);
+                    }
+
+                    LeverOff(gateX + 3, f - 2);
+                    break;
+                }
+
+                case Kind.SpikePit:
+                    RestoreBoulder(room.To - 2, room.Ceiling - 1);
+                    break;
+
+                case Kind.Boulders:
+                    foreach (var bx in new[] { room.From + 5, room.From + 13, room.From + 21 })
+                        RestoreBoulder(bx, room.Ceiling - 1);
+                    break;
+
+                case Kind.FalseFloor:
+                    for (var x = room.From + 6; x <= room.To - 6; x++)
+                        Actuate(x, f, false);
+                    RestoreBoulder(room.From + 10, room.Ceiling - 1);
+                    break;
+            }
+        }
+
+        var area = Area(shaftX, f);
+        WorldGen.RangeFrame(area.Left, area.Top, area.Right, area.Bottom);
+        if (Main.netMode != NetmodeID.Server)
+            return;
+        foreach (var room in rooms)
+            NetMessage.SendTileSquare(-1, room.From - 2, room.Ceiling - 3, room.Width + 4, f - room.Ceiling + 6);
+    }
+
+    private static void LeverOff(int x, int y)
+    {
+        var tile = Main.tile[x, y];
+        if (!tile.HasTile)
+            return;
+        if (tile.TileType == TileID.Lever)
+            tile.TileFrameX = (short)(tile.TileFrameX % 36);
+        else if (tile.TileType == TileID.Switches)
+            tile.TileFrameY = 0;
+    }
+
+    private static void Actuate(int x, int y, bool open)
+    {
+        var tile = Main.tile[x, y];
+        if (tile.HasActuator)
+            tile.IsActuated = open;
+    }
+
+    private static void RestoreBoulder(int x, int bottomY)
+    {
+        if (Main.tile[x, bottomY].HasTile && Main.tile[x, bottomY].TileType == TileID.Boulder)
+            return;
+        Boulder(x, bottomY);
     }
 
     private enum WireColor { Red, Blue, Green, Yellow }
@@ -809,5 +902,32 @@ public class BrockDungeonChestTrap : ModPlayer
             Projectile.NewProjectile(Player.GetSource_FromThis(), position, new Vector2(0f, 2f), ProjectileID.Boulder,
                 60, 10f, Main.myPlayer);
         }
+    }
+}
+
+/// <summary>
+///     Brock's dungeon starts over whenever nobody is left inside (everyone went on to the gym, left, or died): the
+///     challenges are put back (see <see cref="BrockDungeon.ResetTraps" />), so dying means doing it all again. Also once
+///     when the world is loaded.
+/// </summary>
+public class BrockDungeonReset : ModSystem
+{
+    private static bool _wasOccupied;
+    private static int _timer;
+
+    public override void OnWorldLoad() => _wasOccupied = true;
+
+    public override void PostUpdateWorld()
+    {
+        if (Main.netMode == NetmodeID.MultiplayerClient || !BrockGymSystem.HasDungeon || ++_timer < 30)
+            return;
+        _timer = 0;
+        var area = BrockGymSystem.DungeonArea;
+        if (area.IsEmpty)
+            return;
+        var occupied = Main.player.Any(p => p.active && !p.dead && area.Contains(p.Center.ToTileCoordinates()));
+        if (_wasOccupied && !occupied)
+            BrockDungeon.ResetTraps(BrockGymSystem.SurfaceEntrance.X, BrockGymSystem.Interior.Bottom);
+        _wasOccupied = occupied;
     }
 }

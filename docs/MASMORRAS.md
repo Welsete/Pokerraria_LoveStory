@@ -76,6 +76,8 @@ oceano nem para o mundo.
   só com alguém perto), salão dos dardos antes do baú (60 de largura, chão rebaixado, dardos em 3 alturas nas duas
   paredes, abrigos de pedra que cobrem dos dois lados) e pedregulhos caindo ao abrir o baú (`BrockDungeonChestTrap`,
   no máximo a cada 30 s).
+- Reset (2026-11-04): quando ninguém está mais dentro (saiu, chegou no Brock ou morreu), `BrockDungeonReset` fecha o
+  portão e o chão falso, desliga as alavancas e põe as pedras de volta. Interruptor atrás do portão para voltar.
 - Brock (versão 3): (2026-11-04, "bem maior, cheia de armadilha, dardo, lava, morcego"): 9 salas, ~208 blocos.
   Chegada; alavancas (24 de altura); fosso de espinhos com pilares; galeria de dardos (dardos no chão, dos dois lados);
   corredor alto das pedras; chão falso sobre espinhos (corda do outro lado); fosso de lava com pilares de 1 bloco e dardo
