@@ -725,7 +725,8 @@ public static class BrockDungeon
     }
 
     /// <summary>
-    ///     The chest at the end: the diary page and supplies for the Gym.
+    ///     The chest at the end, a generous one: the diary page, supplies and held items for the fight with Brock,
+    ///     treasure to sell and things for the way.
     /// </summary>
     private static void Chest(int x, int f)
     {
@@ -742,7 +743,24 @@ public static class BrockDungeon
             (stones.Length > 0 ? stones[WorldGen.genRand.Next(stones.Length)] : ItemID.None, 1),
             (ModContent.ItemType<Items.PokeBalls.UltraBallItem>(), 5),
             (ModContent.ItemType<Potion>(), 3),
-            (ModContent.ItemType<Repel>(), 2)
+            (ModContent.ItemType<Repel>(), 2),
+            // For the fight with Brock right after
+            (ModContent.ItemType<HardStone>(), 1),
+            (ModContent.ItemType<FocusSash>(), 1),
+            (ModContent.ItemType<Revive>(), 2),
+            (ModContent.ItemType<RareCandy>(), 2),
+            (ModContent.ItemType<ExpCandyS>(), 3),
+            (ModContent.ItemType<ExpCandyM>(), 2),
+            (ModContent.ItemType<OranBerry>(), 3),
+            (ModContent.ItemType<SitrusBerry>(), 2),
+            // Treasure to sell
+            (ModContent.ItemType<Nugget>(), 2),
+            (ModContent.ItemType<RelicCopper>(), 1),
+            // For whoever made it through the lava and the pits
+            (ItemID.HealingPotion, 5),
+            (ItemID.ObsidianSkinPotion, 3),
+            (ItemID.Compass, 1),
+            (ItemID.Rope, 100)
         };
         var chest = Main.chest[index];
         var slot = 0;
@@ -751,7 +769,7 @@ public static class BrockDungeon
             if (type <= ItemID.None)
                 continue;
             chest.item[slot].SetDefaults(type);
-            chest.item[slot].stack = stack;
+            chest.item[slot].stack = Math.Clamp(stack, 1, chest.item[slot].maxStack);
             slot++;
         }
     }

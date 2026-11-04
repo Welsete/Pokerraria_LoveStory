@@ -65,7 +65,9 @@ oceano nem para o mundo.
 ## Respostas do Welsete (2026-11-04)
 
 - **Sem pistas** para a alavanca certa (as três são iguais; a certa muda a cada mundo).
-- **Baú:** a página, uma pedra de evolução aleatória, Ultra Balls, Potions e spray (Repelente, item novo).
+- **Baú (generoso):** a página, uma pedra de evolução aleatória, 5 Ultra Balls, 3 Potions, 2 Repelentes, Pedra Dura,
+  Faixa de Foco, 2 Revives, 2 Doces Raros, Doces de EXP (3 P e 2 M), 3 Oran e 2 Sitrus Berry, 2 Pepitas, Relíquia de
+  Cobre, 5 Poções de Cura, 3 de Pele de Obsidiana, Bússola e 100 de corda.
 - **Construção:** o Claude constrói por código, inspirado nos mapas A Link to Terraria (Earth Temple, Water Dungeon) e
   The Story of Red Cloud (portões de alavanca, placas narrando).
 - **Obrigatória:** a masmorra fica entre a entrada e o líder.
