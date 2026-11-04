@@ -12,6 +12,7 @@
 <img src="https://img.shields.io/badge/Pok%C3%A9mon-151%20%2B%20Lucario-b8323a?style=for-the-badge" alt="151 Pokémon">
 <img src="https://img.shields.io/badge/Languages-PT--BR%20%7C%20EN-3f7a35?style=for-the-badge" alt="PT-BR and EN">
 <img src="https://img.shields.io/badge/License-GPL--3.0-555?style=for-the-badge" alt="GPL-3.0">
+<a href="https://ko-fi.com/welsete"><img src="https://img.shields.io/badge/Ko--fi-support-ff5e5b?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-fi"></a>
 
 <br><br>
 
