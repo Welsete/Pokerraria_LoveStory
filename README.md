@@ -244,8 +244,6 @@ Turn on **Debug Mode** in the mod's settings and press <kbd>F8</kbd> for the tes
 
 Pokémon is © Nintendo, Game Freak and The Pokémon Company. This is a free, non-commercial fan project and is not affiliated with them.
 
-## ☕ Support the developer
-
 <div align="center">
 
 <img src=".github/assets/support/support_banner_en.png" width="700" alt="Support the developer">

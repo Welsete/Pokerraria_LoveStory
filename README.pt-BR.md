@@ -244,8 +244,6 @@ Ligue o **Modo Debug** nas configurações do mod e aperte <kbd>F8</kbd> para ab
 
 Pokémon é © Nintendo, Game Freak e The Pokémon Company. Este é um projeto de fã, gratuito e sem fins comerciais, sem ligação com essas empresas.
 
-## ☕ Apoie o desenvolvedor
-
 <div align="center">
 
 <img src=".github/assets/support/support_banner_pt.png" width="700" alt="Apoie o desenvolvedor">
