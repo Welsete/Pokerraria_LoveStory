@@ -368,6 +368,12 @@ public static class BrockDungeon
                     int from = room.From + 3, to = room.To - 3;
                     Dart(from + 1, bottom - 1, facingRight: true);
                     Dart(to - 1, bottom - 1, facingRight: false);
+
+                    // Both walls of the shaft, at alternating heights: they shoot across while you climb the ropes
+                    for (var y = f + 2; y < bottom - 2; y += 4)
+                        Dart(from - 1, y, facingRight: true);
+                    for (var y = f + 4; y < bottom - 2; y += 4)
+                        Dart(to + 1, y, facingRight: false);
                     break;
                 }
             }
