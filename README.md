@@ -8,7 +8,7 @@
 
 <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/Pokerraria.tmod"><img src="https://img.shields.io/badge/Download-Pokerraria.tmod-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Download Pokerraria.tmod"></a>
 <a href="https://github.com/Welsete/Pokerraria_LoveStory/releases/latest/download/TmonRuntimes.tmod"><img src="https://img.shields.io/badge/Download-TmonRuntimes.tmod-e3b54a?style=for-the-badge&logo=github&logoColor=white" alt="Download TmonRuntimes.tmod"></a>
-<img src="https://img.shields.io/badge/Version-0.4.0-8a4fd8?style=for-the-badge" alt="Version 0.4.0">
+<img src="https://img.shields.io/badge/Version-0.5.0-8a4fd8?style=for-the-badge" alt="Version 0.5.0">
 <img src="https://img.shields.io/badge/tModLoader-1.4.4-2b3a7a?style=for-the-badge" alt="tModLoader 1.4.4">
 <img src="https://img.shields.io/badge/Pok%C3%A9mon-151%20%2B%20Lucario-b8323a?style=for-the-badge" alt="151 Pokémon">
 <img src="https://img.shields.io/badge/Languages-PT--BR%20%7C%20EN-3f7a35?style=for-the-badge" alt="PT-BR and EN">

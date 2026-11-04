@@ -4,6 +4,8 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+## 0.5.0
+
 - The mod is now called Pokerraria inside too: the file is `Pokerraria.tmod` (it was `Terramon.tmod`). Delete the old `Terramon.tmod` from the Mods folder. Characters and worlds from before lose this mod's data (team, PC, badges, journal): start fresh.
 
 - Generated art for 30 more moves: Absorb, Mega Drain, Giga Drain, Leech Seed, Ingrain, Grassy Terrain, Leaf Storm, Petal Dance, Vine Whip, Thunder Fang, Electric Terrain, Magnetic Flux, Zap Cannon, Dragon Breath, Dragon Tail, Outrage, Curse, Destiny Bond, Lick, Shadow Sneak, Bite, Crunch, Fling, Memento, Switcheroo, Bone Rush, Bonemerang, Bulldoze, Gyro Ball and Iron Tail.
