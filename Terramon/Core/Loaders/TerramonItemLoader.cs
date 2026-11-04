@@ -69,6 +69,7 @@ internal sealed class TerramonItemRegistration : ModSystem
             .Add<SuperPotion>()
             .Add<HyperPotion>()
             .Add<MaxPotion>()
+            .Add<Repel>()
             // Revives
             .Add<Revive>()
             .Add<MaxRevive>();

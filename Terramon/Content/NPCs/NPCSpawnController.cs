@@ -211,6 +211,9 @@ public class NPCSpawnController : NPCComponent
         var spawnRateMultiplier = gameplayConfig.PokemonSpawnRateMultiplier;
         if (spawnRateMultiplier == 0) return;
 
+        // A Repel keeps wild Pokémon away
+        if (spawnInfo.Player.HasBuff<Buffs.RepelBuff>()) return;
+
         // Check for some player buffs that affect spawn rates
         // TODO: Use reflection to access NPC.spawnRate instead
         var hasWaterCandle = spawnInfo.Player.HasBuff(BuffID.WaterCandle);

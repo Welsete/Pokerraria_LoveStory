@@ -32,6 +32,12 @@ public class BrockGymSystem : ModSystem
 
     public static bool Exists => Interior != Rectangle.Empty;
 
+    /// <summary>
+    ///     Whether this world's gym has the LoveStory dungeon between the rope and the hall (worlds made from 0.5
+    ///     on). Older worlds don't, and the diary page is handed out in the hall instead.
+    /// </summary>
+    public static bool HasDungeon { get; internal set; }
+
     // Whether a player was inside last time we looked, so Brock only shows up when someone walks in
     private static bool _occupied;
     private static int _checkTimer;
@@ -51,6 +57,7 @@ public class BrockGymSystem : ModSystem
         Interior = Rectangle.Empty;
         LeaderSpot = Point.Zero;
         SurfaceEntrance = Point.Zero;
+        HasDungeon = false;
         _occupied = false;
     }
 
@@ -61,7 +68,7 @@ public class BrockGymSystem : ModSystem
         tag["brockGym"] = new[]
         {
             Interior.X, Interior.Y, Interior.Width, Interior.Height, LeaderSpot.X, LeaderSpot.Y, SurfaceEntrance.X,
-            SurfaceEntrance.Y
+            SurfaceEntrance.Y, HasDungeon ? 1 : 0
         };
     }
 
@@ -72,6 +79,7 @@ public class BrockGymSystem : ModSystem
             Interior = new Rectangle(data[0], data[1], data[2], data[3]);
             LeaderSpot = new Point(data[4], data[5]);
             SurfaceEntrance = data.Length >= 8 ? new Point(data[6], data[7]) : Point.Zero;
+            HasDungeon = data.Length >= 9 && data[8] == 1;
         }
     }
 
@@ -85,6 +93,7 @@ public class BrockGymSystem : ModSystem
         writer.Write(LeaderSpot.Y);
         writer.Write(SurfaceEntrance.X);
         writer.Write(SurfaceEntrance.Y);
+        writer.Write(HasDungeon);
     }
 
     public override void NetReceive(BinaryReader reader)
@@ -92,6 +101,7 @@ public class BrockGymSystem : ModSystem
         Interior = new Rectangle(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32());
         LeaderSpot = new Point(reader.ReadInt32(), reader.ReadInt32());
         SurfaceEntrance = new Point(reader.ReadInt32(), reader.ReadInt32());
+        HasDungeon = reader.ReadBoolean();
     }
 
     public override void PostUpdateWorld()
@@ -138,6 +148,11 @@ public class BrockGymSystem : ModSystem
     ///     Where to put a player teleporting into the gym (world coordinates of their bottom).
     /// </summary>
     public static Vector2 EntranceSpot => new Point(Interior.X + 6, Interior.Bottom).ToWorldCoordinates(8f, 0f);
+
+    /// <summary>
+    ///     Where to put a player teleporting to the start of the dungeon, next to the bottom of the rope.
+    /// </summary>
+    public static Vector2 DungeonSpot => new Point(SurfaceEntrance.X + 3, Interior.Bottom).ToWorldCoordinates(8f, 0f);
 }
 
 /// <summary>
@@ -231,7 +246,7 @@ public static class BrockGymBuilder
     public const int Width = 62;
     public const int Height = 26;
     private const int Shell = 2;
-    private const int EntranceGap = 6; // Tunnel between the left door and the rope shaft
+    private const int EntranceGap = BrockDungeon.Length; // The dungeon between the rope shaft and the left door
     private const int StageHeight = 3;
     private const int RopeAbove = 2; // How many rope tiles stick out of the shrine's floor at the entrance
     private const int ShrineHalf = 8; // Half width of the entrance shrine's floor and pillars
@@ -405,6 +420,12 @@ public static class BrockGymBuilder
 
         // The hall itself is done: a failing detail below shouldn't cost the whole gym
         TryStep("doors", () => BuildDoors(left, right, floorY, stageTop));
+        BrockGymSystem.HasDungeon = false;
+        TryStep("dungeon", () =>
+        {
+            BrockDungeon.Build(left - EntranceGap, left, top, bottom, floorY);
+            BrockGymSystem.HasDungeon = true;
+        });
         TryStep("entrance", () => BuildEntrance(left, floorY));
         TryStep("mural", () => BuildMural((centerLeft + centerRight) / 2 - 15, ceilingY + 1));
         TryStep("decorations",
@@ -414,6 +435,8 @@ public static class BrockGymBuilder
 
         // After framing, so the boulders stay up in the ceiling until a trap drops them
         TryStep("traps", () => BuildTraps(left, ceilingY, floorY, centerLeft, centerRight));
+        if (BrockGymSystem.HasDungeon)
+            TryStep("dungeon traps", () => BrockDungeon.BuildTraps(left - EntranceGap, floorY));
     }
 
     /// <summary>
@@ -490,9 +513,15 @@ public static class BrockGymBuilder
     private static void Protect(int left, int top, Point surfaceEntrance)
     {
         var floorY = top + Height - 1 - Shell;
-        var shaftX = left - EntranceGap;
+        // Older worlds have their shaft only a few tiles from the gym: go by where the rope really is
+        var shaftX = surfaceEntrance != Point.Zero
+            ? surfaceEntrance.X
+            : left - (BrockGymSystem.HasDungeon ? EntranceGap : 6); // 6: the tunnel of the first versions
         ProtectedAreas.Add(new Rectangle(left, top, Width, Height));
-        ProtectedAreas.Add(new Rectangle(shaftX - 1, floorY - 4, left - shaftX + 1, 5));
+        if (BrockGymSystem.HasDungeon)
+            ProtectedAreas.Add(new Rectangle(shaftX - 3, top, left - shaftX + 3, Height));
+        else
+            ProtectedAreas.Add(new Rectangle(shaftX - 1, floorY - 4, left - shaftX + 1, 5));
         if (surfaceEntrance != Point.Zero && surfaceEntrance.X == shaftX && surfaceEntrance.Y < floorY)
             ProtectedAreas.Add(new Rectangle(shaftX - 1, surfaceEntrance.Y - RopeAbove,
                 3, floorY - surfaceEntrance.Y + RopeAbove + 1));
@@ -768,8 +797,8 @@ public static class BrockGymBuilder
     {
         var shaftX = left - EntranceGap;
 
-        // Tunnel
-        for (var x = shaftX - 1; x < left; x++)
+        // Tunnel (worlds with the dungeon have it instead)
+        for (var x = shaftX - 1; x < left && !BrockGymSystem.HasDungeon; x++)
         {
             for (var y = floorY - 4; y <= floorY; y++)
             {

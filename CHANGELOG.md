@@ -4,6 +4,9 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+- Brock's Gym dungeon (new worlds): between the rope and the hall, four rooms of old stone. Three identical levers, only one opens the stone gate and the other two drop a boulder on whoever pulled them; a corridor with boulder traps; a chest with the diary page "Stone by stone", a random evolution stone, Ultra Balls, Potions and Repels. In older worlds the page turns up in Brock's hall, and Misty's page in her Gym.
+- New item: Repel, a spray that keeps wild Pokémon away for 3 minutes (crafted with a Bottle, Deathweed and Gel at a Placed Bottle).
+
 - Two-turn moves now show their charging turn: Fly and Bounce rise in a gust, Dig throws up dirt and opens a hole, Dive sends up a water spout, Phantom Force and Shadow Force sink into ghostly smoke, and Skull Bash, Sky Attack, Razor Wind, Solar Beam, Solar Blade, Meteor Beam, Geomancy, Electro Shot, Freeze Shock and Ice Burn gather energy on the user. In the test panel these moves play their charging turn first.
 
 - LoveStory journal (J), drawn as an open book: the contents list the diary pages with a progress bar, where to go next in chapter 1 and what already happened. Each page opens with its own picture (a black silhouette until it is found) and its text, with arrows to turn the pages. A new character starts with the first page (the prologue) in the bag.

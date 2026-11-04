@@ -1,4 +1,4 @@
-# Masmorras do Brock e da Misty (rascunho para o Welsete aprovar)
+# Masmorras do Brock e da Misty
 
 Decisão do grill-me (2026-11-03): os Ginásios do Brock e da Misty ganham masmorras curtas (3 ou 4 salas) antes do
 líder, cada uma com uma página do diário num baú. Brock: só uma alavanca abre, as outras soltam pedras. Misty: comportas
@@ -62,9 +62,16 @@ oceano nem para o mundo.
 2. Misty depois (a água precisa de mais testes).
 3. As páginas do Brock e da Misty saem do painel F8 e passam a vir só dos baús (o botão continua para testes).
 
-## Perguntas para o Welsete
+## Respostas do Welsete (2026-11-04)
 
-- Pista visual da alavanca certa (tocha ao lado)? Ou sem pista nenhuma?
-- O que mais vai no baú além da página?
-- Salas desenhadas por você no Blueprint Builder, ou eu desenho por código?
-- A masmorra é obrigatória para chegar ao líder, ou é um caminho opcional ao lado?
+- **Sem pistas** para a alavanca certa (as três são iguais; a certa muda a cada mundo).
+- **Baú:** a página, uma pedra de evolução aleatória, Ultra Balls, Potions e spray (Repelente, item novo).
+- **Construção:** o Claude constrói por código, inspirado nos mapas A Link to Terraria (Earth Temple, Water Dungeon) e
+  The Story of Red Cloud (portões de alavanca, placas narrando).
+- **Obrigatória:** a masmorra fica entre a entrada e o líder.
+
+## Estado
+
+- Brock: **feita** (`Content/WorldGeneration/BrockDungeon.cs`), em mundos novos ou com "Construir Ginásio do Brock aqui"
+  no painel F8. Botão "TP masmorra do Brock" para testar. Em mundos antigos a página aparece ao entrar no salão.
+- Misty: falta. Até lá, a página da Misty aparece ao entrar no Ginásio dela.

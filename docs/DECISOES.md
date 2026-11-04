@@ -22,6 +22,7 @@ houver). Perguntas ainda sem resposta ficam no fim.
 - 2026-11-03 · Um menu de diário anota as páginas encontradas, o que já aconteceu e para onde ir em seguida.
 - 2026-11-03 · O capítulo 1 vai do começo até o Ginásio da Misty: duas insígnias, dois encontros com a Aurora e um gancho no fim.
 - 2026-11-03 · Os Ginásios do Brock e da Misty ganham masmorras curtas (3 ou 4 salas) antes do líder, cada uma com uma página do diário. Brock: só uma alavanca abre, as outras soltam pedras. Misty: comportas que mudam o nível da água.
+- 2026-11-04 · Masmorras obrigatórias (entre a entrada e o líder), alavanca certa sem pista, construídas pelo Claude em código com inspiração nos dois mapas. Baú: página, pedra de evolução aleatória, Ultra Balls, Potions e Repelente.
 
 ## Em aberto
 

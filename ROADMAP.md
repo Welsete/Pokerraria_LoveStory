@@ -42,7 +42,7 @@ Decisões em `docs/DECISOES.md` (grill-me de 2026-11-03).
 - [ ] Colocar as páginas do Brock e da Misty nos baús das masmorras (quando as masmorras existirem) [construtor-mundo]
 - [ ] Encontros com a Aurora entram como passos do capítulo em `Journal.Chapter1` [programador-batalha]
 - [ ] Aurora: NPC rival com sprite, dois encontros com batalha (?) onde, quando e com que time [npcs-e-sprites + roteirista-lovestory]
-- [ ] Masmorra curta do Brock (3 ou 4 salas, alavancas: só uma abre, as outras soltam pedras) [construtor-mundo]
+- [x] Masmorra curta do Brock (4 salas, alavancas: só uma abre, as outras soltam pedras; baú com a página) [construtor-mundo]
 - [ ] Masmorra curta da Misty (comportas que mudam o nível da água) [construtor-mundo]
 - [ ] Gancho no fim do capítulo (?) qual [roteirista-lovestory]
 - [ ] Textos pt-BR e en-US: páginas, falas da Aurora, entradas do diário [roteirista-lovestory]

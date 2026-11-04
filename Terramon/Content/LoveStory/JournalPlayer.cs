@@ -2,6 +2,7 @@ using Terramon.Content.Buffs;
 using Terramon.Content.Commands;
 using Terramon.Content.GUI;
 using Terramon.Content.Items;
+using Terramon.Content.WorldGeneration;
 using Terramon.Core.Systems;
 using Terraria.GameInput;
 using Terraria.ModLoader.IO;
@@ -26,6 +27,13 @@ public class JournalPlayer : ModPlayer
     private bool _prologueGiven;
 
     /// <summary>
+    ///     Pages handed out in a Gym because its world has no dungeon to find them in (see <see cref="PostUpdate" />).
+    /// </summary>
+    private readonly HashSet<string> _handedOut = [];
+
+    private int _checkTimer;
+
+    /// <summary>
     ///     Reads a diary page: keeps it in the journal, starts Story time and opens the journal on it.
     /// </summary>
     public void ReadPage(string id)
@@ -45,7 +53,32 @@ public class JournalPlayer : ModPlayer
     public void Reset()
     {
         Pages.Clear();
+        _handedOut.Clear();
         _prologueGiven = false;
+    }
+
+    /// <summary>
+    ///     Worlds made before the Gym dungeons (and every world, for Misty, until hers exists) have nowhere to find the
+    ///     Brock and Misty pages: walking into the Gym hands the page over once.
+    /// </summary>
+    public override void PostUpdate()
+    {
+        if (Player.whoAmI != Main.myPlayer || ++_checkTimer < 60)
+            return;
+        _checkTimer = 0;
+        var feet = Player.Bottom.ToTileCoordinates();
+        if (BrockGymSystem.Exists && !BrockGymSystem.HasDungeon && BrockGymSystem.Interior.Contains(feet))
+            HandOut("Brock");
+        if (MistyGymSystem.Exists && MistyGymSystem.Interior.Contains(feet))
+            HandOut("Misty");
+    }
+
+    private void HandOut(string id)
+    {
+        if (Pages.Contains(id) || !_handedOut.Add(id))
+            return;
+        Player.QuickSpawnItem(Player.GetSource_GiftOrReward(), DiaryPage.ItemType(id));
+        Main.NewText(Journal.Text("PageInGym"), TerramonCommand.ChatColorYellow);
     }
 
     public override void OnEnterWorld()
@@ -68,6 +101,7 @@ public class JournalPlayer : ModPlayer
     {
         tag["pages"] = Pages.ToList();
         tag["prologueGiven"] = _prologueGiven;
+        tag["handedOut"] = _handedOut.ToList();
     }
 
     public override void LoadData(TagCompound tag)
@@ -76,5 +110,8 @@ public class JournalPlayer : ModPlayer
         foreach (var id in tag.GetList<string>("pages"))
             Pages.Add(id);
         _prologueGiven = tag.GetBool("prologueGiven");
+        _handedOut.Clear();
+        foreach (var id in tag.GetList<string>("handedOut"))
+            _handedOut.Add(id);
     }
 }

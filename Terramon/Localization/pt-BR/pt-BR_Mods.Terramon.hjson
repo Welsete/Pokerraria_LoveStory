@@ -126,6 +126,7 @@ Battle: {
 }
 
 LoveStory: {
+	PageInGym: "Você encontra uma página de diário presa atrás de uma pedra solta da parede."
 	PagesFound: "Páginas encontradas: {0}/{1}"
 	PageNumber: "Página {0} de {1}"
 	PageMissingHint: "Procure em baús e masmorras"
@@ -206,6 +207,11 @@ LoveStory: {
 }
 
 Buffs: {
+	RepelBuff: {
+		DisplayName: "Repelente"
+		Description: "Pokémon selvagens não aparecem"
+	}
+
 	StoryTime: {
 		DisplayName: "Hora da história"
 		Description: "Nenhum inimigo aparece enquanto você lê"
@@ -577,6 +583,7 @@ GUI: {
 		PokemonCenterBuilt: O Centro Pokémon foi construído onde você estava.
 		SpawnOnix: Chamar Onix selvagem
 		CallOak: Chamar o Professor Carvalho
+		TeleportBrockDungeon: "TP masmorra do Brock"
 		ChargeTurn: "(turno de carga)"
 		GiveDiaryPages: "Dar páginas do diário"
 		ResetJournal: "Zerar diário"
@@ -661,6 +668,7 @@ GUI: {
 			MoonLord: Senhor da Lua
 		}
 		BadgesReset: Insígnias, desafio da Liga e Hall da Fama foram zerados
+		NoBrockDungeon: "Este mundo não tem a masmorra do Brock (mundo antigo)"
 		DiaryPagesGiven: "Você recebeu {0} páginas do diário"
 		JournalReset: "Diário zerado (a primeira página volta na próxima vez que entrar no mundo)"
 		BattlesCleared: Todas as batalhas foram encerradas
@@ -1111,6 +1119,11 @@ CommonTooltips: {
 }
 
 Items: {
+	Repel: {
+		DisplayName: "Repelente"
+		Tooltip: "Um spray que mantém Pokémon selvagens longe por 3 minutos"
+	}
+
 	BoulderBadge: {
 		DisplayName: Insígnia Rocha
 		Tooltip: Prova da vitória sobre Brock, o Líder de Ginásio de Pewter
@@ -2244,6 +2257,8 @@ Items.LeaguePedestalItem: {
 }
 
 BrockGym: {
+	DungeonSign1: "Estas paredes são mais antigas que o Ginásio. Alguém já passou por aqui antes de você."
+	DungeonSign2: "Três alavancas. Um só caminho."
 	Welcome: "{0} está te esperando no palco. Fale com ele para desafiar o Ginásio de Pewter!"
 	Sign: Ginásio de Pewter. Líder: Brock, o treinador Pokémon duro como pedra! Ele usa Pokémon do tipo Pedra: os tipos Água e Planta levam vantagem. Para desafiá-lo é preciso ter derrotado o Olho de Cthulhu. Desça pela corda e cuidado com as armadilhas no caminho!
 	Announce: "O Ginásio do Brock fica nas cavernas, a {0} blocos a {1} do ponto de nascimento. Procure um pequeno templo de pedra com uma corda descendo para dentro do chão, ou a Insígnia Rocha no mapa."

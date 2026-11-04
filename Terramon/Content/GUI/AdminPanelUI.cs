@@ -105,6 +105,7 @@ public sealed class AdminPanelUI : SmartUIState
             ("LeagueItems", GiveLeagueItems),
             ("ResetBadges", ResetBadges),
             ("TeleportBrockGym", TeleportToBrockGym),
+            ("TeleportBrockDungeon", TeleportToBrockDungeon),
             ("BuildBrockGym", BuildBrockGymHere),
             ("TeleportMistyGym", TeleportToMistyGym),
             ("BuildMistyGym", BuildMistyGymHere),
@@ -1043,6 +1044,22 @@ public sealed class AdminPanelUI : SmartUIState
 
         var player = Main.LocalPlayer;
         var position = BrockGymSystem.EntranceSpot - new Vector2(player.width / 2f, player.height);
+        player.Teleport(position, TeleportationStyleID.RodOfDiscord);
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, player.whoAmI, position.X, position.Y,
+                TeleportationStyleID.RodOfDiscord);
+    }
+
+    private static void TeleportToBrockDungeon()
+    {
+        if (!BrockGymSystem.Exists || !BrockGymSystem.HasDungeon)
+        {
+            Main.NewText(Text("NoBrockDungeon"), TerramonCommand.ChatColorRed);
+            return;
+        }
+
+        var player = Main.LocalPlayer;
+        var position = BrockGymSystem.DungeonSpot - new Vector2(player.width / 2f, player.height);
         player.Teleport(position, TeleportationStyleID.RodOfDiscord);
         if (Main.netMode == NetmodeID.MultiplayerClient)
             NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, player.whoAmI, position.X, position.Y,
