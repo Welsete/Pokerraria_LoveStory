@@ -39,14 +39,13 @@ Quando um golpe do gerador fica pronto, a animação dele substitui a versão de
 
 ## Situação
 
-416 golpes no catálogo: **85** com arte própria, **204** desenhados por código, **127** esperando o gerador.
+416 golpes no catálogo: **92** com arte própria, **204** desenhados por código, **120** esperando o gerador.
 
 ## Faltam: para o gerador de imagem
 
 Em ordem de tipo. Entre parênteses, o arquivo de prompts. Os marcados com * já têm uma versão provisória em código (o Welsete achou fraca) e são a **prioridade**.
 
-- **Água** (5, `agua.md`): Wave Crash, Muddy Water, Surf, Whirlpool, Rain Dance
-- **Planta** (11, `planta.md`): Petal Blizzard, Power Whip, Vine Whip, Absorb, Giga Drain, Leaf Storm, Mega Drain, Petal Dance, Grassy Terrain, Ingrain, Leech Seed
+- **Planta** (9, `planta.md`): Vine Whip, Absorb, Giga Drain, Leaf Storm, Mega Drain, Petal Dance, Grassy Terrain, Ingrain, Leech Seed
 - **Elétrico** (4, `eletrico.md`): Thunder Fang, Zap Cannon, Electric Terrain, Magnetic Flux
 - **Dragão** (3, `dragao.md`): Dragon Tail, Outrage, Dragon Breath
 - **Fantasma** (4, `fantasma.md` · fundo verde): Lick, Shadow Sneak, Curse, Destiny Bond
@@ -86,8 +85,8 @@ Os prompts de todos esses, prontos para copiar, estão em [art/vfx/FILA_GERADOR.
 ## Com arte própria (gerador ou desenho à mão)
 
 - **Fogo** (19): Blaze Kick, Fire Fang, Fire Punch, Flame Charge, Flame Wheel, Flare Blitz, Heat Crash, Ember, Eruption, Fire Blast, Fire Spin, Flamethrower, Heat Wave, Incinerate, Inferno, Lava Plume, Overheat, Sunny Day, Will-O-Wisp
-- **Água** (7): Aqua Jet, Aqua Tail, Dive, Waterfall, Bubble Beam, Hydro Pump, Water Gun
-- **Planta** (2): Razor Leaf, Solar Beam
+- **Água** (12): Aqua Jet, Aqua Tail, Dive, Waterfall, Wave Crash, Bubble Beam, Hydro Pump, Muddy Water, Surf, Water Gun, Whirlpool, Rain Dance
+- **Planta** (4): Petal Blizzard, Power Whip, Razor Leaf, Solar Beam
 - **Elétrico** (5): Thunder Punch, Charge Beam, Thunder, Thunder Shock, Thunderbolt
 - **Gelo** (15): Ice Fang, Ice Punch, Ice Shard, Icicle Crash, Icicle Spear, Aurora Beam, Blizzard, Freeze Dry, Ice Beam, Icy Wind, Powder Snow, Sheer Cold, Haze, Mist, Snowscape
 - **Dragão** (5): Dragon Claw, Dragon Rush, Dragon Pulse, Twister, Dragon Dance

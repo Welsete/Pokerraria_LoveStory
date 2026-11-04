@@ -141,7 +141,7 @@
  {
   "tipo": "Água",
   "golpe": "Wave Crash",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Água",
@@ -162,12 +162,12 @@
  {
   "tipo": "Água",
   "golpe": "Muddy Water",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Água",
   "golpe": "Surf",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Água",
@@ -183,7 +183,7 @@
  {
   "tipo": "Água",
   "golpe": "Whirlpool",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Água",
@@ -200,7 +200,7 @@
  {
   "tipo": "Água",
   "golpe": "Rain Dance",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Água",
@@ -241,12 +241,12 @@
  {
   "tipo": "Planta",
   "golpe": "Petal Blizzard",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Planta",
   "golpe": "Power Whip",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Planta",

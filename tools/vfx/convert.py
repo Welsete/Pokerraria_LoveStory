@@ -88,6 +88,14 @@ SHEETS = [
     ("lote4_aqua_tail.png", "AquaTail", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
     ("lote4_dive.png", "Dive", (4, 2), 3, dict(Travel=0, Ticks=4)),
     ("lote4_waterfall.png", "Waterfall", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote4_muddy_water.png", "MuddyWater", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote4_petal_blizzard.png", "PetalBlizzard", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote4_power_whip.png", "PowerWhip", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote4_rain_dance.png", "RainDance", (4, 2), 3, dict(Travel=0, Ticks=6, At="middle")),
+    ("lote4_surf.png", "Surf", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote4_whirlpool.png", "Whirlpool", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    # Wave Crash came as a 4x4 sheet of loose pieces: only the wave rising, crashing and the spray are used
+    ("lote4_wave_crash.png", "WaveCrash", [(0, 0, 256, 256), (256, 0, 512, 256), (512, 0, 768, 256), (768, 0, 1024, 256), (0, 256, 256, 512), (512, 256, 768, 512), (512, 512, 768, 768), (768, 512, 1024, 768), (256, 768, 512, 1024), (512, 768, 768, 1024)], 2, dict(Travel=0, Ticks=4, Face=1)),
     # High Jump Kick keeps the kicking silhouette (Welsete liked it); Mach Punch came with a boxer on the left of each
     # frame (2 columns x 4 rows): only the part right of him is cut
     ("lote2_high_jump_kick.png", "HighJumpKick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
