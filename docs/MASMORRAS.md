@@ -72,7 +72,12 @@ oceano nem para o mundo.
 
 ## Estado
 
-- Brock: **feita, versão 2** (2026-11-04, depois do primeiro teste do Welsete: mais difícil e maior). Seis salas: chegada;
+- Brock: **versão 3** (2026-11-04, "bem maior, cheia de armadilha, dardo, lava, morcego"): 9 salas, ~208 blocos.
+  Chegada; alavancas (24 de altura); fosso de espinhos com pilares; galeria de dardos (dardos no chão, dos dois lados);
+  corredor alto das pedras; chão falso sobre espinhos (corda do outro lado); fosso de lava com pilares de 1 bloco e dardo
+  cruzando; poço até uma galeria escura com lava e dardos (corda para descer e outra para subir); baú. Morcegos 8x mais
+  e morcegos do inferno. Salas definidas em `Plan` (largura e altura de cada uma, fácil de mudar).
+- Brock (versão 2): (2026-11-04, depois do primeiro teste do Welsete: mais difícil e maior). Seis salas: chegada;
   salão das alavancas com 24 de altura (pedras caem do escuro); fosso de espinhos com pilares; corredor alto com pedras
   escondidas; fosso de lava com pilares de 1 bloco; baú. Morcegos nascem mais lá dentro. O portão não abria porque o
   Terraria não aciona atuador embaixo de bloco protegido; `ProtectedActuators` libera isso.

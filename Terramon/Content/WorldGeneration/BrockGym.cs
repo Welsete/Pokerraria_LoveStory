@@ -253,7 +253,7 @@ public static class BrockGymBuilder
     public const int Width = 62;
     public const int Height = 26;
     private const int Shell = 2;
-    private const int EntranceGap = BrockDungeon.Length; // The dungeon between the rope shaft and the left door
+    private static readonly int EntranceGap = BrockDungeon.Length; // The dungeon between the rope shaft and the left door
     private const int StageHeight = 3;
     private const int RopeAbove = 2; // How many rope tiles stick out of the shrine's floor at the entrance
     private const int ShrineHalf = 8; // Half width of the entrance shrine's floor and pillars
