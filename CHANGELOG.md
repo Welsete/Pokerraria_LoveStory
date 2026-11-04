@@ -4,7 +4,7 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
-- New entrance to Brock's Gym (new worlds): a two-tier stone pagoda on a rocky mound, with the Boulder Badge in the upper gable, marble columns, hanging lanterns in a dark hall, stone lanterns on both sides, stairs up the mound and rubble around it. The rope goes down from its floor.
+- New entrance to Brock's Gym (new worlds): a fossil dig. A rocky outcrop with its layers of stone, granite and clay showing, the skeleton of a huge ancient creature lying on it with its ribcage arching over the dig pit and its skull resting on the cliff, a wooden scaffold with a crane over the pit, lanterns and barrels. The rope goes down the pit.
 
 - Fixed: entering a world with Brock's dungeon could crash the game (a stack overflow when the dungeon's traps were reset).
 

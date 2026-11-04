@@ -2261,7 +2261,7 @@ BrockGym: {
 	DungeonSign2: "Três alavancas. Um só caminho."
 	Welcome: "{0} está te esperando no palco. Fale com ele para desafiar o Ginásio de Pewter!"
 	Sign: Ginásio de Pewter. Líder: Brock, o treinador Pokémon duro como pedra! Ele usa Pokémon do tipo Pedra: os tipos Água e Planta levam vantagem. Para desafiá-lo é preciso ter derrotado o Olho de Cthulhu. Desça pela corda.
-	Announce: "O Ginásio do Brock fica nas cavernas, a {0} blocos a {1} do ponto de nascimento. Procure um templo de pedra em cima de um morro, com uma corda descendo para dentro do chão, ou a Insígnia Rocha no mapa."
+	Announce: "O Ginásio do Brock fica nas cavernas, a {0} blocos a {1} do ponto de nascimento. Procure uma escavação com o esqueleto de uma criatura gigante e uma corda descendo para dentro do chão, ou a Insígnia Rocha no mapa."
 	MapName: Ginásio do Brock (Pewter)
 	MapEntrance: Entrada do Ginásio do Brock
 }

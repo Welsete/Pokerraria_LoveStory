@@ -296,7 +296,7 @@ public static class BrockGymBuilder
                 Build(left, top);
                 GenVars.structures?.AddProtectedStructure(Footprint(left, top), 4);
                 GenVars.structures?.AddProtectedStructure(
-                    BrockTemple.Area(BrockGymSystem.SurfaceEntrance.X, BrockGymSystem.SurfaceEntrance.Y), 2);
+                    BrockDigSite.Area(BrockGymSystem.SurfaceEntrance.X, BrockGymSystem.SurfaceEntrance.Y), 2);
                 Terramon.Instance.Logger.Info(
                     $"Built Brock's Gym at ({left}, {top}) (offset {maxOffset}, solid {solidPercent}%).");
                 return true;
@@ -541,7 +541,7 @@ public static class BrockGymBuilder
             ProtectedAreas.Add(new Rectangle(shaftX - 1, surfaceEntrance.Y - RopeAbove,
                 3, floorY - surfaceEntrance.Y + RopeAbove + 1));
         if (BrockGymSystem.HasDungeon && surfaceEntrance != Point.Zero)
-            ProtectedAreas.Add(BrockTemple.Area(surfaceEntrance.X, surfaceEntrance.Y));
+            ProtectedAreas.Add(BrockDigSite.Area(surfaceEntrance.X, surfaceEntrance.Y));
     }
 
     /// <summary>
@@ -876,10 +876,10 @@ public static class BrockGymBuilder
             }
         }
 
-        // The temple over the rope (the small shrine of the first versions in worlds without the dungeon)
+        // The fossil dig over the rope (the small shrine of the first versions in worlds without the dungeon)
         var ropeTop = surface - RopeAbove;
         if (BrockGymSystem.HasDungeon)
-            ropeTop = BrockTemple.Build(shaftX, surface);
+            ropeTop = BrockDigSite.Build(shaftX, surface);
         else
             BuildShrine(shaftX, surface);
 
