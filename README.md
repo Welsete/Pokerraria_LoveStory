@@ -247,7 +247,7 @@ If you'd like to buy the developer a coffee, it's entirely optional:
 
 From Brazil, Pix works too (random key `2db8d9ed-85b7-40c8-9a32-c7c60498a203`):
 
-<img src=".github/assets/pix.png" width="180" alt="Pix QR code">
+<img src=".github/assets/pix.png" width="285" alt="Pix QR code">
 
 ## 🤝 Contributing
 

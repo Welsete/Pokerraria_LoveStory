@@ -245,7 +245,7 @@ Se quiser pagar um café para o desenvolvedor, é totalmente opcional:
 
 **Pix** (chave aleatória `2db8d9ed-85b7-40c8-9a32-c7c60498a203`):
 
-<img src=".github/assets/pix.png" width="180" alt="QR Code do Pix">
+<img src=".github/assets/pix.png" width="285" alt="QR Code do Pix">
 
 **Do exterior**, pelo Ko-fi (PayPal ou cartão):
 
