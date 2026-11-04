@@ -359,6 +359,7 @@ public sealed class TestBattleUI : SmartUIState
         p.Width.Percent = 0.5f;
         p.Height.Percent = 0.3f;
         p.SetPadding(32f);
+        p.StoryFrame = true;
 
         p.Append(_optionsPanel);
 
@@ -1299,6 +1300,39 @@ public sealed class DynamicPixelRatioElement : UIElement
             DrawAdjustableBox(spriteBatch, _nineSlice.Value, bounds, drawColor, zoom, _noStretching);
         if (_corners != null)
             DrawAdjustableCorners(spriteBatch, _corners.Value, bounds, drawColor, zoom);
+        if (StoryFrame)
+            DrawStoryFrame(spriteBatch, bounds, zoom);
+    }
+
+    /// <summary>Moldura da história: filete de latão, cantos com gema de aurora e o brasão de coração no topo.</summary>
+    public bool StoryFrame;
+
+    private static Asset<Texture2D> _storyFrame;
+
+    public static void DrawStoryFrame(SpriteBatch spriteBatch, Rectangle rect, float scale)
+    {
+        _storyFrame ??= ModContent.Request<Texture2D>("Pokerraria/Assets/GUI/TurnBased/StoryFrame");
+        Texture2D tex = _storyFrame.Value;
+        int px = Math.Max(1, (int)Math.Round(scale));
+        Color line = new(128, 86, 36);
+        int inset = 5 * px;
+        Texture2D pixel = TextureAssets.MagicPixel.Value;
+        spriteBatch.Draw(pixel, new Rectangle(rect.X + inset, rect.Y + inset, rect.Width - inset * 2, px), line);
+        spriteBatch.Draw(pixel, new Rectangle(rect.X + inset, rect.Bottom - inset - px, rect.Width - inset * 2, px), line);
+        spriteBatch.Draw(pixel, new Rectangle(rect.X + inset, rect.Y + inset, px, rect.Height - inset * 2), line);
+        spriteBatch.Draw(pixel, new Rectangle(rect.Right - inset - px, rect.Y + inset, px, rect.Height - inset * 2), line);
+
+        Rectangle corner = new(0, 0, 16, 16);
+        float size = 16 * px;
+        spriteBatch.Draw(tex, new Vector2(rect.X, rect.Y), corner, Color.White, 0f, Vector2.Zero, px, SpriteEffects.None, 0f);
+        spriteBatch.Draw(tex, new Vector2(rect.Right - size, rect.Y), corner, Color.White, 0f, Vector2.Zero, px, SpriteEffects.FlipHorizontally, 0f);
+        spriteBatch.Draw(tex, new Vector2(rect.X, rect.Bottom - size), corner, Color.White, 0f, Vector2.Zero, px, SpriteEffects.FlipVertically, 0f);
+        spriteBatch.Draw(tex, new Vector2(rect.Right - size, rect.Bottom - size), corner, Color.White, 0f, Vector2.Zero, px,
+            SpriteEffects.FlipHorizontally | SpriteEffects.FlipVertically, 0f);
+
+        Rectangle crest = new(16, 0, 23, 7);
+        spriteBatch.Draw(tex, new Vector2(rect.Center.X - 23 * px / 2, rect.Y + 2 * px), crest, Color.White, 0f, Vector2.Zero, px,
+            SpriteEffects.None, 0f);
     }
 
     public static void DrawAdjustableCorners(SpriteBatch spriteBatch, Texture2D tex, Rectangle rect, Color col,
