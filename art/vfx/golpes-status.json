@@ -954,17 +954,17 @@
  {
   "tipo": "Pedra",
   "golpe": "Sandstorm",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Pedra",
   "golpe": "Stealth Rock",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Pedra",
   "golpe": "Wide Guard",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Venenoso",
@@ -975,12 +975,12 @@
  {
   "tipo": "Venenoso",
   "golpe": "Gunk Shot",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Venenoso",
   "golpe": "Poison Fang",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Venenoso",
@@ -1003,12 +1003,12 @@
  {
   "tipo": "Venenoso",
   "golpe": "Acid Spray",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Venenoso",
   "golpe": "Belch",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Venenoso",
@@ -1031,7 +1031,7 @@
  {
   "tipo": "Venenoso",
   "golpe": "Sludge Wave",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Venenoso",
@@ -1084,12 +1084,12 @@
  {
   "tipo": "Venenoso",
   "golpe": "Toxic Spikes",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Inseto",
   "golpe": "Bug Bite",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Inseto",
@@ -1106,7 +1106,7 @@
  {
   "tipo": "Inseto",
   "golpe": "Leech Life",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Inseto",
@@ -1129,7 +1129,7 @@
  {
   "tipo": "Inseto",
   "golpe": "U-turn",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Inseto",
@@ -1158,7 +1158,7 @@
  {
   "tipo": "Inseto",
   "golpe": "String Shot",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Voador",
@@ -1175,12 +1175,12 @@
  {
   "tipo": "Voador",
   "golpe": "Bounce",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Voador",
   "golpe": "Brave Bird",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Voador",
@@ -1203,7 +1203,7 @@
  {
   "tipo": "Voador",
   "golpe": "Sky Attack",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Voador",
@@ -1226,12 +1226,12 @@
  {
   "tipo": "Voador",
   "golpe": "Gust",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Voador",
   "golpe": "Hurricane",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Voador",
@@ -1242,7 +1242,7 @@
  {
   "tipo": "Voador",
   "golpe": "Mirror Move",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Voador",
@@ -1253,7 +1253,7 @@
  {
   "tipo": "Voador",
   "golpe": "Tailwind",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1273,7 +1273,7 @@
  {
   "tipo": "Lutador",
   "golpe": "Counter",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1351,12 +1351,12 @@
  {
   "tipo": "Lutador",
   "golpe": "Seismic Toss",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
   "golpe": "Storm Throw",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1372,7 +1372,7 @@
  {
   "tipo": "Lutador",
   "golpe": "Vital Throw",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1383,7 +1383,7 @@
  {
   "tipo": "Lutador",
   "golpe": "Final Gambit",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Lutador",
@@ -1406,12 +1406,12 @@
  {
   "tipo": "Lutador",
   "golpe": "Quick Guard",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Fada",
   "golpe": "Play Rough",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Fada",
@@ -1445,7 +1445,7 @@
  {
   "tipo": "Fada",
   "golpe": "Misty Terrain",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Fada",
@@ -1480,7 +1480,7 @@
  {
   "tipo": "Psíquico",
   "golpe": "Dream Eater",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Psíquico",
@@ -1491,7 +1491,7 @@
  {
   "tipo": "Psíquico",
   "golpe": "Future Sight",
-  "situacao": "gerador"
+  "situacao": "animado"
  },
  {
   "tipo": "Psíquico",

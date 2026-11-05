@@ -139,6 +139,38 @@ SHEETS = [
     ("lote8_sand_tomb.jpg", "SandTomb", (4, 2), 3, dict(Travel=0, Ticks=4)),
     ("lote8_spikes.jpg", "Spikes", (4, 2), 3, dict(Travel=0, Ticks=4)),
     ("lote8_stone_edge.jpg", "StoneEdge", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    # Lotes 9 a 11 (Poison, Bug, Flying, Fighting, Psychic, Fairy and a few more, 2026-11-05)
+    # Bounce leaves out frame 6 and Hurricane frame 4 (drawn on a filled square); the 4x4 sheets leave out their empty last cells
+    ("lote9_acid_spray.png", "AcidSpray", (4, 2), 3, dict(Travel=2, Ticks=4, Face=1)),
+    ("lote9_belch.png", "Belch", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1, At="middle")),
+    ("lote9_bug_bite.png", "BugBite", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote9_gunk_shot.png", "GunkShot", (4, 2), 3, dict(Travel=1, Ticks=4)),
+    ("lote9_poison_fang.png", "PoisonFang", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote9_sandstorm.png", "Sandstorm", (4, 2), 3, dict(Travel=0, Ticks=5, At="middle")),
+    ("lote9_sludge_wave.png", "SludgeWave", [(c * 256, r * 256, c * 256 + 256, r * 256 + 256) for r in range(4) for c in range(4)], 2, dict(Travel=0, Ticks=3, Face=1)),
+    ("lote9_stealth_rock.png", "StealthRock", (4, 2), 3, dict(Travel=0, Ticks=5)),
+    ("lote9_toxic_spikes.png", "ToxicSpikes", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote9_wide_guard.png", "WideGuard", (4, 2), 3, dict(Travel=0, Ticks=5, At="user")),
+    ("lote10_bounce.png", "Bounce", [(c * 344, r * 384, c * 344 + 344, r * 384 + 384) for r in range(2) for c in range(4) if r * 4 + c != 5], 3, dict(Travel=0, Ticks=4)),
+    ("lote10_brave_bird.png", "BraveBird", [(c * 256, r * 256, c * 256 + 256, r * 256 + 256) for r in range(4) for c in range(4)][:14], 2, dict(Travel=0, Ticks=3, Face=1)),
+    ("lote10_gust.png", "Gust", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote10_hurricane.png", "Hurricane", [b for i, b in enumerate([(c * 256, r * 256, c * 256 + 256, r * 256 + 256) for r in range(4) for c in range(4)][:14]) if i != 3], 2, dict(Travel=0, Ticks=3)),
+    ("lote10_leech_life.png", "LeechLife", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote10_mirror_move.png", "MirrorMove", (4, 2), 3, dict(Travel=0, Ticks=5, At="user")),
+    ("lote10_sky_attack.png", "SkyAttack", [(c * 256, r * 256, c * 256 + 256, r * 256 + 256) for r in range(4) for c in range(4)][:13], 2, dict(Travel=0, Ticks=3, Face=1)),
+    ("lote10_string_shot.png", "StringShot", (4, 2), 3, dict(Travel=2, Ticks=4, Face=1)),
+    ("lote10_tailwind.png", "Tailwind", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1, At="user")),
+    ("lote10_u_turn.png", "UTurn", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote11_counter.png", "Counter", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote11_dream_eater.png", "DreamEater", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote11_final_gambit.png", "FinalGambit", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote11_future_sight.png", "FutureSight", [(c * 256, r * 256, c * 256 + 256, r * 256 + 256) for r in range(4) for c in range(4)][:14], 2, dict(Travel=0, Ticks=4)),
+    ("lote11_misty_terrain.png", "MistyTerrain", (4, 2), 3, dict(Travel=0, Ticks=5, Face=1, At="middle")),
+    ("lote11_play_rough.png", "PlayRough", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote11_quick_guard.png", "QuickGuard", (4, 2), 3, dict(Travel=0, Ticks=4, At="user")),
+    ("lote11_seismic_toss.png", "SeismicToss", (4, 2), 3, dict(Travel=0, Ticks=4)),
+    ("lote11_storm_throw.png", "StormThrow", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
+    ("lote11_vital_throw.png", "VitalThrow", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
     # High Jump Kick keeps the kicking silhouette (Welsete liked it); Mach Punch came with a boxer on the left of each
     # frame (2 columns x 4 rows): only the part right of him is cut
     ("lote2_high_jump_kick.png", "HighJumpKick", (4, 2), 3, dict(Travel=0, Ticks=4, Face=1)),
@@ -149,7 +181,8 @@ SHEETS = [
 # Sheets drawn on a green background instead of magenta. Purple and pink types (Ghost, Psychic, Poison, Dark, Fairy)
 # must use green: the magenta key would erase their own colors (72% of a Ghost-palette sheet was lost in a test).
 GREEN_KEY = {"lote1_rage_fist.png", "lote1_shadow_punch.png", "lote1_sucker_punch.png",
-             "lote6_curse.png", "lote6_destiny_bond.png", "lote6_lick.png", "lote6_shadow_sneak.png", "lote7_bite.png", "lote7_crunch.png", "lote7_fling.png", "lote7_memento.png", "lote7_switcheroo.png"}
+             "lote6_curse.png", "lote6_destiny_bond.png", "lote6_lick.png", "lote6_shadow_sneak.png", "lote7_bite.png", "lote7_crunch.png", "lote7_fling.png", "lote7_memento.png", "lote7_switcheroo.png",
+             "lote9_acid_spray.png", "lote9_belch.png", "lote9_gunk_shot.png", "lote9_poison_fang.png", "lote9_sludge_wave.png", "lote9_toxic_spikes.png", "lote11_dream_eater.png", "lote11_future_sight.png", "lote11_misty_terrain.png", "lote11_play_rough.png"}
 
 
 def load(path, key="magenta"):
@@ -264,7 +297,10 @@ def cut_slab(a, color, tol=14, min_size=1500):
 
 # Pink left by a tinted magenta background (a lighter patch behind Head Smash's dust, the line under Sand Tomb):
 # "cut" drops it, a color paints it (Earthquake's last dust cloud came out pink)
-DEPINK = {"HeadSmash": "cut", "SandTomb": "cut", "Fissure": "cut", "Earthquake": (222, 196, 150)}
+DEPINK = {"HeadSmash": "cut", "SandTomb": "cut", "Fissure": "cut", "Earthquake": (222, 196, 150),
+          # Glows that soaked up the magenta background (teal, rock and sand moves have no pink of their own)
+          "SkyAttack": "cut", "Tailwind": "cut", "BraveBird": "cut", "StealthRock": "cut", "WideGuard": "cut",
+          "Sandstorm": "cut", "BugBite": "cut"}
 
 # Sheets with a slab of ground drawn under every frame: everything a few pixels below the ground's top goes, so the
 # effect sits on the real Terraria ground instead of a block of fake one
