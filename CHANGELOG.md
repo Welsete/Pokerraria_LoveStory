@@ -4,6 +4,7 @@ Versions of **Pokerraria: LoveStory**, by Welsete. Based on [Terramon](https://g
 
 ## Next
 
+- Battles: the HP bar goes down right when the move is seen hitting, instead of after the whole animation (or a fixed pause) is over.
 - 30 more moves with their own animation: Acid Spray, Belch, Bug Bite, Gunk Shot, Poison Fang, Sandstorm, Sludge Wave, Stealth Rock, Toxic Spikes, Wide Guard, Bounce, Brave Bird, Gust, Hurricane, Leech Life, Mirror Move, Sky Attack, String Shot, Tailwind, U-turn, Counter, Dream Eater, Final Gambit, Future Sight, Misty Terrain, Play Rough, Quick Guard, Seismic Toss, Storm Throw and Vital Throw.
 - 10 more moves with their own animation (Ground and Rock): Ancient Power, Dig, Drill Run, Earthquake, Fissure, Head Smash, Rollout, Sand Tomb, Spikes and Stone Edge.
 - The battle options menu has a story frame: a thin brass line, brass corners with an aurora gem and a small heart crest on top. The screens keep their original blue.

@@ -153,6 +153,27 @@ public sealed class MoveVisuals : ModSystem
     public static int AnimationTicks(ushort moveId) => Main.dedServ ? 0 : SpriteFor(moveId)?.Duration ?? 0;
 
     /// <summary>
+    ///     When the move is seen hitting its target, in ticks after it starts: the HP bar goes down right then, not
+    ///     once the whole animation is over. Drawn animations hit when they reach the target and play the first part
+    ///     of their impact frames; the plain ones hit on their burst of dust.
+    /// </summary>
+    public static int ImpactTicks(ushort moveId, MoveCategory category)
+    {
+        if (!Main.dedServ && SpriteFor(moveId) is { } sprite)
+        {
+            var after = Math.Max(0, sprite.Frames - sprite.Charge - sprite.Travel) * sprite.Ticks;
+            return sprite.HitTime + Math.Min(after, Math.Max(sprite.Ticks * 2, after * 2 / 5));
+        }
+
+        return category switch
+        {
+            MoveCategory.Special => TravelTicks + 1,
+            MoveCategory.Status => AuraTicks,
+            _ => 4
+        };
+    }
+
+    /// <summary>
     ///     How long the charging-turn animation of a two-turn move takes, or 0 if it has none.
     /// </summary>
     public static int ChargeAnimationTicks(ushort moveId) => Main.dedServ ? 0 : ChargeSpriteFor(moveId)?.Duration ?? 0;

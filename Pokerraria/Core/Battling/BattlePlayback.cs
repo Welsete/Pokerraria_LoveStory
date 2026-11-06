@@ -1,3 +1,4 @@
+using Pokerraria.Content.Configs;
 using Pokerraria.ID;
 
 namespace Pokerraria.Core.Battling;
@@ -18,10 +19,10 @@ public sealed class BattlePlayback : ModSystem
 {
     // How long each kind of moment lasts (ticks, 60 per second)
     // From "X used Y!" being written out to its hit, while the move's animation plays
-    private const int PhysicalHitDelay = 40;
-    private const int SpecialHitDelay = 50;
-    private const int StatusHitDelay = 45;
     private const int StillHitDelay = 25;
+
+    // Ticks between a move being seen hitting and its target's HP bar starting to go down
+    private const int HitBeat = 6;
 
     // Messages are written out letter by letter (this many per tick, see TypedLine), then stay a moment to be read
     public const float LettersPerTick = 1.2f;
@@ -915,6 +916,11 @@ public sealed class BattlePlayback : ModSystem
             lock (Sync)
                 timeline.BusyTicks = 0;
 
+            // With Debug Mode on, client.log gets when each step of the turn is shown, to tune these pauses
+            if (!fast && GameplayConfig.Instance.DebugMode)
+                Pokerraria.Instance.Logger.Info(
+                    $"[Playback] {Main.GameUpdateCount} {step.Kind} {(step.Kind == Kind.Move ? (MoveID)step.MoveId : StripTags(step.Text))}");
+
             try
             {
                 Run(timeline, step, fast);
@@ -930,14 +936,9 @@ public sealed class BattlePlayback : ModSystem
     {
         if (move.Still)
             return Math.Max(StillHitDelay, MoveVisuals.ChargeAnimationTicks(move.MoveId));
-        var delay = Pokerraria.DatabaseV2.GetMove(move.MoveId)?.Category switch
-        {
-            MoveCategory.Physical => PhysicalHitDelay,
-            MoveCategory.Special => SpecialHitDelay,
-            _ => StatusHitDelay
-        };
-        // A move with its own drawn animation hits once the animation is over
-        return Math.Max(delay, MoveVisuals.AnimationTicks(move.MoveId));
+        // The HP goes down a beat after the hit is seen, while the rest of the animation plays out
+        var category = Pokerraria.DatabaseV2.GetMove(move.MoveId)?.Category ?? MoveCategory.Physical;
+        return MoveVisuals.ImpactTicks(move.MoveId, category) + HitBeat;
     }
 
     private static void Finish(Timeline timeline)
